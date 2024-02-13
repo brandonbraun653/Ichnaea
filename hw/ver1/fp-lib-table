@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Espressif")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/espressif/footprints/Espressif.pretty")(options "")(descr ""))
+  (lib (name "espressif.3dshapes")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/espressif/3dmodels/espressif.3dshapes")(options "")(descr ""))
+)
