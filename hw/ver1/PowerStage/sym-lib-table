@@ -2,4 +2,5 @@
   (version 7)
   (lib (name "Espressif")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/espressif/symbols/Espressif.kicad_sym")(options "")(descr ""))
   (lib (name "ltc7871")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/SMPS/ltc7871.kicad_sym")(options "")(descr ""))
+  (lib (name "GateDrivers")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/GateDrivers.kicad_sym")(options "")(descr ""))
 )

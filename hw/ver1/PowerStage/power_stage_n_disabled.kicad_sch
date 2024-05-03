@@ -1,0 +1,921 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "10636ab6-5499-4396-9348-857f693a8152")
+	(paper "A4")
+	(lib_symbols
+		(symbol "Device:R_US"
+			(pin_numbers hide)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.54 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R_US"
+				(at -2.54 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 1.016 -0.254 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor, US symbol"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_US_0_1"
+				(polyline
+					(pts
+						(xy 0 -2.286) (xy 0 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.286) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -0.762) (xy 1.016 -1.143) (xy 0 -1.524) (xy -1.016 -1.905) (xy 0 -2.286)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0.762) (xy 1.016 0.381) (xy 0 0) (xy -1.016 -0.381) (xy 0 -0.762)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.286) (xy 1.016 1.905) (xy 0 1.524) (xy -1.016 1.143) (xy 0 0.762)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_US_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "power:GNDD"
+			(power)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "GNDD"
+				(at 0 -3.175 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "GNDD_0_1"
+				(rectangle
+					(start -1.27 -1.524)
+					(end 1.27 -2.032)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.524)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GNDD_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0) hide
+					(name "GNDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(text "The \"Applications Information\" section mentions to ensure these pins are not\nleft floating during normal operation, but doesn't say exactly what to do. This is a\nbest guess."
+		(exclude_from_sim no)
+		(at 119.38 88.646 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "840db985-1e71-4a47-9703-8fe46ecdeacf")
+	)
+	(hierarchical_label "SNSA+"
+		(shape output)
+		(at 149.86 71.12 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "438abac6-8844-4a55-b182-db06d241f7fb")
+	)
+	(hierarchical_label "PWM"
+		(shape input)
+		(at 140.97 71.12 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4b24f4d5-63e0-4940-8271-11862ccc599b")
+	)
+	(hierarchical_label "SNSD-"
+		(shape output)
+		(at 167.64 71.12 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "86281419-c731-4cb1-b8a6-0c88916d3109")
+	)
+	(hierarchical_label "SNSD+"
+		(shape output)
+		(at 158.75 71.12 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "bc9ff504-c759-4293-b1b7-7759cdb21b57")
+	)
+	(symbol
+		(lib_id "power:GNDD")
+		(at 140.97 78.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "08e5d220-fc22-4e84-ad50-523c0fe7ba0a")
+		(property "Reference" "#PWR069"
+			(at 140.97 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDD"
+			(at 140.97 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 140.97 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 140.97 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
+			(at 140.97 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7c8abbec-a456-499c-b655-882a26df12b3")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "#PWR069")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "#PWR070")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GNDD")
+		(at 158.75 78.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "131ddc4e-a374-4064-8133-fc8d31682ebd")
+		(property "Reference" "#PWR065"
+			(at 158.75 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDD"
+			(at 158.75 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 158.75 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 158.75 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
+			(at 158.75 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d30ccb95-ddd9-4f32-b56c-2bf5b4e97bf1")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "#PWR065")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "#PWR066")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GNDD")
+		(at 167.64 78.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "50f2a4b2-7f90-464b-911d-9e6466ce9faa")
+		(property "Reference" "#PWR071"
+			(at 167.64 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDD"
+			(at 167.64 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 167.64 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 167.64 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
+			(at 167.64 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d688f168-00a7-434f-9a37-abea000fe6f5")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "#PWR071")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "#PWR072")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 140.97 74.93 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6019adda-dcbe-4b2c-8152-424db74f06a3")
+		(property "Reference" "R36"
+			(at 143.51 73.6599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10k"
+			(at 143.51 76.1999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 139.954 74.676 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 140.97 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 140.97 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "05c80bab-30b4-4eba-bb69-dea422b73ed8")
+		)
+		(pin "2"
+			(uuid "d4cdca8e-28fc-417e-832f-4f0f114ceb92")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "R36")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "R37")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GNDD")
+		(at 149.86 78.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "73e87756-8500-4093-8996-7b06ec247c86")
+		(property "Reference" "#PWR067"
+			(at 149.86 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDD"
+			(at 149.86 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 149.86 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 149.86 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
+			(at 149.86 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "70543a21-fae8-4076-92c8-b5f278d0f9b3")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "#PWR067")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "#PWR068")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 158.75 74.93 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "857531e2-7495-4938-8401-5e62cc6e3a32")
+		(property "Reference" "R40"
+			(at 161.29 73.6599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10k"
+			(at 161.29 76.1999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 157.734 74.676 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 158.75 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 158.75 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6e6ed2f6-6b2e-4b7c-acf2-0399b069e17d")
+		)
+		(pin "2"
+			(uuid "b907a84d-0394-4edc-af6f-4878ef7256c8")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "R40")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "R41")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 149.86 74.93 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a4b7e8e3-ae49-4a8e-aa65-0af26ac6a209")
+		(property "Reference" "R38"
+			(at 152.4 73.6599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10k"
+			(at 152.4 76.1999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 148.844 74.676 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 149.86 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 149.86 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fb0b2d34-352b-4372-81a0-d8178bccb8f6")
+		)
+		(pin "2"
+			(uuid "8a181d2b-b477-4df7-9179-bdd0d4653387")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "R38")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "R39")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 167.64 74.93 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "badd921a-47a1-4cbd-aab5-85ea6f3731a8")
+		(property "Reference" "R42"
+			(at 170.18 73.6599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10k"
+			(at 170.18 76.1999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 166.624 74.676 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 167.64 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 167.64 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "11251c16-a625-45e0-83bf-0e9d19edca2b")
+		)
+		(pin "2"
+			(uuid "d384cb2b-95a3-40b8-a0b4-ece3bde68917")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d"
+					(reference "R42")
+					(unit 1)
+				)
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6/aa8d64b2-53e7-466e-854f-efade5c14e1b"
+					(reference "R43")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

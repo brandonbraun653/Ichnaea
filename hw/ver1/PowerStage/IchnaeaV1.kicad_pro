@@ -565,6 +565,30 @@
     [
       "9659e917-9d44-456f-a2a0-594060309696",
       "PowerSupply"
+    ],
+    [
+      "ec98a9c6-939d-4e77-a0cb-de9e7d256244",
+      "Phase1"
+    ],
+    [
+      "fa9aff26-caf6-491a-a4dd-20eb067f1f07",
+      "Phase2"
+    ],
+    [
+      "9404991a-84cd-40d3-b41e-b6fd90033c77",
+      "Phase3"
+    ],
+    [
+      "951e871e-184d-412d-983e-cb08401577f3",
+      "Phase4"
+    ],
+    [
+      "61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d",
+      "DisabledPhase5"
+    ],
+    [
+      "aa8d64b2-53e7-466e-854f-efade5c14e1b",
+      "DisabledPhase6"
     ]
   ],
   "text_variables": {}
