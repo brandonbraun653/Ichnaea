@@ -1,0 +1,75 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "bb10cc01-4de3-443c-bced-1be4fd73a4dc")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 83.82 68.58)
+		(size 55.245 45.085)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "03bc3b9d-b6d6-471c-8ba6-e018b1844858")
+		(property "Sheetname" "MPPTController"
+			(at 83.82 67.8684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mppt_controller.kicad_sch"
+			(at 83.82 114.2496 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet
+		(at 172.72 68.58)
+		(size 52.705 45.085)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "9797c3f2-bd00-4dd4-b83b-5aee20ae99ea")
+		(property "Sheetname" "RFController"
+			(at 172.72 67.8684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "rf_controller.kicad_sch"
+			(at 172.72 114.2496 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)
