@@ -5,6 +5,7 @@
 import math
 from enum import Enum
 from dataclasses import dataclass
+from loguru import logger
 from eseries import find_nearest, E96
 
 
@@ -26,6 +27,7 @@ class Mosfet:
     crss: float  # Reverse transfer (miller) capacitance, in farads
     i_avg: float  # Rated average current, in amperes
     vth: float  # Gate threshold voltage at desired switching current, in volts
+    vds: float  # Drain-source voltage, in volts
 
 
 @dataclass
@@ -43,8 +45,9 @@ class Capacitor:
     """ Capacitor parameters for the buck converter """
     name: str  # Part number
     c: float  # Capacitance, in farads
+    v: float  # Rated voltage, in volts
     esr: float  # Equivalent series resistance, in ohms
-    
+
 
 @dataclass
 class HybridCapacitor:
@@ -53,6 +56,7 @@ class HybridCapacitor:
     num_ceramic: int
     electrolytic: Capacitor
     num_electrolytic: int
+    fos_v: float = 1.5  # Factor of safety for voltage rating
 
 
 @dataclass
@@ -77,6 +81,8 @@ class OPP:
     v_ripple: float  # Allowed output voltage ripple, in volts
     i_lim: ILim  # Current limit programming option
     drvcc: float = 10.0  # Gate driver supply voltage, in volts (Pin 46, must be 5v, 8v, or 10v)
+    tj_max: float = 75.0  # Maximum junction temperature of mosfet switches, in Celsius
+    t_ambient: float = 25.0  # Ambient temperature, in Celsius
 
 
 # Maximum voltage sense values for a DCR type current sense resistor.
@@ -106,7 +112,7 @@ class LTC7871Parameters:
     inductor: Inductor
     high_side_cap: HybridCapacitor
     low_side_cap: HybridCapacitor
-    i_sense_filter: CurrentSenseFilter
+    i_filter: CurrentSenseFilter
     opp: OPP
 
 
@@ -124,9 +130,32 @@ class LTC7871Validator:
         self.op_i_out_phase = self.op_i_out_max / self.p.opp.phases
 
         # Inductor ripple current (A)
-        self.il_ripple = self.op_i_out_max * self.p.opp.i_ripple
+        self.il_ripple_target = self.op_i_out_max * self.p.opp.i_ripple
 
         self._failed_assertions = []
+        
+        # Computed values
+        self.total_power_dissipation = 0.0
+
+        # Computed values per-phase
+        self.l_min = 0.0
+        self.l_avg_pwr_loss = 0.0
+        self.l_peak_pwr_loss = 0.0
+        self.l_peak_current = 0.0
+        self.l_v_ripple = 0.0
+        self.l_v_sense_ripple = 0.0
+        self.l_v_sense_ripple_max = 0.0
+        self.il_ripple_actual = 0.0
+        self.il_r1_pwr_loss = 0.0
+        self.m_top_pwr_loss = 0.0
+        self.m_bot_pwr_loss = 0.0
+
+        # Output capacitor computed values
+        self.c_low_v_ripple = 0.0
+        self.c_low_esr_eff = 0.0
+        self.c_low_cap_eff = 0.0
+        self.c_low_cap_min = 0.0
+        self.c_low_pwr_loss = 0.0
 
     def validate_absolute_limits(self):
         # Switching frequency limits
@@ -135,49 +164,70 @@ class LTC7871Validator:
         # Minimum On-Time (pg. 29)
         ref_on_time = 150e-9  # (sec) Best case performance from datasheet
         act_on_time = self.p.opp.v_out / (self.p.opp.v_in * self.p.opp.f_sw)
-        self._log_assert(ref_on_time < act_on_time, f"{ref_on_time * 1e9:.2f}nS > {act_on_time*1e9:.2f}nS")
+        self._log_assert(ref_on_time < act_on_time, f"{ref_on_time * 1e9:.2f}nS > {act_on_time * 1e9:.2f}nS")
 
     def validate_inductor(self):
-        # Ensure VSenseMax isn't exceeded
-        act_sense = self.p.inductor.dcr * (self.op_i_out_phase + (self.il_ripple / 2.0))
-        max_sense = VSense_Max_DCR[self.p.opp.i_lim]
-        self._log_assert(act_sense < max_sense, f"Actual voltage sense {act_sense} > maximum allowed voltage sense {max_sense}")
-        print(f"Actual VSense: {act_sense:.2f}V")
-
-        # Compute approximate equality of the output inductor characteristics and the two filter stages
-        tolerance = 1e-2
+        """
+        Validates the inductor selection using the assumption of DCR style current sensing.
+        """
+        # Compute approximate equality of the output inductor characteristics and the two RC filter stages
         l_by_dcr = round(self.p.inductor.l / self.p.inductor.dcr, 3)
-        r1_c1_5 = round(self.p.i_sense_filter.r1 * self.p.i_sense_filter.c1 * 5, 3)
-        r2_c2 = round(self.p.i_sense_filter.r2 * self.p.i_sense_filter.c2, 3)
+        r1_c1_5 = round(self.p.i_filter.r1 * self.p.i_filter.c1 * 5, 3)
+        r2_c2 = round(self.p.i_filter.r2 * self.p.i_filter.c2, 3)
+        
+        # print(f"L/DCR: {l_by_dcr}, R1C1_5: {r1_c1_5}, R2C2: {r2_c2}")
+        self._log_assert(math.isclose(l_by_dcr, r1_c1_5, abs_tol=1e-6), f"L/DCR {l_by_dcr} != 5 * R1C1 {r1_c1_5}")
+        self._log_assert(math.isclose(l_by_dcr, r2_c2, abs_tol=1e-6), f"L/DCR {l_by_dcr} != R2C2 {r2_c2}")
 
+        # Pre-compute a few useful values. 
+        duty_max = (self.p.opp.v_out / (0.9 * self.p.opp.v_in))  # Estimated 90% efficiency (see SLVA477B section 2)
+        v_delta = self.p.opp.v_in - self.p.opp.v_out
+        
         # Compute the minimum inductor value to achieve desired ripple current. << current == lower core loss
-        l_min = ((self.p.opp.v_in - self.p.opp.v_out) / (self.p.opp.f_sw * self.il_ripple)) * (self.p.opp.v_out / self.p.opp.v_in)
-        print(f"Inductance: {self.p.inductor.l * 1e6:.2f}uH, Min: {l_min * 1e6:.2f}uH")
-        self._log_assert(self.p.inductor.l >= l_min, f"Inductor value {self.p.inductor.l} < minimum {l_min}")
+        self.l_min = (v_delta / (self.p.opp.f_sw * self.il_ripple_target)) * duty_max
+        self._log_assert(self.p.inductor.l >= self.l_min,
+                         f"Inductor value {self.p.inductor.l * 1e6:.2f}uH < minimum {self.l_min * 1e6:.2f}uH"
+                         f" for ripple current target")
 
-        # Validate relationship between the inductor and the two filter stages
-        print(f"L/DCR: {l_by_dcr}, R1C1_5: {r1_c1_5}, R2C2: {r2_c2}")
-        self._log_assert(math.isclose(l_by_dcr, r1_c1_5 / 5.0, abs_tol=tolerance), f"L/DCR {l_by_dcr} != R1C1_5 {r1_c1_5}")
-        self._log_assert(math.isclose(l_by_dcr, r2_c2, abs_tol=1e-3), f"L/DCR {l_by_dcr} != R2C2 {r2_c2}")
+        # Compute the actual ripple current in the inductor 
+        self.il_ripple_actual = (v_delta * duty_max) / (self.p.inductor.l * self.p.opp.f_sw)
+        if self.il_ripple_actual > self.op_i_out_phase:
+            logger.warning(f"OPP requires discontinuous mode operation")
+            self.il_ripple_actual = self.op_i_out_phase
 
-        # Ensure the current sense input ripple voltage is less than 2mV
-        v_ripple = (self.p.opp.v_out / self.p.opp.v_in) * ((self.p.opp.v_in - self.p.opp.v_out) / (self.p.i_sense_filter.r1 * self.p.i_sense_filter.c1 * self.p.opp.f_sw))
-        self._log_assert(v_ripple < 10e-3, f"SNSA+, SNS- ripple voltage {v_ripple} > 10mV recommended")
+        # Compute voltage ripple peak voltage due to inductor current ripple
+        self.l_v_ripple = self.p.inductor.dcr * (self.op_i_out_phase + (self.il_ripple_actual / 2.0))
+
+        # Compute voltage ripple across the SNSA+ and SNS- pins after filtering through R1C1
+        self.l_v_sense_ripple = duty_max * v_delta / (self.p.i_filter.r1 * self.p.i_filter.c1 * self.p.opp.f_sw)
+
+        # Ensure the actual voltage ripple can be sensed by the LTC7871 using the current limit setting
+        self.l_v_sense_ripple_max = VSense_Max_DCR[self.p.opp.i_lim]
+        self._log_assert(self.l_v_sense_ripple < self.l_v_sense_ripple_max,
+                         f"Inductor ripple vSense {self.l_v_sense_ripple * 1e3:.2f}mV > configured max "
+                         f"vSense {self.l_v_sense_ripple_max * 1e3:.2f}mV")
+
+        # Ensure we meet the minimum voltage sense ripple requirement for SNR and accuracy
+        self._log_assert(self.l_v_ripple >= 10e-3,
+                         f"SNSA+, SNS- ripple voltage {self.l_v_ripple * 1e3:.2f}mV < 10mV recommended. "
+                         f"Inductor DCR is too low.")
+
+        # Ensure sense pin voltage limits aren't exceeded
+        self._log_assert(self.p.opp.v_out <= 60, f"Output voltage {self.p.opp.v_out} > 60V limit for SNS pins")
 
         # Peak Current Rating
-        il_rated = self.op_i_out_phase + self.il_ripple / 2.0
-        print(f"Inductor Avg Current: {self.op_i_out_phase:.2f}A")
-        print(f"Inductor Peak Current: {il_rated:.2f}A")
+        self.l_peak_current = self.op_i_out_phase + self.il_ripple_actual / 2.0
 
         # Compute copper loss
-        l_i2r_loss = self.op_i_out_phase ** 2 * self.p.inductor.dcr
+        self.l_avg_pwr_loss = self.op_i_out_phase ** 2 * self.p.inductor.dcr
+        self.l_peak_pwr_loss = self.l_peak_current ** 2 * self.p.inductor.dcr
+        self.total_power_dissipation += (self.l_avg_pwr_loss * self.p.opp.phases)
 
-        # Summarize this block
-        print(f"Exp SNS +/- Ripple {v_ripple * 1e3:.2f}mV")
-        print(f"Inductor Avg I2R Loss: {l_i2r_loss:.2f}W")
-        
+        # Compute power loss in R1, which has to handle a bit more dissipation than typical
+        self.il_r1_pwr_loss = ((100 - self.p.opp.v_out) * self.p.opp.v_out) / self.p.i_filter.r1
+        self.total_power_dissipation += (self.il_r1_pwr_loss * self.p.opp.phases)
+
     def validate_mosfet(self):
-        temp_delta = self.p.mosfet.t_delta
         rds_on = self.p.mosfet.rds_on
         crss = self.p.mosfet.crss
         iavg = self.p.mosfet.i_avg
@@ -185,59 +235,81 @@ class LTC7871Validator:
         rdr = 1.5  # Resistance of top switch driver (Ohm), from LTC7060 R_UP(TG)?
 
         # Junction Temp Adjustment
-        est_junction_temp = 75.0  # Celsius
-        ambient_temp = 25.0  # Celsius
-        temp_factor = temp_delta * (est_junction_temp - ambient_temp)
+        temp_factor = self.p.mosfet.t_delta * (self.p.opp.tj_max - self.p.opp.t_ambient)
 
         # Top Switch Mosfet Dissipation
         mos_top_1 = (self.p.opp.v_out / self.p.opp.v_in) * (self.op_i_out_phase ** 2.0) * (1.0 + temp_factor) * rds_on
         mos_top_2 = (self.p.opp.v_in ** 2.0) * (self.op_i_out_phase / 2.0) * rdr * crss
         mos_top_3 = ((1.0 / (self.p.opp.drvcc - vth)) + (1.0 / vth)) * self.p.opp.f_sw
-        mos_top_pwr_dissipation = mos_top_1 + mos_top_2 * mos_top_3
+        self.m_top_pwr_loss = mos_top_1 + mos_top_2 * mos_top_3
 
         # Bottom Switch Mosfet Dissipation
         mos_bot_1 = (self.p.opp.v_in - self.p.opp.v_out) / self.p.opp.v_in
         mos_bot_2 = self.op_i_out_phase ** 2.0
         mos_bot_3 = (1.0 + temp_factor) * rds_on
-        mos_bot_pwr_dissipation = mos_bot_1 * mos_bot_2 * mos_bot_3
+        self.m_bot_pwr_loss = mos_bot_1 * mos_bot_2 * mos_bot_3
 
-        print(f"Dissipation Top: {mos_top_pwr_dissipation:.2f}W")
-        print(f"Dissipation Bottom: {mos_bot_pwr_dissipation:.2f}W")
-        
+        # Validate average current rating
+        self._log_assert(iavg >= self.op_i_out_phase, f"Average current rating {iavg} < {self.op_i_out_phase}")
+
+        # Summarize this block
+        self.total_power_dissipation += ((self.m_top_pwr_loss + self.m_bot_pwr_loss) * self.p.opp.phases)
+
     def validate_high_side_capacitor(self):
-        pass 
-    
-    def validate_low_side_capacitor(self):
-        # Capacitor: CGA6P1X7R1N106M250AC
-        # https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA6P1X7R1N106M250AC
-        CLow_ceramic_cap = self.p.low_side_cap.ceramic.c
-        CLow_ceramic_ESR = self.p.low_side_cap.ceramic.esr
-        CLow_ceramic_N = self.p.low_side_cap.num_ceramic
-        _ceramic_eff_esr = CLow_ceramic_ESR / CLow_ceramic_N
+        pass
 
-        # Capacitor: 80ZLH220MEFCT810X23
-        # https://www.digikey.com/en/products/detail/rubycon/80ZLH220MEFCT810X23/3568221
-        CLow_electrolytic_cap = self.p.low_side_cap.electrolytic.c
-        CLow_electrolytic_ESR = self.p.low_side_cap.electrolytic.esr
-        CLow_electrolytic_N = self.p.low_side_cap.num_electrolytic
-        _electrolytic_eff_esr = CLow_electrolytic_ESR / CLow_electrolytic_N
+    def validate_low_side_capacitor(self):
+        # Ensure voltage limits aren't exceeded
+        self._log_assert(self.p.low_side_cap.fos_v * self.p.opp.v_out < self.p.low_side_cap.ceramic.v,
+                         f"Low side ceramic voltage rating FOS not met.")
+        self._log_assert(self.p.low_side_cap.fos_v * self.p.opp.v_out < self.p.low_side_cap.electrolytic.v,
+                         f"Low side electrolytic voltage rating FOS not met.")
+
+        # Compute effective ESR and capacitance for the low side capacitors
+        c_low_ceramic_cap = self.p.low_side_cap.ceramic.c
+        c_low_ceramic_esr = self.p.low_side_cap.ceramic.esr
+        c_low_ceramic_n = self.p.low_side_cap.num_ceramic
+        _ceramic_eff_esr = c_low_ceramic_esr / c_low_ceramic_n
+
+        c_low_electrolytic_cap = self.p.low_side_cap.electrolytic.c
+        c_low_electrolytic_esr = self.p.low_side_cap.electrolytic.esr
+        c_low_electrolytic_n = self.p.low_side_cap.num_electrolytic
+        _electrolytic_eff_esr = c_low_electrolytic_esr / c_low_electrolytic_n
 
         # Compute effective capacitance and ESR from both ceramic and electrolytic capacitors
-        CLow_eff_ESR = 1.0 / ((1.0 / _ceramic_eff_esr) + (1.0 / _electrolytic_eff_esr))
-        CLow_eff = (CLow_ceramic_cap * CLow_ceramic_N) + (CLow_electrolytic_cap * CLow_electrolytic_N)
+        self.c_low_esr_eff = 1.0 / ((1.0 / _ceramic_eff_esr) + (1.0 / _electrolytic_eff_esr))
+        self.c_low_cap_eff = (c_low_ceramic_cap * c_low_ceramic_n) + (c_low_electrolytic_cap * c_low_electrolytic_n)
 
         # Validate steady state output ripple voltage isn't exceeded
-        dVLow_act = self.il_ripple * (CLow_eff_ESR + (1.0 / (8.0 * self.p.opp.f_sw * CLow_eff)))
-        print(f"Output voltage ripple:\t{dVLow_act * 1e3:.2f}mV, Min: {self.p.opp.v_ripple * 1e3:.2f}mV")
-        self._log_assert(dVLow_act <= self.p.opp.v_ripple, f"Output voltage ripple {dVLow_act} > {self.p.opp.v_ripple}")
+        self.c_low_v_ripple = self.il_ripple_actual * (self.c_low_esr_eff + (1.0 / (8.0 * self.p.opp.f_sw * self.c_low_cap_eff)))
+        self._log_assert(self.c_low_v_ripple <= self.p.opp.v_ripple,
+                         f"Output voltage ripple {self.c_low_v_ripple * 1e3:.2f}mV > {self.p.opp.v_ripple * 1e3:.2f}mV")
 
         # Validate minimum capacitance is met
-        CLow_min_ref = 1.0 / (8.0 * self.p.opp.f_sw * self.p.inductor.dcr)
-        print(f"Output capacitance:\t{CLow_eff * 1e6:.2f}uF, Min: {CLow_min_ref * 1e6:.2f}uF")
-        self._log_assert(CLow_eff > CLow_min_ref, f"Output capacitance {CLow_eff} < {CLow_min_ref}")
+        self.c_low_cap_min = 1.0 / (8.0 * self.p.opp.f_sw * self.p.inductor.dcr)
+        self._log_assert(self.c_low_cap_eff > self.c_low_cap_min, 
+                         f"Output capacitance {self.c_low_cap_eff * 1e6}uF < {self.c_low_cap_min * 1e6:.2f}uF")
 
-        # TODO: Compute power dissipation in the capacitors
+        # Compute total capacitor power dissipation. This is spread out across all the capacitors, but it's
+        # relative to the ESR of each capacitor.
+        self.c_low_pwr_loss = self.op_i_out_max ** 2 * self.c_low_esr_eff
+        self.total_power_dissipation += self.c_low_pwr_loss
         
+    def summarize(self):
+        print(f"\tR1 Power Loss: {self.il_r1_pwr_loss:.2f}W")
+        print(f"\tExp SNS +/- Ripple {self.l_v_sense_ripple * 1e3:.2f}mV")
+        print(f"\tInductance: {self.p.inductor.l * 1e6:.2f}uH, Min: {self.l_min * 1e6:.2f}uH")
+        print(f"\tInductor Avg Current: {self.op_i_out_phase:.2f}A")
+        print(f"\tInductor Peak Current: {self.l_peak_current:.2f}A")
+        print(f"\tInductor Avg I2R Loss: {self.l_avg_pwr_loss:.2f}W")
+        print(f"\tInductor Peak I2R Loss: {self.l_peak_pwr_loss:.2f}W")
+        print(f"\tTop Switch Power Dissipation: {self.m_top_pwr_loss:.2f}W")
+        print(f"\tBottom Switch Power Dissipation: {self.m_bot_pwr_loss:.2f}W")
+        print(f"\tOutput voltage ripple: {self.c_low_v_ripple * 1e3:.2f}mV, Max: {self.p.opp.v_ripple * 1e3:.2f}mV")
+        print(f"\tOutput capacitance: {self.c_low_cap_eff * 1e6:.2f}uF, Min: {self.c_low_cap_min * 1e6:.2f}uF")
+        print(f"\tCapacitor Dissipation: {self.c_low_pwr_loss:.2f}W")
+        print(f"\tTotal Power Dissipation: {self.total_power_dissipation:.2f}W")
+
     def compute_programmable_output_voltage_range(self):
         NominalVoltageRanges = {
             # VLow: (RA, RB)
@@ -256,17 +328,18 @@ class LTC7871Validator:
 
             print(
                 f"{name} Nominal: {VLow_Nominal:.2f}V -> Range: {VLow_programmable_min:.2f}V - {VLow_programmable_max:.2f}V")
-            
+
     def validate(self) -> bool:
-        print(f"Validating {self.p.name}")
+        print(f"Validating: {self.p.name}")
         self.validate_inductor()
         self.validate_mosfet()
         self.validate_high_side_capacitor()
         self.validate_low_side_capacitor()
-        self.compute_programmable_output_voltage_range()
+        self.summarize()
+        # self.compute_programmable_output_voltage_range()
 
         if self._failed_assertions:
-            print("Validation failed:")
+            print("Failed:")
             for msg in self._failed_assertions:
                 print(f"  {msg}")
             return False
