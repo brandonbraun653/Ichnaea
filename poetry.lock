@@ -242,6 +242,54 @@ files = [
 ]
 
 [[package]]
+name = "docopt"
+version = "0.6.2"
+description = "Pythonic argument parser, that will make you smile"
+optional = false
+python-versions = "*"
+files = [
+    {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
+]
+
+[[package]]
+name = "docopt-subcommands"
+version = "4.0.0"
+description = "create subcommand-based CLI programs with docopt"
+optional = false
+python-versions = "*"
+files = [
+    {file = "docopt_subcommands-4.0.0-py2.py3-none-any.whl", hash = "sha256:5cbad12756b8429b8d5069306881fe87d3f135c71d8e85088deb64a13229e908"},
+    {file = "docopt_subcommands-4.0.0.tar.gz", hash = "sha256:e511c33f96474d754333617009443b1641c24e7614d051f8c0d5746670d2243a"},
+]
+
+[package.dependencies]
+docopt = "*"
+
+[package.extras]
+dev = ["twine", "wheel"]
+test = ["hypothesis (>=1.11)", "pytest (>=3.0.7)"]
+
+[[package]]
+name = "eseries"
+version = "1.2.1"
+description = "Working with the E-series of preferred numbers used for electronic components, such as resistors and capacitors"
+optional = false
+python-versions = "*"
+files = [
+    {file = "eseries-1.2.1-py3-none-any.whl", hash = "sha256:6368216bb4876685a7c58a90d79ea523096b866e531240abc2aa7d6878629377"},
+    {file = "eseries-1.2.1.tar.gz", hash = "sha256:06122b18141a28ae7758bb42391b163bc42039fd7b91d3633631c0c8fa300e36"},
+]
+
+[package.dependencies]
+docopt-subcommands = ">=4.0"
+future = "*"
+
+[package.extras]
+dev = ["bumpversion", "check-manifest", "twine", "wheel"]
+doc = ["cartouche", "sphinx"]
+test = ["coverage", "hypothesis", "pytest"]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.1"
 description = "Backport of PEP 654 (exception groups)"
@@ -333,6 +381,17 @@ type1 = ["xattr"]
 ufo = ["fs (>=2.2.0,<3)"]
 unicode = ["unicodedata2 (>=15.1.0)"]
 woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
+
+[[package]]
+name = "future"
+version = "1.0.0"
+description = "Clean single-source support for Python 3 and 2"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "future-1.0.0-py3-none-any.whl", hash = "sha256:929292d34f5872e70396626ef385ec22355a1fae8ad29e1a734c3e43f9fbc216"},
+    {file = "future-1.0.0.tar.gz", hash = "sha256:bd2968309307861edae1458a4f8a4f3598c03be43b97521076aebf5d94c07b05"},
+]
 
 [[package]]
 name = "ipykernel"
@@ -1173,4 +1232,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "f1bc5aae7142a83cc2bf7562af48a367f0b030eb516acfcc9867cd6e62e813a9"
+content-hash = "3bcec30fc9ab32ab06f4e3467dfb3ada2a0262863904e1a584dd89de61ef2a5d"
