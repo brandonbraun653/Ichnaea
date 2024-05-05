@@ -2078,6 +2078,16 @@
 		)
 		(uuid "0f9939ee-8491-4067-9ae3-269311a2e0d6")
 	)
+	(text "This resistor needs to dissipate ~0.11W"
+		(exclude_from_sim no)
+		(at 193.04 67.564 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ef655425-b346-462f-806c-b28e5a40274a")
+	)
 	(hierarchical_label "SNSA+"
 		(shape output)
 		(at 209.55 64.77 0)
