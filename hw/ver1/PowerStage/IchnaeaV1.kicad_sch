@@ -2779,8 +2779,8 @@
 		)
 	)
 	(sheet
-		(at 163.83 83.185)
-		(size 19.05 50.165)
+		(at 163.83 79.375)
+		(size 19.05 53.975)
 		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
@@ -2791,7 +2791,7 @@
 		)
 		(uuid "2acacade-9567-40f5-9827-bf22bd24fca6")
 		(property "Sheetname" "PowerStage"
-			(at 163.83 82.4734 0)
+			(at 163.83 78.6634 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2808,68 +2808,8 @@
 				(justify left top)
 			)
 		)
-		(pin "LTC_PGOOD" output
-			(at 163.83 107.95 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "777b986e-145c-418d-b7d2-aaf3a5313a79")
-		)
-		(pin "LTC_SYNC" input
-			(at 163.83 96.52 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "7cbc67d5-fc33-49e1-96c0-4508640e56d4")
-		)
-		(pin "LTC_RUN" input
-			(at 163.83 91.44 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "b62166cc-4664-469e-8f66-63b479a7f695")
-		)
-		(pin "LTC_FAULT" output
-			(at 163.83 105.41 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "bdcb18c7-08d6-42ee-b159-f541c5ac137f")
-		)
-		(pin "ADC_SEL_0" input
-			(at 163.83 113.03 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "c6cffa96-3391-40aa-976a-517d4dc52c04")
-		)
-		(pin "ADC_SEL_1" input
-			(at 163.83 115.57 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "217bf181-b897-4c08-9be8-2e8409c39165")
-		)
 		(pin "+12V_EXT_VCC" input
-			(at 163.83 86.36 180)
+			(at 163.83 81.28 180)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2878,17 +2818,17 @@
 			)
 			(uuid "82cea607-fb43-48fc-aa26-305d74441458")
 		)
-		(pin "ADC_SEL_2" input
-			(at 163.83 118.11 180)
+		(pin "IO_ADC_SEL_1" input
+			(at 163.83 113.03 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "dd3abf75-2c07-4997-97d6-a64142dd2d3f")
+			(uuid "7bed7e97-b3e6-497e-adb7-76f335ae36a7")
 		)
-		(pin "ADC_OUT" output
+		(pin "IO_ADC_SEL_0" input
 			(at 163.83 110.49 180)
 			(effects
 				(font
@@ -2896,39 +2836,49 @@
 				)
 				(justify left)
 			)
-			(uuid "a0180456-c11a-44b9-a05b-87fb816af1e6")
+			(uuid "32e55e20-99d5-488a-889b-061a04970fe7")
 		)
-		(pin "LTC_SETCUR" input
-			(at 163.83 93.98 180)
+		(pin "IO_ADC_SEL_2" input
+			(at 163.83 115.57 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "216918c1-8b86-4615-84b6-4a1a60ef6e11")
+			(uuid "11be0dd6-6b18-451f-b97b-cb00b182a036")
 		)
-		(pin "LCT_SCK" input
-			(at 163.83 123.19 180)
+		(pin "IO_ADC_OUT" output
+			(at 163.83 107.95 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "58cfd0a1-c709-465f-92b0-f00bc386dc9b")
+			(uuid "d7ddaaf9-742f-4cba-bf10-385407c4289b")
 		)
-		(pin "LTC_SDO" input
-			(at 163.83 128.27 180)
+		(pin "IO_LTC_RUN" input
+			(at 163.83 86.36 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left)
 			)
-			(uuid "cfdf2ed1-9082-4997-9e46-c7a57ddf0868")
+			(uuid "fa9f53c8-01ce-49bb-9400-ec3b4a7ea1fb")
 		)
-		(pin "LTC_SDI" input
+		(pin "IO_LTC_PGOOD" output
+			(at 163.83 99.06 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "fc384c1c-8a93-4d44-8eb7-14c37e1e0919")
+		)
+		(pin "IO_LTC_SDI" input
 			(at 163.83 125.73 180)
 			(effects
 				(font
@@ -2936,9 +2886,39 @@
 				)
 				(justify left)
 			)
-			(uuid "2571156d-1268-4963-922a-49293ccddd77")
+			(uuid "02054a6b-36a6-4d8b-9ce0-942acfeaff50")
 		)
-		(pin "LTC_CSB" input
+		(pin "IO_LTC_SDO" input
+			(at 163.83 128.27 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "ec864c31-07b7-43a8-9247-4d8c79daeb69")
+		)
+		(pin "IO_LCT_SCK" input
+			(at 163.83 123.19 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "629fd387-4118-41c1-91a5-ced126243703")
+		)
+		(pin "IO_LTC_FAULT" output
+			(at 163.83 101.6 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "835ac147-8e72-44aa-995a-e9fed45e3262")
+		)
+		(pin "IO_LTC_CSB" input
 			(at 163.83 130.81 180)
 			(effects
 				(font
@@ -2946,27 +2926,67 @@
 				)
 				(justify left)
 			)
-			(uuid "36472821-e245-45cb-aff6-1571b5b5e6d3")
+			(uuid "a8d0255b-88e1-4c97-9f81-5c864fe940b0")
 		)
-		(pin "HV_IN" input
-			(at 182.88 88.9 0)
+		(pin "IO_LTC_SYNC" input
+			(at 163.83 88.9 180)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 			)
-			(uuid "dd6592af-291e-4893-bc2d-bb9d83400ac9")
+			(uuid "fbefc797-5edb-444f-8b67-bddeb13ccd61")
+		)
+		(pin "IO_LTC_SETCUR" input
+			(at 163.83 91.44 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "92439bbe-e563-4f3e-87c9-2c65dcf1d003")
 		)
 		(pin "LV_OUT" output
-			(at 182.88 101.6 0)
+			(at 182.88 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify right)
 			)
-			(uuid "0c4564d3-6cf7-4a8c-a307-6dbc12142c59")
+			(uuid "bd893bd7-acc7-4f4b-93ee-89d5348f59ea")
+		)
+		(pin "HV_IN" input
+			(at 182.88 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "cc117a2a-0382-41aa-a103-a56ee037aba4")
+		)
+		(pin "IO_LTC_DCCM" input
+			(at 163.83 93.98 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "898539b2-6764-4198-b1b9-51bf56f2a58f")
+		)
+		(pin "IO_LTC_CCM" input
+			(at 163.83 96.52 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "780c51ec-9e77-46a0-ac2a-d169077f881f")
 		)
 		(instances
 			(project "IchnaeaV1"

@@ -88,11 +88,11 @@ class OPP:
 # Maximum voltage sense values for a DCR type current sense resistor.
 # Values are in volts.
 VSense_Max_DCR = {
-    ILim.ILIM_0: 0.1,
-    ILim.ILIM_1_4: 0.2,
-    ILim.ILIM_FLOAT: 0.3,
-    ILim.ILIM_3_4: 0.4,
-    ILim.ILIM_FULL: 0.5
+    ILim.ILIM_0: 10e-3,
+    ILim.ILIM_1_4: 20e-3,
+    ILim.ILIM_FLOAT: 30e-3,
+    ILim.ILIM_3_4: 40e-3,
+    ILim.ILIM_FULL: 50e-3
 }
 
 VSense_VDiv_Resistors = {
@@ -133,7 +133,7 @@ class LTC7871Validator:
         self.il_ripple_target = self.op_i_out_max * self.p.opp.i_ripple
 
         self._failed_assertions = []
-        
+
         # Computed values
         self.total_power_dissipation = 0.0
 
@@ -174,22 +174,22 @@ class LTC7871Validator:
         l_by_dcr = round(self.p.inductor.l / self.p.inductor.dcr, 6)
         r1_c1_5 = round(self.p.i_filter.r1 * self.p.i_filter.c1 * 5, 6)
         r2_c2 = round(self.p.i_filter.r2 * self.p.i_filter.c2, 6)
-        
+
         # print(f"L/DCR: {l_by_dcr}, R1C1_5: {r1_c1_5}, R2C2: {r2_c2}")
         self._log_assert(math.isclose(l_by_dcr, r1_c1_5, abs_tol=1e-4), f"L/DCR {l_by_dcr} != 5 * R1C1 {r1_c1_5}")
         self._log_assert(math.isclose(l_by_dcr, r2_c2, abs_tol=1e-4), f"L/DCR {l_by_dcr} != R2C2 {r2_c2}")
 
-        # Pre-compute a few useful values. 
+        # Pre-compute a few useful values.
         duty_max = (self.p.opp.v_out / (0.9 * self.p.opp.v_in))  # Estimated 90% efficiency (see SLVA477B section 2)
         v_delta = self.p.opp.v_in - self.p.opp.v_out
-        
+
         # Compute the minimum inductor value to achieve desired ripple current. << current == lower core loss
         self.l_min = (v_delta / (self.p.opp.f_sw * self.il_ripple_target)) * duty_max
         self._log_assert(self.p.inductor.l >= self.l_min,
                          f"Inductor value {self.p.inductor.l * 1e6:.2f}uH < minimum {self.l_min * 1e6:.2f}uH"
                          f" for ripple current target")
 
-        # Compute the actual ripple current in the inductor 
+        # Compute the actual ripple current in the inductor
         self.il_ripple_actual = (v_delta * duty_max) / (self.p.inductor.l * self.p.opp.f_sw)
         if self.il_ripple_actual > self.op_i_out_phase:
             self.il_ripple_actual = self.op_i_out_phase
@@ -288,7 +288,7 @@ class LTC7871Validator:
 
         # Validate minimum capacitance is met
         self.c_low_cap_min = 1.0 / (8.0 * self.p.opp.f_sw * self.p.inductor.dcr)
-        self._log_assert(self.c_low_cap_eff > self.c_low_cap_min, 
+        self._log_assert(self.c_low_cap_eff > self.c_low_cap_min,
                          f"Output capacitance {self.c_low_cap_eff * 1e6}uF < {self.c_low_cap_min * 1e6:.2f}uF")
 
         # Compute total capacitor power dissipation. This is spread out across all the capacitors, but it's
@@ -296,7 +296,7 @@ class LTC7871Validator:
         # equivalent the inductor ripple current. See ROHM 64AN035E for more details.
         self.c_low_pwr_loss = (self.il_ripple_actual * self.p.opp.phases) ** 2 * self.c_low_esr_eff
         self.total_power_dissipation += self.c_low_pwr_loss
-        
+
     def summarize(self):
         logger.info(f"\tPer-Phase R1 Power Loss: {self.il_r1_pwr_loss:.2f}W")
         logger.info(f"\tPer-Phase Exp SNS +/- Ripple {self.l_v_sense_ripple * 1e3:.2f}mV")

@@ -547,8 +547,16 @@
       "Root"
     ],
     [
+      "1eb12a94-d1a8-4c6d-98a3-7cd3e4b1be00",
+      "Phase5"
+    ],
+    [
       "2acacade-9567-40f5-9827-bf22bd24fca6",
       "PowerStage"
+    ],
+    [
+      "f7d84b5f-3a25-4a3f-a9d4-4d6adaa55ff3",
+      "Phase6"
     ],
     [
       "ec98a9c6-939d-4e77-a0cb-de9e7d256244",
@@ -575,16 +583,8 @@
       "Phase4"
     ],
     [
-      "61d18c9c-23c4-4ef1-a9cd-55c01cf50a2d",
-      "DisabledPhase5"
-    ],
-    [
       "7a7a0c57-1e7c-4672-a3da-546a4dff2504",
       "HVProtection"
-    ],
-    [
-      "aa8d64b2-53e7-466e-854f-efade5c14e1b",
-      "DisabledPhase6"
     ]
   ],
   "text_variables": {}
