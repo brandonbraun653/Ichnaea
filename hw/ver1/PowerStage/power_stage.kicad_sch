@@ -6098,6 +6098,16 @@
 		)
 		(uuid "3d87319b-0924-4430-9727-2d37acf5424f")
 	)
+	(text "Only enable one at a time. Both GND == floating. NPN PNP? Or MOS?"
+		(exclude_from_sim no)
+		(at 349.758 134.112 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "59dd2596-9bdc-4586-a86d-d464ac04b5ab")
+	)
 	(text "V5 bypass. Place close to pin."
 		(exclude_from_sim no)
 		(at 101.6 35.814 0)
@@ -6107,17 +6117,6 @@
 			)
 		)
 		(uuid "6ba08ec1-84d1-49d5-96c9-b5bd5147ac74")
-	)
-	(text "+5V == Discontinuous Mode\nGND == Forced Continuous Mode\nFLT == Burst Mode"
-		(exclude_from_sim no)
-		(at 39.116 200.406 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "70c2c06d-3cef-4155-85ad-4c80399d2b8a")
 	)
 	(text "From ltc7871.ipynb. \nSelects 12v, 24v, and 48v nominal voltages.\nAdd graphical table on back of board."
 		(exclude_from_sim no)
@@ -6140,6 +6139,17 @@
 			(justify left)
 		)
 		(uuid "99bd11e4-2f62-4926-9f5c-5a957e032e70")
+	)
+	(text "+5V == Discontinuous Mode\nGND == Forced Continuous Mode\nFLT == Burst Mode"
+		(exclude_from_sim no)
+		(at 343.916 167.386 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a8a50431-b438-4832-87e7-aefdb06caacb")
 	)
 	(text "From ltc7871.ipynb, \n1kW, 4phase output\nDCR Sense 30mV"
 		(exclude_from_sim no)
@@ -6275,28 +6285,6 @@
 		(uuid "2fbaa107-0a23-4099-b2c6-2405eaed0210")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 70.9982 156.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "LTC_MODE"
-		(shape passive)
-		(at 54.61 185.42 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "3313c3a5-e8de-4c0d-88d0-d727b092dc5f")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 65.9181 185.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6790,6 +6778,28 @@
 			)
 		)
 	)
+	(global_label "LTC_MODE"
+		(shape passive)
+		(at 359.41 152.4 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ab258f1e-1103-4925-a346-da4ee0dd1048")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 370.7181 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "IO_CTL_ADC_SEL_1"
 		(shape passive)
 		(at 26.67 127 180)
@@ -7178,6 +7188,18 @@
 		)
 		(uuid "30b9c35e-2c44-4786-bcb6-4bfdfdb9ef2d")
 	)
+	(hierarchical_label "LTC_FCCM"
+		(shape input)
+		(at 328.93 139.7 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "56254b54-162e-4a95-ae01-ee7d4154dccb")
+	)
 	(hierarchical_label "LCT_SCK"
 		(shape input)
 		(at 85.09 80.01 0)
@@ -7189,6 +7211,18 @@
 			(justify left)
 		)
 		(uuid "8fc74905-c0e9-4bf2-a52f-27bd4cdd4de3")
+	)
+	(hierarchical_label "LTC_DCCM"
+		(shape input)
+		(at 328.93 137.16 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9365af3d-02ab-44fe-8274-8e955f6d4c37")
 	)
 	(hierarchical_label "ADC_SEL_0"
 		(shape input)
@@ -11350,72 +11384,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GNDD")
-		(at 50.8 191.77 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4a5ac9c8-ebbe-47ad-9987-1e23fdcb079f")
-		(property "Reference" "#PWR07"
-			(at 50.8 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDD"
-			(at 50.8 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 50.8 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 50.8 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
-			(at 50.8 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f3c974eb-cda9-4b8f-b75e-c7845119a063")
-		)
-		(instances
-			(project "IchnaeaV1"
-				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
-					(reference "#PWR07")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5P")
 		(at 107.95 20.32 0)
 		(unit 1)
@@ -11609,79 +11577,6 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "#PWR0114")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Jumper:Jumper_3_Open")
-		(at 50.8 185.42 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4fe63a5e-a05a-4803-b783-ee5222ed922e")
-		(property "Reference" "JP2"
-			(at 48.26 184.1499 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Jumper_3_Open"
-			(at 48.26 186.6899 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Jumper:SolderJumper-3_P1.3mm_Open_RoundedPad1.0x1.5mm_NumberLabels"
-			(at 50.8 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 50.8 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Jumper, 3-pole, both open"
-			(at 50.8 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "6c56af6e-0c83-4ce8-bf6a-f74951c9da69")
-		)
-		(pin "3"
-			(uuid "5a4dae05-c40c-432a-bdb8-2acc94585e32")
-		)
-		(pin "1"
-			(uuid "41ae8303-5dbd-4890-8262-0f0a9f8e5571")
-		)
-		(instances
-			(project "IchnaeaV1"
-				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
-					(reference "JP2")
 					(unit 1)
 				)
 			)
@@ -15363,6 +15258,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5P")
+		(at 355.6 146.05 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a2f15faa-abbb-44cb-bc4e-f74422b8c3b7")
+		(property "Reference" "#PWR06"
+			(at 355.6 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5P"
+			(at 355.6 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 355.6 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 355.6 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5P\""
+			(at 355.6 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "85dd119a-bbad-4cc6-9fbd-8ff86c122b3f")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "#PWR06")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
 		(at 133.35 87.63 270)
 		(unit 1)
@@ -16546,6 +16507,79 @@
 		)
 	)
 	(symbol
+		(lib_id "Jumper:Jumper_3_Open")
+		(at 355.6 152.4 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ba94a624-3f68-4899-8788-44c3adcd934a")
+		(property "Reference" "JP2"
+			(at 353.06 151.1299 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Jumper_3_Open"
+			(at 353.06 153.6699 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Jumper:SolderJumper-3_P1.3mm_Open_RoundedPad1.0x1.5mm_NumberLabels"
+			(at 355.6 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 355.6 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Jumper, 3-pole, both open"
+			(at 355.6 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "12e6aa0f-3709-47e7-82eb-1a2b4311fd2e")
+		)
+		(pin "3"
+			(uuid "b9af278e-1f54-40f8-b813-f55007638a50")
+		)
+		(pin "1"
+			(uuid "d59ec370-c77b-4535-92fe-8dc3911a5811")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "JP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+VSW")
 		(at 58.42 22.86 0)
 		(unit 1)
@@ -16738,6 +16772,72 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "#PWR0120")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GNDD")
+		(at 355.6 158.75 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c39bf6d8-7a2d-49cf-ad6e-11900195c2c7")
+		(property "Reference" "#PWR07"
+			(at 355.6 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDD"
+			(at 355.6 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 355.6 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 355.6 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GNDD\" , digital ground"
+			(at 355.6 158.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "66b42e92-08a7-44e3-89f1-3aedbcfafe7f")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -17202,72 +17302,6 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "#PWR061")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5P")
-		(at 50.8 179.07 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "cf6e352e-8d24-4b03-9d5e-2f6fd68bb039")
-		(property "Reference" "#PWR06"
-			(at 50.8 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5P"
-			(at 50.8 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 50.8 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 50.8 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5P\""
-			(at 50.8 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "95619a7e-4113-4755-a1b0-b691e055937d")
-		)
-		(instances
-			(project "IchnaeaV1"
-				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
-					(reference "#PWR06")
 					(unit 1)
 				)
 			)
