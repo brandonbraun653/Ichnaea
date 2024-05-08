@@ -25,22 +25,22 @@ filter_4_7uH_1_6mOhm = CurrentSenseFilter(r1=6.2e3, c1=100e-9, r2=6.2e3, c2=470e
 opp_peak_stress = OPP(
     description="Put peak stress on the power stage with max v_in, min v_out, and max power",
     v_in=75.4, v_out=12.0, p_max=2000, v_ripple=20e-3, i_ripple=0.2, f_sw=600e3, phases=6,
-    i_lim=ILim.ILIM_0)
+    i_lim=ILim.ILIM_3_4)
 
 opp_max_vin_min_vout_min_pwr = OPP(
     description="Put peak voltage stress on the power stage, but low current stress",
     v_in=75.4, v_out=12.0, p_max=150, v_ripple=100e-3, i_ripple=0.99, f_sw=250e3, phases=6,
-    i_lim=ILim.ILIM_0)
+    i_lim=ILim.ILIM_3_4)
 
 opp_vlow_max_power = OPP(
     description="Low voltage input, high power",
     v_in=24.0, v_out=14, p_max=1000, v_ripple=20e-3, i_ripple=0.1, f_sw=400e3, phases=6,
-    i_lim=ILim.ILIM_0)
+    i_lim=ILim.ILIM_3_4)
 
 opp_vlow_min_power = OPP(
     description="Low voltage input, high power",
     v_in=24.0, v_out=14, p_max=10, v_ripple=20e-3, i_ripple=0.99, f_sw=750e3, phases=6,
-    i_lim=ILim.ILIM_0)
+    i_lim=ILim.ILIM_3_4)
 
 
 # A few design corner cases to explore. This by no means is robust enough for a full design, but it gets

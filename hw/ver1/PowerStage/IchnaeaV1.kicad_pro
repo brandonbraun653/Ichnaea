@@ -473,14 +473,26 @@
         },
         {
           "group_by": false,
-          "label": "Datasheet",
-          "name": "Datasheet",
+          "label": "Digikey",
+          "name": "Digikey",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "LCSC",
+          "name": "LCSC",
           "show": true
         },
         {
           "group_by": false,
           "label": "Footprint",
           "name": "Footprint",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "Datasheet",
+          "name": "Datasheet",
           "show": true
         },
         {
@@ -494,13 +506,31 @@
           "label": "DNP",
           "name": "${DNP}",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Digikey",
+          "name": "Field-1",
+          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
-      "name": "Grouped By Value",
+      "name": "",
       "sort_asc": true,
-      "sort_field": "Reference"
+      "sort_field": "Value"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -567,24 +597,12 @@
       "Phase2"
     ],
     [
-      "02dad1e4-3a45-4e72-b76b-741cb68a77c2",
-      "IOProtection"
-    ],
-    [
       "9404991a-84cd-40d3-b41e-b6fd90033c77",
       "Phase3"
     ],
     [
-      "df3be397-570e-4aad-b65b-da047592dc87",
-      "ContactorDrive"
-    ],
-    [
       "951e871e-184d-412d-983e-cb08401577f3",
       "Phase4"
-    ],
-    [
-      "7a7a0c57-1e7c-4672-a3da-546a4dff2504",
-      "HVProtection"
     ]
   ],
   "text_variables": {}

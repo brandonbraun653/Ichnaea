@@ -1,0 +1,2 @@
+- Add contactor drive, HV lightning protection, and IO ESD protection
+- Update resistors that come in contact with high voltage input to a better voltage rated part. Currently only rated to 75V and we can technically go up to 90V.
