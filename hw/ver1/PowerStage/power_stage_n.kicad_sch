@@ -3049,7 +3049,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "76728638-d45d-4d8e-8eef-2194bf521933")
 		(property "Reference" "Q1"
 			(at 172.72 69.8499 0)
@@ -3171,7 +3170,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "94443004-aeaa-4207-bdd5-13ed90167d1f")
-		(property "Reference" "U6"
+		(property "Reference" "U1"
 			(at 142.24 60.96 0)
 			(effects
 				(font
@@ -3187,7 +3186,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:TDFN-10-1EP_2x3mm_P0.5mm_EP0.9x2mm_ThermalVias"
+		(property "Footprint" "DFN:TDFN-10-1EP_4x4mm_P0.8mm_EP2.6x3mm"
 			(at 141.986 99.314 0)
 			(effects
 				(font
