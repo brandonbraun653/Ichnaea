@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.15,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.1
+          "min_clearance": 0.25
         }
       },
       "diff_pair_dimensions": [
@@ -68,7 +68,7 @@
         "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
-        "courtyards_overlap": "error",
+        "courtyards_overlap": "warning",
         "diff_pair_gap_out_of_range": "error",
         "diff_pair_uncoupled_length_too_long": "error",
         "drill_out_of_range": "error",
@@ -100,7 +100,7 @@
         "silk_overlap": "warning",
         "skew_out_of_range": "error",
         "solder_mask_bridge": "error",
-        "starved_thermal": "error",
+        "starved_thermal": "ignore",
         "text_height": "warning",
         "text_thickness": "warning",
         "through_hole_pad_without_hole": "error",
@@ -129,7 +129,7 @@
         "min_through_hole_diameter": 0.3,
         "min_track_width": 0.0,
         "min_via_annular_width": 0.1,
-        "min_via_diameter": 0.5,
+        "min_via_diameter": 0.4,
         "solder_mask_clearance": 0.0,
         "solder_mask_min_width": 0.0,
         "solder_mask_to_copper_clearance": 0.0,
@@ -220,20 +220,16 @@
           "drill": 0.0
         },
         {
-          "diameter": 0.25,
-          "drill": 0.15
-        },
-        {
           "diameter": 0.5,
-          "drill": 0.2
+          "drill": 0.3
         },
         {
           "diameter": 0.6,
-          "drill": 0.25
+          "drill": 0.4
         },
         {
           "diameter": 0.7,
-          "drill": 0.3
+          "drill": 0.5
         }
       ],
       "zones_allow_external_fillets": false
@@ -515,11 +511,11 @@
     "netclass_assignments": null,
     "netclass_patterns": [
       {
-        "netclass": "HighPower",
+        "netclass": "Default",
         "pattern": "HT"
       },
       {
-        "netclass": "HighPower",
+        "netclass": "Default",
         "pattern": "VLOW"
       }
     ]
@@ -697,6 +693,10 @@
     [
       "fa9aff26-caf6-491a-a4dd-20eb067f1f07",
       "Phase4"
+    ],
+    [
+      "4449d0d4-97f3-411e-9677-b10dd382e2c6",
+      "ControlStage"
     ],
     [
       "9404991a-84cd-40d3-b41e-b6fd90033c77",
