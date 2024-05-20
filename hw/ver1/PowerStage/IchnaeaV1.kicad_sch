@@ -1474,6 +1474,12 @@
 		(uuid "1477c31e-8581-4411-be4f-1df70c4cd895")
 	)
 	(junction
+		(at 182.88 99.06)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1ac1ae84-303e-4e88-b374-0511d1faf22d")
+	)
+	(junction
 		(at 191.77 63.5)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1757,6 +1763,16 @@
 	)
 	(wire
 		(pts
+			(xy 182.88 134.62) (xy 182.88 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3868f0e6-67f2-4edd-b53e-8ac704226a50")
+	)
+	(wire
+		(pts
 			(xy 194.31 77.47) (xy 196.85 77.47)
 		)
 		(stroke
@@ -1794,6 +1810,16 @@
 			(type default)
 		)
 		(uuid "44391896-fe30-4ac9-a3c5-127cd0a2cb98")
+	)
+	(wire
+		(pts
+			(xy 180.34 134.62) (xy 182.88 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a5f489a-ea0e-448f-bc9c-82b6215d4d05")
 	)
 	(wire
 		(pts
@@ -1927,7 +1953,17 @@
 	)
 	(wire
 		(pts
-			(xy 180.34 99.06) (xy 186.69 99.06)
+			(xy 182.88 99.06) (xy 186.69 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8eb92073-976d-4297-9f9b-fdfc5b85dc37")
+	)
+	(wire
+		(pts
+			(xy 180.34 99.06) (xy 182.88 99.06)
 		)
 		(stroke
 			(width 0)
@@ -4986,18 +5022,8 @@
 			)
 			(uuid "1cf7d220-1fc3-4278-941f-151b74a50e19")
 		)
-		(pin "+5V" output
-			(at 148.59 58.42 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "09fca06e-944e-435d-9e3c-6a7902636897")
-		)
 		(pin "+3V3" input
-			(at 148.59 55.88 180)
+			(at 148.59 54.61 180)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5170,6 +5196,64 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9"
 					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 148.59 128.27)
+		(size 31.75 12.065)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "3575180d-5fc5-415e-8d93-e293ac05129d")
+		(property "Sheetname" "LowVoltageSupply"
+			(at 148.59 127.5584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "low_voltage_supply.kicad_sch"
+			(at 148.59 140.9196 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "VIN_LV" input
+			(at 180.34 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "90ba9e8a-b34e-4fb2-a5fd-d8f43bbd7bac")
+		)
+		(pin "VOUT_LV" output
+			(at 148.59 134.62 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "5c1a59f3-02f9-4583-89f9-7e74878d2b91")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9"
+					(page "10")
 				)
 			)
 		)

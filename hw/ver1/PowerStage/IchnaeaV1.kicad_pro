@@ -705,6 +705,10 @@
     [
       "951e871e-184d-412d-983e-cb08401577f3",
       "Phase6"
+    ],
+    [
+      "3575180d-5fc5-415e-8d93-e293ac05129d",
+      "LowVoltageSupply"
     ]
   ],
   "text_variables": {}

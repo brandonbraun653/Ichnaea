@@ -4654,6 +4654,12 @@
 		(uuid "127b876c-6c46-4a33-b9df-ce3247e0821a")
 	)
 	(junction
+		(at 351.79 43.18)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "19dac62f-ed86-4ea6-8a22-9234e229cab1")
+	)
+	(junction
 		(at 373.38 33.02)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4720,12 +4726,6 @@
 		(uuid "3b405244-a026-4ed6-8b76-901d783ec2d9")
 	)
 	(junction
-		(at 351.79 43.18)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3b438088-d6c7-45b3-850f-9e0ad38f37de")
-	)
-	(junction
 		(at 154.94 133.35)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4754,12 +4754,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "547ea895-8350-449d-9e04-f34bf423df95")
-	)
-	(junction
-		(at 347.98 111.76)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "55b69162-6318-4bc6-9b71-684c7027b04a")
 	)
 	(junction
 		(at 234.95 217.17)
@@ -4874,6 +4868,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9e74915b-cc98-4ff5-aa3c-808ad5822ed4")
+	)
+	(junction
+		(at 347.98 111.76)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9ec8c185-ba89-4717-820c-47c81eaa5742")
 	)
 	(junction
 		(at 58.42 143.51)
@@ -5207,16 +5207,6 @@
 	)
 	(wire
 		(pts
-			(xy 339.09 43.18) (xy 351.79 43.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "23f302fa-9114-477f-ad6d-9221559c5c42")
-	)
-	(wire
-		(pts
 			(xy 73.66 269.24) (xy 73.66 270.51)
 		)
 		(stroke
@@ -5364,16 +5354,6 @@
 			(type default)
 		)
 		(uuid "31fb3778-1b22-456f-8cc1-ca09a2101fcf")
-	)
-	(wire
-		(pts
-			(xy 347.98 152.4) (xy 349.25 152.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "34875ec0-8eda-4778-bbc7-a32563289a26")
 	)
 	(wire
 		(pts
@@ -5587,6 +5567,16 @@
 	)
 	(wire
 		(pts
+			(xy 347.98 111.76) (xy 363.22 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "506176c7-fed5-461d-9ac6-fc5b90cd21ee")
+	)
+	(wire
+		(pts
 			(xy 73.66 237.49) (xy 76.2 237.49)
 		)
 		(stroke
@@ -5627,16 +5617,6 @@
 	)
 	(wire
 		(pts
-			(xy 347.98 111.76) (xy 363.22 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "53deabbc-51b5-436e-9205-81ef4d595685")
-	)
-	(wire
-		(pts
 			(xy 199.39 54.61) (xy 199.39 67.31)
 		)
 		(stroke
@@ -5674,16 +5654,6 @@
 			(type default)
 		)
 		(uuid "5604e8dc-c9cc-4c9f-a8fd-296999f0a356")
-	)
-	(wire
-		(pts
-			(xy 339.09 111.76) (xy 347.98 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "589c7447-fa74-4baf-83f9-c46ce41ffe9b")
 	)
 	(wire
 		(pts
@@ -5787,6 +5757,16 @@
 	)
 	(wire
 		(pts
+			(xy 346.71 77.47) (xy 346.71 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6266c295-c98c-4b17-b95e-a14952540cd9")
+	)
+	(wire
+		(pts
 			(xy 60.96 142.24) (xy 60.96 143.51)
 		)
 		(stroke
@@ -5834,6 +5814,26 @@
 			(type default)
 		)
 		(uuid "68a87366-7c3f-4024-b209-906d55a7ab6c")
+	)
+	(wire
+		(pts
+			(xy 336.55 152.4) (xy 349.25 152.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a043349-8320-47ec-8533-1e20665ff45b")
+	)
+	(wire
+		(pts
+			(xy 346.71 43.18) (xy 351.79 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6ad13aff-6ad2-4ea7-847a-e73f9d4e2bd9")
 	)
 	(wire
 		(pts
@@ -5887,6 +5887,16 @@
 	)
 	(wire
 		(pts
+			(xy 346.71 111.76) (xy 347.98 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "720ed9e6-37fc-4491-b7b7-ae402623c3fa")
+	)
+	(wire
+		(pts
 			(xy 218.44 241.3) (xy 232.41 241.3)
 		)
 		(stroke
@@ -5914,6 +5924,16 @@
 			(type default)
 		)
 		(uuid "7a680669-1d10-4fbf-b35a-456ff445ec41")
+	)
+	(wire
+		(pts
+			(xy 347.98 107.95) (xy 347.98 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7cb52850-a2c5-466d-834d-252feaccfea7")
 	)
 	(wire
 		(pts
@@ -6057,6 +6077,16 @@
 	)
 	(wire
 		(pts
+			(xy 346.71 72.39) (xy 349.25 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d43a129-6f97-4888-a0b2-60ccd3704ae3")
+	)
+	(wire
+		(pts
 			(xy 102.87 185.42) (xy 105.41 185.42)
 		)
 		(stroke
@@ -6084,16 +6114,6 @@
 			(type default)
 		)
 		(uuid "8f3ae0fd-a65b-4ad1-be3a-eef74010f48f")
-	)
-	(wire
-		(pts
-			(xy 347.98 107.95) (xy 347.98 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "901d8615-5abd-4ff2-acb5-16a9c58937b0")
 	)
 	(wire
 		(pts
@@ -6214,6 +6234,16 @@
 			(type default)
 		)
 		(uuid "9c724265-f4f5-401e-aedc-0f41948d04c0")
+	)
+	(wire
+		(pts
+			(xy 336.55 144.78) (xy 349.25 144.78)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9ca0d8eb-07a9-4e13-b369-4adeb179bb93")
 	)
 	(wire
 		(pts
@@ -6624,16 +6654,6 @@
 			(type default)
 		)
 		(uuid "d5f92f33-ea8b-4ee7-a056-3aac6d1fb12e")
-	)
-	(wire
-		(pts
-			(xy 347.98 144.78) (xy 349.25 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d6184310-cd1d-42c4-a6f2-a5e5537ae30d")
 	)
 	(wire
 		(pts
@@ -8103,7 +8123,7 @@
 	)
 	(global_label "LTC_SYNC"
 		(shape passive)
-		(at 339.09 77.47 0)
+		(at 349.25 72.39 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8113,7 +8133,7 @@
 		)
 		(uuid "f2a5f4c0-32af-4519-8370-408d747a2872")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 350.0958 77.47 0)
+			(at 360.2558 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8239,7 +8259,7 @@
 	)
 	(hierarchical_label "LV_OUT"
 		(shape output)
-		(at 185.42 25.4 0)
+		(at 185.42 21.59 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8465,18 +8485,6 @@
 		)
 		(uuid "abd07be7-116e-476c-94d6-941c0592ca08")
 	)
-	(hierarchical_label "+5V"
-		(shape output)
-		(at 185.42 22.86 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "b089f0a4-2190-4338-a748-434c5eb5a334")
-	)
 	(hierarchical_label "DC_IN_EN"
 		(shape input)
 		(at 259.08 99.06 180)
@@ -8491,7 +8499,7 @@
 	)
 	(hierarchical_label "IO_I2C_SCL"
 		(shape passive)
-		(at 347.98 152.4 180)
+		(at 328.93 152.4 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8527,7 +8535,7 @@
 	)
 	(hierarchical_label "IO_I2C_SDA"
 		(shape passive)
-		(at 347.98 144.78 180)
+		(at 328.93 144.78 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9450,71 +9458,6 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "#PWR042")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5P")
-		(at 185.42 22.86 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0bf128df-f854-47e9-a20f-76e4bca239f0")
-		(property "Reference" "#PWR0158"
-			(at 189.23 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5P"
-			(at 179.578 22.86 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 185.42 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 185.42 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5P\""
-			(at 185.42 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "978fd507-df2e-4823-a868-8692100505cc")
-		)
-		(instances
-			(project "IchnaeaV1"
-				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
-					(reference "#PWR0158")
 					(unit 1)
 				)
 			)
@@ -13262,6 +13205,101 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "C23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 332.74 152.4 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3a628e3b-5957-468c-86b4-88e07582e1e3")
+		(property "Reference" "R105"
+			(at 332.74 158.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 332.74 156.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 332.486 151.384 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 332.74 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 332.74 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field-1" ""
+			(at 332.74 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 332.74 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C21189"
+			(at 332.74 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ce5e97c5-8914-4cf9-a25d-93dcfe1aa6ca")
+		)
+		(pin "2"
+			(uuid "dcfd19a2-9af2-4c6b-9e0f-3b56e0f0f161")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "R105")
 					(unit 1)
 				)
 			)
@@ -17605,6 +17643,101 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
+		(at 342.9 111.76 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7ca48e4d-f9ca-41ff-abce-a5c52eed7e1b")
+		(property "Reference" "R102"
+			(at 342.9 118.11 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 342.9 115.57 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 342.646 110.744 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 342.9 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 342.9 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field-1" ""
+			(at 342.9 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 342.9 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C21189"
+			(at 342.9 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "dd50704c-ba56-43e1-8746-96ada5f8fdf5")
+		)
+		(pin "2"
+			(uuid "bf67648a-9d72-4de5-b964-4e90add53f8b")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "R102")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
 		(at 226.06 222.25 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -20539,6 +20672,101 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R_US")
+		(at 342.9 43.18 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a24c34af-38a7-4ce1-b808-bdb7855ec4b9")
+		(property "Reference" "R103"
+			(at 342.9 49.53 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 342.9 46.99 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 342.646 42.164 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 342.9 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 342.9 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field-1" ""
+			(at 342.9 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 342.9 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C21189"
+			(at 342.9 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "493c79d4-16b7-44c6-9ac8-a1ccc58058e8")
+		)
+		(pin "2"
+			(uuid "79c8dd36-4887-42f8-83dd-a960e3d8da51")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "R103")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GNDD")
 		(at 322.58 204.47 0)
 		(unit 1)
@@ -20759,6 +20987,101 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "R41")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 342.9 77.47 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a7538836-343b-4747-a396-cbcaad27c2d6")
+		(property "Reference" "R104"
+			(at 342.9 83.82 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 342.9 81.28 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 342.646 76.454 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 342.9 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 342.9 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field-1" ""
+			(at 342.9 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 342.9 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C21189"
+			(at 342.9 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "60a85017-3d0c-40fc-967f-cd48a56af102")
+		)
+		(pin "2"
+			(uuid "83a3c8a6-d594-4509-9dde-d03c406f7b26")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "R104")
 					(unit 1)
 				)
 			)
@@ -22017,7 +22340,7 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 185.42 25.4 90)
+		(at 185.42 21.59 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -22025,7 +22348,7 @@
 		(dnp no)
 		(uuid "b66ba379-3436-4d63-85dc-2da23c44609f")
 		(property "Reference" "#PWR086"
-			(at 189.23 25.4 0)
+			(at 189.23 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22034,7 +22357,7 @@
 			)
 		)
 		(property "Value" "VLOW"
-			(at 177.038 25.4 90)
+			(at 177.038 21.59 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22043,7 +22366,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 185.42 25.4 0)
+			(at 185.42 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22052,7 +22375,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 185.42 25.4 0)
+			(at 185.42 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22061,7 +22384,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 185.42 25.4 0)
+			(at 185.42 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -24966,6 +25289,100 @@
 			(project "IchnaeaV1"
 				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
 					(reference "#PWR073")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 332.74 144.78 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ddd0c4b5-8cb7-495d-b471-e6f66838e7c5")
+		(property "Reference" "R106"
+			(at 332.74 138.43 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 332.74 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 332.486 145.796 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 332.74 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 332.74 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field-1" ""
+			(at 332.74 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 332.74 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C21189"
+			(at 332.74 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fb0a9730-9e9a-4c95-b1e4-06fd14f1d424")
+		)
+		(pin "2"
+			(uuid "d87f4542-69d2-420c-bd69-3ce1208c7ac9")
+		)
+		(instances
+			(project "IchnaeaV1"
+				(path "/1a8ad36a-4b76-4949-97c2-661f12a0b1d9/2acacade-9567-40f5-9827-bf22bd24fca6"
+					(reference "R106")
 					(unit 1)
 				)
 			)
