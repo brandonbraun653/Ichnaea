@@ -2181,6 +2181,15 @@
 				(hide yes)
 			)
 		)
+		(property "Digikey" "N/A"
+			(at 151.13 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c18db155-99a6-457b-a625-52c227f78dd3")
 		)
@@ -2498,6 +2507,15 @@
 				(hide yes)
 			)
 		)
+		(property "Digikey" "N/A"
+			(at 82.55 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "643f7e7f-a162-494d-9d06-79d6dac514c9")
 		)
@@ -2762,6 +2780,15 @@
 		)
 		(property "Digikey" "SRR1280-220MCT-ND"
 			(at 157.48 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
+			(at 157.48 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3173,6 +3200,15 @@
 				(hide yes)
 			)
 		)
+		(property "Digikey" "N/A"
+			(at 153.67 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "bdc4340e-970e-40ca-bdf7-5861cff858d3")
 		)
@@ -3242,6 +3278,15 @@
 			)
 		)
 		(property "Digikey" "31-AP66200FVBW-13CT-ND"
+			(at 132.08 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 132.08 92.71 0)
 			(effects
 				(font
@@ -3735,6 +3780,15 @@
 		)
 		(property "LCSC" "C23192"
 			(at 116.84 87.63 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 116.84 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)

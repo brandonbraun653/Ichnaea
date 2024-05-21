@@ -8390,7 +8390,7 @@
 		(uuid "fa476669-2edc-4422-b850-1033b90ac302")
 	)
 	(hierarchical_label "IO_LTC_SDO"
-		(shape input)
+		(shape output)
 		(at 137.16 123.19 180)
 		(fields_autoplaced yes)
 		(effects
@@ -8455,6 +8455,15 @@
 			)
 		)
 		(property "Digikey" "74AHCT1G126SE-7DICT-ND"
+			(at 378.46 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 378.46 77.47 0)
 			(effects
 				(font
@@ -9906,6 +9915,15 @@
 			)
 		)
 		(property "LCSC" "C14996"
+			(at 135.89 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
 			(at 135.89 20.32 0)
 			(effects
 				(font
@@ -11475,6 +11493,15 @@
 			)
 		)
 		(property "Digikey" "74AHCT1G126SE-7DICT-ND"
+			(at 378.46 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 378.46 111.76 0)
 			(effects
 				(font
@@ -13821,6 +13848,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 326.39 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "3a0d919e-2a2a-4285-a488-85d1b6e8a6c0")
 		)
@@ -15018,6 +15054,15 @@
 			)
 		)
 		(property "Digikey" "74AHCT1G126SE-7DICT-ND"
+			(at 276.86 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 276.86 133.35 0)
 			(effects
 				(font
@@ -16892,6 +16937,15 @@
 			)
 		)
 		(property "Digikey" "74AHCT1G126SE-7DICT-ND"
+			(at 326.39 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 326.39 77.47 0)
 			(effects
 				(font
@@ -20649,6 +20703,15 @@
 			)
 		)
 		(property "Digikey" "74AHCT1G126SE-7DICT-ND"
+			(at 378.46 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 378.46 43.18 0)
 			(effects
 				(font
@@ -26361,6 +26424,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 276.86 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "d1024d23-d0c6-47c7-92cc-4abb46140ecb")
 		)
@@ -27220,6 +27292,15 @@
 			)
 		)
 		(property "Digikey" "74AHCT1G126SE-7DICT-ND"
+			(at 326.39 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 326.39 111.76 0)
 			(effects
 				(font
