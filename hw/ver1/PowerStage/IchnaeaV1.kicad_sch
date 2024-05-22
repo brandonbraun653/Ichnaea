@@ -1833,16 +1833,6 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 68.58) (xy 148.59 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "477950a5-f5e3-4546-9013-afc171392e4a")
-	)
-	(wire
-		(pts
 			(xy 180.34 63.5) (xy 186.69 63.5)
 		)
 		(stroke
@@ -2043,16 +2033,6 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 78.74) (xy 148.59 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8e93e297-cf98-4d96-a27d-ded25fb9f96c")
-	)
-	(wire
-		(pts
 			(xy 180.34 99.06) (xy 182.88 99.06)
 		)
 		(stroke
@@ -2250,16 +2230,6 @@
 			(type default)
 		)
 		(uuid "cad5f190-c447-4ec2-9f53-8d7cf89665f3")
-	)
-	(wire
-		(pts
-			(xy 142.24 73.66) (xy 148.59 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cc2e49c8-5589-4fe5-b579-b01a3f3afd10")
 	)
 	(wire
 		(pts
@@ -4392,16 +4362,6 @@
 			)
 			(uuid "fa9f53c8-01ce-49bb-9400-ec3b4a7ea1fb")
 		)
-		(pin "IO_LTC_PGOOD" output
-			(at 148.59 73.66 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "fc384c1c-8a93-4d44-8eb7-14c37e1e0919")
-		)
 		(pin "IO_LTC_SDI" input
 			(at 148.59 99.06 180)
 			(effects
@@ -4411,16 +4371,6 @@
 				(justify left)
 			)
 			(uuid "02054a6b-36a6-4d8b-9ce0-942acfeaff50")
-		)
-		(pin "IO_LTC_FAULT" output
-			(at 148.59 78.74 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "835ac147-8e72-44aa-995a-e9fed45e3262")
 		)
 		(pin "IO_LTC_CSB" input
 			(at 148.59 104.14 180)
@@ -4441,16 +4391,6 @@
 				(justify left)
 			)
 			(uuid "fbefc797-5edb-444f-8b67-bddeb13ccd61")
-		)
-		(pin "IO_LTC_SETCUR" input
-			(at 148.59 68.58 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "92439bbe-e563-4f3e-87c9-2c65dcf1d003")
 		)
 		(pin "LV_OUT" output
 			(at 180.34 99.06 0)
@@ -4798,16 +4738,6 @@
 			)
 			(uuid "5f2235fe-9bac-4688-8504-6b6b86e2bc02")
 		)
-		(pin "CTL_IN_FAULT" input
-			(at 142.24 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "67cef94d-07e2-4934-8668-523c8eb1f535")
-		)
 		(pin "CTL_IN_ADC" input
 			(at 142.24 83.82 0)
 			(effects
@@ -4817,16 +4747,6 @@
 				(justify right)
 			)
 			(uuid "8c3fabdb-5d90-4f41-9613-055f4776a457")
-		)
-		(pin "CTL_IN_PGOOD" input
-			(at 142.24 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "f7c1587c-d22f-44a7-8842-e5678a058eb3")
 		)
 		(pin "CTL_IN_SLAVE" input
 			(at 142.24 76.2 0)
@@ -4957,16 +4877,6 @@
 				(justify right)
 			)
 			(uuid "4893e11c-3d50-45c0-8af6-8c837d11baec")
-		)
-		(pin "CTL_OUT_SETCUR" output
-			(at 142.24 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "3cdb3510-41da-47f1-80eb-f30df591cf87")
 		)
 		(pin "CTL_IN_SDI" input
 			(at 142.24 101.6 0)
