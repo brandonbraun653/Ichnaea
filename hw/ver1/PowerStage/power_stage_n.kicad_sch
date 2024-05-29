@@ -2308,7 +2308,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-75V"
 			(at 226.06 85.0899 0)
 			(effects
 				(font
@@ -2354,6 +2354,15 @@
 			)
 		)
 		(property "Digikey" "445-CGA6P1X7R1N106M250ACCT-ND"
+			(at 222.25 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 222.25 83.82 0)
 			(effects
 				(font
@@ -3679,7 +3688,7 @@
 				)
 			)
 		)
-		(property "Value" "6.2k"
+		(property "Value" "6.2k-0.25w"
 			(at 196.85 60.96 90)
 			(effects
 				(font

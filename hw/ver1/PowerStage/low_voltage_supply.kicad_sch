@@ -2183,6 +2183,15 @@
 				(hide yes)
 			)
 		)
+		(property "Digikey" "N/A"
+			(at 160.02 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "97d062fd-5544-424f-b0a9-cd455e9aa59b")
 		)
@@ -3393,6 +3402,15 @@
 		)
 		(property "LCSC" "C23231"
 			(at 106.68 87.63 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "N/A"
+			(at 106.68 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)

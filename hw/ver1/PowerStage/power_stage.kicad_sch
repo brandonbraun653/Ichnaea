@@ -11201,7 +11201,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100V"
 			(at 245.11 27.9399 0)
 			(effects
 				(font
@@ -11247,6 +11247,15 @@
 			)
 		)
 		(property "Digikey" "490-16266-1-ND"
+			(at 241.3 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 241.3 26.67 0)
 			(effects
 				(font
@@ -11872,7 +11881,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100V"
 			(at 265.43 27.9399 0)
 			(effects
 				(font
@@ -11918,6 +11927,15 @@
 			)
 		)
 		(property "Digikey" "490-16266-1-ND"
+			(at 261.62 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 261.62 26.67 0)
 			(effects
 				(font
@@ -12223,7 +12241,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100V"
 			(at 224.79 27.9399 0)
 			(effects
 				(font
@@ -12269,6 +12287,15 @@
 			)
 		)
 		(property "Digikey" "490-16266-1-ND"
+			(at 220.98 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 220.98 26.67 0)
 			(effects
 				(font
@@ -13839,7 +13866,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100V"
 			(at 234.95 27.9399 0)
 			(effects
 				(font
@@ -13885,6 +13912,15 @@
 			)
 		)
 		(property "Digikey" "490-16266-1-ND"
+			(at 231.14 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 231.14 26.67 0)
 			(effects
 				(font
@@ -14929,7 +14965,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k-NTC"
 			(at 54.61 243.8399 0)
 			(effects
 				(font
@@ -15687,7 +15723,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-75V"
 			(at 144.78 26.6699 0)
 			(effects
 				(font
@@ -15733,6 +15769,15 @@
 			)
 		)
 		(property "Digikey" "445-CGA6P1X7R1N106M250ACCT-ND"
+			(at 140.97 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 140.97 25.4 0)
 			(effects
 				(font
@@ -20030,7 +20075,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100V"
 			(at 254 27.9399 0)
 			(effects
 				(font
@@ -20076,6 +20121,15 @@
 			)
 		)
 		(property "Digikey" "490-16266-1-ND"
+			(at 251.46 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 251.46 26.67 0)
 			(effects
 				(font
@@ -20609,7 +20663,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100V"
 			(at 275.59 27.9399 0)
 			(effects
 				(font
@@ -20655,6 +20709,15 @@
 			)
 		)
 		(property "Digikey" "490-16266-1-ND"
+			(at 271.78 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 271.78 26.67 0)
 			(effects
 				(font
@@ -22401,7 +22464,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "10k-NTC"
 			(at 76.2 243.8399 0)
 			(effects
 				(font
