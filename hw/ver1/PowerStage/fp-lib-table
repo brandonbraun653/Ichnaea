@@ -1,0 +1,9 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Espressif")(type "KiCad")(uri "${KIPRJMOD}/../../lib/espressif/footprints/Espressif.pretty")(options "")(descr ""))
+  (lib (name "espressif.3dshapes")(type "KiCad")(uri "${KIPRJMOD}/../../lib/espressif/3dmodels/espressif.3dshapes")(options "")(descr ""))
+  (lib (name "Inductors")(type "KiCad")(uri "${KIPRJMOD}/../../lib/KiCadLib/Inductors.pretty")(options "")(descr ""))
+  (lib (name "Mosfets")(type "KiCad")(uri "${KIPRJMOD}/../../lib/KiCadLib/Mosfets")(options "")(descr ""))
+  (lib (name "DFN")(type "KiCad")(uri "${KIPRJMOD}/../../lib/KiCadLib/DFN.pretty")(options "")(descr ""))
+  (lib (name "Connectors")(type "KiCad")(uri "${KIPRJMOD}/../../lib/KiCadLib/Connectors")(options "")(descr ""))
+)
