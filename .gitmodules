@@ -4,3 +4,6 @@
 [submodule "hw/lib/KiCadLib"]
 	path = hw/lib/KiCadLib
 	url = https://github.com/brandonbraun653/KiCadLib.git
+[submodule "lib/pico-sdk"]
+	path = lib/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git

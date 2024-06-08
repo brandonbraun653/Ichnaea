@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Pico Debug",
+      "cwd": "${workspaceRoot}",
+      "executable": "${command:cmake.launchTargetPath}",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "openocd",
+      "gdbPath": "arm-none-eabi-gdb",
+      "device": "RP2040",
+      "configFiles": [
+        "interface/cmsis-dap.cfg",
+        "target/rp2040.cfg"
+      ],
+      "svdFile": "${workspaceRoot}lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
+      "searchDir": [
+        "/usr/share/openocd/scripts"
+      ]
+    },
+    {
+      "name": "BMP Debug",
+      "cwd": "${workspaceRoot}",
+      "executable": "./build/src/Ichnaea.elf",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "bmp",
+      "interface": "swd",
+      "device": "RP2040",
+      "svdFile": "${workspaceRoot}lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
+      "gdbPath": "arm-none-eabi-gdb",
+      "BMPGDBSerialPort": "/dev/ttyACM0",
+      "showDevDebugOutput": "raw",
+      "preRestartCommands": [
+        "enable breakpoint"
+      ]
+    }
+  ]
+}
