@@ -35,3 +35,10 @@ int main()
     sleep_ms( 500 );
   }
 }
+
+/* NOTES:
+- Monitor thread
+- Control thread
+- Spawn the HW init sequences first. Might need to register. Start monitor thread.
+Then have the monitor start the control.
+*/
