@@ -3,6 +3,7 @@
 - Update resistors that come in contact with high voltage input to a better voltage rated part. Currently only rated to 75V and we can technically go up to 90V.
 - Green LEDs next to the SWD connector are far too bright.
 - All LEDs are showing a "ghosting" effect for a second during boot while the IO are tri-stated. Add a weak pullup on these IO to prevent the ghosting.
+- Add a versioning resistor divider for one of the extra ADC pins. Can be used to identify future revisions in software.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.

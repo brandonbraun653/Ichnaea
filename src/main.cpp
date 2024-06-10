@@ -11,15 +11,26 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "pico/stdlib.h"
-#include "hardware/gpio.h"
+#include "src/bsp/board_map.hpp"
+#include "src/system/system_error.hpp"
 
 /*-----------------------------------------------------------------------------
 Public Functions
 -----------------------------------------------------------------------------*/
 
+/**
+ * @brief Core entry point for Ichnaea
+ *
+ * This is responsible for initializing the hardware and starting the main
+ * monitor and control system threads.
+ *
+ * @return int
+ */
 int main()
 {
+  Panic::powerUp();
+  BSP::powerUp();
+
   /*---------------------------------------------------------------------------
   Initialize the GPIO pin
   ---------------------------------------------------------------------------*/
@@ -34,6 +45,11 @@ int main()
     gpio_put( LED_PIN, 0 );
     sleep_ms( 500 );
   }
+
+  /*---------------------------------------------------------------------------
+  Main thread should never return
+  ---------------------------------------------------------------------------*/
+  return -1;
 }
 
 /* NOTES:
