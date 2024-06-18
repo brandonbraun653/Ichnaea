@@ -28,6 +28,7 @@ target_link_libraries(IchnaeaApp
         Ichnaea_Board
         Ichnaea_System
         Ichnaea_PicoLibs
+        pico_mock_lib
 )
 
 # create map/bin/hex file etc.
