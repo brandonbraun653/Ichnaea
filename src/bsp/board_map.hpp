@@ -15,19 +15,18 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
+#include "hardware/adc.h"
 #include "hardware/gpio.h"
+#include "hardware/resets.h"
+#include "pico/bootrom.h"
 #include "pico/platform.h"
 #include "pico/stdlib.h"
+#include "pico/time.h"
 #include <cstddef>
 #include <cstdint>
 
 #if defined( PICO_RP2040 ) && ( PICO_RP2040 == 1 )
-#include "hardware/adc.h"
-#include "hardware/resets.h"
-#include "pico/bootrom.h"
-
 #define ICHNAEA_EMBEDDED
-
 #else
 #define ICHNAEA_SIMULATOR
 #endif /* PICO_RP2040 */
