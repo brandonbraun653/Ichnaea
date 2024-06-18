@@ -22,7 +22,7 @@
     {
       "name": "BMP Debug",
       "cwd": "${workspaceRoot}",
-      "executable": "./build/src/Ichnaea.elf",
+      "executable": "./build/mbed/debug/src/IchnaeaApp.elf",
       "request": "launch",
       "type": "cortex-debug",
       "servertype": "bmp",

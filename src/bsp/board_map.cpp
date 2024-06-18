@@ -101,14 +101,11 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Initialize and read the ADC pin used for board versioning
     -------------------------------------------------------------------------*/
-    #if defined( ICHNAEA_EMBEDDED )
     adc_init();
     adc_gpio_init( PIN_ADC_BOARD_VERSION );
+    gpio_set_pulls( PIN_ADC_BOARD_VERSION, false, true );
     adc_select_input( ADC_CHANNEL_BOARD_VERSION );
     const float version_voltage = static_cast<float>( adc_read() ) * ADC_VOLT_PER_BIT;
-    #else
-    const float version_voltage = 0.0f;
-    #endif
 
     int selected_version = convert_adc_to_version( version_voltage );
     if ( selected_version < 0 )
