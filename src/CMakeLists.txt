@@ -1,8 +1,15 @@
+# -----------------------------------------------------------------------------
+# Project Libraries
+# -----------------------------------------------------------------------------
 add_subdirectory(bsp)
+add_subdirectory(hw)
 add_subdirectory(sim)
 add_subdirectory(system)
+add_subdirectory(threads)
 
-# Shared Targets for Header Includes
+# -----------------------------------------------------------------------------
+# Project Interface Headers
+# -----------------------------------------------------------------------------
 add_library(Ichnaea_Headers INTERFACE)
 target_include_directories(Ichnaea_Headers INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
@@ -12,6 +19,7 @@ target_include_directories(Ichnaea_Headers INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
 add_library(Ichnaea_PicoHeaders INTERFACE)
 target_link_libraries(Ichnaea_PicoHeaders INTERFACE
   # These headers work on all platforms
+  pico_multicore_headers
   pico_stdlib_headers
   pico_stdio_headers
   pico_time_headers
@@ -35,6 +43,7 @@ add_library(Ichnaea_PicoLibs INTERFACE)
 target_link_libraries(Ichnaea_PicoLibs INTERFACE
   # These libraries compile on all platforms
   pico_stdlib
+  pico_multicore
   hardware_gpio
 )
 
@@ -46,13 +55,15 @@ elseif(${PICO_PLATFORM} STREQUAL "host")
   target_link_libraries(Ichnaea_PicoLibs INTERFACE Ichnaea_PicoStubs)
 endif()
 
-add_executable(IchnaeaApp main.cpp)
+add_executable(IchnaeaApp ichnaea_main.cpp)
 target_link_libraries(IchnaeaApp
   Ichnaea_Board
+  Ichnaea_Hardware
   Ichnaea_Headers
   Ichnaea_PicoHeaders
   Ichnaea_PicoLibs
   Ichnaea_System
+  Ichnaea_Threads
 )
 
 # create map/bin/hex file etc.

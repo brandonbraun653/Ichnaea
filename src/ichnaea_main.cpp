@@ -11,8 +11,10 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/bsp/board_map.hpp"
+#include "pico/multicore.h"
+#include "src/hw/bootup.hpp"
 #include "src/system/system_error.hpp"
+#include "src/threads/ichnaea_threads.hpp"
 
 /*-----------------------------------------------------------------------------
 Public Functions
@@ -28,33 +30,21 @@ Public Functions
  */
 int main()
 {
-  Panic::powerUp();
-  BSP::powerUp();
+  /*---------------------------------------------------------------------------
+  Start the world
+  ---------------------------------------------------------------------------*/
+  HW::initDrivers();
+  HW::runPostInit();
 
   /*---------------------------------------------------------------------------
-  Initialize the GPIO pin
+  Spin up the monitor and control threads
   ---------------------------------------------------------------------------*/
-  const uint LED_PIN = 20;
-  gpio_init(LED_PIN);
-  gpio_set_dir(LED_PIN, GPIO_OUT);
-
-  while( 1 )
-  {
-    gpio_put( LED_PIN, 1 );
-    sleep_ms( 500 );
-    gpio_put( LED_PIN, 0 );
-    sleep_ms( 500 );
-  }
+  multicore_launch_core1( Threads::monitorThread );
+  Threads::controlThread();
 
   /*---------------------------------------------------------------------------
-  Main thread should never return
+  Should never reach this point
   ---------------------------------------------------------------------------*/
+  Panic::throwSystemError( Panic::ErrorCode::SYSTEM_THREAD_EXIT );
   return -1;
 }
-
-/* NOTES:
-- Monitor thread
-- Control thread
-- Spawn the HW init sequences first. Might need to register. Start monitor thread.
-Then have the monitor start the control.
-*/

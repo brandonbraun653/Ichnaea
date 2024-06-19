@@ -4,6 +4,7 @@
 - Green LEDs next to the SWD connector are far too bright.
 - All LEDs are showing a "ghosting" effect for a second during boot while the IO are tri-stated. Add a weak pullup on these IO to prevent the ghosting.
 - Add a versioning resistor divider for one of the extra ADC pins. Can be used to identify future revisions in software.
+- Remove 0-ohm resistors on validated interfaces.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.
@@ -11,19 +12,26 @@ Dang this happened twice. I have two diodes like this.
 - PWM fan pin header is not the expected type. It has a peg for alignment and the latch mechanism in the back is shorter than expected.
 
 # PCB Layout
-- Improve thermal pad connections. Too hard to solder large components to the board.
+- Improve thermal pad connections. Too hard to solder large components to the board without the hot plate.
   - Inductors
   - Output capacitors (through hole)
 - Don't put components right next to pins you may need to rework. It's hard to get a soldering iron in there.
 - USB C connector sticks too far through the board. Had to raise it up for the inductor to lay flat beneath it. Maybe switch to SMD USB micro B?
 - Try and get as many components on the top of the board as possible. Soldering rework is a *nightmare* once the inductors go on the back.
+- Shrink the SOT-23-5 package to the standard layout side. The hand soldering pad sizing is excessive.
+- Improve copper pour coverage for high voltage input
+
+# PCB Design
+- Manually add the fiducials for manufacturing tooling. I want to control their location.
+- Specify serial location for JLC.
 
 # General Notes
 - Output capacitors should be same height or shorter than inductors. You can't lay it flat on the back without it feeling unstable.
 - Might need Kapton tape to prevent shorting heatsink to through hole capacitor leads.
+- Need to add mount holes or plan out mounting situation with final inverter packaging.
 
 # Design Faults
-- Failed to connect all 1.1V rail pins together.
+- Failed to connect all 1.1V rail pins together. This prevents the RP2040 from booting.
 - Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
 What I should have done is stuck with a surface mount USB micro B connector, kept the traces short, and moved the connector near the RP2040.
 Specifically I'm thinking next to the lower left ground terminal.
