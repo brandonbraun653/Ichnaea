@@ -41,8 +41,8 @@ namespace BSP
      * These must be defined here because the board version is not known at compile
      * time. Ideally these pins do not change in future hardware revisions.
      */
-    static constexpr uint32_t UNMAPPED_LED_PINS[] = { 18, 19, 20, 21 };
-    static constexpr uint32_t UNMAPPED_LED_NUM    = sizeof( UNMAPPED_LED_PINS ) / sizeof( UNMAPPED_LED_PINS[ 0 ] );
+    static constexpr size_t UNMAPPED_LED_PINS[] = { 18, 19, 20, 21 };
+    static constexpr size_t UNMAPPED_LED_NUM    = sizeof( UNMAPPED_LED_PINS ) / sizeof( UNMAPPED_LED_PINS[ 0 ] );
   }    // namespace Internal
 
   /*---------------------------------------------------------------------------
@@ -56,6 +56,53 @@ namespace BSP
   {
     size_t majorVersion;
     size_t minorVersion;
+
+    struct ADC
+    {
+      size_t sensePin;
+    } adc;
+
+    struct GPIO
+    {
+      size_t ltcDcm;
+      size_t ltcCcm;
+      size_t ltcSlave;
+      size_t ltcRun;
+      size_t adcSel0;
+      size_t adcSel1;
+      size_t adcSel2;
+      size_t ledStatus0;
+      size_t ledStatus1;
+      size_t ledStatus2;
+      size_t ledStatus3;
+    } gpio;
+
+    struct I2C
+    {
+      size_t sda;
+      size_t sck;
+    } i2c;
+
+    struct PWM
+    {
+      size_t ltcSync;
+      size_t fanCtl;
+      size_t fanSense;
+    } pwm;
+
+    struct SPI
+    {
+      size_t sck;
+      size_t mosi;
+      size_t miso;
+      size_t cs0;
+    } spi;
+
+    struct UART
+    {
+      size_t tx;
+      size_t rx;
+    } uart;
   };
 
   /*-----------------------------------------------------------------------------
