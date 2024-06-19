@@ -1,5 +1,5 @@
-
 add_subdirectory(bsp)
+add_subdirectory(sim)
 add_subdirectory(system)
 
 # Shared Targets for Header Includes
@@ -43,12 +43,6 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
 if(${PICO_PLATFORM} STREQUAL "rp2040")
   target_link_libraries(Ichnaea_PicoLibs INTERFACE hardware_adc)
 elseif(${PICO_PLATFORM} STREQUAL "host")
-  # Collect all the simulator stubs for the Pico SDK
-  file(GLOB PICO_SIM_STUBS ${CMAKE_CURRENT_SOURCE_DIR}/sim/*.c)
-  add_library(Ichnaea_PicoStubs STATIC ${PICO_SIM_STUBS})
-  target_link_libraries(Ichnaea_PicoStubs PRIVATE pico_mock_headers)
-
-  # Link the stubs to the PicoLibs interface
   target_link_libraries(Ichnaea_PicoLibs INTERFACE Ichnaea_PicoStubs)
 endif()
 

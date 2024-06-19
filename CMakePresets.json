@@ -76,24 +76,14 @@
       "description": "Build the project for the current configuration",
       "targets": [
         "Ichnaea"
-      ],
-      "jobs": 8
+      ]
     },
     {
       "name": "Ichnaea Tests",
       "description": "Build the tests for the current configuration",
       "targets": [
         "IchnaeaTests"
-      ],
-      "jobs": 8
-    }
-  ],
-  "testPresets": [
-    {
-      "name": "HostTests",
-      "description": "Run the tests for the current configuration",
-      "displayName": "Host Debug Test Suite",
-      "configurePreset": "Host Debug"
+      ]
     }
   ]
 }
