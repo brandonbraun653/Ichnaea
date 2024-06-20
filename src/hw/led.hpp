@@ -22,7 +22,7 @@ namespace HW::LED
   /*---------------------------------------------------------------------------
   Enumerations
   ---------------------------------------------------------------------------*/
-  enum class Channel : uint8_t
+  enum Channel : uint8_t
   {
     STATUS_0,
     STATUS_1,
@@ -37,11 +37,35 @@ namespace HW::LED
   ---------------------------------------------------------------------------*/
 
   /**
-   *  Initializes the LED hardware
-   *
-   *  @return void
+   * @brief Initializes the LED hardware
    */
   void initialize();
+
+  /**
+   * @brief Runs the POST sequence on the LEDs
+   */
+  void postSequence();
+
+  /**
+   * @brief Turns on the LED
+   *
+   * @param channel   Which LED to turn on
+   */
+  void set( const Channel channel );
+
+  /**
+   * @brief Turns off the LED
+   *
+   * @param channel   Which LED to turn off
+   */
+  void clear( const Channel channel );
+
+  /**
+   * @brief Toggles the logical state of the led
+   *
+   * @param channel   Which LED to toggle
+   */
+  void toggle( const Channel channel );
 
 }    // namespace HW::LED
 

@@ -13,6 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include "src/bsp/board_map.hpp"
 #include "src/hw/bootup.hpp"
+#include "src/hw/led.hpp"
 #include "src/system/system_error.hpp"
 
 namespace HW
@@ -22,17 +23,22 @@ namespace HW
   ---------------------------------------------------------------------------*/
   void initDrivers()
   {
+    /*-------------------------------------------------------------------------
+    Load system dependencies for the hardware (order matters here)
+    -------------------------------------------------------------------------*/
     Panic::powerUp();
     BSP::powerUp();
-    //HW::LED::initialize();
+
+    /*-------------------------------------------------------------------------
+    Initialize the hardware peripherals. Ordered by least complex/dependent
+    to most complex/dependent.
+    -------------------------------------------------------------------------*/
+    HW::LED::initialize();
   }
 
   void runPostInit()
   {
-    //HW::LED::set( HW::LED::Channel::STATUS_0, true );
-    //HW::LED::set( HW::LED::Channel::STATUS_1, true );
-    //HW::LED::set( HW::LED::Channel::STATUS_2, true );
-    //HW::LED::set( HW::LED::Channel::STATUS_3, true );
+    HW::LED::postSequence();
   }
 
 }  // namespace HW

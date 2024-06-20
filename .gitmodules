@@ -13,3 +13,6 @@
 [submodule "lib/pico-mock"]
 	path = lib/pico-mock
 	url = https://github.com/brandonbraun653/pico-mock.git
+[submodule "lib/etl"]
+	path = lib/etl
+	url = https://github.com/ETLCPP/etl.git

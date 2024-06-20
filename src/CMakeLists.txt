@@ -11,7 +11,10 @@ add_subdirectory(threads)
 # Project Interface Headers
 # -----------------------------------------------------------------------------
 add_library(Ichnaea_Headers INTERFACE)
-target_include_directories(Ichnaea_Headers INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../)
+target_include_directories(Ichnaea_Headers INTERFACE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../
+  ${CMAKE_CURRENT_SOURCE_DIR}/../lib/etl/include
+)
 
 # -----------------------------------------------------------------------------
 # Pico Interface Headers
@@ -65,6 +68,8 @@ target_link_libraries(IchnaeaApp
   Ichnaea_System
   Ichnaea_Threads
 )
+# Fix annoying linker ordering dependencies that might get introduced
+target_link_options(IchnaeaApp PRIVATE -Wl,--start-group)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(IchnaeaApp)

@@ -37,7 +37,8 @@ int main()
   HW::runPostInit();
 
   /*---------------------------------------------------------------------------
-  Spin up the monitor and control threads
+  Spin up the monitor and control threads. There is no true OS here, so a
+  "thread" is just a function that consumes a whole core.
   ---------------------------------------------------------------------------*/
   multicore_launch_core1( Threads::monitorThread );
   Threads::controlThread();
