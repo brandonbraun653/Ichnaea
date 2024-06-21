@@ -23,6 +23,8 @@ namespace HW
   ---------------------------------------------------------------------------*/
   void initDrivers()
   {
+    timer_hw->dbgpause = 0;    // Do not pause the timer during debug
+
     /*-------------------------------------------------------------------------
     Load system dependencies for the hardware (order matters here)
     -------------------------------------------------------------------------*/

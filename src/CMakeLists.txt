@@ -28,6 +28,7 @@ target_link_libraries(Ichnaea_PicoHeaders INTERFACE
   pico_time_headers
   hardware_gpio_headers
   hardware_timer_headers
+  hardware_pwm_headers
   hardware_uart_headers
 )
 
@@ -48,6 +49,7 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   pico_stdlib
   pico_multicore
   hardware_gpio
+  hardware_pwm
 )
 
 # Some of the HW libraries don't work on the host target due to inline assembly or

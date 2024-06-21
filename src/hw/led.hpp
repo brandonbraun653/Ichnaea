@@ -22,7 +22,7 @@ namespace HW::LED
   /*---------------------------------------------------------------------------
   Enumerations
   ---------------------------------------------------------------------------*/
-  enum Channel : uint8_t
+  enum Channel : uint
   {
     STATUS_0,
     STATUS_1,
@@ -51,21 +51,29 @@ namespace HW::LED
    *
    * @param channel   Which LED to turn on
    */
-  void set( const Channel channel );
+  void enable( const uint channel );
 
   /**
    * @brief Turns off the LED
    *
    * @param channel   Which LED to turn off
    */
-  void clear( const Channel channel );
+  void disable( const uint channel );
 
   /**
    * @brief Toggles the logical state of the led
    *
    * @param channel   Which LED to toggle
    */
-  void toggle( const Channel channel );
+  void toggle( const uint channel );
+
+  /**
+   * @brief Set the brightness of the LED when it's enabled
+   *
+   * @param channel   Which LED to adjust
+   * @param brightness  Brightness level from 0.0 to 1.0
+   */
+  void setBrightness( const uint channel, const float brightness );
 
 }    // namespace HW::LED
 

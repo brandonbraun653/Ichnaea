@@ -16,7 +16,9 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "hardware/adc.h"
+#include "hardware/clocks.h"
 #include "hardware/gpio.h"
+#include "hardware/pwm.h"
 #include "hardware/resets.h"
 #include "pico/bootrom.h"
 #include "pico/platform.h"
