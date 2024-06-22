@@ -13,6 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include "src/bsp/board_map.hpp"
 #include "src/hw/bootup.hpp"
+#include "src/hw/gpio.hpp"
 #include "src/hw/led.hpp"
 #include "src/system/system_error.hpp"
 
@@ -35,6 +36,7 @@ namespace HW
     Initialize the hardware peripherals. Ordered by least complex/dependent
     to most complex/dependent.
     -------------------------------------------------------------------------*/
+    HW::GPIO::initialize();
     HW::LED::initialize();
   }
 

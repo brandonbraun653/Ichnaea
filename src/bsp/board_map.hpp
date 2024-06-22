@@ -17,12 +17,16 @@ Includes
 -----------------------------------------------------------------------------*/
 #include "hardware/adc.h"
 #include "hardware/clocks.h"
+#include "hardware/dma.h"
 #include "hardware/gpio.h"
+#include "hardware/irq.h"
 #include "hardware/pwm.h"
 #include "hardware/resets.h"
+#include "hardware/uart.h"
 #include "pico/bootrom.h"
 #include "pico/platform.h"
 #include "pico/stdlib.h"
+#include "pico/sync.h"
 #include "pico/time.h"
 #include <cstddef>
 #include <cstdint>
@@ -73,10 +77,7 @@ namespace BSP
       size_t adcSel0;
       size_t adcSel1;
       size_t adcSel2;
-      size_t ledStatus0;
-      size_t ledStatus1;
-      size_t ledStatus2;
-      size_t ledStatus3;
+      size_t spiCs0;
     } gpio;
 
     struct I2C
@@ -90,6 +91,10 @@ namespace BSP
       size_t ltcSync;
       size_t fanCtl;
       size_t fanSense;
+      size_t ledStatus0;
+      size_t ledStatus1;
+      size_t ledStatus2;
+      size_t ledStatus3;
     } pwm;
 
     struct SPI
@@ -97,7 +102,6 @@ namespace BSP
       size_t sck;
       size_t mosi;
       size_t miso;
-      size_t cs0;
     } spi;
 
     struct UART

@@ -124,31 +124,31 @@ namespace BSP
 
     if( selected_version == 1 )
     {
-      s_board_map.majorVersion    = BSPV1::BOARD_VERSION_MAJOR;
-      s_board_map.minorVersion    = BSPV1::BOARD_VERSION_MINOR;
-      s_board_map.adc.sensePin    = BSPV1::ADC::PIN_SENSE;
-      s_board_map.gpio.ltcDcm     = BSPV1::GPIO::PIN_OUT_LTC_DCM;
-      s_board_map.gpio.ltcCcm     = BSPV1::GPIO::PIN_OUT_LTC_CCM;
-      s_board_map.gpio.ltcSlave   = BSPV1::GPIO::PIN_IN_LTC_SLAVE;
-      s_board_map.gpio.ltcRun     = BSPV1::GPIO::PIN_IO_LTC_RUN;
-      s_board_map.gpio.adcSel0    = BSPV1::GPIO::PIN_OUT_ADC_SEL_0;
-      s_board_map.gpio.adcSel1    = BSPV1::GPIO::PIN_OUT_ADC_SEL_1;
-      s_board_map.gpio.adcSel2    = BSPV1::GPIO::PIN_OUT_ADC_SEL_2;
-      s_board_map.gpio.ledStatus0 = BSPV1::GPIO::PIN_OUT_LED_STATUS_0;
-      s_board_map.gpio.ledStatus1 = BSPV1::GPIO::PIN_OUT_LED_STATUS_1;
-      s_board_map.gpio.ledStatus2 = BSPV1::GPIO::PIN_OUT_LED_STATUS_2;
-      s_board_map.gpio.ledStatus3 = BSPV1::GPIO::PIN_OUT_LED_STATUS_3;
-      s_board_map.i2c.sda         = BSPV1::I2C::PIN_SDA;
-      s_board_map.i2c.sck         = BSPV1::I2C::PIN_SCK;
-      s_board_map.pwm.ltcSync     = BSPV1::PWM::PIN_OUT_LTC_SYNC;
-      s_board_map.pwm.fanCtl      = BSPV1::PWM::PIN_OUT_FAN_CTL;
-      s_board_map.pwm.fanSense    = BSPV1::PWM::PIN_IN_FAN_SENSE;
-      s_board_map.spi.sck         = BSPV1::SPI::PIN_SCK;
-      s_board_map.spi.mosi        = BSPV1::SPI::PIN_MOSI;
-      s_board_map.spi.miso        = BSPV1::SPI::PIN_MISO;
-      s_board_map.spi.cs0         = BSPV1::SPI::PIN_CS_0;
-      s_board_map.uart.tx         = BSPV1::UART::PIN_TX;
-      s_board_map.uart.rx         = BSPV1::UART::PIN_RX;
+      s_board_map.adc.sensePin   = BSPV1::ADC::PIN_SENSE;
+      s_board_map.gpio.adcSel0   = BSPV1::GPIO::PIN_OUT_ADC_SEL_0;
+      s_board_map.gpio.adcSel1   = BSPV1::GPIO::PIN_OUT_ADC_SEL_1;
+      s_board_map.gpio.adcSel2   = BSPV1::GPIO::PIN_OUT_ADC_SEL_2;
+      s_board_map.gpio.ltcCcm    = BSPV1::GPIO::PIN_OUT_LTC_CCM;
+      s_board_map.gpio.ltcDcm    = BSPV1::GPIO::PIN_OUT_LTC_DCM;
+      s_board_map.gpio.ltcRun    = BSPV1::GPIO::PIN_IO_LTC_RUN;
+      s_board_map.gpio.ltcSlave  = BSPV1::GPIO::PIN_IN_LTC_SLAVE;
+      s_board_map.gpio.spiCs0    = BSPV1::SPI::PIN_CS_0;
+      s_board_map.i2c.sck        = BSPV1::I2C::PIN_SCK;
+      s_board_map.i2c.sda        = BSPV1::I2C::PIN_SDA;
+      s_board_map.majorVersion   = BSPV1::BOARD_VERSION_MAJOR;
+      s_board_map.minorVersion   = BSPV1::BOARD_VERSION_MINOR;
+      s_board_map.pwm.fanCtl     = BSPV1::PWM::PIN_OUT_FAN_CTL;
+      s_board_map.pwm.fanSense   = BSPV1::PWM::PIN_IN_FAN_SENSE;
+      s_board_map.pwm.ledStatus0 = BSPV1::GPIO::PIN_OUT_LED_STATUS_0;
+      s_board_map.pwm.ledStatus1 = BSPV1::GPIO::PIN_OUT_LED_STATUS_1;
+      s_board_map.pwm.ledStatus2 = BSPV1::GPIO::PIN_OUT_LED_STATUS_2;
+      s_board_map.pwm.ledStatus3 = BSPV1::GPIO::PIN_OUT_LED_STATUS_3;
+      s_board_map.pwm.ltcSync    = BSPV1::PWM::PIN_OUT_LTC_SYNC;
+      s_board_map.spi.miso       = BSPV1::SPI::PIN_MISO;
+      s_board_map.spi.mosi       = BSPV1::SPI::PIN_MOSI;
+      s_board_map.spi.sck        = BSPV1::SPI::PIN_SCK;
+      s_board_map.uart.rx        = BSPV1::UART::PIN_RX;
+      s_board_map.uart.tx        = BSPV1::UART::PIN_TX;
     }
   }
 

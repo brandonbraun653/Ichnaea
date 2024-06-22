@@ -5,11 +5,16 @@
 - All LEDs are showing a "ghosting" effect for a second during boot while the IO are tri-stated. Add a weak pullup on these IO to prevent the ghosting. PWM module doesn't fully drive these off.
 - Add a versioning resistor divider for one of the extra ADC pins. Can be used to identify future revisions in software.
 - Remove 0-ohm resistors on validated interfaces.
+- (Possibly) Remove the daisy chain HW interface. With the goal of a micro-inverter setup, I should be able to get 1-2kW out of this thing, which is plenty.
+Daisy chaining at the MPPT level doesn't make sense when you're going to join at the 220V power level anyways.
+- Consider increasing the size of the power transistors to something taller. Currently they are shorter than the LTC7871, which is causing problems with heat sink contact. Do cost optimization now.
+- Add a second interface for debug and system testing control. I don't want to go through the BMS port, which actually needs to be
+exercised for system testing.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.
 Dang this happened twice. I have two diodes like this.
-- PWM fan pin header is not the expected type. It has a peg for alignment and the latch mechanism in the back is shorter than expected.
+- PWM fan pin header is not the expected type. It has a peg for alignment and the latch mechanism in the back is shorter than expected. This might not be an issue? Need to find a fan.
 
 # PCB Layout
 - Improve thermal pad connections. Too hard to solder large components to the board without the hot plate.

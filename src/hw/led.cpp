@@ -58,10 +58,10 @@ namespace HW::LED
     -------------------------------------------------------------------------*/
     memset( &s_led_map, 0, sizeof( s_led_map ) );
 
-    s_led_map[ Channel::STATUS_0 ].pin = BSP::getIOConfig().gpio.ledStatus0;
-    s_led_map[ Channel::STATUS_1 ].pin = BSP::getIOConfig().gpio.ledStatus1;
-    s_led_map[ Channel::STATUS_2 ].pin = BSP::getIOConfig().gpio.ledStatus2;
-    s_led_map[ Channel::STATUS_3 ].pin = BSP::getIOConfig().gpio.ledStatus3;
+    s_led_map[ Channel::STATUS_0 ].pin = BSP::getIOConfig().pwm.ledStatus0;
+    s_led_map[ Channel::STATUS_1 ].pin = BSP::getIOConfig().pwm.ledStatus1;
+    s_led_map[ Channel::STATUS_2 ].pin = BSP::getIOConfig().pwm.ledStatus2;
+    s_led_map[ Channel::STATUS_3 ].pin = BSP::getIOConfig().pwm.ledStatus3;
 
     /*-------------------------------------------------------------------------
     Figure out the correct clock divider to get roughly 1kHz PWM frequency
@@ -111,7 +111,7 @@ namespace HW::LED
   void postSequence()
   {
     /*-------------------------------------------------------------------------
-    Quickly pulse each led to indicate the system is booting
+    Quickly pulse each led on a ramp up/down sequence
     -------------------------------------------------------------------------*/
     for( size_t channel = 0; channel < s_led_map.size(); channel++ )
     {

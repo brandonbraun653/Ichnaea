@@ -22,14 +22,17 @@ target_include_directories(Ichnaea_Headers INTERFACE
 add_library(Ichnaea_PicoHeaders INTERFACE)
 target_link_libraries(Ichnaea_PicoHeaders INTERFACE
   # These headers work on all platforms
-  pico_multicore_headers
-  pico_stdlib_headers
-  pico_stdio_headers
-  pico_time_headers
+  hardware_dma_headers
   hardware_gpio_headers
-  hardware_timer_headers
+  hardware_irq_headers
   hardware_pwm_headers
+  hardware_timer_headers
   hardware_uart_headers
+  pico_multicore_headers
+  pico_stdio_headers
+  pico_stdlib_headers
+  pico_sync_headers
+  pico_time_headers
 )
 
 # Some of the HW headers don't work on the host target due to inline assembly or
@@ -46,10 +49,13 @@ endif()
 add_library(Ichnaea_PicoLibs INTERFACE)
 target_link_libraries(Ichnaea_PicoLibs INTERFACE
   # These libraries compile on all platforms
-  pico_stdlib
-  pico_multicore
+  hardware_dma
   hardware_gpio
+  hardware_irq
   hardware_pwm
+  pico_multicore
+  pico_stdlib
+  pico_sync
 )
 
 # Some of the HW libraries don't work on the host target due to inline assembly or
