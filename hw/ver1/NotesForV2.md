@@ -10,6 +10,8 @@ Daisy chaining at the MPPT level doesn't make sense when you're going to join at
 - Consider increasing the size of the power transistors to something taller. Currently they are shorter than the LTC7871, which is causing problems with heat sink contact. Do cost optimization now.
 - Add a second interface for debug and system testing control. I don't want to go through the BMS port, which actually needs to be
 exercised for system testing.
+- Add an eeprom or similar for saving settings from the BMS. Need to remember programmed voltage/current limits.
+- Use a pulldown resistor on the LTC RUN pin to force the controller to always boot in an OFF state. Don't know why I inverted this.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.

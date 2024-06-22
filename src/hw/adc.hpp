@@ -25,11 +25,12 @@ namespace HW::ADC
 
   enum Channel : size_t
   {
-    LTC_IMON,
-    TEMP_SENSE_0,
-    TEMP_SENSE_1,
-    HV_DC_SENSE,
-    LV_DC_SENSE,
+    RP2040_TEMP,  /**< Internal temperature sensor on the RP2040 */
+    LTC_IMON,     /**< Average current output from the LTC7871 */
+    TEMP_SENSE_0, /**< External temperature sensor 0 */
+    TEMP_SENSE_1, /**< External temperature sensor 1 */
+    HV_DC_SENSE,  /**< Solar high voltage input sense */
+    LV_DC_SENSE,  /**< Buck converter voltage output sense */
 
     NUM_OPTIONS
   };
@@ -46,7 +47,7 @@ namespace HW::ADC
   /**
    * @brief POST sequence for the ADC hardware
    */
-  void postInit();
+  void postSequence();
 
   /**
    * @brief Read the voltage on a specific channel.
@@ -63,8 +64,8 @@ namespace HW::ADC
   /**
    * @brief Get the voltage on a specific channel without triggering a new conversion.
    *
-   * This will return the last known voltage on the specified channel. If the
-   * channel has not been read yet, the result will be -1.0f.
+   * This will return the last known voltage, which may be stale. Errors in this
+   * call will return -1.0f.
    *
    * @param channel Which channel to read
    * @return float  The voltage on the channel

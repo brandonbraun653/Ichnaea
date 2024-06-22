@@ -26,9 +26,11 @@ target_link_libraries(Ichnaea_PicoHeaders INTERFACE
   hardware_gpio_headers
   hardware_irq_headers
   hardware_pwm_headers
+  hardware_spi_headers
   hardware_timer_headers
   hardware_uart_headers
   pico_multicore_headers
+  pico_platform_headers
   pico_stdio_headers
   pico_stdlib_headers
   pico_sync_headers
@@ -53,7 +55,9 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   hardware_gpio
   hardware_irq
   hardware_pwm
+  hardware_spi
   pico_multicore
+  pico_platform
   pico_stdlib
   pico_sync
 )

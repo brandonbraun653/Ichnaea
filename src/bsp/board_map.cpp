@@ -73,7 +73,7 @@ namespace BSP
     else
     {
       // Fill this in later when we have more versions on V2.
-      Panic::throwSystemError( Panic::ErrorCode::BOARD_VERSION_READ_FAIL );
+      Panic::throwError( Panic::ErrorCode::BOARD_VERSION_READ_FAIL );
     }
 
     return -1;
@@ -111,7 +111,7 @@ namespace BSP
     int selected_version = convert_adc_to_version( version_voltage );
     if ( selected_version < 0 )
     {
-      Panic::throwSystemError( Panic::ErrorCode::BOARD_VERSION_READ_FAIL );
+      Panic::throwError( Panic::ErrorCode::BOARD_VERSION_READ_FAIL );
     }
 
     s_board_map.majorVersion = BSPV1::BOARD_VERSION_MAJOR;

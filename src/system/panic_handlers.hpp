@@ -33,12 +33,17 @@ namespace Panic::Handlers
   PANIC_HANDLER_DECL( DefaultHandler );
 
   /**
+   * @brief This handler does absolutely nothing.
+   */
+  PANIC_HANDLER_DECL( NoopHandler );
+
+  /**
    * @brief Safe the system if the board version cannot be determined.
    *
    * This is a critical error and the board should not be allowed to start
    * operating if the IO version cannot be determined.
    */
   PANIC_HANDLER_DECL( FailToReadBoardVersion );
-}   // namespace Panic::Handlers
+}    // namespace Panic::Handlers
 
-#endif  /* !ICHNAEA_PANIC_HANDLERS_HPP */
+#endif /* !ICHNAEA_PANIC_HANDLERS_HPP */

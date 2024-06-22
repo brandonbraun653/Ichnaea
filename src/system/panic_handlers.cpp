@@ -29,6 +29,12 @@ namespace Panic::Handlers
   }
 
 
+  PANIC_HANDLER_DEF( NoopHandler )
+  {
+    return true;
+  }
+
+
   PANIC_HANDLER_DEF( FailToReadBoardVersion )
   {
     using namespace BSP::Internal;
@@ -73,4 +79,4 @@ namespace Panic::Handlers
     System::reset( System::ResetType::REBOOT );
     return false;
   }
-}  // namespace Panic::Handlers
+}    // namespace Panic::Handlers

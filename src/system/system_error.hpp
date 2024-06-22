@@ -16,6 +16,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
+#include <cstddef>
 
 /*-----------------------------------------------------------------------------
 Macros
@@ -33,12 +34,21 @@ namespace Panic
   /**
    * @brief Error codes that can be reported by the system
    */
-  enum class ErrorCode : uint32_t
+  enum class ErrorCode : size_t
   {
     NO_ERROR = 0,
     UNKNOWN,
+    ASSERTION_FAIL,
+    INVALID_PARAM,
+    INVALID_CONTEXT,
+    SYSTEM_INIT_FAIL,
+    POST_FAIL,
     BOARD_VERSION_READ_FAIL,
     SYSTEM_THREAD_EXIT,
+    LTC7871_DATA_WRITE_FAIL,
+    LTC7871_DATA_READ_FAIL,
+    LTC7871_PEC_READ_FAIL,
+    LTC7871_PEC_WRITE_FAIL,
 
     NUM_OPTIONS
   };
@@ -47,7 +57,7 @@ namespace Panic
   Aliases
   ---------------------------------------------------------------------------*/
 
-  using ErrorCallback = bool ( * )( const ErrorCode& );
+  using ErrorCallback = bool ( * )( const ::Panic::ErrorCode & );
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -64,7 +74,18 @@ namespace Panic
    * @param code  Error code to report
    * @return bool True if the handler was able to recover, false otherwise
    */
-  bool throwSystemError( const ErrorCode code );
+  bool throwError( const ErrorCode code );
+
+  /**
+   * @brief Get the last thrown error code
+   * @return ErrorCode
+   */
+  ErrorCode getLastError();
+
+  /**
+   * @brief Resets the error code back to NO_ERROR
+   */
+  void resetError();
 
   /**
    * @brief Registers a handler for a specific error code
@@ -74,6 +95,6 @@ namespace Panic
    */
   void registerHandler( const ErrorCode code, ErrorCallback handler );
 
-}  // namespace Panic
+}    // namespace Panic
 
-#endif  /* !ICHNAEA_SYSTEM_ERROR_HPP */
+#endif /* !ICHNAEA_SYSTEM_ERROR_HPP */

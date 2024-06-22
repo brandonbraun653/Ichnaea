@@ -22,6 +22,7 @@ Includes
 #include "hardware/irq.h"
 #include "hardware/pwm.h"
 #include "hardware/resets.h"
+#include "hardware/spi.h"
 #include "hardware/uart.h"
 #include "pico/bootrom.h"
 #include "pico/platform.h"
