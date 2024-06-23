@@ -21,24 +21,85 @@ Includes
 namespace HW::LTC7871
 {
   /*---------------------------------------------------------------------------
+  Enumerations
+  ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief Specific reasons why the LTC7871 faulted
+   */
+  enum class FaultCode : size_t
+  {
+    NO_FAULT = 0,
+
+    NUM_OPTIONS
+  };
+
+
+  /**
+   * @brief Internal classification of modes the driver can be in.
+   *
+   * This is extremely helpful for error handling and command parsing to ensure
+   * the driver is in a valid state to perform certain behaviors.
+   */
+  enum class DriverMode : size_t
+  {
+    DISABLED,         /* System is at an idle state an not operating */
+    POST_SEQUENCE,    /* Running the power on self test */
+    INITIALIZING,     /* Booting up and checking for ability to operate */
+    NORMAL_OPERATION, /* System running normally */
+    FAULTED           /* Error state due to abnormal behavior */
+  };
+
+  /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
   /**
-   * @brief Init the driver and ensure the LTC7871 is in a safed state.
+   * @brief Initializes the LTC7871 driver
    */
   void initialize();
 
   /**
    * @brief Perform power on self test (POST) for the LTC7871
+   * @warning This function has a dependency on the BMS communication bus.
    */
   void postSequence();
 
   /**
-   * @brief Read the current output of the LTC7871
-   * @return float The current in Amps
+   * @brief Enables the LTC7871 and configures it for normal operation.
+   *
+   * If successful, this will start power flowing from the solar input
+   * to the low voltage output. If unsuccessful, the LTC7871 will be
+   * returned back to a safe state and the system will be shutdown.
    */
-  float getAverageCurrent();
+  void powerOn();
+
+  /**
+   * @brief Disables the LTC7871 and puts it into a low power state.
+   *
+   * This will cut off power conversion and prevent the LTC7871 from
+   * interacting with the system until the power up sequence is run.
+   */
+  void powerOff();
+
+  /**
+   * @brief Gets the current operational mode of the driver
+   *
+   * @return DriverMode
+   */
+  DriverMode getMode();
+
+  /**
+   * @brief Gets the latest fault code from the driver
+   *
+   * @return FaultCode
+   */
+  FaultCode getFaultCode();
+
+  /**
+   * @brief Resets the fault code to NO_FAULT
+   */
+  void clearFaultCode();
 
 }  // namespace HW::LTC7871
 

@@ -25,10 +25,10 @@ namespace HW::LTC7871
   Constants
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t SPI_BAUD     = 1'000'000; /**< Max clock for LTC7871 is 5MHz */
-  static constexpr size_t LTC_ADDR_IDX = 0;
-  static constexpr size_t LTC_DATA_IDX = 1;
-  static constexpr size_t LTC_PEC_IDX  = 2;
+  static constexpr size_t SPI_BAUD     = 1'000'000; /* Max clock for LTC7871 is 5MHz */
+  static constexpr size_t LTC_ADDR_IDX = 0;         /* Buffer index for register addresses */
+  static constexpr size_t LTC_DATA_IDX = 1;         /* Buffer index for data field */
+  static constexpr size_t LTC_PEC_IDX  = 2;         /* Buffer index for error check code */
 
   /*---------------------------------------------------------------------------
   Aliases
@@ -41,6 +41,8 @@ namespace HW::LTC7871
   ---------------------------------------------------------------------------*/
 
   static const BSP::IOConfig *s_io_config;
+  static DriverMode           s_driver_mode;
+  static FaultCode            s_fault_code;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -48,7 +50,9 @@ namespace HW::LTC7871
 
   void initialize()
   {
-    s_io_config = &BSP::getIOConfig();
+    s_io_config   = &BSP::getIOConfig();
+    s_driver_mode = DriverMode::DISABLED;
+    s_fault_code  = FaultCode::NO_FAULT;
 
     /*-------------------------------------------------------------------------
     Power up the GPIO control lines
@@ -116,13 +120,21 @@ namespace HW::LTC7871
 
   void postSequence()
   {
+    /*---------------------------------------------------------------------------
+    Force proper control flow to the POST_SEQUENCE state. Don't cause a side effect
+    since we don't know why this is being called.
+    ---------------------------------------------------------------------------*/
+    if( s_driver_mode != DriverMode::DISABLED )
+    {
+      return;
+    }
+
     /*-------------------------------------------------------------------------
-    Ensure the LTC7871 is in a known state. The CML bit is sticky and it's not
-    guaranteed the RP2040 and LTC7871 powered up together. Without this being
-    cleared, this driver is going to error out rather quickly.
+    Ensure the LTC7871 is in a known state. It's not guaranteed the RP2040 and
+    LTC7871 powered up together and we have no clue what happened previously.
     -------------------------------------------------------------------------*/
+    s_driver_mode = DriverMode::POST_SEQUENCE;
     Private::clear_communication_fault();
-    Private::reset_configuration();
 
     /*-------------------------------------------------------------------------
     Read in the HW strapping configuration to determine what operational
@@ -133,15 +145,74 @@ namespace HW::LTC7871
     -------------------------------------------------------------------------*/
     const uint8_t cfg1_reg = Private::read_register( REG_MFR_CONFIG1 );
     const uint8_t cfg2_reg = Private::read_register( REG_MFR_CONFIG2 );
+
   }
 
 
-  float getAverageCurrent()
+  void powerOn()
   {
-    return 0.0f;
+
   }
 
 
+  void powerOff()
+  {
+
+  }
+
+
+  DriverMode getMode()
+  {
+    return s_driver_mode;
+  }
+
+
+  FaultCode getFaultCode()
+  {
+    return s_fault_code;
+  }
+
+
+  void clearFaultCode()
+  {
+    s_fault_code = FaultCode::NO_FAULT;
+  }
+
+
+  bool Private::resolve_boot_configuration( SystemConfig &cfg )
+  {
+    /*-------------------------------------------------------------------------
+    *IMPORTANT* Really need to read any configuration data from the
+    previous power cycle to ensure we don't boot up and immediately change
+    output voltage/current limts. If a battery is connected and we reconfigure
+    all willy nilly, it could be catastrophic.
+
+    There should be a layered approach:
+      1. If any of the following are true, return an invalid configuration:
+        - Output voltage is present and no input voltage
+        - Output voltage is higher than input voltage
+        - No voltage on either the input or output
+        - Any voltage is outside the expected operational range
+
+      2. With a BMS attached, read and validate the configuration. If it's
+         invalid, return false and do not boot. The BMS acts as a single
+         point of truth to describe the connected storage system. It's also
+         responsible for isolation from this buck converter.
+
+      2. If the BMS is unavailable and no voltage is present on the output,
+         we can assume there is no battery and power up to some sane values
+         based on the input voltage. This will essentially be "free running"
+         mode where we try and provide max power the solar panel can provide.
+
+        2a. When free running, use the last programmed system limits for voltage
+            and current and ramp to those points as a kind of "soft-start".
+            This thing *is* still programmable via other interfaces after all.
+
+    Log all boot decisions to the system log for later analysis.
+    -------------------------------------------------------------------------*/
+
+    return false;
+  }
 
   void Private::clear_communication_fault()
   {
@@ -180,13 +251,8 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Validate all the R/W registers are in their default state (0x00)
     -------------------------------------------------------------------------*/
-    const etl::array<uint8_t, 5> regs_to_check{
-      REG_MFR_CHIP_CTRL,
-      REG_MFR_IDAC_VLOW,
-      REG_MFR_IDAC_VHIGH,
-      REG_MFR_IDAC_SETCUR,
-      REG_MFR_SSFM
-    };
+    const etl::array<uint8_t, 5> regs_to_check{ REG_MFR_CHIP_CTRL, REG_MFR_IDAC_VLOW, REG_MFR_IDAC_VHIGH, REG_MFR_IDAC_SETCUR,
+                                                REG_MFR_SSFM };
 
     for( const auto &reg : regs_to_check )
     {
@@ -232,8 +298,8 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Prepare data for the read
     -------------------------------------------------------------------------*/
-    spi_txfr_buffer_t rx_buf = { 0, 0, 0 };
-    const uint8_t read_cmd = static_cast<uint8_t>( ( reg << 1u ) | 1u );
+    spi_txfr_buffer_t rx_buf   = { 0, 0, 0 };
+    const uint8_t     read_cmd = static_cast<uint8_t>( ( reg << 1u ) | 1u );
 
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
@@ -293,9 +359,6 @@ namespace HW::LTC7871
 
   bool Private::on_ltc_error( const Panic::ErrorCode &err )
   {
-    // SHIT. Need to handle this. It's basically a critical shutdown event. We cannot
-    // ever lose control of the registers.
-
     // Unrecoverable:
     // - ERR_LTC_PEC_READ_FAIL
     // - ERR_LTC_PEC_WRITE_FAIL
@@ -304,6 +367,8 @@ namespace HW::LTC7871
 
     // Potentially Recoverable:
     // - ERR_LTC_CMD_FAIL
+
+    // Key off DriverMode to determine the final error behavior.
     return true;
   }
 }    // namespace HW::LTC7871

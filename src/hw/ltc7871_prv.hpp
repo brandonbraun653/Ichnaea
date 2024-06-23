@@ -22,6 +22,32 @@ Includes
 
 namespace HW::LTC7871::Private
 {
+  /*---------------------------------------------------------------------------
+  Structures
+  ---------------------------------------------------------------------------*/
+
+  struct SystemConfig
+  {
+
+  };
+
+  /*---------------------------------------------------------------------------
+  Public Functions
+  ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief Decides a safe configuration to apply to the LTC7871 on boot.
+   *
+   * This will resolve through several data sources to try and determine the
+   * best configuration to apply to the LTC7871 on boot. If no configuration
+   * can be determined safely, this function will return false.
+   *
+   * @param cfg Configuration to update
+   * @return true  The resolved configuration is safe
+   * @return false Unable to safely resolve a configuration
+   */
+  bool resolve_boot_configuration( SystemConfig &cfg );
+
   /**
    * @brief Clears the CML bit in the MFR_CHIP_CTRL register
    */
