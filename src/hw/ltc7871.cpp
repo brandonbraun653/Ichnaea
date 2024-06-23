@@ -146,6 +146,29 @@ namespace HW::LTC7871
     const uint8_t cfg1_reg = Private::read_register( REG_MFR_CONFIG1 );
     const uint8_t cfg2_reg = Private::read_register( REG_MFR_CONFIG2 );
 
+    // TODO BMB: May want to add configurable expected defaults depending on HW versions.
+    // Some of the default current sense limits might not be the same.
+
+    const bool is_buck_mode = ( cfg2_reg & MFR_CONFIG2_BUCK_BOOST_Msk ) == MFR_CONFIG2_BUCK_BOOST_Buck;
+    Panic::assertion( is_buck_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    const bool is_10v_drvcc = ( cfg1_reg & MFR_CONFIG1_DRVCC_SET_Msk ) == MFR_CONFIG1_DRVCC_SET_10V;
+    Panic::assertion( is_10v_drvcc, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    const bool is_40mv_ilim = ( cfg1_reg & MFR_CONFIG1_ILIM_SET_Msk ) == MFR_CONFIG1_ILIM_SET_40mV;
+    Panic::assertion( is_40mv_ilim, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    const bool is_burst_mode = ( cfg2_reg & MFR_CONFIG2_BURST_Msk ) == MFR_CONFIG2_BURST_Msk;
+    Panic::assertion( is_burst_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    const bool is_not_dcm_mode = ( cfg2_reg & MFR_CONFIG2_DCM_Msk ) == 0;
+    Panic::assertion( is_not_dcm_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    const bool is_not_hiz_mode = ( cfg2_reg & MFR_CONFIG2_HIZ_Msk ) == 0;
+    Panic::assertion( is_not_hiz_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    const bool is_not_spread_spectrum_mode = ( cfg2_reg & MFR_CONFIG2_SPRD_Msk ) == 0;
+    Panic::assertion( is_not_spread_spectrum_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
   }
 
 
