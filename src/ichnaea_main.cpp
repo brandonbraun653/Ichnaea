@@ -46,6 +46,6 @@ int main()
   /*---------------------------------------------------------------------------
   Should never reach this point
   ---------------------------------------------------------------------------*/
-  Panic::throwError( Panic::ErrorCode::SYSTEM_THREAD_EXIT );
+  Panic::throwError( Panic::ErrorCode::ERR_SYSTEM_THREAD_EXIT );
   return -1;
 }

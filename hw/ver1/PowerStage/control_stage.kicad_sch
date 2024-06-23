@@ -6489,9 +6489,9 @@
 		)
 		(uuid "948a9975-4ef7-4bd7-86f6-65f7ca83e71e")
 	)
-	(text "V2: Need to pull up SDO to V3.3. Open drain @LTC."
+	(text "V2: Need to pull up SDO to V3.3. Open drain @LTC.\nAdded a 10k pull up on board and removed the 2k pull down. Seems to work?"
 		(exclude_from_sim no)
-		(at 40.132 162.052 0)
+		(at 53.34 161.798 0)
 		(effects
 			(font
 				(size 1.27 1.27)

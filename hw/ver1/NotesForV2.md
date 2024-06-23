@@ -13,6 +13,7 @@ exercised for system testing.
 - Add an eeprom or similar for saving settings from the BMS. Need to remember programmed voltage/current limits.
 - Add cheap SPI chip for logging asserts/faults. People are going to want to know what went wrong. Might be able to reuse this for the eeprom stuff?
 - Add test points to critical data lines like SPI.
+- Really consider adding CAN bus somewhere....either the inverter or something. Need to be able to remotely control the system. Think about the system level aspects before building V2.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.

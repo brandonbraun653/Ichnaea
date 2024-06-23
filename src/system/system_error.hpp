@@ -34,21 +34,32 @@ namespace Panic
   /**
    * @brief Error codes that can be reported by the system
    */
-  enum class ErrorCode : size_t
+  enum ErrorCode : size_t
   {
+    /*-------------------------------------------------------------------------
+    General Errors
+    -------------------------------------------------------------------------*/
     NO_ERROR = 0,
-    UNKNOWN,
-    ASSERTION_FAIL,
-    INVALID_PARAM,
-    INVALID_CONTEXT,
-    SYSTEM_INIT_FAIL,
-    POST_FAIL,
-    BOARD_VERSION_READ_FAIL,
-    SYSTEM_THREAD_EXIT,
-    LTC7871_DATA_WRITE_FAIL,
-    LTC7871_DATA_READ_FAIL,
-    LTC7871_PEC_READ_FAIL,
-    LTC7871_PEC_WRITE_FAIL,
+    ERR_UNKNOWN,                 /* An unknown error occurred */
+    ERR_ASSERTION_FAIL,          /* An assertion of some kind failed */
+    ERR_INVALID_PARAM,           /* Bad argument inputs to a function */
+    ERR_INVALID_CONTEXT,         /* Something ran where it wasn't supposed to */
+    ERR_SYSTEM_INIT_FAIL,        /* Failed to initialize a driver */
+    ERR_POST_FAIL,               /* Driver POST sequence failed */
+    ERR_BOARD_VERSION_READ_FAIL, /* Failed to determine HW revision */
+    ERR_SYSTEM_THREAD_EXIT,      /* System thread terminated when it should not have */
+
+    /*-------------------------------------------------------------------------
+    LTC7871 Errors
+    -------------------------------------------------------------------------*/
+    _ERR_LTC_START,
+    ERR_LTC_DATA_WRITE_FAIL = _ERR_LTC_START, /* Unable to write data to SPI */
+    ERR_LTC_DATA_READ_FAIL,                   /* Unable to read data from SPI */
+    ERR_LTC_PEC_READ_FAIL,                    /* Ichnaea computed PEC miscompare for the PEC sent by LTC */
+    ERR_LTC_PEC_WRITE_FAIL,                   /* LTC computed PEC miscompare for the PEC sent by Ichnaea */
+    ERR_LTC_CMD_FAIL,                         /* A commanded interaction failed to apply as expected */
+    ERR_LTC_HW_STRAP_FAIL,                    /* The hardware strap configuration is invalid */
+    _ERR_LTC_END,
 
     NUM_OPTIONS
   };

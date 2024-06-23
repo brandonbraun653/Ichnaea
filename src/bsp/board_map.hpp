@@ -100,9 +100,10 @@ namespace BSP
 
     struct SPI
     {
-      size_t sck;
-      size_t mosi;
-      size_t miso;
+      size_t      sck;  /**< Pin selected for SCK */
+      size_t      mosi; /**< Pin selected for MOSI */
+      size_t      miso; /**< Pin selected for MISO */
+      spi_inst_t *pHw;  /**< Reference to the HW register/instance */
     } spi;
 
     struct UART

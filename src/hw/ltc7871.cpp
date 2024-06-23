@@ -15,14 +15,9 @@ Includes
 #include "etl/array.h"
 #include "src/bsp/board_map.hpp"
 #include "src/hw/ltc7871.hpp"
+#include "src/hw/ltc7871_prv.hpp"
 #include "src/hw/ltc7871_reg.hpp"
 #include "src/system/system_error.hpp"
-
-/*-----------------------------------------------------------------------------
-Local Literals
------------------------------------------------------------------------------*/
-
-#define SPI ( spi1 )
 
 namespace HW::LTC7871
 {
@@ -30,11 +25,10 @@ namespace HW::LTC7871
   Constants
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t  SPI_BAUD     = 1'000'000; /**< Max clock for LTC7871 is 5MHz */
-  static constexpr uint8_t PEC_INIT     = 0x41;      /**< Initial PEC value for LTC7871 */
-  static constexpr size_t  LTC_REG_IDX  = 0;
-  static constexpr size_t  LTC_DATA_IDX = 1;
-  static constexpr size_t  LTC_PEC_IDX  = 2;
+  static constexpr size_t SPI_BAUD     = 1'000'000; /**< Max clock for LTC7871 is 5MHz */
+  static constexpr size_t LTC_ADDR_IDX = 0;
+  static constexpr size_t LTC_DATA_IDX = 1;
+  static constexpr size_t LTC_PEC_IDX  = 2;
 
   /*---------------------------------------------------------------------------
   Aliases
@@ -43,13 +37,10 @@ namespace HW::LTC7871
   using spi_txfr_buffer_t = etl::array<uint8_t, 3>;
 
   /*---------------------------------------------------------------------------
-  Private Function Declarations
+  Static Data
   ---------------------------------------------------------------------------*/
 
-  static void    write_register( const uint8_t reg, const uint8_t data );
-  static uint8_t read_register( const uint8_t reg );
-  static uint8_t compute_pec( const spi_txfr_buffer_t &buffer );
-  static bool    on_ltc_error( const Panic::ErrorCode &err );
+  static const BSP::IOConfig *s_io_config;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -57,76 +48,91 @@ namespace HW::LTC7871
 
   void initialize()
   {
-    auto config = BSP::getIOConfig();
+    s_io_config = &BSP::getIOConfig();
 
     /*-------------------------------------------------------------------------
     Power up the GPIO control lines
     -------------------------------------------------------------------------*/
     /* Ensures the controller is off */
     // TODO BMB: This needs to be swapped over to an output for mosfet control in V2.
-    gpio_init( config.gpio.ltcRun );
-    gpio_set_dir( config.gpio.ltcRun, GPIO_IN );
-    gpio_pull_up( config.gpio.ltcRun );
+    gpio_init( s_io_config->gpio.ltcRun );
+    gpio_set_dir( s_io_config->gpio.ltcRun, GPIO_IN );
+    gpio_pull_up( s_io_config->gpio.ltcRun );
 
     /* Set the mode control to Burst */
-    gpio_init( config.gpio.ltcCcm );
-    gpio_set_dir( config.gpio.ltcCcm, GPIO_OUT );
-    gpio_put( config.gpio.ltcCcm, 0 );
+    gpio_init( s_io_config->gpio.ltcCcm );
+    gpio_set_dir( s_io_config->gpio.ltcCcm, GPIO_OUT );
+    gpio_put( s_io_config->gpio.ltcCcm, 0 );
 
-    gpio_init( config.gpio.ltcDcm );
-    gpio_set_dir( config.gpio.ltcDcm, GPIO_OUT );
-    gpio_put( config.gpio.ltcDcm, 0 );
+    gpio_init( s_io_config->gpio.ltcDcm );
+    gpio_set_dir( s_io_config->gpio.ltcDcm, GPIO_OUT );
+    gpio_put( s_io_config->gpio.ltcDcm, 0 );
 
     /* Use the FREQ pin resistor to set initial switching frequency */
-    gpio_init( config.pwm.ltcSync );
-    gpio_set_dir( config.pwm.ltcSync, GPIO_OUT );
-    gpio_put( config.pwm.ltcSync, 1 );
+    gpio_init( s_io_config->pwm.ltcSync );
+    gpio_set_dir( s_io_config->pwm.ltcSync, GPIO_OUT );
+    gpio_put( s_io_config->pwm.ltcSync, 1 );
 
     /*-------------------------------------------------------------------------
     Power up the SPI control lines
     -------------------------------------------------------------------------*/
-    gpio_init( config.spi.sck );
-    gpio_set_function( config.spi.sck, GPIO_FUNC_SPI );
-    gpio_pull_down( config.spi.sck );
+    gpio_init( s_io_config->spi.sck );
+    gpio_set_function( s_io_config->spi.sck, GPIO_FUNC_SPI );
+    gpio_pull_down( s_io_config->spi.sck );
 
-    gpio_init( config.spi.mosi );
-    gpio_set_function( config.spi.mosi, GPIO_FUNC_SPI );
-    gpio_pull_down( config.spi.mosi );
+    gpio_init( s_io_config->spi.mosi );
+    gpio_set_function( s_io_config->spi.mosi, GPIO_FUNC_SPI );
+    gpio_pull_down( s_io_config->spi.mosi );
 
-    gpio_init( config.spi.miso );
-    gpio_set_function( config.spi.miso, GPIO_FUNC_SPI );
-    gpio_pull_up( config.spi.miso ); // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
+    gpio_init( s_io_config->spi.miso );
+    gpio_set_function( s_io_config->spi.miso, GPIO_FUNC_SPI );
+    gpio_pull_up( s_io_config->spi.miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
 
-    gpio_init( config.gpio.spiCs0 );
-    gpio_set_dir( config.gpio.spiCs0, GPIO_OUT );
-    gpio_pull_up( config.gpio.spiCs0 );
-    gpio_put( config.gpio.spiCs0, 1 );
+    gpio_init( s_io_config->gpio.spiCs0 );
+    gpio_set_dir( s_io_config->gpio.spiCs0, GPIO_OUT );
+    gpio_pull_up( s_io_config->gpio.spiCs0 );
+    gpio_put( s_io_config->gpio.spiCs0, 1 );
 
     /*-------------------------------------------------------------------------
     Initialize the SPI peripheral
     -------------------------------------------------------------------------*/
-    const uint act_baud = spi_init( SPI, SPI_BAUD );
+    const uint act_baud = spi_init( s_io_config->spi.pHw, SPI_BAUD );
     if( act_baud > SPI_BAUD )
     {
-      Panic::throwError( Panic::ErrorCode::SYSTEM_INIT_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_SYSTEM_INIT_FAIL );
     }
 
-    spi_set_format( SPI, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST );
+    spi_set_format( s_io_config->spi.pHw, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST );
 
     /*-------------------------------------------------------------------------
     Map error handlers for the LTC7871 driver
     -------------------------------------------------------------------------*/
-    Panic::registerHandler( Panic::ErrorCode::LTC7871_PEC_READ_FAIL, on_ltc_error );
-    Panic::registerHandler( Panic::ErrorCode::LTC7871_DATA_READ_FAIL, on_ltc_error );
-    Panic::registerHandler( Panic::ErrorCode::LTC7871_PEC_WRITE_FAIL, on_ltc_error );
-    Panic::registerHandler( Panic::ErrorCode::LTC7871_DATA_WRITE_FAIL, on_ltc_error );
+    for( size_t ecode = Panic::_ERR_LTC_START; ecode < Panic::_ERR_LTC_END; ecode++ )
+    {
+      Panic::registerHandler( static_cast<Panic::ErrorCode>( ecode ), Private::on_ltc_error );
+    }
   }
 
 
   void postSequence()
   {
-    const uint8_t cfg1_reg = read_register( REG_MFR_CONFIG1 );
-    const uint8_t cfg2_reg = read_register( REG_MFR_CONFIG2 );
+    /*-------------------------------------------------------------------------
+    Ensure the LTC7871 is in a known state. The CML bit is sticky and it's not
+    guaranteed the RP2040 and LTC7871 powered up together. Without this being
+    cleared, this driver is going to error out rather quickly.
+    -------------------------------------------------------------------------*/
+    Private::clear_communication_fault();
+    Private::reset_configuration();
+
+    /*-------------------------------------------------------------------------
+    Read in the HW strapping configuration to determine what operational
+    paramters the LTC7871 decided on during power up. This ensures our software
+    algorithms don't conflict with the hardware. For a trivial example, it
+    would be really unfortunate if the MFR_CONFIG2_BUCK_BOOST bit was set to
+    boost mode, because the software assumes we're always in buck mode.
+    -------------------------------------------------------------------------*/
+    const uint8_t cfg1_reg = Private::read_register( REG_MFR_CONFIG1 );
+    const uint8_t cfg2_reg = Private::read_register( REG_MFR_CONFIG2 );
   }
 
 
@@ -136,40 +142,78 @@ namespace HW::LTC7871
   }
 
 
-  /*---------------------------------------------------------------------------
-  Private Functions
-  ---------------------------------------------------------------------------*/
 
-  /**
-   * @brief Write a register on the LTC7871 with the given data.
-   *
-   * This function ensures that either the data is fully committed without
-   * error, or the LTC7871 is placed into a fault state and the system is
-   * shutdown.
-   *
-   * @param reg Register address to write to
-   * @param data Data to write to the register
-   */
-  static void write_register( const uint8_t reg, const uint8_t data )
+  void Private::clear_communication_fault()
+  {
+    /*-------------------------------------------------------------------------
+    Clear the CML bit in the MFR_CHIP_CTRL register
+    -------------------------------------------------------------------------*/
+    uint8_t ctrl_reg = read_register( REG_MFR_CHIP_CTRL );
+    if( ( ctrl_reg & MFR_CHIP_CTRL_CML_Msk ) == MFR_CHIP_CTRL_CML_Normal )
+    {
+      return;
+    }
+
+    ctrl_reg |= MFR_CHIP_CTRL_CML_Fault;
+    write_register( REG_MFR_CHIP_CTRL, ctrl_reg );
+
+    /*-------------------------------------------------------------------------
+    Ensure the fault was cleared
+    -------------------------------------------------------------------------*/
+    ctrl_reg = read_register( REG_MFR_CHIP_CTRL );
+    if( ( ctrl_reg & MFR_CHIP_CTRL_CML_Msk ) != MFR_CHIP_CTRL_CML_Normal )
+    {
+      Panic::throwError( Panic::ErrorCode::ERR_LTC_CMD_FAIL );
+    }
+  }
+
+
+  void Private::reset_configuration()
+  {
+    /*-------------------------------------------------------------------------
+    Request a reset through the MFR_CHIP_CTRL register. The datasheet claims
+    this bit is sticky, so we need to set it to 1, then back to 0 to clear it.
+    -------------------------------------------------------------------------*/
+    write_register( REG_MFR_CHIP_CTRL, MFR_CHIP_CTRL_RESET );
+    write_register( REG_MFR_CHIP_CTRL, 0u );
+
+    /*-------------------------------------------------------------------------
+    Validate all the R/W registers are in their default state (0x00)
+    -------------------------------------------------------------------------*/
+    const etl::array<uint8_t, 5> regs_to_check{
+      REG_MFR_CHIP_CTRL,
+      REG_MFR_IDAC_VLOW,
+      REG_MFR_IDAC_VHIGH,
+      REG_MFR_IDAC_SETCUR,
+      REG_MFR_SSFM
+    };
+
+    for( const auto &reg : regs_to_check )
+    {
+      const uint8_t actual = read_register( reg );
+      Panic::assertion( actual == 0x00, Panic::ErrorCode::ERR_LTC_CMD_FAIL );
+    }
+  }
+
+
+  void Private::write_register( const uint8_t reg, const uint8_t data )
   {
     /*-------------------------------------------------------------------------
     Compute the buffer to send over SPI
     -------------------------------------------------------------------------*/
-    spi_txfr_buffer_t tx_buf = { static_cast<uint8_t>( ( reg << 1u ) & 0xFF ), data, PEC_INIT };
-    tx_buf[ LTC_PEC_IDX ] = compute_pec( tx_buf );
+    spi_txfr_buffer_t tx_buf = { static_cast<uint8_t>( ( reg << 1u ) & 0xFF ), data, 0 };
+    tx_buf[ LTC_PEC_IDX ]    = compute_pec( tx_buf[ LTC_ADDR_IDX ], data );
 
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
     -------------------------------------------------------------------------*/
-    auto config = BSP::getIOConfig();
-
-    gpio_put( config.gpio.spiCs0, 0 );
-    const int write_size = spi_write_blocking( SPI, tx_buf.data(), tx_buf.size() );
-    gpio_put( config.gpio.spiCs0, 1 );
+    gpio_put( s_io_config->gpio.spiCs0, 0 );
+    const int write_size = spi_write_blocking( s_io_config->spi.pHw, tx_buf.data(), tx_buf.size() );
+    gpio_put( s_io_config->gpio.spiCs0, 1 );
 
     if( write_size != static_cast<int>( tx_buf.size() ) )
     {
-      Panic::throwError( Panic::ErrorCode::LTC7871_DATA_WRITE_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_LTC_DATA_WRITE_FAIL );
     }
 
     /*-------------------------------------------------------------------------
@@ -178,105 +222,88 @@ namespace HW::LTC7871
     const auto ctrl_reg = read_register( REG_MFR_CHIP_CTRL );
     if( ( ctrl_reg & MFR_CHIP_CTRL_CML_Msk ) == MFR_CHIP_CTRL_CML_Fault )
     {
-      Panic::throwError( Panic::ErrorCode::LTC7871_PEC_WRITE_FAIL );
-    }
-
-    const auto applied_data = read_register( reg );
-    if( applied_data != data )
-    {
-      Panic::throwError( Panic::ErrorCode::LTC7871_DATA_WRITE_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_LTC_PEC_WRITE_FAIL );
     }
   }
 
 
-  /**
-   * @brief Reads a register from the LTC7871.
-   *
-   * This function ensures that the data read is valid by checking the PEC code
-   * that is returned with the data. Should an error occur, the LTC7871 is placed
-   * into a fault state and the system is shutdown.
-   *
-   * @param reg Register address to read from
-   * @return uint8_t Data read from the register
-   */
-  static uint8_t read_register( const uint8_t reg )
+  uint8_t Private::read_register( const uint8_t reg )
   {
     /*-------------------------------------------------------------------------
     Prepare data for the read
     -------------------------------------------------------------------------*/
-    const uint8_t read_addr = ( reg << 1u ) | 1u;
-    spi_txfr_buffer_t rx_buf = {};
+    spi_txfr_buffer_t rx_buf = { 0, 0, 0 };
+    const uint8_t read_cmd = static_cast<uint8_t>( ( reg << 1u ) | 1u );
 
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
     -------------------------------------------------------------------------*/
-    auto config = BSP::getIOConfig();
+    gpio_put( s_io_config->gpio.spiCs0, 0 );
+    const int read_size = spi_read_blocking( s_io_config->spi.pHw, read_cmd, rx_buf.data(), rx_buf.size() );
+    gpio_put( s_io_config->gpio.spiCs0, 1 );
 
-    gpio_put( config.gpio.spiCs0, 0 );
-    const int read_size = spi_read_blocking( SPI, read_addr, rx_buf.data(), rx_buf.size() );
-    gpio_put( config.gpio.spiCs0, 1 );
-
-    if ( read_size != static_cast<int>( rx_buf.size() ) )
+    if( read_size != static_cast<int>( rx_buf.size() ) )
     {
-      Panic::throwError( Panic::ErrorCode::LTC7871_DATA_READ_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_LTC_DATA_READ_FAIL );
     }
 
     /*-------------------------------------------------------------------------
     Validate the PEC code, calculated over the address we sent + the returned
     data byte.
     -------------------------------------------------------------------------*/
-    rx_buf[ LTC_REG_IDX ] = read_addr;
-    rx_buf[ LTC_REG_IDX ] = reg; // testing?
-    const uint8_t pec = compute_pec( rx_buf );
+    const uint8_t pec = compute_pec( read_cmd, rx_buf[ LTC_DATA_IDX ] );
 
     if( pec != rx_buf[ LTC_PEC_IDX ] )
     {
-      Panic::throwError( Panic::ErrorCode::LTC7871_PEC_READ_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_LTC_PEC_READ_FAIL );
     }
 
     return rx_buf[ LTC_DATA_IDX ];
   }
 
 
-  /**
-   * @brief Computes the PEC code for the given buffer
-   *
-   * @param buffer Buffer to compute the PEC code for
-   * @return uint8_t PEC code
-   */
-  static uint8_t compute_pec( const spi_txfr_buffer_t &buffer )
+  uint8_t Private::compute_pec( const uint8_t addr, const uint8_t data )
   {
-    // Datasheet states the PEC is calculated over address and data bytes
-    uint16_t data = static_cast<uint16_t>( buffer[ 0 ] << 8u | buffer[ 1 ] );
-    uint16_t pec  = PEC_INIT;
+    /*-------------------------------------------------------------------------
+    Initialize the algorithm according to pg. 33 of the LTC7871 datasheet
+    -------------------------------------------------------------------------*/
+    uint16_t tmp = static_cast<uint16_t>( addr << 8u | data );
+    uint16_t pec = 0x41;
 
-    // Iterate from MSB first
+    /*-------------------------------------------------------------------------
+    Compute the PEC code for the given data. Must iterate MSB first since that
+    is what the LTC7871 is doing (see Figure 14).
+    -------------------------------------------------------------------------*/
     for( int i = 15; i >= 0; i-- )
     {
-      uint8_t din = ( data >> i ) & 1u;              // Get the current data bit
-      uint8_t in0 = din ^ ( ( pec >> 7u ) & 1u );    // XOR the highest PEC bit with the current data bit
-      uint8_t in1 = in0 ^ ( ( pec >> 0u ) & 1u );    // XOR lowest PEC bit with the result of the previous XOR
-      uint8_t in2 = in0 ^ ( ( pec >> 1u ) & 1u );    // XOR the second lowest PEC bit with the result of the first XOR
+      const uint16_t din = ( tmp >> i ) & 1u;               // Get the current data bit
+      const uint16_t in0 = din ^ ( ( pec >> 7u ) & 1u );    // XOR the highest PEC bit with the current data bit
+      const uint16_t in1 = in0 ^ ( ( pec >> 0u ) & 1u );    // XOR lowest PEC bit with the result of the previous XOR
+      const uint16_t in2 = in0 ^ ( ( pec >> 1u ) & 1u );    // XOR the second lowest PEC bit with the result of the first XOR
 
       // Shift PEC left by 1 and update lowest bits
-      pec = ( pec << 1u ) & 0xF8;
-      pec |= ( in2 | in1 | in0 ) & 0x07;
+      pec = ( pec << 1u ) & 0xF8u;
+      pec |= ( ( in2 << 2u ) | ( in1 << 1u ) | in0 ) & 0x07u;
+      pec &= 0xFFu;
     }
 
     return pec;
   }
 
 
-  /**
-   * @brief Error handler for PEC calculation failures
-   *
-   * @param err Error code that was thrown
-   * @return bool
-   */
-  static bool on_ltc_error( const Panic::ErrorCode &err )
+  bool Private::on_ltc_error( const Panic::ErrorCode &err )
   {
     // SHIT. Need to handle this. It's basically a critical shutdown event. We cannot
     // ever lose control of the registers.
+
+    // Unrecoverable:
+    // - ERR_LTC_PEC_READ_FAIL
+    // - ERR_LTC_PEC_WRITE_FAIL
+    // - ERR_LTC_DATA_READ_FAIL
+    // - ERR_LTC_DATA_WRITE_FAIL
+
+    // Potentially Recoverable:
+    // - ERR_LTC_CMD_FAIL
     return true;
   }
 }    // namespace HW::LTC7871

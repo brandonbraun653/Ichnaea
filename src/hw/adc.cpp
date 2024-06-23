@@ -52,7 +52,7 @@ namespace HW::ADC
       case 29:
         return 3;
       default:
-        Panic::throwError( Panic::ErrorCode::INVALID_PARAM );
+        Panic::throwError( Panic::ErrorCode::ERR_INVALID_PARAM );
         return 255;
     }
   }
@@ -119,7 +119,7 @@ namespace HW::ADC
       volatile float voltage = getVoltage( i );
       if( voltage < 0.0f )
       {
-        Panic::throwError( Panic::ErrorCode::POST_FAIL );
+        Panic::throwError( Panic::ErrorCode::ERR_POST_FAIL );
       }
     }
   }
@@ -134,14 +134,14 @@ namespace HW::ADC
     -------------------------------------------------------------------------*/
     if( channel >= Channel::NUM_OPTIONS )
     {
-      Panic::throwError( Panic::ErrorCode::INVALID_PARAM );
+      Panic::throwError( Panic::ErrorCode::ERR_INVALID_PARAM );
       return -1.0f;
     }
 
     if( System::inISR() )
     {
       /* Trying to control mutexes, HW, and timing in an ISR? No no.*/
-      Panic::throwError( Panic::ErrorCode::INVALID_CONTEXT );
+      Panic::throwError( Panic::ErrorCode::ERR_INVALID_CONTEXT );
       return -1.0f;
     }
 
@@ -205,7 +205,7 @@ namespace HW::ADC
   {
     if( channel >= Channel::NUM_OPTIONS )
     {
-      Panic::throwError( Panic::ErrorCode::INVALID_PARAM );
+      Panic::throwError( Panic::ErrorCode::ERR_INVALID_PARAM );
       return -1.0f;
     }
 

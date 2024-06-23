@@ -156,6 +156,8 @@ namespace HW::LTC7871
   /*---------------------------------------------------------------------------
   MFR_CHIP_CTRL
   ---------------------------------------------------------------------------*/
+  static constexpr uint8_t MFR_CHIP_CTRL_Msk = 0x07;
+
   static constexpr uint8_t MFR_CHIP_CTRL_WP_Pos     = 0;
   static constexpr uint8_t MFR_CHIP_CTRL_WP_Msk     = 1u << MFR_CHIP_CTRL_WP_Pos;
   static constexpr uint8_t MFR_CHIP_CTRL_WP_Disable = 0u << MFR_CHIP_CTRL_WP_Pos;

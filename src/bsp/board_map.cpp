@@ -73,7 +73,7 @@ namespace BSP
     else
     {
       // Fill this in later when we have more versions on V2.
-      Panic::throwError( Panic::ErrorCode::BOARD_VERSION_READ_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_BOARD_VERSION_READ_FAIL );
     }
 
     return -1;
@@ -97,7 +97,7 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Route error handling behavior through the panic system
     -------------------------------------------------------------------------*/
-    Panic::registerHandler( Panic::ErrorCode::BOARD_VERSION_READ_FAIL, Panic::Handlers::FailToReadBoardVersion );
+    Panic::registerHandler( Panic::ErrorCode::ERR_BOARD_VERSION_READ_FAIL, Panic::Handlers::FailToReadBoardVersion );
 
     /*-------------------------------------------------------------------------
     Initialize and read the ADC pin used for board versioning
@@ -111,7 +111,7 @@ namespace BSP
     int selected_version = convert_adc_to_version( version_voltage );
     if ( selected_version < 0 )
     {
-      Panic::throwError( Panic::ErrorCode::BOARD_VERSION_READ_FAIL );
+      Panic::throwError( Panic::ErrorCode::ERR_BOARD_VERSION_READ_FAIL );
     }
 
     s_board_map.majorVersion = BSPV1::BOARD_VERSION_MAJOR;
@@ -147,6 +147,7 @@ namespace BSP
       s_board_map.spi.miso       = BSPV1::SPI::PIN_MISO;
       s_board_map.spi.mosi       = BSPV1::SPI::PIN_MOSI;
       s_board_map.spi.sck        = BSPV1::SPI::PIN_SCK;
+      s_board_map.spi.pHw        = spi1;
       s_board_map.uart.rx        = BSPV1::UART::PIN_RX;
       s_board_map.uart.tx        = BSPV1::UART::PIN_TX;
     }
