@@ -30,8 +30,11 @@ namespace HW::LTC7871
   Constants
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t SPI_BAUD = 4'000'000; /**< Max clock for LTC7871 is 5MHz */
-  static constexpr uint8_t PEC_INIT = 0x41; /**< Initial PEC value for LTC7871 */
+  static constexpr size_t  SPI_BAUD     = 1'000'000; /**< Max clock for LTC7871 is 5MHz */
+  static constexpr uint8_t PEC_INIT     = 0x41;      /**< Initial PEC value for LTC7871 */
+  static constexpr size_t  LTC_REG_IDX  = 0;
+  static constexpr size_t  LTC_DATA_IDX = 1;
+  static constexpr size_t  LTC_PEC_IDX  = 2;
 
   /*---------------------------------------------------------------------------
   Aliases
@@ -60,9 +63,10 @@ namespace HW::LTC7871
     Power up the GPIO control lines
     -------------------------------------------------------------------------*/
     /* Ensures the controller is off */
+    // TODO BMB: This needs to be swapped over to an output for mosfet control in V2.
     gpio_init( config.gpio.ltcRun );
-    gpio_set_dir( config.gpio.ltcRun, GPIO_OUT );
-    gpio_put( config.gpio.ltcRun, 0 );
+    gpio_set_dir( config.gpio.ltcRun, GPIO_IN );
+    gpio_pull_up( config.gpio.ltcRun );
 
     /* Set the mode control to Burst */
     gpio_init( config.gpio.ltcCcm );
@@ -91,7 +95,7 @@ namespace HW::LTC7871
 
     gpio_init( config.spi.miso );
     gpio_set_function( config.spi.miso, GPIO_FUNC_SPI );
-    gpio_pull_down( config.spi.miso );
+    gpio_pull_up( config.spi.miso ); // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
 
     gpio_init( config.gpio.spiCs0 );
     gpio_set_dir( config.gpio.spiCs0, GPIO_OUT );
@@ -121,7 +125,8 @@ namespace HW::LTC7871
 
   void postSequence()
   {
-    // TODO: validate the CONFIG1/2 reigster settings to inspect hw state on boot.
+    const uint8_t cfg1_reg = read_register( REG_MFR_CONFIG1 );
+    const uint8_t cfg2_reg = read_register( REG_MFR_CONFIG2 );
   }
 
 
@@ -151,14 +156,16 @@ namespace HW::LTC7871
     Compute the buffer to send over SPI
     -------------------------------------------------------------------------*/
     spi_txfr_buffer_t tx_buf = { static_cast<uint8_t>( ( reg << 1u ) & 0xFF ), data, PEC_INIT };
-    tx_buf[ 2 ] = compute_pec( tx_buf );
+    tx_buf[ LTC_PEC_IDX ] = compute_pec( tx_buf );
 
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
     -------------------------------------------------------------------------*/
-    gpio_put( BSP::getIOConfig().gpio.spiCs0, 0 );
+    auto config = BSP::getIOConfig();
+
+    gpio_put( config.gpio.spiCs0, 0 );
     const int write_size = spi_write_blocking( SPI, tx_buf.data(), tx_buf.size() );
-    gpio_put( BSP::getIOConfig().gpio.spiCs0, 1 );
+    gpio_put( config.gpio.spiCs0, 1 );
 
     if( write_size != static_cast<int>( tx_buf.size() ) )
     {
@@ -203,9 +210,11 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
     -------------------------------------------------------------------------*/
-    gpio_put( BSP::getIOConfig().gpio.spiCs0, 0 );
+    auto config = BSP::getIOConfig();
+
+    gpio_put( config.gpio.spiCs0, 0 );
     const int read_size = spi_read_blocking( SPI, read_addr, rx_buf.data(), rx_buf.size() );
-    gpio_put( BSP::getIOConfig().gpio.spiCs0, 1 );
+    gpio_put( config.gpio.spiCs0, 1 );
 
     if ( read_size != static_cast<int>( rx_buf.size() ) )
     {
@@ -216,15 +225,16 @@ namespace HW::LTC7871
     Validate the PEC code, calculated over the address we sent + the returned
     data byte.
     -------------------------------------------------------------------------*/
-    rx_buf[ 0 ] = read_addr;
+    rx_buf[ LTC_REG_IDX ] = read_addr;
+    rx_buf[ LTC_REG_IDX ] = reg; // testing?
     const uint8_t pec = compute_pec( rx_buf );
 
-    if( pec != rx_buf[ 2 ] )
+    if( pec != rx_buf[ LTC_PEC_IDX ] )
     {
       Panic::throwError( Panic::ErrorCode::LTC7871_PEC_READ_FAIL );
     }
 
-    return rx_buf[ 1 ];
+    return rx_buf[ LTC_DATA_IDX ];
   }
 
 

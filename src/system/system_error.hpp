@@ -77,6 +77,14 @@ namespace Panic
   bool throwError( const ErrorCode code );
 
   /**
+   * @brief Throws an error if the predicate is false
+   *
+   * @param predicate Condition to evaluate
+   * @param code    Error code to throw if the predicate is false
+   */
+  void assertion( const bool predicate, const ErrorCode code );
+
+  /**
    * @brief Get the last thrown error code
    * @return ErrorCode
    */

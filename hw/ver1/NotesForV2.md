@@ -1,4 +1,4 @@
-# Circuit Updates (Desirements)
+# Circuit Updates
 - Add HV lightning protection, and IO ESD protection
 - Update resistors that come in contact with high voltage input to a better voltage rated part. Currently only rated to 75V and we can technically go up to 90V.
 - Green LEDs next to the SWD connector are far too bright. Might be able to control this with PWM.
@@ -11,7 +11,8 @@ Daisy chaining at the MPPT level doesn't make sense when you're going to join at
 - Add a second interface for debug and system testing control. I don't want to go through the BMS port, which actually needs to be
 exercised for system testing.
 - Add an eeprom or similar for saving settings from the BMS. Need to remember programmed voltage/current limits.
-- Use a pulldown resistor on the LTC RUN pin to force the controller to always boot in an OFF state. Don't know why I inverted this.
+- Add cheap SPI chip for logging asserts/faults. People are going to want to know what went wrong. Might be able to reuse this for the eeprom stuff?
+- Add test points to critical data lines like SPI.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.
@@ -42,6 +43,8 @@ Dang this happened twice. I have two diodes like this.
 - Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
 What I should have done is stuck with a surface mount USB micro B connector, kept the traces short, and moved the connector near the RP2040.
 Specifically I'm thinking next to the lower left ground terminal.
+- LTC7871 SDO pin requires an external pull up resistor (open drain output). Missed that line in the datasheet.
+- Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low while an external resistor pulls it high to 5V. Default 5V pull up NOT on the V5 LTC Pin because that doesn't turn on until the RUN pin is high.
 
 # Assembly Steps (Worked Well)
 - There was so much thermal mass with the copper pours that I needed a hot plate to do all the initial placement and rework. Was truly beautiful. Next

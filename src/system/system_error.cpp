@@ -63,6 +63,14 @@ namespace Panic
   }
 
 
+  void assertion( const bool predicate, const ErrorCode code )
+  {
+    if( !predicate )
+    {
+      throwError( code );
+    }
+  }
+
   ErrorCode getLastError()
   {
     return s_last_error;

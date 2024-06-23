@@ -32,6 +32,7 @@
 			"platform.h": "c",
 			"assert.h": "c",
 			"cstdint": "c"
-		}
+		},
+		"cortex-debug.variableUseNaturalFormat": false
 	}
 }
