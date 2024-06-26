@@ -44,11 +44,12 @@ Dang this happened twice. I have two diodes like this.
 - Failed to connect all 1.1V rail pins together. This prevents the RP2040 from booting.
 - Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
 What I should have done is stuck with a surface mount USB micro B connector, kept the traces short, and moved the connector near the RP2040.
-Specifically I'm thinking next to the lower left ground terminal.
 - LTC7871 SDO pin requires an external pull up resistor (open drain output). Missed that line in the datasheet.
-- Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low while an external resistor pulls it high to 5V. Default 5V pull up NOT on the V5 LTC Pin because that doesn't turn on until the RUN pin is high. This **MUST** always allow the the LTC to free run
-so that a sudden reset of the RP2040 doesn't cause a glitch in the power. It's expected that the
-BMS will provide the required power isolation from this converter before allowing charge to flow.
+- Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low while an external resistor pulls it high to 5V. Default 5V pull up NOT on the V5 LTC pin because that doesn't turn on until the RUN pin is high. This **MUST** always allow the the LTC to free run
+so that a sudden reset of the RP2040 doesn't cause a glitch in the power. It's expected that the BMS will provide the required power isolation from this converter before allowing charge to flow.
+- Control of output ON/OFF is entirely incorrect (see previous comments about the RUN pin). Need to add a MOSFET on the PWMEN pin to pull the
+signal to GND. This will allow the RP2040 to control power ON/OFF behavior without disabling communication with the LTC7871. I need to be able to
+program current/voltage limits to a safe value before enabling the output.
 
 # Assembly Steps (Worked Well)
 - There was so much thermal mass with the copper pours that I needed a hot plate to do all the initial placement and rework. Was truly beautiful. Next

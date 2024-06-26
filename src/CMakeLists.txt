@@ -3,6 +3,7 @@
 # -----------------------------------------------------------------------------
 add_subdirectory(bsp)
 add_subdirectory(hw)
+add_subdirectory(integration/mbedutils)
 add_subdirectory(sim)
 add_subdirectory(system)
 add_subdirectory(threads)
@@ -22,6 +23,7 @@ target_include_directories(Ichnaea_Headers INTERFACE
 add_library(Ichnaea_PicoHeaders INTERFACE)
 target_link_libraries(Ichnaea_PicoHeaders INTERFACE
   # These headers work on all platforms
+  hardware_clocks_headers
   hardware_dma_headers
   hardware_gpio_headers
   hardware_irq_headers
@@ -51,6 +53,7 @@ endif()
 add_library(Ichnaea_PicoLibs INTERFACE)
 target_link_libraries(Ichnaea_PicoLibs INTERFACE
   # These libraries compile on all platforms
+  hardware_clocks
   hardware_dma
   hardware_gpio
   hardware_irq
@@ -75,10 +78,12 @@ target_link_libraries(IchnaeaApp
   Ichnaea_Board
   Ichnaea_Hardware
   Ichnaea_Headers
+  Ichnaea_MbedUtils
   Ichnaea_PicoHeaders
   Ichnaea_PicoLibs
   Ichnaea_System
   Ichnaea_Threads
+  mbedutils_logging
 )
 # Fix annoying linker ordering dependencies that might get introduced
 target_link_options(IchnaeaApp PRIVATE -Wl,--start-group)

@@ -130,6 +130,14 @@ namespace HW::LTC7871
     }
 
     /*-------------------------------------------------------------------------
+    Enable the LTC chip for communication. It's highly likely that these IO are
+    already in the correct state, but we should be explicit about it.
+    -------------------------------------------------------------------------*/
+    // TODO BMB: Add these back in when HW v2 is ready.
+    // gpio_put( s_io_config->gpio.ltcRun, 0 );
+    // gpio_put( s_io_config->gpio.ltcPwmEn, 0 );
+
+    /*-------------------------------------------------------------------------
     Ensure the LTC7871 is in a known state. It's not guaranteed the RP2040 and
     LTC7871 powered up together and we have no clue what happened previously.
     -------------------------------------------------------------------------*/
@@ -169,18 +177,44 @@ namespace HW::LTC7871
 
     const bool is_not_spread_spectrum_mode = ( cfg2_reg & MFR_CONFIG2_SPRD_Msk ) == 0;
     Panic::assertion( is_not_spread_spectrum_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    /*-------------------------------------------------------------------------
+    Making it here means we can transition to the next state
+    -------------------------------------------------------------------------*/
+    s_driver_mode = DriverMode::INITIALIZING;
   }
 
 
   void powerOn()
   {
+    /*-------------------------------------------------------------------------
+    Ensure we're in the correct state to power up the system
+    -------------------------------------------------------------------------*/
+    if( s_driver_mode != DriverMode::INITIALIZING )
+    {
+      // TODO: Log this as a warning
+      return;
+    }
 
+    // TODO: Need to remove R102 on the board. The buffers are pulling the PWMEN line low, preventing power conversion.
+    // TODO: While you're at it, may as well get R104 as well.
+    /*-------------------------------------------------------------------------
+    Decide if we're going to power up the system
+    -------------------------------------------------------------------------*/
+    Private::LTCConfig ltc;
+    if( !Private::resolve_power_on_config( ltc ) )
+    {
+      // TODO: Log this as a warning
+      s_driver_mode = DriverMode::FAULTED;
+      return;
+    }
   }
 
 
   void powerOff()
   {
-
+    // Allow this to be called at any time. It should always be safe to power off.
+    s_driver_mode = DriverMode::INITIALIZING;
   }
 
 
@@ -202,7 +236,7 @@ namespace HW::LTC7871
   }
 
 
-  bool Private::resolve_boot_configuration( SystemConfig &cfg )
+  bool Private::resolve_power_on_config( LTCConfig &cfg )
   {
     /*-------------------------------------------------------------------------
     *IMPORTANT* Really need to read any configuration data from the

@@ -26,9 +26,15 @@ namespace HW::LTC7871::Private
   Structures
   ---------------------------------------------------------------------------*/
 
-  struct SystemConfig
+  /**
+   * @brief Register values to control power conversion setpoints
+   */
+  struct LTCConfig
   {
-
+    uint8_t idac_vlow;   /* Register setting for MFR_IDAC_VLOW */
+    uint8_t idac_vhigh;  /* Register setting for MFR_IDAC_VHIGH */
+    uint8_t idac_setcur; /* Register setting for MFR_IDAC_SETCUR */
+    uint8_t ssfm;        /* Register setting for MFR_SSFM */
   };
 
   /*---------------------------------------------------------------------------
@@ -36,17 +42,18 @@ namespace HW::LTC7871::Private
   ---------------------------------------------------------------------------*/
 
   /**
-   * @brief Decides a safe configuration to apply to the LTC7871 on boot.
+   * @brief Decides a safe configuration to apply to the LTC7871.
    *
    * This will resolve through several data sources to try and determine the
-   * best configuration to apply to the LTC7871 on boot. If no configuration
-   * can be determined safely, this function will return false.
+   * best configuration to apply to the LTC7871 when turning on the high power
+   * conversion hardware. If no configuration can be determined safely, this
+   * function will return false.
    *
    * @param cfg Configuration to update
    * @return true  The resolved configuration is safe
    * @return false Unable to safely resolve a configuration
    */
-  bool resolve_boot_configuration( SystemConfig &cfg );
+  bool resolve_power_on_config( LTCConfig &cfg );
 
   /**
    * @brief Clears the CML bit in the MFR_CHIP_CTRL register
