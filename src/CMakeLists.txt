@@ -16,6 +16,9 @@ target_include_directories(Ichnaea_Headers INTERFACE
   ${CMAKE_CURRENT_SOURCE_DIR}/../
   ${CMAKE_CURRENT_SOURCE_DIR}/../lib/etl/include
 )
+target_link_libraries(Ichnaea_Headers INTERFACE
+  mbedutils_headers
+)
 
 # -----------------------------------------------------------------------------
 # Pico Interface Headers
@@ -83,7 +86,10 @@ target_link_libraries(IchnaeaApp
   Ichnaea_PicoLibs
   Ichnaea_System
   Ichnaea_Threads
+  mbedutils_lib_core
+  mbedutils_lib_pico
   mbedutils_logging
+  mbedutils_logging_bare_metal
 )
 # Fix annoying linker ordering dependencies that might get introduced
 target_link_options(IchnaeaApp PRIVATE -Wl,--start-group)

@@ -17,7 +17,10 @@ Includes
 #include "src/hw/gpio.hpp"
 #include "src/hw/led.hpp"
 #include "src/hw/ltc7871.hpp"
+#include "src/hw/uart.hpp"
 #include "src/system/system_error.hpp"
+#include "src/system/system_logging.hpp"
+#include <mbedutils/assert.hpp>
 
 namespace HW
 {
@@ -31,6 +34,7 @@ namespace HW
     /*-------------------------------------------------------------------------
     Load system dependencies for the hardware (order matters here)
     -------------------------------------------------------------------------*/
+    mbedutils::assert::initialize();
     Panic::powerUp();
     BSP::powerUp();
 
@@ -41,8 +45,14 @@ namespace HW
     HW::GPIO::initialize(); /* Must be first to init IO to a safe state */
     HW::LED::initialize();
     HW::ADC::initialize();
+    HW::UART::initialize();
 
     HW::LTC7871::initialize();
+
+    /*-------------------------------------------------------------------------
+    Initialize system level modules that depend on the hardware
+    -------------------------------------------------------------------------*/
+    Logging::initialize();
   }
 
   void runPostInit()
