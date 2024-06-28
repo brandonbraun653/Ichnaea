@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/time_intf.hpp>
+#include "hardware/timer.h"
 
 namespace mbedutils::time
 {
@@ -21,12 +22,7 @@ namespace mbedutils::time
 
   size_t millis()
   {
-    return 0;
+    return static_cast<size_t>( time_us_64() / 1000 );
   }
 
-
-  size_t micros()
-  {
-    return 0;
-  }
 }  // namespace mbedutils::time

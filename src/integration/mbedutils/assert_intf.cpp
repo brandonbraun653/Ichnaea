@@ -21,6 +21,7 @@ namespace mbedutils::assert
 
   void on_assert_fail( const bool halt, const etl::string_view &msg )
   {
+    __asm volatile("bkpt #0");
   }
 
 }  // namespace mbedutils::assert

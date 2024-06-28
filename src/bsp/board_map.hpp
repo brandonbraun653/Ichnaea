@@ -40,6 +40,14 @@ Includes
 
 namespace BSP
 {
+  /*---------------------------------------------------------------------------
+  Constants
+  ---------------------------------------------------------------------------*/
+
+  static constexpr size_t MAX_NUM_UARTS = 2;
+  static constexpr size_t MAX_NUM_SPI   = 2;
+  static constexpr size_t MAX_NUM_GPIO  = 10;
+
   namespace Internal
   {
     /**

@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/uart_intf.hpp>
+#include "src/hw/uart.hpp"
 
 namespace mbedutils::intf::uart
 {
@@ -21,25 +22,25 @@ namespace mbedutils::intf::uart
 
   int write( const size_t channel, const uint8_t *data, const size_t length )
   {
-    return 0;
+    return static_cast<int>( ::HW::UART::write( channel, data, length ) );
   }
 
 
   size_t tx_available( const size_t channel )
   {
-    return 0;
+    return ::HW::UART::txAvailable( channel );
   }
 
 
   int read( const size_t channel, uint8_t *data, const size_t length )
   {
-    return 0;
+    return static_cast<int>( ::HW::UART::read( channel, data, length ) );
   }
 
 
   size_t rx_available( const size_t channel )
   {
-    return 0;
+    return ::HW::UART::rxAvailable( channel );
   }
 
 }  // namespace mbedutils::intf::uart

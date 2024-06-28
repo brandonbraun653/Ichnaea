@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/cmn_intf.hpp>
+#include "src/bsp/board_map.hpp"
 
 namespace mbedutils::intf
 {
@@ -21,19 +22,40 @@ namespace mbedutils::intf
 
   size_t max_drivers( const Driver driver )
   {
-    return 0;
+    switch( driver )
+    {
+      case Driver::UART:
+        return 0;
+
+      default:
+        return 0;
+    }
   }
 
 
   size_t max_driver_index( const Driver driver )
   {
-    return 0;
+    switch( driver )
+    {
+      case Driver::UART:
+        return 0;
+
+      default:
+        return 0;
+    }
   }
 
 
   bool is_driver_available( const Driver driver, const size_t channel )
   {
-    return false;
+    switch( driver )
+    {
+      case Driver::UART:
+        return false;
+
+      default:
+        return false;
+    }
   }
 
 }  // namespace mbedutils::cmn
