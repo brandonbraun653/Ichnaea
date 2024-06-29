@@ -11,36 +11,55 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include <mbedutils/interfaces/uart_intf.hpp>
+#include <mbedutils/interfaces/serial_intf.hpp>
 #include "src/hw/uart.hpp"
 
-namespace mb::intf::uart
+namespace mb::intf::serial
 {
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  int write( const size_t channel, const uint8_t *data, const size_t length )
+  bool lock( const size_t channel, const size_t timeout )
   {
-    return static_cast<int>( ::HW::UART::write( channel, data, length ) );
+    return false;
   }
 
 
-  size_t tx_available( const size_t channel )
+  void unlock( const size_t channel )
   {
-    return ::HW::UART::txAvailable( channel );
   }
 
 
-  int read( const size_t channel, uint8_t *data, const size_t length )
+  int async_write( const size_t channel, const void *data, const size_t length )
   {
-    return static_cast<int>( ::HW::UART::read( channel, data, length ) );
+    return -1;
   }
 
 
-  size_t rx_available( const size_t channel )
+  void on_tx_complete( const size_t channel, TXCompleteCallback callback )
   {
-    return ::HW::UART::rxAvailable( channel );
   }
 
-}  // namespace mb::intf::uart
+
+  void abort_write( const size_t channel )
+  {
+  }
+
+
+  int async_read( const size_t channel, void *data, const size_t length )
+  {
+    return -1;
+  }
+
+
+  void on_rx_complete( const size_t channel, RXCompleteCallback callback )
+  {
+  }
+
+
+  void abort_read( const size_t channel )
+  {
+  }
+
+}    // namespace mb::intf::uart

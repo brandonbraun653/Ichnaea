@@ -14,7 +14,7 @@ Includes
 #include <mbedutils/interfaces/cmn_intf.hpp>
 #include "src/bsp/board_map.hpp"
 
-namespace mb::intf
+namespace mb::hw
 {
   /*---------------------------------------------------------------------------
   Public Functions
@@ -58,4 +58,4 @@ namespace mb::intf
     }
   }
 
-}  // namespace mb::cmn
+}  // namespace mb::hw
