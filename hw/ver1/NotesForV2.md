@@ -50,6 +50,7 @@ so that a sudden reset of the RP2040 doesn't cause a glitch in the power. It's e
 - Control of output ON/OFF is entirely incorrect (see previous comments about the RUN pin). Need to add a MOSFET on the PWMEN pin to pull the
 signal to GND. This will allow the RP2040 to control power ON/OFF behavior without disabling communication with the LTC7871. I need to be able to
 program current/voltage limits to a safe value before enabling the output.
+- Pin header for connecting to the BMS needs to change. I just ripped it off accidentally.
 
 # Assembly Steps (Worked Well)
 - There was so much thermal mass with the copper pours that I needed a hot plate to do all the initial placement and rework. Was truly beautiful. Next
