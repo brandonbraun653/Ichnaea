@@ -21,6 +21,7 @@ Includes
 #include "src/system/system_error.hpp"
 #include "src/system/system_logging.hpp"
 #include <mbedutils/assert.hpp>
+#include <mbedutils/osal.hpp>
 
 namespace HW
 {
@@ -34,6 +35,7 @@ namespace HW
     /*-------------------------------------------------------------------------
     Load system dependencies for the hardware (order matters here)
     -------------------------------------------------------------------------*/
+    mb::osal::initOSALDrivers();
     mb::assert::initialize();
     Panic::powerUp();
     BSP::powerUp();

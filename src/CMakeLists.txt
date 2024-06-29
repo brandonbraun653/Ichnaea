@@ -62,6 +62,7 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   hardware_irq
   hardware_pwm
   hardware_spi
+  hardware_uart
   pico_multicore
   pico_platform
   pico_stdlib

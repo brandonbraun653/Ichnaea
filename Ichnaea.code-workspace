@@ -85,7 +85,8 @@
 			"istream": "cpp",
 			"set": "cpp",
 			"sstream": "cpp",
-			"text_encoding": "cpp"
+			"text_encoding": "cpp",
+			"condition_variable": "cpp"
 		},
 		"cortex-debug.variableUseNaturalFormat": false,
 		"output.smartScroll.enabled": false
