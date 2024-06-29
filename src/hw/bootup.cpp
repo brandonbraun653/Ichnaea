@@ -34,7 +34,7 @@ namespace HW
     /*-------------------------------------------------------------------------
     Load system dependencies for the hardware (order matters here)
     -------------------------------------------------------------------------*/
-    mbedutils::assert::initialize();
+    mb::assert::initialize();
     Panic::powerUp();
     BSP::powerUp();
 

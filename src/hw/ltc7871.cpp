@@ -59,54 +59,60 @@ namespace HW::LTC7871
     -------------------------------------------------------------------------*/
     /* Ensures the controller is off */
     // TODO BMB: This needs to be swapped over to an output for mosfet control in V2.
-    gpio_init( s_io_config->gpio.ltcRun );
-    gpio_set_dir( s_io_config->gpio.ltcRun, GPIO_IN );
-    gpio_pull_up( s_io_config->gpio.ltcRun );
+    uint pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_RUN );
+    gpio_init( pin );
+    gpio_set_dir( pin, GPIO_IN );
+    gpio_pull_up( pin );
 
     /* Set the mode control to Burst */
-    gpio_init( s_io_config->gpio.ltcCcm );
-    gpio_set_dir( s_io_config->gpio.ltcCcm, GPIO_OUT );
-    gpio_put( s_io_config->gpio.ltcCcm, 0 );
+    pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_CCM );
+    gpio_init( pin );
+    gpio_set_dir( pin, GPIO_OUT );
+    gpio_put( pin, 0 );
 
-    gpio_init( s_io_config->gpio.ltcDcm );
-    gpio_set_dir( s_io_config->gpio.ltcDcm, GPIO_OUT );
-    gpio_put( s_io_config->gpio.ltcDcm, 0 );
+    pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_DCM );
+    gpio_init( pin );
+    gpio_set_dir( pin, GPIO_OUT );
+    gpio_put( pin, 0 );
 
     /* Use the FREQ pin resistor to set initial switching frequency */
-    gpio_init( s_io_config->pwm.ltcSync );
-    gpio_set_dir( s_io_config->pwm.ltcSync, GPIO_OUT );
-    gpio_put( s_io_config->pwm.ltcSync, 1 );
+    pin = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LTC_SYNC );
+    gpio_init( pin );
+    gpio_set_dir( pin, GPIO_OUT );
+    gpio_put( pin, 1 );
 
     /*-------------------------------------------------------------------------
     Power up the SPI control lines
     -------------------------------------------------------------------------*/
-    gpio_init( s_io_config->spi.sck );
-    gpio_set_function( s_io_config->spi.sck, GPIO_FUNC_SPI );
-    gpio_pull_down( s_io_config->spi.sck );
+    gpio_init( s_io_config->spi[ BSP::SPI_LTC7871 ].sck );
+    gpio_set_function( s_io_config->spi[ BSP::SPI_LTC7871 ].sck, GPIO_FUNC_SPI );
+    gpio_pull_down( s_io_config->spi[ BSP::SPI_LTC7871 ].sck );
 
-    gpio_init( s_io_config->spi.mosi );
-    gpio_set_function( s_io_config->spi.mosi, GPIO_FUNC_SPI );
-    gpio_pull_down( s_io_config->spi.mosi );
+    gpio_init( s_io_config->spi[ BSP::SPI_LTC7871 ].mosi );
+    gpio_set_function( s_io_config->spi[ BSP::SPI_LTC7871 ].mosi, GPIO_FUNC_SPI );
+    gpio_pull_down( s_io_config->spi[ BSP::SPI_LTC7871 ].mosi );
 
-    gpio_init( s_io_config->spi.miso );
-    gpio_set_function( s_io_config->spi.miso, GPIO_FUNC_SPI );
-    gpio_pull_up( s_io_config->spi.miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
+    gpio_init( s_io_config->spi[ BSP::SPI_LTC7871 ].miso );
+    gpio_set_function( s_io_config->spi[ BSP::SPI_LTC7871 ].miso, GPIO_FUNC_SPI );
+    gpio_pull_up( s_io_config->spi[ BSP::SPI_LTC7871 ].miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
 
-    gpio_init( s_io_config->gpio.spiCs0 );
-    gpio_set_dir( s_io_config->gpio.spiCs0, GPIO_OUT );
-    gpio_pull_up( s_io_config->gpio.spiCs0 );
-    gpio_put( s_io_config->gpio.spiCs0, 1 );
+    pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    gpio_init( pin );
+    gpio_set_dir( pin, GPIO_OUT );
+    gpio_pull_up( pin );
+    gpio_put( pin, 1 );
 
     /*-------------------------------------------------------------------------
     Initialize the SPI peripheral
     -------------------------------------------------------------------------*/
-    const uint act_baud = spi_init( s_io_config->spi.pHw, SPI_BAUD );
+    auto pSPI = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
+    const uint act_baud = spi_init( pSPI, SPI_BAUD );
     if( act_baud > SPI_BAUD )
     {
       Panic::throwError( Panic::ErrorCode::ERR_SYSTEM_INIT_FAIL );
     }
 
-    spi_set_format( s_io_config->spi.pHw, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST );
+    spi_set_format( pSPI, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST );
 
     /*-------------------------------------------------------------------------
     Map error handlers for the LTC7871 driver
@@ -321,6 +327,9 @@ namespace HW::LTC7871
 
   void Private::write_register( const uint8_t reg, const uint8_t data )
   {
+    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    auto       pSPI   = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
+
     /*-------------------------------------------------------------------------
     Compute the buffer to send over SPI
     -------------------------------------------------------------------------*/
@@ -330,9 +339,9 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
     -------------------------------------------------------------------------*/
-    gpio_put( s_io_config->gpio.spiCs0, 0 );
-    const int write_size = spi_write_blocking( s_io_config->spi.pHw, tx_buf.data(), tx_buf.size() );
-    gpio_put( s_io_config->gpio.spiCs0, 1 );
+    gpio_put( cs_pin, 0 );
+    const int write_size = spi_write_blocking( pSPI, tx_buf.data(), tx_buf.size() );
+    gpio_put( cs_pin, 1 );
 
     if( write_size != static_cast<int>( tx_buf.size() ) )
     {
@@ -352,6 +361,9 @@ namespace HW::LTC7871
 
   uint8_t Private::read_register( const uint8_t reg )
   {
+    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    auto       pSPI   = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
+
     /*-------------------------------------------------------------------------
     Prepare data for the read
     -------------------------------------------------------------------------*/
@@ -361,9 +373,9 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Perform the SPI transfer
     -------------------------------------------------------------------------*/
-    gpio_put( s_io_config->gpio.spiCs0, 0 );
-    const int read_size = spi_read_blocking( s_io_config->spi.pHw, read_cmd, rx_buf.data(), rx_buf.size() );
-    gpio_put( s_io_config->gpio.spiCs0, 1 );
+    gpio_put( cs_pin, 0 );
+    const int read_size = spi_read_blocking( pSPI, read_cmd, rx_buf.data(), rx_buf.size() );
+    gpio_put( cs_pin, 1 );
 
     if( read_size != static_cast<int>( rx_buf.size() ) )
     {

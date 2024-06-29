@@ -3,7 +3,7 @@
  *    assert_intf.cpp
  *
  *  Description:
- *    Ichnaea integration of the mbedutils assert interface
+ *    Ichnaea integration of the mb assert interface
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -13,7 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/assert_intf.hpp>
 
-namespace mbedutils::assert
+namespace mb::assert
 {
   /*---------------------------------------------------------------------------
   Public Functions
@@ -24,4 +24,4 @@ namespace mbedutils::assert
     __asm volatile("bkpt #0");
   }
 
-}  // namespace mbedutils::assert
+}  // namespace mb::assert

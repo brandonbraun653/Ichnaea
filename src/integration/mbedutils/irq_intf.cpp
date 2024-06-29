@@ -3,7 +3,7 @@
  *    irq_intf.cpp
  *
  *  Description:
- *    Ichnaea integration of the mbedutils IRQ interface
+ *    Ichnaea integration of the mb IRQ interface
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -16,7 +16,7 @@ Includes
 #include "src/system/system_util.hpp"
 #include "hardware/sync.h"
 
-namespace mbedutils::irq
+namespace mb::irq
 {
   /*---------------------------------------------------------------------------
   Static Data
@@ -45,4 +45,4 @@ namespace mbedutils::irq
     restore_interrupts( s_saved_interrupt_mask );
   }
 
-}    // namespace mbedutils::irq
+}    // namespace mb::irq

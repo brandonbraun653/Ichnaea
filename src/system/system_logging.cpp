@@ -21,8 +21,8 @@ namespace Logging
   Static Data
   ---------------------------------------------------------------------------*/
 
-  static mbedutils::logging::UARTSink        s_uart_sink;
-  static mbedutils::logging::SinkHandle_rPtr s_uart_handle;
+  static mb::logging::UARTSink        s_uart_sink;
+  static mb::logging::SinkHandle_rPtr s_uart_handle;
 
 
   /*---------------------------------------------------------------------------
@@ -31,9 +31,9 @@ namespace Logging
 
   void initialize()
   {
-    using namespace mbedutils::logging;
+    using namespace mb::logging;
 
-    mbedutils::logging::initialize();
+    mb::logging::initialize();
 
     s_uart_sink.assignChannel( 0 );
     s_uart_sink.logLevel = Level::LVL_TRACE;
@@ -42,7 +42,7 @@ namespace Logging
     s_uart_handle = SinkHandle_rPtr( &s_uart_sink );
     registerSink( s_uart_handle );
 
-    mbed_assert( ErrCode::ERR_OK == setRootSink( s_uart_handle ), "Failed to set root sink" );
+    mbed_assert_msg( ErrCode::ERR_OK == setRootSink( s_uart_handle ), "Failed to set root sink" );
   }
 
 }    // namespace Logging

@@ -33,6 +33,9 @@ Includes
 #include <cstdint>
 #include <etl/array.h>
 
+#include <mbedutils/assert.hpp>
+#include <mbedutils/drivers/hardware/utility.hpp>
+
 #if defined( PICO_RP2040 ) && ( PICO_RP2040 == 1 )
 #define ICHNAEA_EMBEDDED
 #else
@@ -180,6 +183,27 @@ namespace BSP
    * @return const IOConfig&
    */
   const IOConfig &getIOConfig();
+
+  /**
+   * @brief Gets the pin associated with the given peripheral and logical name.
+   *
+   * Note that this only works for IO with a single pin. Multi-pin peripherals
+   * will need to access the IOConfig directly.
+   *
+   * @param type Peripheral type to get the pin for
+   * @param port Logical name of the pin, from one of the enums above
+   * @return uint
+   */
+  uint getPin( const mb::hw::Peripheral type, const size_t port );
+
+  /**
+   * @brief Gets the hardware instance associated with the given peripheral and logical name
+   *
+   * @param type Peripheral type to get the pin for
+   * @param port Logical name of the pin, from one of the enums above
+   * @return void*
+   */
+  void *getHardware( const mb::hw::Peripheral type, const size_t port );
 }    // namespace BSP
 
 #endif /* !ICHNAEA_BOARD_MAP_HPP */

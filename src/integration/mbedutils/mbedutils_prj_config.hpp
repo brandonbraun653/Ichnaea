@@ -3,7 +3,7 @@
  *    mbedutils_prj_config.hpp
  *
  *  Description:
- *    Project specific configuration file for the mbedutils library.
+ *    Project specific configuration file for the mb library.
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/

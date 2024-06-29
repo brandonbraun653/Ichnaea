@@ -58,10 +58,10 @@ namespace HW::LED
     -------------------------------------------------------------------------*/
     memset( &s_led_map, 0, sizeof( s_led_map ) );
 
-    s_led_map[ BSP::PWM_LED_STATUS_0 ].pin = BSP::getIOConfig().pwm[ BSP::PWM_LED_STATUS_0 ].pin;
-    s_led_map[ BSP::PWM_LED_STATUS_1 ].pin = BSP::getIOConfig().pwm[ BSP::PWM_LED_STATUS_1 ].pin;
-    s_led_map[ BSP::PWM_LED_STATUS_2 ].pin = BSP::getIOConfig().pwm[ BSP::PWM_LED_STATUS_2 ].pin;
-    s_led_map[ BSP::PWM_LED_STATUS_3 ].pin = BSP::getIOConfig().pwm[ BSP::PWM_LED_STATUS_3 ].pin;
+    s_led_map[ STATUS_0 ].pin = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LED_STATUS_0 );
+    s_led_map[ STATUS_1 ].pin = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LED_STATUS_1 );
+    s_led_map[ STATUS_2 ].pin = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LED_STATUS_2 );
+    s_led_map[ STATUS_3 ].pin = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LED_STATUS_3 );
 
     /*-------------------------------------------------------------------------
     Figure out the correct clock divider to get roughly 1kHz PWM frequency

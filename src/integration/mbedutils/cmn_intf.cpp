@@ -3,7 +3,7 @@
  *    cmn_intf.cpp
  *
  *  Description:
- *    Ichnaea integration of the mbedutils common interface
+ *    Ichnaea integration of the mb common interface
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -14,7 +14,7 @@ Includes
 #include <mbedutils/interfaces/cmn_intf.hpp>
 #include "src/bsp/board_map.hpp"
 
-namespace mbedutils::intf
+namespace mb::intf
 {
   /*---------------------------------------------------------------------------
   Public Functions
@@ -58,4 +58,4 @@ namespace mbedutils::intf
     }
   }
 
-}  // namespace mbedutils::cmn
+}  // namespace mb::cmn

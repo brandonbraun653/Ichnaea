@@ -3,7 +3,7 @@
  *    uart_intf.cpp
  *
  *  Description:
- *    Ichnaea integration of the mbedutils UART interface
+ *    Ichnaea integration of the mb UART interface
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -14,7 +14,7 @@ Includes
 #include <mbedutils/interfaces/uart_intf.hpp>
 #include "src/hw/uart.hpp"
 
-namespace mbedutils::intf::uart
+namespace mb::intf::uart
 {
   /*---------------------------------------------------------------------------
   Public Functions
@@ -43,4 +43,4 @@ namespace mbedutils::intf::uart
     return ::HW::UART::rxAvailable( channel );
   }
 
-}  // namespace mbedutils::intf::uart
+}  // namespace mb::intf::uart

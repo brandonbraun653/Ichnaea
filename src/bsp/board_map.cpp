@@ -16,6 +16,7 @@ Includes
 #include "src/system/system_error.hpp"
 #include "src/system/panic_handlers.hpp"
 #include <cstring>
+#include <mbedutils/drivers/hardware/utility.hpp>
 
 namespace BSP
 {
@@ -155,5 +156,46 @@ namespace BSP
   const IOConfig &getIOConfig()
   {
     return s_board_map;
+  }
+
+
+  uint getPin( const mb::hw::Peripheral type, const size_t port )
+  {
+    switch( type )
+    {
+      case mb::hw::Peripheral::PERIPH_ADC:
+        mbed_assert( port < s_board_map.adc.size() );
+        return s_board_map.adc[ port ].pin;
+
+      case mb::hw::Peripheral::PERIPH_GPIO:
+        mbed_assert( port < s_board_map.gpio.size() );
+        return s_board_map.gpio[ port ].pin;
+
+      case mb::hw::Peripheral::PERIPH_PWM:
+        mbed_assert( port < s_board_map.pwm.size() );
+        return s_board_map.pwm[ port ].pin;
+
+      default:
+        mbed_assert_always();
+        return 0;
+    }
+  }
+
+  void *getHardware( const mb::hw::Peripheral type, const size_t port )
+  {
+    switch( type )
+    {
+      case mb::hw::Peripheral::PERIPH_SPI:
+        mbed_assert( port < s_board_map.spi.size() );
+        return s_board_map.spi[ port ].pHw;
+
+      case mb::hw::Peripheral::PERIPH_UART:
+        mbed_assert( port < s_board_map.uart.size() );
+        return s_board_map.uart[ port ].pHw;
+
+      default:
+        mbed_assert_always();
+        return nullptr;
+    }
   }
 }    // namespace BSP
