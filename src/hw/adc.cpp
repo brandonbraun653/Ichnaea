@@ -75,24 +75,24 @@ namespace HW::ADC
     /*-------------------------------------------------------------------------
     Initialize the GPIO for ADC selection and input
     -------------------------------------------------------------------------*/
-    adc_gpio_init( config.adc.sensePin );
+    adc_gpio_init( config.gpio[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
 
-    gpio_init( config.gpio.adcSel0 );
-    gpio_set_dir( config.gpio.adcSel0, GPIO_OUT );
-    gpio_put( config.gpio.adcSel0, 0 );
+    gpio_init( config.gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin );
+    gpio_set_dir( config.gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, GPIO_OUT );
+    gpio_put( config.gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, 0 );
 
-    gpio_init( config.gpio.adcSel1 );
-    gpio_set_dir( config.gpio.adcSel1, GPIO_OUT );
-    gpio_put( config.gpio.adcSel1, 0 );
+    gpio_init( config.gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin );
+    gpio_set_dir( config.gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin, GPIO_OUT );
+    gpio_put( config.gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin, 0 );
 
-    gpio_init( config.gpio.adcSel2 );
-    gpio_set_dir( config.gpio.adcSel2, GPIO_OUT );
-    gpio_put( config.gpio.adcSel2, 0 );
+    gpio_init( config.gpio[ BSP::GPIO_LTC_ADCSEL2 ].pin );
+    gpio_set_dir( config.gpio[ BSP::GPIO_LTC_ADCSEL2 ].pin, GPIO_OUT );
+    gpio_put( config.gpio[ BSP::GPIO_LTC_ADCSEL2 ].pin, 0 );
 
     /*-------------------------------------------------------------------------
     Initialize static memory
     -------------------------------------------------------------------------*/
-    s_adc_select = map_adc_input( config.adc.sensePin );
+    s_adc_select = map_adc_input( config.gpio[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
     s_adc_ch_sel.fill( 0 );
     s_cached_voltage.fill( -1.0f );
     recursive_mutex_init( &s_adc_mutex );
@@ -168,9 +168,9 @@ namespace HW::ADC
       Select the correct ADC channel
       -----------------------------------------------------------------------*/
       adc_select_input( s_adc_select );
-      gpio_put( BSP::getIOConfig().gpio.adcSel0, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x01 ) );
-      gpio_put( BSP::getIOConfig().gpio.adcSel1, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x02 ) );
-      gpio_put( BSP::getIOConfig().gpio.adcSel2, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x04 ) );
+      gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x01 ) );
+      gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x02 ) );
+      gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL2 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x04 ) );
 
       /*-----------------------------------------------------------------------
       Insert >35nS delay to account for 74HC4051 switching times. See table

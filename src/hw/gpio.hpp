@@ -20,29 +20,6 @@ Includes
 namespace HW::GPIO
 {
   /*---------------------------------------------------------------------------
-  Enumerations
-  ---------------------------------------------------------------------------*/
-
-  /**
-   * @brief Available GPIO pins on the Ichnaea hardware
-   *
-   * These are only pins dedicated to logical GPIO functions. They do not
-   * include pins dedicated for other purposes like UART, SPI, etc.
-   */
-  enum Pin : uint32_t
-  {
-    PIN_LTC_DCM,
-    PIN_LTC_CCM,
-    PIN_LTC_RUN,
-    PIN_ADC_SEL_0,
-    PIN_ADC_SEL_1,
-    PIN_ADC_SEL_2,
-    PIN_SPI_CS_0,
-
-    NUM_OPTIONS
-  };
-
-  /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 

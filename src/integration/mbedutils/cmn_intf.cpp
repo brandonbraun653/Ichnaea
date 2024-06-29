@@ -25,7 +25,7 @@ namespace mbedutils::intf
     switch( driver )
     {
       case Driver::UART:
-        return 0;
+        return BSP::UART_MAX_PORTS;
 
       default:
         return 0;
@@ -38,7 +38,7 @@ namespace mbedutils::intf
     switch( driver )
     {
       case Driver::UART:
-        return 0;
+        return BSP::UART_MAX_PORTS - 1;
 
       default:
         return 0;
@@ -51,7 +51,7 @@ namespace mbedutils::intf
     switch( driver )
     {
       case Driver::UART:
-        return false;
+        return channel < BSP::UART_MAX_PORTS;
 
       default:
         return false;
