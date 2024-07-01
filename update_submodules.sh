@@ -11,6 +11,10 @@ echo "Updating CppUTest"
 cd $ICHNAEA_ROOT/lib/cpputest
 git submodule update --init --recursive
 
+echo "Updating MbedUtils"
+cd $ICHNAEA_ROOT/lib/mbedutils
+git submodule update --init
+
 echo "Updating PicoMock"
 cd $ICHNAEA_ROOT/lib/pico-mock
 git submodule update --init --recursive

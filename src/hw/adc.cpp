@@ -92,7 +92,7 @@ namespace HW::ADC
     /*-------------------------------------------------------------------------
     Initialize static memory
     -------------------------------------------------------------------------*/
-    s_adc_select = map_adc_input( config.gpio[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
+    s_adc_select = map_adc_input( config.adc[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
     s_adc_ch_sel.fill( 0 );
     s_cached_voltage.fill( -1.0f );
     recursive_mutex_init( &s_adc_mutex );
