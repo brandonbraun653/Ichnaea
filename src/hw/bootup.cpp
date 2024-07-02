@@ -33,23 +33,27 @@ static etl::string<128> testString  = "My name is 'What?' My name is 'Who?' My n
 static etl::string<128> testString2 = "I'm beginning to feel like a Rap God, Rap God\r\n";
 static etl::string<128> testString3 = "All my people from the front to the back nod, back nod\r\n";
 
-static void test_callback( const size_t channel, const size_t num_bytes)
+etl::string<128> read_buffer;
+etl::string<128> write_buffer;
+
+static void write_callback( const size_t channel, const size_t num_bytes)
+{
+  using namespace mb::hw::serial;
+}
+
+static void read_callback( const size_t channel, const size_t num_bytes)
 {
   using namespace mb::hw::serial;
 
-  if( num_bytes == testString.size() )
+  if( num_bytes != 0 )
   {
-    intf::write_async( channel, testString2.c_str(), testString2.size() );
-  }
-  else if( num_bytes == testString2.size() )
-  {
-    intf::write_async( channel, testString3.c_str(), testString3.size() );
-  }
-  else if( num_bytes == testString3.size() )
-  {
-    intf::write_async( channel, testString.c_str(), testString.size() );
+    write_buffer.clear();
+    write_buffer.append( read_buffer.c_str(), num_bytes );
+    intf::write_async( channel, write_buffer.c_str(), write_buffer.size() );
   }
 
+  read_buffer.fill( '\0' );
+  intf::read_async( channel, read_buffer.data(), read_buffer.max_size(), 1'000 );
 }
 
 namespace HW
@@ -85,7 +89,6 @@ namespace HW
     -------------------------------------------------------------------------*/
     Logging::initialize();
 
-
     // !TESTING
     using namespace mb::hw::serial;
 
@@ -104,9 +107,11 @@ namespace HW
     pico::configure( config );
     intf::lock( 0, 1000 );
 
-    intf::on_tx_complete( config.usr_channel, intf::TXCompleteCallback::create<test_callback>() );
+    intf::on_tx_complete( config.usr_channel, intf::TXCompleteCallback::create<write_callback>() );
+    intf::on_rx_complete( config.usr_channel, intf::RXCompleteCallback::create<read_callback>() );
 
-    intf::write_async( 0, testString.c_str(), testString.size() );
+    // intf::write_async( 0, testString.c_str(), testString.size() );
+    intf::read_async( 0, read_buffer.data(), read_buffer.max_size(), 1'000 );
   }
 
   void runPostInit()
