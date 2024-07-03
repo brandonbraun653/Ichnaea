@@ -12,7 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/time_intf.hpp>
-#include "hardware/timer.h"
+#include "pico/time.h"
 
 namespace mb::time
 {
@@ -22,7 +22,7 @@ namespace mb::time
 
   size_t millis()
   {
-    return static_cast<size_t>( time_us_64() / 1000 );
+    return to_ms_since_boot( get_absolute_time() );
   }
 
 }  // namespace mb::time

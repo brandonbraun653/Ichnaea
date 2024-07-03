@@ -33,7 +33,7 @@ static etl::string<128> testString  = "My name is 'What?' My name is 'Who?' My n
 static etl::string<128> testString2 = "I'm beginning to feel like a Rap God, Rap God\r\n";
 static etl::string<128> testString3 = "All my people from the front to the back nod, back nod\r\n";
 
-etl::string<128> read_buffer;
+etl::string<8> read_buffer;
 etl::string<128> write_buffer;
 
 static void write_callback( const size_t channel, const size_t num_bytes)
@@ -41,7 +41,7 @@ static void write_callback( const size_t channel, const size_t num_bytes)
   using namespace mb::hw::serial;
 }
 
-static void read_callback( const size_t channel, const size_t num_bytes)
+static void read_callback( const size_t channel, const size_t num_bytes )
 {
   using namespace mb::hw::serial;
 
@@ -107,11 +107,11 @@ namespace HW
     pico::configure( config );
     intf::lock( 0, 1000 );
 
-    intf::on_tx_complete( config.usr_channel, intf::TXCompleteCallback::create<write_callback>() );
+    //intf::on_tx_complete( config.usr_channel, intf::TXCompleteCallback::create<write_callback>() );
     intf::on_rx_complete( config.usr_channel, intf::RXCompleteCallback::create<read_callback>() );
 
     // intf::write_async( 0, testString.c_str(), testString.size() );
-    intf::read_async( 0, read_buffer.data(), read_buffer.max_size(), 1'000 );
+    intf::read_async( 0, read_buffer.data(), 5, 1'000 );
   }
 
   void runPostInit()
