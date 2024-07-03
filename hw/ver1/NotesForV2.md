@@ -15,6 +15,7 @@ exercised for system testing.
 - Add test points to critical data lines like SPI.
 - Add a CAN bus serial interface. Need to be able to remotely control the system. Think about the system level aspects before building V2. The comms interfaces should be its own
 board so that I can cheaply build those and not incur risk with the power conversion boards when they don't need it. Probably should have at least two ports for a distributed network.
+- Consider an integrated half-bridge mosfet solution. Might actually be cheaper than discrete components and take up less space.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200.
