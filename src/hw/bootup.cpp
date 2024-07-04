@@ -25,35 +25,27 @@ Includes
 
 //! TESTING
 #include <mbedutils/interfaces/serial_intf.hpp>
+#include <mbedutils/drivers/hardware/serial.hpp>
 #include <mbedutils/drivers/hardware/pico/pico_serial.hpp>
 #include <etl/string.h>
 
 // Apparently Copilot was trained on Eminem lyrics. Nice.
-static etl::string<128> testString  = "My name is 'What?' My name is 'Who?' My name is 'Chicka Chicka' Slim Shady\r\n";
+static etl::string<128> testString1 = "My name is 'What?' My name is 'Who?' My name is 'Chicka Chicka' Slim Shady\r\n";
 static etl::string<128> testString2 = "I'm beginning to feel like a Rap God, Rap God\r\n";
 static etl::string<128> testString3 = "All my people from the front to the back nod, back nod\r\n";
+static etl::string<12> testString4 = "Done!\r\n";
 
-etl::string<8> read_buffer;
-etl::string<128> write_buffer;
+static mb::hw::serial::SerialDriver serial;
+static etl::bip_buffer_spsc_atomic<uint8_t, 512> txBuffer;
+static etl::bip_buffer_spsc_atomic<uint8_t, 512> rxBuffer;
 
-static void write_callback( const size_t channel, const size_t num_bytes)
+static etl::string<128> readBuffer;
+static etl::string<128> writeBuffer;
+
+static void echo_function()
 {
-  using namespace mb::hw::serial;
-}
-
-static void read_callback( const size_t channel, const size_t num_bytes )
-{
-  using namespace mb::hw::serial;
-
-  if( num_bytes != 0 )
-  {
-    write_buffer.clear();
-    write_buffer.append( read_buffer.c_str(), num_bytes );
-    intf::write_async( channel, write_buffer.c_str(), write_buffer.size() );
-  }
-
-  read_buffer.fill( '\0' );
-  intf::read_async( channel, read_buffer.data(), read_buffer.max_size(), 1'000 );
+  serial.read( readBuffer.data(), readBuffer.capacity(), 5 );
+  serial.write( readBuffer.data(), strlen( readBuffer.data() ) );
 }
 
 namespace HW
@@ -92,26 +84,27 @@ namespace HW
     // !TESTING
     using namespace mb::hw::serial;
 
-    pico::UartConfig config;
-    config.reset();
-    config.uart = uart0;
-    config.baudrate = 115200;
-    config.data_bits = 8;
-    config.stop_bits = 1;
-    config.parity = UART_PARITY_NONE;
-    config.tx_pin = 16;
-    config.rx_pin = 17;
-    config.usr_channel = 0;
+    pico::UartConfig uart_cfg;
+    uart_cfg.reset();
+    uart_cfg.uart = uart0;
+    uart_cfg.baudrate = 115200;
+    uart_cfg.data_bits = 8;
+    uart_cfg.stop_bits = 1;
+    uart_cfg.parity = UART_PARITY_NONE;
+    uart_cfg.tx_pin = 16;
+    uart_cfg.rx_pin = 17;
+    uart_cfg.usr_channel = 0;
 
     pico::initialize();
-    pico::configure( config );
-    intf::lock( 0, 1000 );
+    pico::configure( uart_cfg );
 
-    //intf::on_tx_complete( config.usr_channel, intf::TXCompleteCallback::create<write_callback>() );
-    intf::on_rx_complete( config.usr_channel, intf::RXCompleteCallback::create<read_callback>() );
+    Config serial_cfg;
+    serial_cfg.channel  = uart_cfg.usr_channel;
+    serial_cfg.rxBuffer = &rxBuffer;
+    serial_cfg.txBuffer = &txBuffer;
 
-    // intf::write_async( 0, testString.c_str(), testString.size() );
-    intf::read_async( 0, read_buffer.data(), 5, 1'000 );
+    serial.open( serial_cfg );
+    serial.onReadComplete( CompletionCallback::create<echo_function>() );
   }
 
   void runPostInit()
