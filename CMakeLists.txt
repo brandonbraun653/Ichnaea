@@ -12,6 +12,10 @@ add_compile_options(
   -Wno-maybe-uninitialized
 )
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_definitions(-DDEBUG)
+endif()
+
 # Import Pico SDK. This must be done before the project() command, else the ARM compiler won't be detected.
 set(PICO_SDK_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/pico-sdk")
 include(pico_sdk_import.cmake)

@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/assert_intf.hpp>
+#include <mbedutils/logging.hpp>
 
 namespace mb::assert
 {
@@ -23,8 +24,14 @@ namespace mb::assert
   {
     if( halt )
     {
+      // TODO: Implement a system reset here
       __asm volatile( "bkpt #0" );
     }
+
+    /*-------------------------------------------------------------------------
+    Log the error message to the debug output
+    -------------------------------------------------------------------------*/
+    logging::log( logging::Level::LVL_ERROR, msg.data(), msg.size() );
   }
 
 }  // namespace mb::assert

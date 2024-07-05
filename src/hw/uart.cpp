@@ -11,101 +11,43 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "etl/bip_buffer_spsc_atomic.h"
 #include "src/bsp/board_map.hpp"
 #include "src/hw/uart.hpp"
+#include <etl/bip_buffer_spsc_atomic.h>
+#include <mbedutils/drivers/hardware/pico/pico_serial.hpp>
 
 namespace HW::UART
 {
-  /*---------------------------------------------------------------------------
-  Constants
-  ---------------------------------------------------------------------------*/
-
-  static constexpr size_t DEFAULT_BAUD   = 9200;
-  static constexpr size_t TX_BUFFER_SIZE = 1024;
-  static constexpr size_t RX_BUFFER_SIZE = 512;
-
-  /*---------------------------------------------------------------------------
-  Aliases
-  ---------------------------------------------------------------------------*/
-
-  /**
-   * @brief Alias the bipartite buffer type for uniform DMA buffer management.
-   * This is assuming the buffer size is less than 65536 bytes.
-   *
-   * @tparam N Size of the buffer to create
-   */
-  template<const size_t N>
-  using bip_buffer = etl::bip_buffer_spsc_atomic<uint8_t, N, etl::memory_model::MEMORY_MODEL_MEDIUM>;
-
-  /*---------------------------------------------------------------------------
-  Structures
-  ---------------------------------------------------------------------------*/
-
-  struct UARTControlBlock
-  {
-    critical_section_t         rtx_cs;   /**< IRQ exclusive access protection */
-    mutex_t                    txlock;   /**< TX buffer protections */
-    mutex_t                    rxlock;   /**< RX buffer protections */
-    bip_buffer<TX_BUFFER_SIZE> txBuffer; /**< TX output buffer */
-    bip_buffer<RX_BUFFER_SIZE> rxBuffer; /**< RX input buffer */
-  };
-
-  /*---------------------------------------------------------------------------
-  Static Data
-  ---------------------------------------------------------------------------*/
-
-  static etl::array<UARTControlBlock, Channel::NUM_OPTIONS> s_uart_cb;
-
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
   void initialize()
   {
+    using namespace mb::hw::serial;
+
     /*-------------------------------------------------------------------------
-    Initialize the UART pins
+    Initialize the Pico serial driver this module is built on top of
     -------------------------------------------------------------------------*/
-  }
+    pico::initialize();
 
+    /*-------------------------------------------------------------------------
+    Configure the BMS UART channel
+    -------------------------------------------------------------------------*/
+    pico::UartConfig uart_cfg;
+    auto io_cfg = BSP::getIOConfig();
 
-  void configure( const size_t channel, const uint32_t baudRate )
-  {
-  }
+    uart_cfg.reset();
+    uart_cfg.uart        = io_cfg.uart[ UART_BMS ].pHw;
+    uart_cfg.baudrate    = 115200;
+    uart_cfg.data_bits   = 8;
+    uart_cfg.stop_bits   = 1;
+    uart_cfg.parity      = UART_PARITY_NONE;
+    uart_cfg.tx_pin      = io_cfg.uart[ UART_BMS ].tx;
+    uart_cfg.rx_pin      = io_cfg.uart[ UART_BMS ].rx;
+    uart_cfg.usr_channel = UART_BMS;
 
-
-  bool acquire( const size_t channel, const size_t timeout )
-  {
-    return false;
-  }
-
-
-  void release( const size_t channel )
-  {
-  }
-
-
-  size_t txAvailable( const size_t channel )
-  {
-    return 0;
-  }
-
-
-  size_t rxAvailable( const size_t channel )
-  {
-    return 0;
-  }
-
-
-  size_t write( const size_t channel, const uint8_t *const data, const size_t length )
-  {
-    return 0;
-  }
-
-
-  size_t read( const size_t channel, uint8_t *const data, const size_t length )
-  {
-    return 0;
+    pico::configure( uart_cfg );
   }
 
 }  // namespace HW::UART

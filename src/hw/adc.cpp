@@ -15,7 +15,9 @@ Includes
 #include "src/bsp/board_map.hpp"
 #include "src/hw/adc.hpp"
 #include "src/system/system_error.hpp"
+#include "src/system/system_sensor.hpp"
 #include "src/system/system_util.hpp"
+#include <mbedutils/logging.hpp>
 
 namespace HW::ADC
 {
@@ -71,6 +73,7 @@ namespace HW::ADC
     be sufficient.
     -------------------------------------------------------------------------*/
     adc_init();
+    adc_set_temp_sensor_enabled( true );
 
     /*-------------------------------------------------------------------------
     Initialize the GPIO for ADC selection and input
@@ -122,11 +125,21 @@ namespace HW::ADC
         Panic::throwError( Panic::ErrorCode::ERR_POST_FAIL );
       }
     }
+
+    LOG_DEBUG( "Average Current: %.2fA", Sensor::getAverageCurrent() );
+    LOG_DEBUG( "High Side Voltage: %.2fV", Sensor::getHighSideVoltage() );
+    LOG_DEBUG( "Low Side Voltage: %.2fV", Sensor::getLowSideVoltage() );
+    LOG_DEBUG( "RP2040 Temp: %.2fC", Sensor::getRP2040Temp() );
+    LOG_DEBUG( "Board Temp 0: %.2fC", Sensor::getBoardTemp0() );
+    LOG_DEBUG( "Board Temp 1: %.2fC", Sensor::getBoardTemp1() );
   }
 
 
   float getVoltage( const size_t channel )
   {
+    /**
+     * @brief RP2040 ADC is 12-bit, 3.3V reference
+     */
     constexpr float ADC_VOLT_PER_BIT = 3.3f / 4096.0f;
 
     /*-------------------------------------------------------------------------

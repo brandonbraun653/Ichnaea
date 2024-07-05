@@ -98,3 +98,8 @@ target_link_options(IchnaeaApp PRIVATE -Wl,--start-group)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(IchnaeaApp)
+
+# Dump a summary of the memory usage for embedded platforms
+if( ${PICO_PLATFORM} STREQUAL "rp2040" )
+target_link_options(IchnaeaApp PRIVATE -Wl,--print-memory-usage)
+endif()

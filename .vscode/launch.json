@@ -34,7 +34,8 @@
       "runToEntryPoint": "main",
       "preLaunchCommands": [
         "attach 1",
-        "set mem inaccessible-by-default off"
+        "set mem inaccessible-by-default off",
+        "monitor frequency 2000000"
       ],
       "numberOfProcessors": 2,
       "preRestartCommands": [

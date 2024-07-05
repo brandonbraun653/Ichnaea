@@ -242,6 +242,22 @@ namespace HW::LTC7871
   }
 
 
+  ILim getILim()
+  {
+    if( s_driver_mode != DriverMode::NORMAL_OPERATION )
+    {
+      return ILim::Unknown;
+    }
+
+    return ILim::V0;
+  }
+
+  float getRSense()
+  {
+    return 0.0016f;
+  }
+
+
   bool Private::resolve_power_on_config( LTCConfig &cfg )
   {
     /*-------------------------------------------------------------------------

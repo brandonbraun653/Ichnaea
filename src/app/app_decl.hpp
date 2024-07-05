@@ -1,32 +1,36 @@
 /******************************************************************************
  *  File Name:
- *    monitor_thread.cpp
+ *    app_decl.hpp
  *
  *  Description:
- *    Monitor thread to ensure that the system is operating correctly
+ *    Application function declarations
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
 
+#pragma once
+#ifndef ICHNAEA_APP_DECLARATIONS_HPP
+#define ICHNAEA_APP_DECLARATIONS_HPP
+
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/app/app_decl.hpp"
-#include "src/bsp/board_map.hpp"
-#include "src/threads/ichnaea_threads.hpp"
 
-namespace Threads
+
+namespace App
 {
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  void monitorThread( void )
-  {
-    while( 1 )
-    {
-      //App::procSystemMeasurements();
-      sleep_ms( 500 );
-    }
-  }
-}    // namespace Threads
+  /**
+   * @brief Process measured system data
+   *
+   * This function is responsible for measuring the raw system data and
+   * publishing it to the appropriate data structures for consumption by
+   * the rest of the system.
+   */
+  void procSystemMeasurements();
+}  // namespace App
+
+#endif  /* !ICHNAEA_APP_DECLARATIONS_HPP */

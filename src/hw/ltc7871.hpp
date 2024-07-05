@@ -44,10 +44,25 @@ namespace HW::LTC7871
   enum class DriverMode : size_t
   {
     DISABLED,         /* System is at an idle state an not operating */
+    FAULTED,          /* Error state due to abnormal behavior */
     POST_SEQUENCE,    /* Running the power on self test */
     INITIALIZING,     /* Booting up and checking for ability to operate */
     NORMAL_OPERATION, /* System running normally */
-    FAULTED           /* Error state due to abnormal behavior */
+  };
+
+
+  /**
+   * @brief Discrete voltage levels that can be set/detected on the ILIM pin.
+   *
+   * This controls the current comparator threshold for the LTC7871.
+   */
+  enum class ILim : size_t
+  {
+    Unknown, /**< ILIM pin voltage is unknown */
+    V0,      /**< ILIM pin voltage is zero */
+    V1_4,    /**< ILIM pin voltage is 1/4 V5 */
+    V3_4,    /**< ILIM pin voltage is 3/4 V5 */
+    V5       /**< ILIM pin voltage is V5 */
   };
 
   /*---------------------------------------------------------------------------
@@ -100,6 +115,20 @@ namespace HW::LTC7871
    * @brief Resets the fault code to NO_FAULT
    */
   void clearFaultCode();
+
+  /**
+   * @brief Gets the detected ILIM pin setting from HW strapping.
+   *
+   * @return ILim
+   */
+  ILim getILim();
+
+  /**
+   * @brief Gets the inductor current sense resistor value
+   *
+   * @return float
+   */
+  float getRSense();
 
 }  // namespace HW::LTC7871
 
