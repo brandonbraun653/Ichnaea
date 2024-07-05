@@ -65,6 +65,49 @@ namespace HW::LTC7871
     V5       /**< ILIM pin voltage is V5 */
   };
 
+  /**
+   * @brief Available fault status codes for the LTC7871
+   */
+  enum LTCFaultBits : uint32_t
+  {
+    // MFR_FAULT Register
+    LTC_FAULT_OVERTEMP = 0, /**< An overtemperature fault has occurred */
+    LTC_FAULT_VREF_BAD = 1, /**< The internal reference self-check failed */
+    LTC_FAULT_V5_UV    = 2, /**< The V5 pin is undervoltage */
+    LTC_FAULT_DRVCC_UV = 3, /**< The DRVcc pin is undervoltage */
+    LTC_FAULT_VHIGH_UV = 4, /**< The UVHigh pin is less than 1.2v threshold */
+    LTC_FAULT_VHIGH_OV = 5, /**< The UVHigh pin is greater than 1.2v threshold */
+    LTC_FAULT_VLOW_OV  = 6, /**< The UVLow pin is greater than 1.2v threshold */
+
+    // MFR_OC_FAULT Register
+    LTC_FAULT_OC_1 = 7,  /**< Channel 1 overcurrent fault has occurred */
+    LTC_FAULT_OC_2 = 8,  /**< Channel 2 overcurrent fault has occurred */
+    LTC_FAULT_OC_3 = 9,  /**< Channel 3 overcurrent fault has occurred */
+    LTC_FAULT_OC_4 = 10, /**< Channel 4 overcurrent fault has occurred */
+    LTC_FAULT_OC_5 = 11, /**< Channel 5 overcurrent fault has occurred */
+    LTC_FAULT_OC_6 = 12, /**< Channel 6 overcurrent fault has occurred */
+
+    // MFR_NOC_FAULT Register
+    LTC_FAULT_NOC_1 = 13, /**< Channel 1 negative overcurrent fault has occurred */
+    LTC_FAULT_NOC_2 = 14, /**< Channel 2 negative overcurrent fault has occurred */
+    LTC_FAULT_NOC_3 = 15, /**< Channel 3 negative overcurrent fault has occurred */
+    LTC_FAULT_NOC_4 = 16, /**< Channel 4 negative overcurrent fault has occurred */
+    LTC_FAULT_NOC_5 = 17, /**< Channel 5 negative overcurrent fault has occurred */
+    LTC_FAULT_NOC_6 = 18, /**< Channel 6 negative overcurrent fault has occurred */
+
+    LTC_FAULT_COUNT
+  };
+
+
+  enum LTCStatusBits : uint32_t
+  {
+    LTC_STATUS_PGOOD       = 0, /**< Regulated VLow/VHigh is within +/-10% */
+    LTC_STATUS_MAX_CURRENT = 1, /**< Maximum current limit reached */
+    LTC_STATUS_SS_DONE     = 2, /**< Soft-start sequence is complete */
+
+    LTC_STATUS_COUNT
+  };
+
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
@@ -96,6 +139,30 @@ namespace HW::LTC7871
    * interacting with the system until the power up sequence is run.
    */
   void powerOff();
+
+  /**
+   * @brief Reads the fault registers of the LTC7871.
+   *
+   * This collapses the 3 fault registers into a single 32-bit value.
+   *
+   * @return A bit field of LTCFaultBits
+   */
+  uint32_t readLTCFaults();
+
+  /**
+   * @brief Reads the status register of the LTC7871.
+   *
+   * @return uint32_t
+   */
+  uint32_t readLTCStatus();
+
+  /**
+   * @brief Converts a fault code to a human readable string
+   *
+   * @param code  Fault code to convert
+   * @return Loggable/printable error message of the code
+   */
+  const char *ltcFaultCodeToString( const uint32_t code );
 
   /**
    * @brief Gets the current operational mode of the driver

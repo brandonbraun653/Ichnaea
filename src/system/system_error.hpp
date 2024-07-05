@@ -59,6 +59,7 @@ namespace Panic
     ERR_LTC_PEC_WRITE_FAIL,                   /* LTC computed PEC miscompare for the PEC sent by Ichnaea */
     ERR_LTC_CMD_FAIL,                         /* A commanded interaction failed to apply as expected */
     ERR_LTC_HW_STRAP_FAIL,                    /* The hardware strap configuration is invalid */
+    ERR_LTC_FAULT,                            /* The LTC7871 has thrown a fault code */
     _ERR_LTC_END,
 
     NUM_OPTIONS

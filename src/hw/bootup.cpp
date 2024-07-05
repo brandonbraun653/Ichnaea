@@ -66,7 +66,7 @@ namespace HW
     HW::LED::postSequence();
     HW::ADC::postSequence();
 
-    //HW::LTC7871::postSequence();
+    HW::LTC7871::postSequence();
     LOG_TRACE( "POST sequence complete" );
   }
 

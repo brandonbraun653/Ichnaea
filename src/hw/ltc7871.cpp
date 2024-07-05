@@ -18,6 +18,7 @@ Includes
 #include "src/hw/ltc7871_prv.hpp"
 #include "src/hw/ltc7871_reg.hpp"
 #include "src/system/system_error.hpp"
+#include <mbedutils/logging.hpp>
 
 namespace HW::LTC7871
 {
@@ -159,6 +160,7 @@ namespace HW::LTC7871
     -------------------------------------------------------------------------*/
     const uint8_t cfg1_reg = Private::read_register( REG_MFR_CONFIG1 );
     const uint8_t cfg2_reg = Private::read_register( REG_MFR_CONFIG2 );
+    LOG_DEBUG( "LTC7871 Strap: CFG1=0x%02X, CFG2=0x%02X", cfg1_reg, cfg2_reg );
 
     // TODO BMB: May want to add configurable expected defaults depending on HW versions.
     // Some of the default current sense limits might not be the same.
@@ -183,6 +185,24 @@ namespace HW::LTC7871
 
     const bool is_not_spread_spectrum_mode = ( cfg2_reg & MFR_CONFIG2_SPRD_Msk ) == 0;
     Panic::assertion( is_not_spread_spectrum_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+
+    /*-------------------------------------------------------------------------
+    Process any fault states
+    -------------------------------------------------------------------------*/
+    const uint32_t faults = readLTCFaults();
+    for( size_t i = 0; i < LTCFaultBits::LTC_FAULT_COUNT; i++ )
+    {
+      LOG_ERROR_IF( ( ( faults & ( 1u << i ) ) != 0 ), "LTC7871 Fault: %s", ltcFaultCodeToString( i ) );
+    }
+    Panic::assertion( faults == 0, Panic::ERR_LTC_FAULT );
+
+    /*-------------------------------------------------------------------------
+    Summarize the status register
+    -------------------------------------------------------------------------*/
+    const uint8_t status = Private::read_register( REG_MFR_STATUS );
+    LOG_DEBUG( "LTC7871 Status: 0x%02X, SS_DONE: %d, MAX_CURRENT: %d, PGOOD: %d", status,
+               ( status & MFR_STATUS_SS_DONE_Msk ) != 0, ( status & MFR_STATUS_MAX_CURRENT_Msk ) != 0,
+               ( status & MFR_STATUS_PGOOD_Msk ) != 0 );
 
     /*-------------------------------------------------------------------------
     Making it here means we can transition to the next state
@@ -221,6 +241,105 @@ namespace HW::LTC7871
   {
     // Allow this to be called at any time. It should always be safe to power off.
     s_driver_mode = DriverMode::INITIALIZING;
+  }
+
+
+  uint32_t readLTCFaults()
+  {
+    /*-------------------------------------------------------------------------
+    Read the fault registers from the LTC7871
+    -------------------------------------------------------------------------*/
+    const uint8_t fault1 = Private::read_register( REG_MFR_FAULT );
+    const uint8_t fault2 = Private::read_register( REG_MFR_OC_FAULT );
+    const uint8_t fault3 = Private::read_register( REG_MFR_NOC_FAULT );
+
+    /*-------------------------------------------------------------------------
+    Collapse the fault bits into a single 32-bit value
+    -------------------------------------------------------------------------*/
+    uint32_t bits = 0;
+    bits |= static_cast<uint32_t>( fault1 ) << 16u;
+    bits |= static_cast<uint32_t>( fault2 ) << 8u;
+    bits |= static_cast<uint32_t>( fault3 );
+
+    return bits;
+  }
+
+
+  uint32_t readLTCStatus()
+  {
+    /*-------------------------------------------------------------------------
+    Read the status register from the LTC7871
+    -------------------------------------------------------------------------*/
+    const uint8_t status = Private::read_register( REG_MFR_STATUS );
+
+    return static_cast<uint32_t>( status );
+  }
+
+
+  const char *ltcFaultCodeToString( const uint32_t code )
+  {
+    switch( code )
+    {
+      case LTC_FAULT_OVERTEMP:
+        return "Over-temperature";
+
+      case LTC_FAULT_VREF_BAD:
+        return "Internal reference voltage out of range";
+
+      case LTC_FAULT_V5_UV:
+        return "5V output under-voltage";
+
+      case LTC_FAULT_DRVCC_UV:
+        return "DRVCC under-voltage";
+
+      case LTC_FAULT_VHIGH_UV:
+        return "VHigh under-voltage sense < 1.2v";
+
+      case LTC_FAULT_VHIGH_OV:
+        return "VHigh over-voltage sense > 1.2v";
+
+      case LTC_FAULT_VLOW_OV:
+        return "VLow over-voltage sense > 1.2v";
+
+      case LTC_FAULT_OC_1:
+        return "Channel 1 over-current";
+
+      case LTC_FAULT_OC_2:
+        return "Channel 2 over-current";
+
+      case LTC_FAULT_OC_3:
+        return "Channel 3 over-current";
+
+      case LTC_FAULT_OC_4:
+        return "Channel 4 over-current";
+
+      case LTC_FAULT_OC_5:
+        return "Channel 5 over-current";
+
+      case LTC_FAULT_OC_6:
+        return "Channel 6 over-current";
+
+      case LTC_FAULT_NOC_1:
+        return "Channel 1 negative over-current";
+
+      case LTC_FAULT_NOC_2:
+        return "Channel 2 negative over-current";
+
+      case LTC_FAULT_NOC_3:
+        return "Channel 3 negative over-current";
+
+      case LTC_FAULT_NOC_4:
+        return "Channel 4 negative over-current";
+
+      case LTC_FAULT_NOC_5:
+        return "Channel 5 negative over-current";
+
+      case LTC_FAULT_NOC_6:
+        return "Channel 6 negative over-current";
+
+      default:
+        return "Unknown fault code";
+    }
   }
 
 

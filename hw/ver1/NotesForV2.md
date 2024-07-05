@@ -14,7 +14,7 @@ and we can technically go up to 90V.
 - [ ] Consider an integrated half-bridge mosfet solution. Might actually be cheaper than discrete components and take up less space.
 - [ ] Output capacitors should be same height or shorter than inductors. You can't lay it flat on the back without it feeling unstable.
 - [ ] Add MOSFET to PWMEN pin (see Design Faults)
-- [ ] Add test points to critical connection for bed of nails testing
+- [ ] Add test points to critical connection for bed of nails testing (16 IO for Salea Automation)
   - [ ] SPI
   - [ ] Power
     - [ ] 1.1V
@@ -23,6 +23,14 @@ and we can technically go up to 90V.
     - [ ] 12.0V
     - [ ] Vout
     - [ ] Vin
+  - [ ] LTC Control
+    - [ ] PWMEN
+    - [ ] SS
+    - [ ] RUN
+    - [ ] MODE
+    - [ ] SYNC
+    - [ ] SETCUR
+    - [ ] OV/UV FB High and Low
 - [ ] Remove R11 from ADC circuitry. Not needed.
 - [ ] Add ADC channels:
   - [ ] 5V from LTC
@@ -56,10 +64,8 @@ and we can technically go up to 90V.
 - [ ] Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
 What I should have done is stuck with a surface mount USB micro B connector, kept the traces short, and moved the connector near the RP2040.
 - [ ] LTC7871 SDO pin requires an external pull up resistor (open drain output). Missed that line in the datasheet.
-- [ ] Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low while an external resistor pulls it
-high to 5V. Default 5V pull up NOT on the V5 LTC pin because that doesn't turn on until the RUN pin is high. This **MUST** always allow the the
-LTC to free run so that a sudden reset of the RP2040 doesn't cause a glitch in the power. It's expected that the BMS will provide the required
-power isolation from this converter before allowing charge to flow.
+- [ ] Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low. An internal 2uA pullup will
+automatically start the converter without an external pullup. It's expected that the BMS will provide the required power isolation during startup.
 - [ ] Control of output ON/OFF is entirely incorrect (see previous comments about the RUN pin). Need to add a MOSFET on the PWMEN pin to pull the
 signal to GND. This will allow the RP2040 to control power ON/OFF behavior without disabling communication with the LTC7871. I need to be able to
 program current/voltage limits to a safe value before enabling the output.
