@@ -78,7 +78,7 @@ namespace HW::ADC
     /*-------------------------------------------------------------------------
     Initialize the GPIO for ADC selection and input
     -------------------------------------------------------------------------*/
-    adc_gpio_init( config.gpio[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
+    adc_gpio_init( config.adc[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
 
     gpio_init( config.gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin );
     gpio_set_dir( config.gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, GPIO_OUT );
