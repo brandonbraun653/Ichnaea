@@ -13,6 +13,8 @@ Includes
 -----------------------------------------------------------------------------*/
 #include "src/bsp/board_map.hpp"
 #include "src/threads/ichnaea_threads.hpp"
+#include "src/system/system_sensor.hpp"
+#include <mbedutils/logging.hpp>
 
 namespace Threads
 {
@@ -24,7 +26,9 @@ namespace Threads
   {
     while( 1 )
     {
-      sleep_ms( 500 );
+      LOG_INFO( "Current: %.2fA, VHigh: %.2fV, VLow: %.2f", Sensor::getAverageCurrent(), Sensor::getHighSideVoltage(),
+                Sensor::getLowSideVoltage() );
+      sleep_ms( 1000 );
     }
   }
 }    // namespace Threads

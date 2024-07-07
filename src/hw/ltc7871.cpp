@@ -205,6 +205,17 @@ namespace HW::LTC7871
                ( status & MFR_STATUS_PGOOD_Msk ) != 0 );
 
     /*-------------------------------------------------------------------------
+    // !TESTING
+    Set the output voltage to 12V
+    -------------------------------------------------------------------------*/
+    Private::set_mode_pin( Private::LTC_MODE_DISC );
+
+    Private::idac_write_protect( false );
+    Private::write_register( REG_MFR_IDAC_VLOW, 0x1F );
+    Private::idac_write_protect( true );
+
+
+    /*-------------------------------------------------------------------------
     Making it here means we can transition to the next state
     -------------------------------------------------------------------------*/
     s_driver_mode = DriverMode::INITIALIZING;
@@ -363,13 +374,9 @@ namespace HW::LTC7871
 
   ILim getILim()
   {
-    if( s_driver_mode != DriverMode::NORMAL_OPERATION )
-    {
-      return ILim::Unknown;
-    }
-
-    return ILim::V0;
+    return ILim::V3_4;
   }
+
 
   float getRSense()
   {
@@ -407,10 +414,20 @@ namespace HW::LTC7871
             This thing *is* still programmable via other interfaces after all.
 
     Log all boot decisions to the system log for later analysis.
+
+    Update:
+    - May want to always reset the LTC7871 to OFF unless the BMS commands it to
+      turn on. This might be annoying if the system suddenly resets, but it
+      ensures safety.
+
+    - May want a button input to allow someone to manually turn the system on
+      without the BMS. Would be interesting. We'd have to match output voltage
+      already present or just simply refuse to boot if we see output voltage.
     -------------------------------------------------------------------------*/
 
     return false;
   }
+
 
   void Private::clear_communication_fault()
   {
@@ -574,5 +591,38 @@ namespace HW::LTC7871
 
     // Key off DriverMode to determine the final error behavior.
     return true;
+  }
+
+
+  void Private::idac_write_protect( const bool enable )
+  {
+    const uint8_t reg = enable ? MFR_CHIP_CTRL_WP_Enable : MFR_CHIP_CTRL_WP_Disable;
+    write_register( REG_MFR_CHIP_CTRL, reg );
+  }
+
+
+  void Private::set_mode_pin( const uint8_t mode )
+  {
+    uint ccm_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_CCM );
+    uint dcm_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_DCM );
+
+    switch( mode )
+    {
+      case SwitchingMode::LTC_MODE_CONT:
+        gpio_put( ccm_pin, 1 );
+        gpio_put( dcm_pin, 0 );
+        break;
+
+      case SwitchingMode::LTC_MODE_DISC:
+        gpio_put( ccm_pin, 0 );
+        gpio_put( dcm_pin, 1 );
+        break;
+
+      case SwitchingMode::LTC_MODE_BURST:
+      default:
+        gpio_put( ccm_pin, 0 );
+        gpio_put( dcm_pin, 0 );
+        break;
+    }
   }
 }    // namespace HW::LTC7871

@@ -51,11 +51,6 @@ namespace Sensor
     constexpr float IMON_RNG_MAX = 2.5f;
     constexpr float IMON_ZERO    = 1.25f;
 
-    if( getMode() != DriverMode::NORMAL_OPERATION )
-    {
-      return 0.0f;
-    }
-
     /*-------------------------------------------------------------------------
     Get operational parameters of the LTC7871
     -------------------------------------------------------------------------*/

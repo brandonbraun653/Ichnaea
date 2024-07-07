@@ -31,11 +31,16 @@ and we can technically go up to 90V.
     - [ ] SYNC
     - [ ] SETCUR
     - [ ] OV/UV FB High and Low
+    - [ ] PWM Control Lines
 - [ ] Remove R11 from ADC circuitry. Not needed.
 - [ ] Add ADC channels:
   - [ ] 5V from LTC
   - [ ] 12V from Buck Converter
   - [ ] ?
+- [ ] Add back the fault indicator LEDs for `PGOOD` and `FAULT` signals. I really wish I had them right now.
+- [ ] Add bleeder resistor to SS pin to allow for fault soft start recovery.
+- [ ] Add bleeder resistors to input and output capacitors. They don't fully discharge when removing power.
+- [ ] Remove 10k pulldown on MOSFET power stages. Redundant when using the HIP2210 driver.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.
@@ -49,7 +54,8 @@ and we can technically go up to 90V.
 - [ ] USB C connector sticks too far through the board. Had to raise it up for the inductor to lay flat beneath it. Switch to SMD USB micro B.
 - [ ] Place all low power SMD components on top layer. Soldering rework is a *nightmare* once the inductors go on the back.
 - [ ] Shrink the SOT-23-5 package to the standard layout side. The hand soldering pad sizing is excessive.
-- [ ] Increase copper pour coverage for high voltage input
+- [ ] Increase copper pour coverage for high voltage input.
+- [ ] Add fiducials for manufacturing.
 
 # PCB Design
 - [ ] Manually add the fiducials for manufacturing tooling. I want to control their location.
@@ -63,13 +69,16 @@ and we can technically go up to 90V.
 - [ ] Failed to connect all 1.1V rail pins together. This prevents the RP2040 from booting.
 - [ ] Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
 What I should have done is stuck with a surface mount USB micro B connector, kept the traces short, and moved the connector near the RP2040.
-- [ ] LTC7871 SDO pin requires an external pull up resistor (open drain output). Missed that line in the datasheet.
+- [ ] LTC7871 SDO pin requires an external pull up resistor (open drain output). Missed that line in the datasheet. Pull up to 3.3V.
 - [ ] Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low. An internal 2uA pullup will
 automatically start the converter without an external pullup. It's expected that the BMS will provide the required power isolation during startup.
 - [ ] Control of output ON/OFF is entirely incorrect (see previous comments about the RUN pin). Need to add a MOSFET on the PWMEN pin to pull the
 signal to GND. This will allow the RP2040 to control power ON/OFF behavior without disabling communication with the LTC7871. I need to be able to
 program current/voltage limits to a safe value before enabling the output.
 - [ ] Pin header for connecting to the BMS needs to change. I just ripped it off accidentally.
+- [ ] Pull up on PWMEN needs to be stronger. R33 was 10k and replacing to 1k was much better.
+- [ ] Dead time resistor on HIP2210 should be 47k for the MCAC80N10Y to prevent shoot through. Validated experimentally.
+- [ ] I think I may have sized the heatsink holes wrong? Need to double check against the fan that I have.
 
 # Assembly Steps (Worked Well)
 - There was so much thermal mass with the copper pours that I needed a hot plate to do all the initial placement and rework. Was truly beautiful. Next

@@ -23,6 +23,17 @@ Includes
 namespace HW::LTC7871::Private
 {
   /*---------------------------------------------------------------------------
+  Enumerations
+  ---------------------------------------------------------------------------*/
+
+  enum SwitchingMode : uint8_t
+  {
+    LTC_MODE_BURST = 0x00,
+    LTC_MODE_DISC  = 0x01,
+    LTC_MODE_CONT  = 0x02
+  };
+
+  /*---------------------------------------------------------------------------
   Structures
   ---------------------------------------------------------------------------*/
 
@@ -108,6 +119,21 @@ namespace HW::LTC7871::Private
    * @return bool True if the error was handled, false otherwise
    */
   bool on_ltc_error( const Panic::ErrorCode &err );
+
+  /**
+   * @brief Enable or disable write protection on the LTC7871 IDAC registers
+   *
+   * @param enable True to enable write protection, false to disable
+   */
+  void idac_write_protect( const bool enable );
+
+  /**
+   * @brief Sets the LTC MODE pin to one of the SwitchingMode values
+   *
+   * @param mode Which mode to set the pin to
+   */
+  void set_mode_pin( const uint8_t mode );
+
 }    // namespace HW::LTC7871::Private
 
 #endif /* !ICHNAEA_LTC7871_PRIVATE_HPP */
