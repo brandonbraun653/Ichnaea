@@ -46,6 +46,7 @@ and we can technically go up to 90V.
   - Control the SMPS power through the RP2040 via an EN signal once the system has bootstrapped.
   - Likely need to adjust the VREF pin of the HIP2210 to not go above 5V when the increased power supply is enabled.
 - [ ] Remove the 100 ohm series resistor with the analog switch output. Add test point.
+- [ ] Add low pass filter to analog signals. Getting lots of noise right now. 100Hz cutoff.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.

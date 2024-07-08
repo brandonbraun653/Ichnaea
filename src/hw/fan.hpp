@@ -45,7 +45,7 @@ namespace HW::FAN
    *
    * @return float Fan speed in RPM
    */
-  float getFanSpeedRPM();
+  float getFanSpeed();
 }  // namespace HW::FAN
 
 #endif  /* !ICHNAEA_FAN_CONTROL_HPP */

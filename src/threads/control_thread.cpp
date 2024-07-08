@@ -29,7 +29,7 @@ namespace Threads
     {
       LOG_INFO( "Current: %.2fA, VHigh: %.2fV, VLow: %.2f", Sensor::getAverageCurrent(), Sensor::getHighSideVoltage(),
                 Sensor::getLowSideVoltage() );
-      LOG_INFO( "Fan Speed: %.2f RPM", HW::FAN::getFanSpeedRPM() );
+      LOG_INFO( "Fan Speed: %.2f RPM", HW::FAN::getFanSpeed() );
       sleep_ms( 1000 );
     }
   }

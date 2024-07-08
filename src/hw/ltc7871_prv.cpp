@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "etl/array.h"
+#include <etl/algorithm.h>
 #include "src/bsp/board_map.hpp"
 #include "src/hw/ltc7871_prv.hpp"
 #include "src/hw/ltc7871_reg.hpp"
@@ -22,7 +23,6 @@ namespace HW::LTC7871::Private
   Constants
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t SPI_BAUD     = 1'000'000; /* Max clock for LTC7871 is 5MHz */
   static constexpr size_t LTC_ADDR_IDX = 0;         /* Buffer index for register addresses */
   static constexpr size_t LTC_DATA_IDX = 1;         /* Buffer index for data field */
   static constexpr size_t LTC_PEC_IDX  = 2;         /* Buffer index for error check code */
@@ -282,6 +282,12 @@ namespace HW::LTC7871::Private
 
   void set_switching_frequency( const float frequency )
   {
+    auto pin          = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LTC_SYNC );
+    auto sync_channel = pwm_gpio_to_channel( pin );
+    auto sync_slice   = pwm_gpio_to_slice_num( pin );
 
+    uint16_t approx_level  = static_cast<uint16_t>( LTC_SYNC_PWM_FREQ / frequency );
+    uint16_t clamped_level = etl::clamp( approx_level, LTC_SYNC_CNT_WRAP_HF_MIN, LTC_SYNC_CNT_WRAP_LF_MAX );
+    pwm_set_chan_level( sync_slice, sync_channel, clamped_level );
   }
 }  // namespace HW::LTC7871::Private

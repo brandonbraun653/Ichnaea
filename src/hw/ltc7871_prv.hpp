@@ -23,6 +23,46 @@ Includes
 namespace HW::LTC7871::Private
 {
   /*---------------------------------------------------------------------------
+  Constants
+  ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief Base clock to configure the PWM peripheral for LTC sync signal
+   */
+  static constexpr float LTC_SYNC_PWM_FREQ = 10'000'000.0f;
+
+  /**
+   * @brief Max counter value to ensure minimum switching frequency is met.
+   *
+   * Assuming a counter base clock of 10MHz and minimum switching frequency
+   * of 60kHz, this is the max value the counter can wrap at before the
+   * switching frequency is too low.
+   *
+   * Period @60kHz: 16.666 uS
+   * Base Clock: 100nS
+   * Counter Value: 166 == 16.6 uS or 60.240kHz
+   */
+  static constexpr uint16_t LTC_SYNC_CNT_WRAP_LF_MAX = 166u;
+
+  /**
+   * @brief Min counter value to ensure maximum switching frequency is met.
+   *
+   * Assuming a counter base clock of 10MHz and maximum switching frequency
+   * of 750kHz, this is the min value the counter can wrap at before the
+   * switching frequency is too high.
+   *
+   * Period @750kHz: 1.333 uS
+   * Base Clock: 100nS
+   * Counter Value: 14 == 1.4 uS or 714.285kHz
+   */
+  static constexpr uint16_t LTC_SYNC_CNT_WRAP_HF_MIN = 14u;
+
+  /**
+   * @brief Default value to disable signaling on the LTC SYNC pin
+   */
+  static constexpr uint16_t LTC_SYNC_CNT_WRAP_OFF = LTC_SYNC_CNT_WRAP_LF_MAX + 1u;
+
+  /*---------------------------------------------------------------------------
   Enumerations
   ---------------------------------------------------------------------------*/
 

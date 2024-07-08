@@ -31,17 +31,15 @@ namespace HW::FAN
 
   struct FanState
   {
-    uint     pin_ctrl;
-    uint     pin_tach;
-    uint     ctrl_pwm_slice;
-    uint     ctrl_pwm_channel;
-    uint16_t ctrl_level;
-    bool     enabled;
-    uint tach_pwm_slice;
-    uint tach_pwm_channel;
-    volatile uint32_t tach_count;
-    volatile float tach_rpm;
-    absolute_time_t last_tach_time;
+    bool              enabled;          /**< Fan control enabled state */
+    uint              pin_ctrl;         /**< PWM control pin */
+    uint              pin_tach;         /**< Tachometer input pin */
+    uint              ctrl_pwm_slice;   /**< PWM slice for control */
+    uint              ctrl_pwm_channel; /**< PWM channel for control */
+    uint16_t          ctrl_level;       /**< Current PWM level for control */
+    volatile uint32_t tach_count;       /**< Tachometer pulse count */
+    volatile float    tach_rpm;         /**< Tachometer RPM value */
+    absolute_time_t   last_tach_time;   /**< Last time the tachometer was updated */
   };
 
   /*---------------------------------------------------------------------------
@@ -53,6 +51,13 @@ namespace HW::FAN
   /*---------------------------------------------------------------------------
   Private Functions
   ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief Interrupt handler for the fan tachometer input
+   *
+   * @param gpio    (Unused) The GPIO pin that triggered the interrupt
+   * @param events  (Unused) The type of event that triggered the interrupt
+   */
   static void gpio_callback( uint gpio, uint32_t events )
   {
     s_fan.tach_count = s_fan.tach_count + 1u;
@@ -64,8 +69,7 @@ namespace HW::FAN
       uint32_t        time_diff    = absolute_time_diff_us( s_fan.last_tach_time, current_time );
 
       // Calculate RPM: (s_fan.tach_count / 2) * (60 seconds / time_diff in minutes)
-      s_fan.tach_rpm = ( s_fan.tach_count / 2.0f ) * ( 60.0f * 1000000.0f / time_diff );
-
+      s_fan.tach_rpm       = ( s_fan.tach_count / 2.0f ) * ( 60.0f * 1000000.0f / time_diff );
       s_fan.tach_count     = 0;
       s_fan.last_tach_time = current_time;
     }
@@ -80,9 +84,11 @@ namespace HW::FAN
     /*-------------------------------------------------------------------------
     Initialize the fan state information
     -------------------------------------------------------------------------*/
-    s_fan.pin_ctrl = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_FAN_CONTROL );
-    s_fan.pin_tach = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_FAN_SENSE );
-    s_fan.enabled  = true;
+    memset( &s_fan, 0, sizeof( FanState ) );
+
+    s_fan.pin_ctrl       = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_FAN_CONTROL );
+    s_fan.pin_tach       = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_FAN_SENSE );
+    s_fan.enabled        = true;
     s_fan.last_tach_time = get_absolute_time();
 
     /*-------------------------------------------------------------------------
@@ -98,34 +104,35 @@ namespace HW::FAN
     s_fan.ctrl_pwm_slice   = pwm_gpio_to_slice_num( s_fan.pin_ctrl );
     s_fan.ctrl_pwm_channel = pwm_gpio_to_channel( s_fan.pin_ctrl );
 
-    s_fan.tach_pwm_slice   = pwm_gpio_to_slice_num( s_fan.pin_tach );
-    s_fan.tach_pwm_channel = pwm_gpio_to_channel( s_fan.pin_tach );
-
-    gpio_set_function( s_fan.pin_tach, GPIO_FUNC_PWM );
     gpio_set_function( s_fan.pin_ctrl, GPIO_FUNC_PWM );
     gpio_set_pulls( s_fan.pin_ctrl, false, true );
 
-    // PWM setup
+    /*-------------------------------------------------------------------------
+    Configure the PWM slice for fan control
+    -------------------------------------------------------------------------*/
     pwm_set_wrap( s_fan.ctrl_pwm_slice, PWM_COUNTER_WRAP );
     pwm_set_chan_level( s_fan.ctrl_pwm_slice, s_fan.ctrl_pwm_channel, PWM_COUNTER_OFF );
     pwm_set_clkdiv( s_fan.ctrl_pwm_slice, divisor );
     pwm_set_counter( s_fan.ctrl_pwm_slice, 0 );
     pwm_set_enabled( s_fan.ctrl_pwm_slice, true );
 
-    // Tachometer input setup (pin 23)
-    gpio_set_function(s_fan.pin_tach, GPIO_FUNC_SIO);
-    gpio_set_dir(s_fan.pin_tach, GPIO_IN);
-    gpio_pull_up(s_fan.pin_tach);
-
-    gpio_set_irq_enabled_with_callback(s_fan.pin_tach, GPIO_IRQ_EDGE_RISE, true, &gpio_callback);
-
-    setSpeedPercent( 0.1f );
+    /*-------------------------------------------------------------------------
+    Configure GPIO to trigger an interrupt on rising edge of the tach signal
+    -------------------------------------------------------------------------*/
+    gpio_set_function( s_fan.pin_tach, GPIO_FUNC_SIO );
+    gpio_set_dir( s_fan.pin_tach, GPIO_IN );
+    gpio_pull_up( s_fan.pin_tach );
+    gpio_set_irq_enabled_with_callback( s_fan.pin_tach, GPIO_IRQ_EDGE_RISE, true, &gpio_callback );
   }
 
 
   void postSequence()
   {
-    LOG_INFO( "Fan RPM: %.2f", getFanSpeedRPM() );
+    setSpeedPercent( 0.1f );
+    sleep_ms( 1000 );
+    setSpeedPercent( 1.00f );
+    sleep_ms( 2000 );
+    setSpeedPercent( 0.1f );
   }
 
 
@@ -134,8 +141,8 @@ namespace HW::FAN
     /*-------------------------------------------------------------------------
     Clamp the brightness level to a valid range and convert it to a PWM level.
     -------------------------------------------------------------------------*/
-    const float    clamped_speed  = MAX( 0.0f, MIN( speed, 0.99f ) );
-    const uint16_t approx_level   = MIN( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_speed ) );
+    const float    clamped_speed = MAX( 0.0f, MIN( speed, 0.99f ) );
+    const uint16_t approx_level  = MIN( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_speed ) );
 
     /*-------------------------------------------------------------------------
     Apply the updates
@@ -144,11 +151,12 @@ namespace HW::FAN
     if( s_fan.enabled )
     {
       pwm_set_chan_level( s_fan.ctrl_pwm_slice, s_fan.ctrl_pwm_channel, s_fan.ctrl_level );
+      LOG_TRACE( "Set fan speed: %.2f%", clamped_speed * 100.0f );
     }
   }
 
 
-  float getFanSpeedRPM()
+  float getFanSpeed()
   {
     return s_fan.tach_rpm;
   }

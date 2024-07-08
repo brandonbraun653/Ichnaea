@@ -25,13 +25,11 @@ namespace HW::LTC7871
   Constants
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t SPI_BAUD = 1'000'000; /* Max clock for LTC7871 is 5MHz */
-  static constexpr float  LTC_SYNC_COUNTER_FREQ = 1'000'000.0f; /* 1MHz */
-  static constexpr size_t LTC_SYNC_COUNTER_MAX  = 750; /* 60kHz */
-  static constexpr size_t LTC_SYNC_COUNTER_MIN  = 60;  /* 750kHz*/
-
-  // 1.333 uS 750kHz
-  // 16.666 uS 60kHz
+  /**
+   * @brief Base clock for the SPI interface to the LTC7871.
+   * @warning Max clock for LTC7871 is 5MHz.
+   */
+  static constexpr size_t LTC_SPI_CLK_RATE = 1'000'000;
 
   /*---------------------------------------------------------------------------
   Static Data
@@ -72,19 +70,33 @@ namespace HW::LTC7871
     gpio_set_dir( pin, GPIO_OUT );
     gpio_put( pin, 0 );
 
-   /*-------------------------------------------------------------------------
-    Figure out the correct clock divider to get roughly 1MHz PWM frequency.
-    This should allow for easy specification of the switching frequency.
+    /*-------------------------------------------------------------------------
+    Configure the LTC SYNC pin. The LTC boots off the FREQ pin resistor, set
+    to ~400kHz. The fact that we're running this code means the LTC is already
+    in a known state (it's powering the RP2040), so match the switching
+    frequency on the SYNC pin to minimize disturbances.
     -------------------------------------------------------------------------*/
-    const float f_clk_peri = static_cast<float>( frequency_count_khz( CLOCKS_FC0_SRC_VALUE_CLK_PERI ) );
-    const float f_pwm      = 1'000'000.0f;
-    const float divisor    = f_clk_peri / f_pwm;
+    pin                      = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LTC_SYNC );
+    const float f_clk_peri   = static_cast<float>( frequency_count_khz( CLOCKS_FC0_SRC_VALUE_CLK_PERI ) );
+    const float divisor      = f_clk_peri / Private::LTC_SYNC_PWM_FREQ;
+    const uint  sync_channel = pwm_gpio_to_channel( pin );
+    const uint  sync_slice   = pwm_gpio_to_slice_num( pin );
 
-    /* Use the FREQ pin resistor to set initial switching frequency */
-    pin = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LTC_SYNC );
+    /* Map GPIO to PWM */
     gpio_init( pin );
-    gpio_set_dir( pin, GPIO_OUT );
-    gpio_put( pin, 1 );
+    gpio_set_function( pin, GPIO_FUNC_PWM );
+    gpio_set_pulls( pin, false, true );
+
+    /* Configure the PWM to idle state */
+    pwm_set_wrap( sync_slice, Private::LTC_SYNC_CNT_WRAP_LF_MAX );
+    pwm_set_chan_level( sync_slice, sync_channel, Private::LTC_SYNC_CNT_WRAP_OFF );
+    pwm_set_clkdiv( sync_slice, divisor );
+    pwm_set_counter( sync_slice, 0 );
+    pwm_set_enabled( sync_slice, true );
+
+    /* Match the base frequency of ~400kHz */
+    // TODO: Should this be moved to later? It's not clear if the LTC is ready for this yet.
+    Private::set_switching_frequency( 400'000.0f );
 
     /*-------------------------------------------------------------------------
     Power up the SPI control lines
@@ -111,8 +123,8 @@ namespace HW::LTC7871
     Initialize the SPI peripheral
     -------------------------------------------------------------------------*/
     auto pSPI = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
-    const uint act_baud = spi_init( pSPI, SPI_BAUD );
-    if( act_baud > SPI_BAUD )
+    const uint act_baud = spi_init( pSPI, LTC_SPI_CLK_RATE );
+    if( act_baud > LTC_SPI_CLK_RATE )
     {
       Panic::throwError( Panic::ErrorCode::ERR_SYSTEM_INIT_FAIL );
     }
