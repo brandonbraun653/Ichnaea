@@ -30,7 +30,7 @@
       "device": "RP2040",
       "svdFile": "${workspaceRoot}/lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
       "gdbPath": "arm-none-eabi-gdb",
-      "BMPGDBSerialPort": "/dev/ttyACM0",
+      "BMPGDBSerialPort": "/dev/ttyACM1",
       "runToEntryPoint": "main",
       "preLaunchCommands": [
         "attach 1",

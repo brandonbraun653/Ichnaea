@@ -41,6 +41,11 @@ and we can technically go up to 90V.
 - [ ] Add bleeder resistor to SS pin to allow for fault soft start recovery.
 - [ ] Add bleeder resistors to input and output capacitors. They don't fully discharge when removing power.
 - [ ] Remove 10k pulldown on MOSFET power stages. Redundant when using the HIP2210 driver.
+- [ ] Analyze adding secondary SMPS to supply gate driver power. LTC7871 is *burning* through power to supply 10V through an internal LDO.
+  - Use diode OR-ing on the LTC supply path to switch over to the SMPS.
+  - Control the SMPS power through the RP2040 via an EN signal once the system has bootstrapped.
+  - Likely need to adjust the VREF pin of the HIP2210 to not go above 5V when the increased power supply is enabled.
+- [ ] Remove the 100 ohm series resistor with the analog switch output. Add test point.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.

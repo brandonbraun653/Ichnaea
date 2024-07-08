@@ -14,6 +14,7 @@ Includes
 #include "src/bsp/board_map.hpp"
 #include "src/hw/adc.hpp"
 #include "src/hw/bootup.hpp"
+#include "src/hw/fan.hpp"
 #include "src/hw/gpio.hpp"
 #include "src/hw/led.hpp"
 #include "src/hw/ltc7871.hpp"
@@ -49,6 +50,7 @@ namespace HW
     HW::LED::initialize();
     HW::ADC::initialize();
     HW::UART::initialize();
+    HW::FAN::initialize();
 
     HW::LTC7871::initialize();
 
@@ -65,6 +67,7 @@ namespace HW
     LOG_TRACE( "Running POST sequence" );
     HW::LED::postSequence();
     HW::ADC::postSequence();
+    HW::FAN::postSequence();
 
     HW::LTC7871::postSequence();
     LOG_TRACE( "POST sequence complete" );

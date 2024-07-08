@@ -134,6 +134,37 @@ namespace HW::LTC7871::Private
    */
   void set_mode_pin( const uint8_t mode );
 
+  /**
+   * @brief Set the output voltage of the LTC7871.
+   *
+   * This modifies the MFR_IDAC_VLOW register to set the output voltage of the
+   * LTC7871.
+   *
+   * @param voltage Desired setpoint in Volts
+   */
+  void set_output_voltage( const float voltage );
+
+  /**
+   * @brief Sets the max average current for the LTC7871.
+   *
+   * This modifies the MFR_IDAC_SETCUR register to set the maximum average
+   * current that the LTC7871 will allow to flow through the load. Each
+   * phase on the board will share the load equally.
+   *
+   * @param current Desired setpoint in Amps
+   */
+  void set_max_avg_current( const float current );
+
+  /**
+   * @brief Sets the switching frequency of the LTC7871.
+   *
+   * This injects a square wave signal into the SYNC pin of the LTC7871 to
+   * set the switching frequency of the power conversion hardware.
+   *
+   * @param frequency Desired frequency in kHz
+   */
+  void set_switching_frequency( const float frequency );
+
 }    // namespace HW::LTC7871::Private
 
 #endif /* !ICHNAEA_LTC7871_PRIVATE_HPP */

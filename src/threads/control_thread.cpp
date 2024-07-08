@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "src/bsp/board_map.hpp"
+#include "src/hw/fan.hpp"
 #include "src/threads/ichnaea_threads.hpp"
 #include "src/system/system_sensor.hpp"
 #include <mbedutils/logging.hpp>
@@ -28,6 +29,7 @@ namespace Threads
     {
       LOG_INFO( "Current: %.2fA, VHigh: %.2fV, VLow: %.2f", Sensor::getAverageCurrent(), Sensor::getHighSideVoltage(),
                 Sensor::getLowSideVoltage() );
+      LOG_INFO( "Fan Speed: %.2f RPM", HW::FAN::getFanSpeedRPM() );
       sleep_ms( 1000 );
     }
   }

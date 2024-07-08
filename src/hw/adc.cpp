@@ -203,9 +203,19 @@ namespace HW::ADC
       #endif /* ICHNAEA_EMBEDDED */
 
       /*-----------------------------------------------------------------------
-      Perform the ADC conversion
+      Average three samples to reduce noise. None of the signals we're reading
+      are high frequency, so this should be fine.
       -----------------------------------------------------------------------*/
-      result = static_cast<float>( adc_read() ) * ADC_VOLT_PER_BIT;
+      result = 0.0f;
+      for ( size_t i = 0; i < 3; i++ )
+      {
+        result += static_cast<float>( adc_read() );
+        busy_wait_us( 50 );
+      }
+
+      result /= 3.0f;
+      result *= ADC_VOLT_PER_BIT;
+
       s_cached_voltage[ channel ] = result;
     }
     recursive_mutex_exit( &s_adc_mutex );
