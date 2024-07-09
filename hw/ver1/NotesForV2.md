@@ -45,6 +45,7 @@ and we can technically go up to 90V.
   - Use diode OR-ing on the LTC supply path to switch over to the SMPS.
   - Control the SMPS power through the RP2040 via an EN signal once the system has bootstrapped.
   - Likely need to adjust the VREF pin of the HIP2210 to not go above 5V when the increased power supply is enabled.
+  - Must be small height to fit under the heat sink. Supply peak loads of 20A, average much smaller. Desktop PSU suggests ~500mA average.
 - [ ] Remove the 100 ohm series resistor with the analog switch output. Add test point.
 - [ ] Add low pass filter to analog signals. Getting lots of noise right now. 100Hz cutoff.
 - [ ] Remap LTC SYNC and LED_STATUS_2 pins to not be on the same PWM channels
