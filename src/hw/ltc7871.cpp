@@ -77,7 +77,7 @@ namespace HW::LTC7871
     frequency on the SYNC pin to minimize disturbances.
     -------------------------------------------------------------------------*/
     pin                      = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LTC_SYNC );
-    const float f_clk_peri   = static_cast<float>( frequency_count_khz( CLOCKS_FC0_SRC_VALUE_CLK_PERI ) );
+    const float f_clk_peri   = static_cast<float>( frequency_count_khz( CLOCKS_FC0_SRC_VALUE_CLK_PERI ) ) * 1000.0f;
     const float divisor      = f_clk_peri / Private::LTC_SYNC_PWM_FREQ;
     const uint  sync_channel = pwm_gpio_to_channel( pin );
     const uint  sync_slice   = pwm_gpio_to_slice_num( pin );
@@ -94,10 +94,6 @@ namespace HW::LTC7871
     pwm_set_counter( sync_slice, 0 );
     pwm_set_enabled( sync_slice, true );
 
-    /* Match the base frequency of ~400kHz */
-    // TODO: Should this be moved to later? It's not clear if the LTC is ready for this yet.
-    Private::set_switching_frequency( 400'000.0f );
-
     /*-------------------------------------------------------------------------
     Power up the SPI control lines
     -------------------------------------------------------------------------*/
@@ -111,7 +107,8 @@ namespace HW::LTC7871
 
     gpio_init( s_io_config->spi[ BSP::SPI_LTC7871 ].miso );
     gpio_set_function( s_io_config->spi[ BSP::SPI_LTC7871 ].miso, GPIO_FUNC_SPI );
-    gpio_pull_up( s_io_config->spi[ BSP::SPI_LTC7871 ].miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
+    gpio_pull_up(
+        s_io_config->spi[ BSP::SPI_LTC7871 ].miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
 
     pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
     gpio_init( pin );
@@ -122,7 +119,7 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Initialize the SPI peripheral
     -------------------------------------------------------------------------*/
-    auto pSPI = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
+    auto       pSPI     = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
     const uint act_baud = spi_init( pSPI, LTC_SPI_CLK_RATE );
     if( act_baud > LTC_SPI_CLK_RATE )
     {

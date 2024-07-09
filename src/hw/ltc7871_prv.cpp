@@ -23,9 +23,9 @@ namespace HW::LTC7871::Private
   Constants
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t LTC_ADDR_IDX = 0;         /* Buffer index for register addresses */
-  static constexpr size_t LTC_DATA_IDX = 1;         /* Buffer index for data field */
-  static constexpr size_t LTC_PEC_IDX  = 2;         /* Buffer index for error check code */
+  static constexpr size_t LTC_ADDR_IDX = 0; /* Buffer index for register addresses */
+  static constexpr size_t LTC_DATA_IDX = 1; /* Buffer index for data field */
+  static constexpr size_t LTC_PEC_IDX  = 2; /* Buffer index for error check code */
 
   /*---------------------------------------------------------------------------
   Aliases
@@ -133,7 +133,7 @@ namespace HW::LTC7871::Private
   void write_register( const uint8_t reg, const uint8_t data )
   {
     const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
-    auto       pSPI   = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
+    auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
     /*-------------------------------------------------------------------------
     Compute the buffer to send over SPI
@@ -167,7 +167,7 @@ namespace HW::LTC7871::Private
   uint8_t read_register( const uint8_t reg )
   {
     const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
-    auto       pSPI   = reinterpret_cast<spi_inst_t*>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
+    auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
     /*-------------------------------------------------------------------------
     Prepare data for the read
@@ -286,8 +286,11 @@ namespace HW::LTC7871::Private
     auto sync_channel = pwm_gpio_to_channel( pin );
     auto sync_slice   = pwm_gpio_to_slice_num( pin );
 
-    uint16_t approx_level  = static_cast<uint16_t>( LTC_SYNC_PWM_FREQ / frequency );
-    uint16_t clamped_level = etl::clamp( approx_level, LTC_SYNC_CNT_WRAP_HF_MIN, LTC_SYNC_CNT_WRAP_LF_MAX );
-    pwm_set_chan_level( sync_slice, sync_channel, clamped_level );
+    uint16_t approx_wrap    = static_cast<uint16_t>( LTC_SYNC_PWM_FREQ / frequency ) - 1u;
+    uint16_t clamped_wrap   = etl::clamp( approx_wrap, LTC_SYNC_CNT_WRAP_HF_MIN, LTC_SYNC_CNT_WRAP_LF_MAX );
+    uint16_t midpoint_level = clamped_wrap / 2u;
+
+    pwm_set_chan_level( sync_slice, sync_channel, midpoint_level );
+    pwm_set_wrap( sync_slice, clamped_wrap );
   }
-}  // namespace HW::LTC7871::Private
+}    // namespace HW::LTC7871::Private

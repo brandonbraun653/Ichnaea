@@ -47,6 +47,8 @@ and we can technically go up to 90V.
   - Likely need to adjust the VREF pin of the HIP2210 to not go above 5V when the increased power supply is enabled.
 - [ ] Remove the 100 ohm series resistor with the analog switch output. Add test point.
 - [ ] Add low pass filter to analog signals. Getting lots of noise right now. 100Hz cutoff.
+- [ ] Remap LTC SYNC and LED_STATUS_2 pins to not be on the same PWM channels
+  - [ ] Re-verify all PWM channels for conflicts. Excel sheet?
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.
@@ -85,6 +87,9 @@ program current/voltage limits to a safe value before enabling the output.
 - [ ] Pull up on PWMEN needs to be stronger. R33 was 10k and replacing to 1k was much better.
 - [ ] Dead time resistor on HIP2210 should be 47k for the MCAC80N10Y to prevent shoot through. Validated experimentally.
 - [ ] I think I may have sized the heatsink holes wrong? Need to double check against the fan that I have.
+- [ ] LTC SYNC pullup (R23, 10k) is too weak. Switch to 1k.
+- [ ] Screw hole near the VIN terminal doesn't allow for the nut/bolt to seat flush. Need to compress all the inductors together more.
+- [ ] I've inadvertently mapped the RP2040 SYNC (4) and LED_STATUS_2 (20) pins to the same PWM channel (PWM2A).
 
 # Assembly Steps (Worked Well)
 - There was so much thermal mass with the copper pours that I needed a hot plate to do all the initial placement and rework. Was truly beautiful. Next
