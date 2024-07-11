@@ -90,6 +90,7 @@ target_link_libraries(IchnaeaApp
   mbedutils_lib_core
   mbedutils_lib_hardware
   mbedutils_lib_pico
+  mbedutils_lib_rpc_server
   mbedutils_logging
   mbedutils_logging_bare_metal
 )
