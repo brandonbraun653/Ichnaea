@@ -11,6 +11,9 @@ python = "^3.10"
 matplotlib = "^3.8.3"
 eseries = "^1.2.1"
 loguru = "^0.7.2"
+protobuf = "^5.27.2"
+grpcio-tools = "^1.65.0"
+mypy-protobuf = "^3.6.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.2"
