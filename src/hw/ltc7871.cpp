@@ -219,14 +219,13 @@ namespace HW::LTC7871
 
     /*-------------------------------------------------------------------------
     // !TESTING
-    Set the output voltage to 12V
+    Set the output voltage
     -------------------------------------------------------------------------*/
-    Private::set_mode_pin( Private::LTC_MODE_CONT );
+    Private::set_mode_pin( Private::LTC_MODE_BURST );
 
     Private::idac_write_protect( false );
     Private::write_register( REG_MFR_IDAC_VLOW, 0x3F );
     Private::idac_write_protect( true );
-
 
     /*-------------------------------------------------------------------------
     Making it here means we can transition to the next state
