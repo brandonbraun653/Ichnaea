@@ -2,6 +2,7 @@
 # Project Libraries
 # -----------------------------------------------------------------------------
 add_subdirectory(bsp)
+add_subdirectory(com)
 add_subdirectory(hw)
 add_subdirectory(integration/mbedutils)
 add_subdirectory(sim)
@@ -18,6 +19,7 @@ target_include_directories(Ichnaea_Headers INTERFACE
 )
 target_link_libraries(Ichnaea_Headers INTERFACE
   mbedutils_headers
+  mbedutils_lib_rpc_headers
 )
 
 # -----------------------------------------------------------------------------
@@ -80,6 +82,7 @@ endif()
 add_executable(IchnaeaApp ichnaea_main.cpp)
 target_link_libraries(IchnaeaApp
   Ichnaea_Board
+  Ichnaea_Com
   Ichnaea_Hardware
   Ichnaea_Headers
   Ichnaea_MbedUtils

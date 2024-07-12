@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "src/bsp/board_map.hpp"
+#include "src/com/ctrl_server.hpp"
 #include "src/hw/adc.hpp"
 #include "src/hw/bootup.hpp"
 #include "src/hw/fan.hpp"
@@ -58,6 +59,7 @@ namespace HW
     Initialize system level modules that depend on the hardware
     -------------------------------------------------------------------------*/
     Logging::initialize();
+    Control::initialize();
 
     LOG_TRACE( "Hardware initialization complete" );
   }
