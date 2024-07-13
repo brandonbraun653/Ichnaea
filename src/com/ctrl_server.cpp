@@ -13,6 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/drivers/rpc/rpc_server.hpp>
 #include <mbedutils/drivers/rpc/builtin_services.hpp>
+#include <mbedutils/drivers/rpc/builtin_messages.hpp>
 
 namespace Control
 {
@@ -33,7 +34,6 @@ namespace Control
     server::Config test_config;
 
     s_test_server.open( test_config );
-    s_test_server.addService( services::PingService() );
   }
 
 }  // namespace Control
