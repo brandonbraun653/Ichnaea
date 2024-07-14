@@ -11,9 +11,9 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include <mbedutils/drivers/rpc/rpc_server.hpp>
 #include <mbedutils/drivers/rpc/builtin_services.hpp>
-#include <mbedutils/drivers/rpc/builtin_messages.hpp>
+#include <mbedutils/drivers/rpc/rpc_common.hpp>
+#include <mbedutils/drivers/rpc/rpc_server.hpp>
 
 namespace Control
 {
@@ -21,7 +21,7 @@ namespace Control
   Static Data
   ---------------------------------------------------------------------------*/
 
-  static mb::rpc::server::Server s_test_server;
+  // static mb::rpc::server::Server s_test_server;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -29,11 +29,6 @@ namespace Control
 
   void initialize()
   {
-    using namespace mb::rpc;
-
-    server::Config test_config;
-
-    s_test_server.open( test_config );
   }
 
 }  // namespace Control

@@ -58,8 +58,8 @@ namespace HW
     /*-------------------------------------------------------------------------
     Initialize system level modules that depend on the hardware
     -------------------------------------------------------------------------*/
-    Logging::initialize();
-    Control::initialize();
+    //Logging::initialize();
+    //Control::initialize();
 
     LOG_TRACE( "Hardware initialization complete" );
   }
