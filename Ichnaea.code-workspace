@@ -72,7 +72,9 @@
 			"mutex": "cpp",
 			"semaphore": "cpp",
 			"stop_token": "cpp",
-			"thread": "cpp"
+			"thread": "cpp",
+			"*.inc": "cpp",
+			"chrono": "cpp"
 		},
 		"cortex-debug.variableUseNaturalFormat": false,
 		"output.smartScroll.enabled": false,

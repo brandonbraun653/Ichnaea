@@ -35,6 +35,8 @@ namespace Threads
   static mb::rpc::StreamStorage<128>        s_rpc_tx_buffer;
   static mb::rpc::ScratchStorage<64>        s_rpc_tx_scratch;
   static mb::rpc::ScratchStorage<64>        s_rpc_rx_scratch;
+  static mb::rpc::services::PingService     s_ping_service;
+  static mb::rpc::messages::PingMessage     s_ping_message;
 
 
   /*---------------------------------------------------------------------------
@@ -71,6 +73,12 @@ namespace Threads
     rpc_cfg.rxScratchSize = s_rpc_rx_scratch.size();
 
     s_rpc_server.open( rpc_cfg );
+
+    /*-------------------------------------------------------------------------
+    Bind builtin services and messages to the server
+    -------------------------------------------------------------------------*/
+    mbed_assert_continue( s_rpc_server.addMessage( &s_ping_message ) );
+    mbed_assert_continue( s_rpc_server.addService( &s_ping_service ) );
     sleep_ms( 100 );
 
     while( 1 )

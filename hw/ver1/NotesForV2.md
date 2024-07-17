@@ -10,7 +10,7 @@ and we can technically go up to 90V.
 - [ ] Add a second serial interface for debug and system testing control.
 - [ ] Add an eeprom for saving settings from the BMS.
 - [ ] Add NOR flash for logging asserts/faults. Prioritize over EEPROM w/pin constraints.
-- [ ] Add a CAN bus serial interface for distributed control.
+- [ ] Add a CAN/RS485 bus serial interface for distributed control.
 - [ ] Consider an integrated half-bridge mosfet solution. Might actually be cheaper than discrete components and take up less space.
 - [ ] Output capacitors should be same height or shorter than inductors. You can't lay it flat on the back without it feeling unstable.
 - [ ] Add MOSFET to PWMEN pin (see Design Faults)
