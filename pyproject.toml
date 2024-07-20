@@ -26,6 +26,7 @@ pytest = "*"
 mbedutils = {path = "lib/mbedutils/python", develop = true}
 
 crc = "^7.0.0"
+pytest-loguru = "^0.4.0"
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.2"
 

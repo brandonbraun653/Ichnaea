@@ -1326,6 +1326,23 @@ tomli = {version = ">=1", markers = "python_version < \"3.11\""}
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
+name = "pytest-loguru"
+version = "0.4.0"
+description = "Pytest Loguru"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest_loguru-0.4.0-py3-none-any.whl", hash = "sha256:3cc7b9c6b22cb158209ccbabf0d678dacd3f3c7497d6f46f1c338c13bee1ac77"},
+    {file = "pytest_loguru-0.4.0.tar.gz", hash = "sha256:0d9e4e72ae9bfd92f774c666e7353766af11b0b78edd59c290e89be116050f03"},
+]
+
+[package.dependencies]
+loguru = "*"
+
+[package.extras]
+test = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 description = "Extensions to the standard Python datetime module"
@@ -1603,4 +1620,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "ce7962393ec3c1deeb88796c7308e1a4447685865b022baffbfab0d43a2a4bd4"
+content-hash = "2fcedffdd8555979b821dc3a0ccdc0f134ede5516a9c6c5243d76f5a7530b6e3"

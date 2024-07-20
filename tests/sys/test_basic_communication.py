@@ -2,11 +2,10 @@ import logging
 import pytest
 from tests.sys.fixtures import rpc_client
 
-
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.usefixtures("rpc_client")
+# @pytest.mark.parametrize("rpc_client", ["TRACE"], indirect=True)
 class TestBasicRPCCommunication:
     """ Tests basic communication with the RPC server. """
 

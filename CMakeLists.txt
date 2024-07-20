@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.15)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
@@ -19,6 +19,8 @@ add_compile_options(
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_definitions(-DDEBUG)
 endif()
+
+
 
 # Import Pico SDK. This must be done before the project() command, else the ARM compiler won't be detected.
 set(PICO_SDK_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/pico-sdk")
@@ -54,8 +56,33 @@ add_custom_target(coverage
 )
 
 project(Ichnaea C CXX ASM)
+
+# Import and configure the FreeRTOS Kernel
+add_library(freertos_config INTERFACE)
+target_include_directories(freertos_config SYSTEM
+INTERFACE
+    src/integration/freertos
+)
+target_compile_definitions(freertos_config
+  INTERFACE
+    projCOVERAGE_TEST=0
+)
+
+set( FREERTOS_HEAP "4" CACHE STRING "" FORCE)
+set( FREERTOS_PORT "GCC_POSIX" CACHE STRING "" FORCE)
+if (CMAKE_CROSSCOMPILING)
+  set(FREERTOS_PORT "GCC_ARM_CM0" CACHE STRING "" FORCE)
+endif()
+
+add_subdirectory("lib/freertos-kernel")
+
+# Import the PicoSDK
 pico_sdk_init()
+
+# Add testing functionality for CMake
 enable_testing()
+
+# Add the subdirectories for the project
 add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(lib/pico-mock)
