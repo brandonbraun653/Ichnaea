@@ -71,6 +71,11 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   pico_sync
 )
 
+target_include_directories(Ichnaea_PicoLibs INTERFACE
+${CMAKE_CURRENT_SOURCE_DIR}/integration/freertos
+${FREERTOS_RP2040_PORT_PATH}/include
+)
+
 # Some of the HW libraries don't work on the host target due to inline assembly or
 # other HW specific code. Redirect to the mock library which has the same API.
 if(${PICO_PLATFORM} STREQUAL "rp2040")
@@ -100,6 +105,8 @@ target_link_libraries(IchnaeaApp
   mbedutils_lib_rpc_server
   mbedutils_logging
   mbedutils_logging_bare_metal
+  FreeRTOS-Kernel
+  FreeRTOS-Kernel-Heap4
 )
 # Fix annoying linker ordering dependencies that might get introduced
 target_link_options(IchnaeaApp PRIVATE -Wl,--start-group)

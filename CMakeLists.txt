@@ -20,12 +20,15 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_definitions(-DDEBUG)
 endif()
 
-
-
 # Import Pico SDK. This must be done before the project() command, else the ARM compiler won't be detected.
 set(PICO_SDK_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/pico-sdk")
 include(pico_sdk_import.cmake)
 include(pico_extras_import_optional.cmake)
+
+# Import FreeRTOS Kernel. This must be done before the project() command.
+set(FREERTOS_RP2040_PORT_PATH "${CMAKE_CURRENT_LIST_DIR}/lib/freertos-kernel/portable/ThirdParty/GCC/RP2040")
+include(${FREERTOS_RP2040_PORT_PATH}/FreeRTOS_Kernel_import.cmake)
+message(STATUS "FreeRTOS Kernel Path: ${FREERTOS_KERNEL_PATH}")
 
 # Find and configure the Doxygen package
 find_package(Doxygen)
@@ -59,22 +62,15 @@ project(Ichnaea C CXX ASM)
 
 # Import and configure the FreeRTOS Kernel
 add_library(freertos_config INTERFACE)
-target_include_directories(freertos_config SYSTEM
-INTERFACE
-    src/integration/freertos
+target_include_directories(freertos_config INTERFACE
+    ${CMAKE_CURRENT_LIST_DIR}/src/integration/freertos
+    ${FREERTOS_KERNEL_PATH}/include
+    ${FREERTOS_RP2040_PORT_PATH}/include
 )
-target_compile_definitions(freertos_config
-  INTERFACE
-    projCOVERAGE_TEST=0
+target_link_libraries(freertos_config INTERFACE
+    pico_platform_headers
+    pico_sync_headers
 )
-
-set( FREERTOS_HEAP "4" CACHE STRING "" FORCE)
-set( FREERTOS_PORT "GCC_POSIX" CACHE STRING "" FORCE)
-if (CMAKE_CROSSCOMPILING)
-  set(FREERTOS_PORT "GCC_ARM_CM0" CACHE STRING "" FORCE)
-endif()
-
-add_subdirectory("lib/freertos-kernel")
 
 # Import the PicoSDK
 pico_sdk_init()
