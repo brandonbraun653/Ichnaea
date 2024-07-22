@@ -15,10 +15,39 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-
+#include <cstdint>
+#include <mbedutils/thread.hpp>
 
 namespace Threads
 {
+  /*---------------------------------------------------------------------------
+  Structures
+  ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief Task message type for Ichnaea
+   */
+  struct TaskMsg
+  {
+    mb::thread::TaskMsgId id;
+    union _MsgType
+    {
+      // Temporary for now
+      float    a;
+      uint32_t b;
+      uint8_t  c;
+    } msg;
+  };
+
+  /*---------------------------------------------------------------------------
+  Public Functions
+  ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief Initialize the project threading system.
+   */
+  void initialize();
+
   /**
    * @brief Monitors the system for proper operation and reports any issues.
    *
@@ -26,7 +55,7 @@ namespace Threads
    * current, etc. It will also be responsible for reporting any issues to the
    * control thread.
    */
-  void monitorThread( void );
+  void monitorThread( void* arg );
 
   /**
    * @brief A high priority low latency thread to directly control the system.
@@ -34,9 +63,8 @@ namespace Threads
    * This is tasked with implementing MPPT algorithms, emergency shutdowns,
    * communication with the BMS, etc.
    */
-  void controlThread( void );
+  void controlThread( void* arg );
 
-  // TODO: Need a message publishing interface similar to TSK_msg.
 }    // namespace Threads
 
 #endif /* !ICHNAEA_THREADS_HPP */

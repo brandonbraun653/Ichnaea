@@ -23,7 +23,7 @@ namespace Threads
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  void monitorThread( void )
+  void monitorThread( void *arg )
   {
     sleep_ms( 1500 );
     while( 1 )

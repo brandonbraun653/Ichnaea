@@ -22,6 +22,7 @@ Includes
 #include "src/hw/uart.hpp"
 #include "src/system/system_error.hpp"
 #include "src/system/system_logging.hpp"
+#include "src/threads/ichnaea_threads.hpp"
 #include <mbedutils/assert.hpp>
 #include <mbedutils/osal.hpp>
 #include <mbedutils/logging.hpp>
@@ -61,7 +62,9 @@ namespace HW
     //Logging::initialize();
     //Control::initialize();
 
-    LOG_TRACE( "Hardware initialization complete" );
+    Threads::initialize();
+
+    LOG_TRACE( "Driver initialization complete" );
   }
 
   void runPostInit()

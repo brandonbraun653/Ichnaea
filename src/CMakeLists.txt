@@ -91,12 +91,13 @@ target_link_libraries(IchnaeaApp
   Ichnaea_System
   Ichnaea_Threads
   mbedutils_lib_core
+  mbedutils_lib_freertos
   mbedutils_lib_hardware
   mbedutils_lib_pico
   mbedutils_lib_rpc_cobs
-  mbedutils_lib_rpc_server
-  mbedutils_lib_rpc_proto
   mbedutils_lib_rpc_nanopb
+  mbedutils_lib_rpc_proto
+  mbedutils_lib_rpc_server
   mbedutils_logging
   mbedutils_logging_bare_metal
 )

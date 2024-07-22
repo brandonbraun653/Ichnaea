@@ -15,6 +15,7 @@ Includes
 #include "src/hw/bootup.hpp"
 #include "src/system/system_error.hpp"
 #include "src/threads/ichnaea_threads.hpp"
+#include <mbedutils/thread.hpp>
 
 /*-----------------------------------------------------------------------------
 Public Functions
@@ -41,7 +42,9 @@ int main()
   "thread" is just a function that consumes a whole core.
   ---------------------------------------------------------------------------*/
   //multicore_launch_core1( Threads::monitorThread );
-  Threads::controlThread();
+  Threads::controlThread( nullptr );
+
+  mb::thread::startScheduler();
 
   /*---------------------------------------------------------------------------
   Should never reach this point

@@ -40,7 +40,7 @@ namespace Threads
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  void controlThread( void )
+  void controlThread( void *arg )
   {
     using namespace mb::rpc;
     using namespace mb::hw::serial;
