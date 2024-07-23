@@ -43,6 +43,8 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+#define configMBEDUTILS_MAX_NUM_TASKS 5
+
 /******************************************************************************/
 /* Hardware description related definitions. **********************************/
 /******************************************************************************/
@@ -53,7 +55,7 @@
  * settings.  Your application will certainly need a different value so set this
  * correctly. This is very often, but not always, equal to the main system clock
  * frequency. */
-#define configCPU_CLOCK_HZ    ( ( unsigned long ) 20000000 )
+#define configCPU_CLOCK_HZ    ( ( unsigned long ) 125'000'000 )
 
 /* configSYSTICK_CLOCK_HZ is an optional parameter for ARM Cortex-M ports only.
  *
@@ -505,10 +507,7 @@
 
 /* Set configNUMBER_OF_CORES to the number of available processor cores.
  * Defaults to 1 if left undefined. */
-
-/*
- #define configNUMBER_OF_CORES                     [Num of available cores]
- */
+ #define configNUMBER_OF_CORES                    2
 
 /* When using SMP (i.e. configNUMBER_OF_CORES is greater than one), set
  * configRUN_MULTIPLE_PRIORITIES to 0 to allow multiple tasks to run
@@ -525,7 +524,7 @@
  * vTaskCoreAffinityGet APIs can be used to set and retrieve which cores a task
  * can run on. If configUSE_CORE_AFFINITY is set to 0 then the FreeRTOS
  * scheduler is free to run any task on any available core. */
-#define configUSE_CORE_AFFINITY                   0
+#define configUSE_CORE_AFFINITY                   1
 
 /* When using SMP with core affinity feature enabled, set
  * configTASK_DEFAULT_CORE_AFFINITY to change the default core affinity mask for

@@ -16,19 +16,6 @@ Includes
 #include <mbedutils/thread.hpp>
 #include <mbedutils/util.hpp>
 
-namespace mb::thread::intf
-{
-  inline constexpr size_t num_cores()
-  {
-    return 2;
-  }
-
-  inline constexpr size_t max_tasks()
-  {
-    return 5;
-  }
-}
-
 namespace Threads
 {
   /*---------------------------------------------------------------------------
@@ -62,7 +49,7 @@ namespace Threads
     -------------------------------------------------------------------------*/
     mb::thread::TaskConfig cfg;
     cfg.name       = s_monitor_storage.name;
-    cfg.func       = mb::thread::TaskFunction::create<monitorThread>();
+    cfg.func       = monitorThread;
     cfg.affinity   = 0;
     cfg.priority   = 128;
     cfg.stack_buf  = s_monitor_storage.stack;
