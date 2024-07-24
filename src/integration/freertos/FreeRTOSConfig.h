@@ -79,7 +79,7 @@
 
 /* configTICK_RATE_HZ sets frequency of the tick interrupt in Hz, normally
  * calculated from the configCPU_CLOCK_HZ value. */
-#define configTICK_RATE_HZ                         100
+#define configTICK_RATE_HZ                         1000
 
 /* Set configUSE_PREEMPTION to 1 to use pre-emptive scheduling.  Set
  * configUSE_PREEMPTION to 0 to use co-operative scheduling.
@@ -111,7 +111,7 @@
 /* configMAX_PRIORITIES Sets the number of available task priorities.  Tasks can
  * be assigned priorities of 0 to (configMAX_PRIORITIES - 1).  Zero is the
  * lowest priority. */
-#define configMAX_PRIORITIES                       256
+#define configMAX_PRIORITIES                       32
 
 /* configMINIMAL_STACK_SIZE defines the size of the stack used by the Idle task
  * (in words, not in bytes!).  The kernel does not use this constant for any
@@ -121,7 +121,7 @@
 
 /* configMAX_TASK_NAME_LEN sets the maximum length (in characters) of a task's
  * human readable name.  Includes the NULL terminator. */
-#define configMAX_TASK_NAME_LEN                    16
+#define configMAX_TASK_NAME_LEN                    32
 
 /* Time is measured in 'ticks' - which is the number of times the tick interrupt
  * has executed since the RTOS kernel was started.
@@ -307,29 +307,7 @@
 /* Set configENABLE_HEAP_PROTECTOR to 1 to enable bounds checking and
  * obfuscation to internal heap block pointers in heap_4.c and heap_5.c to help
  * catch pointer corruptions. Defaults to 0 if left undefined. */
-#define configENABLE_HEAP_PROTECTOR                  0
-
-/******************************************************************************/
-/* Interrupt nesting behaviour configuration. *********************************/
-/******************************************************************************/
-
-/* configKERNEL_INTERRUPT_PRIORITY sets the priority of the tick and context
- * switch performing interrupts.  Not supported by all FreeRTOS ports.  See
- * https://www.freertos.org/RTOS-Cortex-M3-M4.html for information specific to
- * ARM Cortex-M devices. */
-#define configKERNEL_INTERRUPT_PRIORITY          255
-
-/* configMAX_SYSCALL_INTERRUPT_PRIORITY sets the interrupt priority above which
- * FreeRTOS API calls must not be made.  Interrupts above this priority are
- * never disabled, so never delayed by RTOS activity.  The default value is set
- * to the highest interrupt priority (0).  Not supported by all FreeRTOS ports.
- * See https://www.freertos.org/RTOS-Cortex-M3-M4.html for information specific
- * to ARM Cortex-M devices. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY     191
-
-/* Another name for configMAX_SYSCALL_INTERRUPT_PRIORITY - the name used depends
- * on the FreeRTOS port. */
-#define configMAX_API_CALL_INTERRUPT_PRIORITY    0
+#define configENABLE_HEAP_PROTECTOR                  1
 
 /******************************************************************************/
 /* Hook and callback function related definitions. ****************************/
@@ -339,18 +317,9 @@
  * functionality in the build.  Set to 0 to exclude the hook functionality from
  * the build.  The application writer is responsible for providing the hook
  * function for any set to 1.  See https://www.freertos.org/a00016.html. */
-#define configUSE_IDLE_HOOK                   0
-#define configUSE_TICK_HOOK                   0
-#define configUSE_MALLOC_FAILED_HOOK          0
-#define configUSE_DAEMON_TASK_STARTUP_HOOK    0
-
-/* Set configUSE_SB_COMPLETED_CALLBACK to 1 to have send and receive completed
- * callbacks for each instance of a stream buffer or message buffer. When the
- * option is set to 1, APIs xStreamBufferCreateWithCallback() and
- * xStreamBufferCreateStaticWithCallback() (and likewise APIs for message
- * buffer) can be used to create a stream buffer or message buffer instance
- * with application provided callbacks. Defaults to 0 if left undefined. */
-#define configUSE_SB_COMPLETED_CALLBACK       0
+#define configUSE_IDLE_HOOK                   1
+#define configUSE_TICK_HOOK                   1
+#define configUSE_MALLOC_FAILED_HOOK          1
 
 /* Set configCHECK_FOR_STACK_OVERFLOW to 1 or 2 for FreeRTOS to check for a
  * stack overflow at the time of a context switch.  Set to 0 to not look for a
@@ -426,88 +395,12 @@
     }
 
 /******************************************************************************/
-/* FreeRTOS MPU specific definitions. *****************************************/
-/******************************************************************************/
-
-/* If configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS is set to 1 then
- * the application writer can provide functions that execute in privileged mode.
- * See:
- * https://www.freertos.org/a00110.html#configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS
- * Defaults to 0 if left undefined.  Only used by the FreeRTOS Cortex-M MPU
- * ports, not the standard ARMv7-M Cortex-M port. */
-#define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS    0
-
-/* Set configTOTAL_MPU_REGIONS to the number of MPU regions implemented on your
- * target hardware.  Normally 8 or 16.  Only used by the FreeRTOS Cortex-M MPU
- * ports, not the standard ARMv7-M Cortex-M port.  Defaults to 8 if left
- * undefined. */
-#define configTOTAL_MPU_REGIONS                                   8
-
-/* configTEX_S_C_B_FLASH allows application writers to override the default
- * values for the for TEX, Shareable (S), Cacheable (C) and Bufferable (B) bits
- * for the MPU region covering Flash.  Defaults to 0x07UL (which means TEX=000,
- * S=1, C=1, B=1) if left undefined.  Only used by the FreeRTOS Cortex-M MPU
- * ports, not the standard ARMv7-M Cortex-M port. */
-#define configTEX_S_C_B_FLASH                                     0x07UL
-
-/* configTEX_S_C_B_SRAM allows application writers to override the default
- * values for the for TEX, Shareable (S), Cacheable (C) and Bufferable (B) bits
- * for the MPU region covering RAM. Defaults to 0x07UL (which means TEX=000,
- * S=1, C=1, B=1) if left undefined.  Only used by the FreeRTOS Cortex-M MPU
- * ports, not the standard ARMv7-M Cortex-M port. */
-#define configTEX_S_C_B_SRAM                                      0x07UL
-
-/* Set configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY to 0 to prevent any privilege
- * escalations originating from outside of the kernel code itself.  Set to 1 to
- * allow application tasks to raise privilege.  Defaults to 1 if left undefined.
- * Only used by the FreeRTOS Cortex-M MPU ports, not the standard ARMv7-M
- * Cortex-M port. */
-#define configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY               1
-
-/* Set configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS to 1 to allow unprivileged
- * tasks enter critical sections (effectively mask interrupts). Set to 0 to
- * prevent unprivileged tasks entering critical sections.  Defaults to 1 if left
- * undefined.  Only used by the FreeRTOS Cortex-M MPU ports, not the standard
- * ARMv7-M Cortex-M port. */
-#define configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS                0
-
-/* FreeRTOS Kernel version 10.6.0 introduced a new v2 MPU wrapper, namely
- * mpu_wrappers_v2.c. Set configUSE_MPU_WRAPPERS_V1 to 0 to use the new v2 MPU
- * wrapper. Set configUSE_MPU_WRAPPERS_V1 to 1 to use the old v1 MPU wrapper
- * (mpu_wrappers.c). Defaults to 0 if left undefined. */
-#define configUSE_MPU_WRAPPERS_V1                                 0
-
-/* When using the v2 MPU wrapper, set configPROTECTED_KERNEL_OBJECT_POOL_SIZE to
- * the total number of kernel objects, which includes tasks, queues, semaphores,
- * mutexes, event groups, timers, stream buffers and message buffers, in your
- * application. The application will not be able to have more than
- * configPROTECTED_KERNEL_OBJECT_POOL_SIZE kernel objects at any point of
- * time. */
-#define configPROTECTED_KERNEL_OBJECT_POOL_SIZE                   10
-
-/* When using the v2 MPU wrapper, set configSYSTEM_CALL_STACK_SIZE to the size
- * of the system call stack in words. Each task has a statically allocated
- * memory buffer of this size which is used as the stack to execute system
- * calls. For example, if configSYSTEM_CALL_STACK_SIZE is defined as 128 and
- * there are 10 tasks in the application, the total amount of memory used for
- * system call stacks is 128 * 10 = 1280 words. */
-#define configSYSTEM_CALL_STACK_SIZE                              128
-
-/* When using the v2 MPU wrapper, set configENABLE_ACCESS_CONTROL_LIST to 1 to
- * enable Access Control List (ACL) feature. When ACL is enabled, an
- * unprivileged task by default does not have access to any kernel object other
- * than itself. The application writer needs to explicitly grant the
- * unprivileged task access to the kernel objects it needs using the APIs
- * provided for the same. Defaults to 0 if left undefined. */
-#define configENABLE_ACCESS_CONTROL_LIST                          1
-
-/******************************************************************************/
 /* SMP( Symmetric MultiProcessing ) Specific Configuration definitions. *******/
 /******************************************************************************/
 
 /* Set configNUMBER_OF_CORES to the number of available processor cores.
  * Defaults to 1 if left undefined. */
- #define configNUMBER_OF_CORES                    2
+ #define configNUMBER_OF_CORES                    1
 
 /* When using SMP (i.e. configNUMBER_OF_CORES is greater than one), set
  * configRUN_MULTIPLE_PRIORITIES to 0 to allow multiple tasks to run
@@ -524,7 +417,7 @@
  * vTaskCoreAffinityGet APIs can be used to set and retrieve which cores a task
  * can run on. If configUSE_CORE_AFFINITY is set to 0 then the FreeRTOS
  * scheduler is free to run any task on any available core. */
-#define configUSE_CORE_AFFINITY                   1
+#define configUSE_CORE_AFFINITY                   0
 
 /* When using SMP with core affinity feature enabled, set
  * configTASK_DEFAULT_CORE_AFFINITY to change the default core affinity mask for
@@ -553,77 +446,6 @@
  * the core affinity of the RTOS Daemon/Timer Service task. Defaults to
  * tskNO_AFFINITY if left undefined. */
 #define configTIMER_SERVICE_TASK_CORE_AFFINITY    tskNO_AFFINITY
-
-/******************************************************************************/
-/* ARMv8-M secure side port related definitions. ******************************/
-/******************************************************************************/
-
-/* secureconfigMAX_SECURE_CONTEXTS define the maximum number of tasks that can
- *  call into the secure side of an ARMv8-M chip.  Not used by any other ports.
- */
-#define secureconfigMAX_SECURE_CONTEXTS        5
-
-/* Defines the kernel provided implementation of
- * vApplicationGetIdleTaskMemory() and vApplicationGetTimerTaskMemory()
- * to provide the memory that is used by the Idle task and Timer task
- * respectively. The application can provide it's own implementation of
- * vApplicationGetIdleTaskMemory() and vApplicationGetTimerTaskMemory() by
- * setting configKERNEL_PROVIDED_STATIC_MEMORY to 0 or leaving it undefined. */
-#define configKERNEL_PROVIDED_STATIC_MEMORY    1
-
-/******************************************************************************/
-/* ARMv8-M port Specific Configuration definitions. ***************************/
-/******************************************************************************/
-
-/* Set configENABLE_TRUSTZONE to 1 when running FreeRTOS on the non-secure side
- * to enable the TrustZone support in FreeRTOS ARMv8-M ports which allows the
- * non-secure FreeRTOS tasks to call the (non-secure callable) functions
- * exported from secure side. */
-#define configENABLE_TRUSTZONE            1
-
-/* If the application writer does not want to use TrustZone, but the hardware
- * does not support disabling TrustZone then the entire application (including
- * the FreeRTOS scheduler) can run on the secure side without ever branching to
- * the non-secure side. To do that, in addition to setting
- * configENABLE_TRUSTZONE to 0, also set configRUN_FREERTOS_SECURE_ONLY to 1. */
-#define configRUN_FREERTOS_SECURE_ONLY    1
-
-/* Set configENABLE_MPU to 1 to enable the Memory Protection Unit (MPU), or 0
- * to leave the Memory Protection Unit disabled. */
-#define configENABLE_MPU                  1
-
-/* Set configENABLE_FPU to 1 to enable the Floating Point Unit (FPU), or 0
- * to leave the Floating Point Unit disabled. */
-#define configENABLE_FPU                  1
-
-/* Set configENABLE_MVE to 1 to enable the M-Profile Vector Extension (MVE)
- * support, or 0 to leave the MVE support disabled. This option is only
- * applicable to Cortex-M55 and Cortex-M85 ports as M-Profile Vector Extension
- * (MVE) is available only on these architectures. configENABLE_MVE must be left
- * undefined, or defined to 0 for the Cortex-M23,Cortex-M33 and Cortex-M35P
- * ports. */
-#define configENABLE_MVE                  1
-
-/******************************************************************************/
-/* ARMv7-M and ARMv8-M port Specific Configuration definitions. ***************/
-/******************************************************************************/
-
-/* Set configCHECK_HANDLER_INSTALLATION to 1 to enable additional asserts to
- * verify that the application has correctly installed FreeRTOS interrupt
- * handlers.
- *
- * An application can install FreeRTOS interrupt handlers in one of the
- * following ways:
- *   1. Direct Routing  -  Install the functions vPortSVCHandler and
- * xPortPendSVHandler for SVC call and PendSV interrupts respectively.
- *   2. Indirect Routing - Install separate handlers for SVC call and PendSV
- *                         interrupts and route program control from those
- * handlers to vPortSVCHandler and xPortPendSVHandler functions. The
- * applications that use Indirect Routing must set
- * configCHECK_HANDLER_INSTALLATION to 0.
- *
- * Defaults to 1 if left undefined. */
-#define configCHECK_HANDLER_INSTALLATION    1
 
 /******************************************************************************/
 /* Definitions that include or exclude functionality. *************************/

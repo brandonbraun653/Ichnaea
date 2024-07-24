@@ -53,8 +53,8 @@ namespace Threads
     cfg.name       = s_monitor_storage.name;
     cfg.id         = TSK_MONITOR_ID;
     cfg.func       = monitorThread;
-    cfg.affinity   = 0;
-    cfg.priority   = 128;
+    cfg.affinity   = 0x3;
+    cfg.priority   = 15;
     cfg.stack_buf  = s_monitor_storage.stack;
     cfg.stack_size = count_of_array( s_monitor_storage.stack );
     cfg.msg_pool   = &s_monitor_storage.msg_pool;
