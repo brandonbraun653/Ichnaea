@@ -15,8 +15,11 @@ Includes
 #include "src/bsp/board_map.hpp"
 #include "src/threads/ichnaea_threads.hpp"
 #include "src/system/system_sensor.hpp"
+#include "src/hw/led.hpp"
 #include <mbedutils/logging.hpp>
 
+#include <FreeRTOS.h>
+#include <task.h>
 namespace Threads
 {
   /*---------------------------------------------------------------------------
@@ -25,12 +28,12 @@ namespace Threads
 
   void monitorThread( void *arg )
   {
-    sleep_ms( 1500 );
+    vTaskDelay( pdMS_TO_TICKS( 1500 ) );
+    HW::LED::setBrightness( HW::LED::Channel::STATUS_0, 0.5f );
     while( 1 )
     {
-      LOG_INFO( "Current: %.2fA, VHigh: %.2fV, VLow: %.2f", Sensor::getAverageCurrent(), Sensor::getHighSideVoltage(),
-                Sensor::getLowSideVoltage() );
-      sleep_ms( 1000 );
+      HW::LED::toggle( HW::LED::Channel::STATUS_0 );
+      vTaskDelay( pdMS_TO_TICKS( 500 ) );
     }
   }
 }    // namespace Threads

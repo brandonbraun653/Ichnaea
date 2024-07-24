@@ -28,7 +28,7 @@ namespace Threads
   static mb::thread::Task                                                          s_monitor_task;
   static mb::thread::TaskConfigStorage<TaskMsg, MonitorMsgDepth, MonitorStackSize> s_monitor_storage;
 
-  static mb::thread::TaskCBStorage<5> s_tsk_cb;
+  static mb::thread::TaskControlBlockStorage<5> s_tsk_cb;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -47,8 +47,11 @@ namespace Threads
     /*-------------------------------------------------------------------------
     Add the monitor thread
     -------------------------------------------------------------------------*/
+    s_monitor_storage.name = "Monitor";
+
     mb::thread::TaskConfig cfg;
     cfg.name       = s_monitor_storage.name;
+    cfg.id         = TSK_MONITOR_ID;
     cfg.func       = monitorThread;
     cfg.affinity   = 0;
     cfg.priority   = 128;

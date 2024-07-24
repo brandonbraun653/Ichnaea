@@ -20,6 +20,9 @@ target_include_directories(Ichnaea_Headers INTERFACE
 target_link_libraries(Ichnaea_Headers INTERFACE
   mbedutils_headers
   mbedutils_lib_rpc_headers
+
+  # TESTING
+  freertos_config
 )
 
 # -----------------------------------------------------------------------------
@@ -69,12 +72,16 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   pico_platform
   pico_stdlib
   pico_sync
+
+  # TESTING
+  freertos_config
 )
 
-target_include_directories(Ichnaea_PicoLibs INTERFACE
-${CMAKE_CURRENT_SOURCE_DIR}/integration/freertos
-${FREERTOS_RP2040_PORT_PATH}/include
-)
+# target_include_directories(Ichnaea_PicoLibs INTERFACE
+# ${CMAKE_CURRENT_SOURCE_DIR}/integration/freertos
+# ${FREERTOS_RP2040_PORT_PATH}/include
+# )
+
 
 # Some of the HW libraries don't work on the host target due to inline assembly or
 # other HW specific code. Redirect to the mock library which has the same API.
