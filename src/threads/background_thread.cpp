@@ -1,9 +1,9 @@
 /******************************************************************************
  *  File Name:
- *    monitor_thread.cpp
+ *    background_thread.cpp
  *
  *  Description:
- *    Monitor thread to ensure that the system is operating correctly
+ *    Background process for Idle things and low priority tasks
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -11,10 +11,8 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/app/app_decl.hpp"
 #include "src/bsp/board_map.hpp"
 #include "src/threads/ichnaea_threads.hpp"
-#include "src/system/system_sensor.hpp"
 #include "src/hw/led.hpp"
 #include <mbedutils/logging.hpp>
 
@@ -23,12 +21,18 @@ namespace Threads
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
-
-  void monitorThread( void *arg )
+  void backgroundThread( void *arg )
   {
+
+    //HW::runPostInit();
+    // TODO: Send message to all other threads to start
+
+    HW::LED::setBrightness( HW::LED::Channel::STATUS_0, 0.5f );
     while( 1 )
     {
-      sleep_ms( 1000 );
+      HW::LED::toggle( HW::LED::Channel::STATUS_0 );
+      sleep_ms( 500 );
+      LOG_INFO( "System time: %d", mb::time::millis() );
     }
   }
-}    // namespace Threads
+}  // namespace Threads

@@ -22,11 +22,11 @@ namespace mb::assert
 
   void on_assert_fail( const bool halt, const etl::string_view &msg )
   {
-    if( halt )
-    {
+    //if( halt )
+    //{
       // TODO: Implement a system reset here
       __asm volatile( "bkpt #0" );
-    }
+    //}
 
     /*-------------------------------------------------------------------------
     Log the error message to the debug output

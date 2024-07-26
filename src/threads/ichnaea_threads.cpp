@@ -18,17 +18,26 @@ Includes
 
 namespace Threads
 {
+  using namespace mb::thread;
+
   /*---------------------------------------------------------------------------
   Static Data
   ---------------------------------------------------------------------------*/
 
-  static constexpr size_t MonitorMsgDepth  = 15;
-  static constexpr size_t MonitorStackSize = 1024;
+  static mb::thread::TaskControlBlockStorage<TSK_COUNT_MAX> s_tsk_cb;
 
-  static mb::thread::Task                                                          s_monitor_task;
-  static mb::thread::TaskConfigStorage<TaskMsg, MonitorMsgDepth, MonitorStackSize> s_monitor_storage;
+  /* Background Thread */
+  static Task                                s_background_task;
+  static TaskConfigStorage<TaskMsg, 1, 2048> s_background_storage;
 
-  static mb::thread::TaskControlBlockStorage<5> s_tsk_cb;
+  /* Monitor Thread */
+  static Task                                s_monitor_task;
+  static TaskConfigStorage<TaskMsg, 1, 1024> s_monitor_storage;
+
+  /* Control Thread */
+  static Task                                s_control_task;
+  static TaskConfigStorage<TaskMsg, 1, 1024> s_control_storage;
+
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -45,11 +54,30 @@ namespace Threads
     mb::thread::initialize( mod_cfg );
 
     /*-------------------------------------------------------------------------
+    Add the background thread
+    -------------------------------------------------------------------------*/
+    s_background_storage.name = "Background";
+
+    mb::thread::TaskConfig cfg;
+    cfg.reset();
+    cfg.name       = s_background_storage.name;
+    cfg.id         = TSK_BACKGROUND_ID;
+    cfg.func       = backgroundThread;
+    cfg.affinity   = 0x3;
+    cfg.priority   = 10;
+    cfg.stack_buf  = s_background_storage.stack;
+    cfg.stack_size = count_of_array( s_background_storage.stack );
+    cfg.msg_pool   = &s_background_storage.msg_pool;
+    cfg.msg_queue  = &s_background_storage.msg_queue;
+
+    s_background_task = mb::thread::create( cfg );
+
+    /*-------------------------------------------------------------------------
     Add the monitor thread
     -------------------------------------------------------------------------*/
     s_monitor_storage.name = "Monitor";
 
-    mb::thread::TaskConfig cfg;
+    cfg.reset();
     cfg.name       = s_monitor_storage.name;
     cfg.id         = TSK_MONITOR_ID;
     cfg.func       = monitorThread;
@@ -62,5 +90,22 @@ namespace Threads
 
     s_monitor_task = mb::thread::create( cfg );
 
+    /*-------------------------------------------------------------------------
+    Add the control thread
+    -------------------------------------------------------------------------*/
+    s_control_storage.name = "Control";
+
+    cfg.reset();
+    cfg.name       = s_control_storage.name;
+    cfg.id         = TSK_CONTROL_ID;
+    cfg.func       = controlThread;
+    cfg.affinity   = 0x3;
+    cfg.priority   = 20;
+    cfg.stack_buf  = s_control_storage.stack;
+    cfg.stack_size = count_of_array( s_control_storage.stack );
+    cfg.msg_pool   = &s_control_storage.msg_pool;
+    cfg.msg_queue  = &s_control_storage.msg_queue;
+
+    s_control_task = mb::thread::create( cfg );
   }
 }  // namespace Threads

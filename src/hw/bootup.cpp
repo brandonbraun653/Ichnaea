@@ -57,11 +57,10 @@ namespace HW
     //HW::LTC7871::initialize();
 
     /*-------------------------------------------------------------------------
-    Initialize system level modules that depend on the hardware
+    Initialize system level modules that depend on the hardware.
     -------------------------------------------------------------------------*/
-    //Logging::initialize();
-    //Control::initialize();
-
+    Control::initialize();
+    Logging::initialize();
     Threads::initialize();
 
     LOG_TRACE( "Driver initialization complete" );

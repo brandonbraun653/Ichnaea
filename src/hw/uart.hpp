@@ -20,6 +20,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <cstddef>
 #include <cstdint>
+#include <mbedutils/drivers/hardware/serial.hpp>
 
 namespace HW::UART
 {
@@ -42,6 +43,8 @@ namespace HW::UART
    * @brief Initalize UART driver and hardware
    */
   void initialize();
+
+  mb::hw::serial::SerialDriver &getDriver( const Channel channel );
 
 }  // namespace HW::UART
 

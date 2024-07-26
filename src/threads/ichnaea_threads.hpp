@@ -26,7 +26,9 @@ namespace Threads
 
   enum SystemTask : mb::thread::TaskId
   {
+    TSK_BACKGROUND_ID = 0,
     TSK_MONITOR_ID,
+    TSK_CONTROL_ID,
 
     TSK_COUNT_MAX
   };
@@ -60,11 +62,20 @@ namespace Threads
   void initialize();
 
   /**
+   * @brief Low priority background thread to handle non-critical tasks.
+   *
+   * @param arg Unused
+   */
+  void backgroundThread( void* arg );
+
+  /**
    * @brief Monitors the system for proper operation and reports any issues.
    *
    * This is tasked with monitoring system health, such as temperature, voltage,
    * current, etc. It will also be responsible for reporting any issues to the
    * control thread.
+   *
+   * @param arg Unused
    */
   void monitorThread( void* arg );
 
@@ -73,6 +84,8 @@ namespace Threads
    *
    * This is tasked with implementing MPPT algorithms, emergency shutdowns,
    * communication with the BMS, etc.
+   *
+   * @param arg Unused
    */
   void controlThread( void* arg );
 

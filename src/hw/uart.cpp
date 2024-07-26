@@ -19,6 +19,14 @@ Includes
 namespace HW::UART
 {
   /*---------------------------------------------------------------------------
+  Static Data
+  ---------------------------------------------------------------------------*/
+
+  static mb::hw::serial::SerialDriver              s_bms_driver;
+  static etl::bip_buffer_spsc_atomic<uint8_t, 512> s_bms_tx_buffer;
+  static etl::bip_buffer_spsc_atomic<uint8_t, 512> s_bms_rx_buffer;
+
+  /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
@@ -48,6 +56,29 @@ namespace HW::UART
     uart_cfg.usr_channel = UART_BMS;
 
     pico::configure( uart_cfg );
+
+    Config serial_cfg;
+    serial_cfg.channel  = HW::UART::UART_BMS;
+    serial_cfg.rxBuffer = &s_bms_rx_buffer;
+    serial_cfg.txBuffer = &s_bms_tx_buffer;
+
+    mbed_assert( s_bms_driver.open( serial_cfg ) );
+  }
+
+
+  mb::hw::serial::SerialDriver &getDriver( const Channel channel )
+  {
+    switch( channel )
+    {
+      case UART_BMS:
+        return s_bms_driver;
+
+      default:
+        break;
+    }
+
+    mbed_assert( false );
+    return s_bms_driver;
   }
 
 }  // namespace HW::UART

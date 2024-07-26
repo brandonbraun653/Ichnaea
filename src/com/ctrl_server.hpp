@@ -16,7 +16,7 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-
+#include <mbedutils/rpc.hpp>
 
 namespace Control
 {
@@ -28,6 +28,8 @@ namespace Control
    * @brief Initializes the various control server components
    */
   void initialize();
+
+  mb::rpc::server::Server &getRPCServer();
 
 }  // namespace Control
 
