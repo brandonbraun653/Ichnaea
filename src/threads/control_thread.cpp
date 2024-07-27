@@ -24,14 +24,11 @@ namespace Threads
 
   void controlThread( void *arg )
   {
-    /*-------------------------------------------------------------------------
-    Bind builtin services and messages to the server
-    -------------------------------------------------------------------------*/
     sleep_ms( 100 );
 
     while( 1 )
     {
-      //Control::getRPCServer().runServices();
+      Control::getRPCServer().runServices();
       sleep_ms( 25 );
     }
   }

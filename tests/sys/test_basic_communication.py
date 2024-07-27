@@ -14,8 +14,7 @@ class TestBasicRPCCommunication:
         assert rpc_client.ping()
 
     def test_logging(self, rpc_client):
-        from time import sleep
-        sleep(500)
+        from time import sleep, time
         LOGGER.debug("This is a debug message")
         # TODO BMB: Get the console logging to work, then start adding messages to pull data from the system
         #   and to inject commands for control.

@@ -36,7 +36,7 @@ namespace Threads
 
   /* Control Thread */
   static Task                                s_control_task;
-  static TaskConfigStorage<TaskMsg, 1, 1024> s_control_storage;
+  static TaskConfigStorage<TaskMsg, 1, 2048> s_control_storage;
 
 
   /*---------------------------------------------------------------------------
