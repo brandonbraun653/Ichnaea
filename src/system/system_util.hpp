@@ -15,7 +15,7 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-
+#include <cstdint>
 
 namespace System
 {
@@ -30,6 +30,16 @@ namespace System
    * @return false  The context is not in an ISR
    */
   bool inISR();
+
+  /**
+   * @brief Unique identifier for the system.
+   *
+   * This value is generated from a 32-bit hash of the NOR flash device ID
+   * attached to this processor. It should be unique across all Ichnaea systems.
+   *
+   * @return uint32_t
+   */
+  uint32_t identity();
 
 }  // namespace System
 

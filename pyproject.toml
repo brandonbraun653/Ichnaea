@@ -1,14 +1,11 @@
 [tool.poetry]
-name = "Ichnaea"
+name = "IchnaeaDevelopment"
 version = "0.1.0"
 description = "MPPT charge controller development environment"
 authors = ["Brandon Braun <brandonbraun653@protonmail.com>"]
 license = "MIT"
 readme = "README.md"
 package-mode = false
-packages = [
-    { include = "proto", from = "lib/nanopb/generator" }
-]
 
 [build-system]
 requires = ["poetry-core"]
@@ -24,6 +21,7 @@ grpcio-tools = "^1.65.0"
 mypy-protobuf = "^3.6.0"
 pytest = "*"
 mbedutils = {path = "lib/mbedutils/python", develop = true}
+ichnaea = {path = "app", develop = true}
 
 crc = "^7.0.0"
 pytest-loguru = "^0.4.0"

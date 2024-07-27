@@ -5,11 +5,64 @@ isort:skip_file
 
 import builtins
 import google.protobuf.descriptor
+import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
 import mbed_rpc_pb2
+import sys
 import typing
 
+if sys.version_info >= (3, 10):
+    import typing as typing_extensions
+else:
+    import typing_extensions
+
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
+
+class _Service:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _ServiceEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Service.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    SVC_IDENTITY: _Service.ValueType  # 0
+
+class Service(_Service, metaclass=_ServiceEnumTypeWrapper):
+    """System services that are available to all nodes in the network."""
+
+SVC_IDENTITY: Service.ValueType  # 0
+global___Service = Service
+
+class _Message:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _MessageEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Message.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    MSG_GET_ID_REQ: _Message.ValueType  # 0
+    MSG_GET_ID_RSP: _Message.ValueType  # 1
+
+class Message(_Message, metaclass=_MessageEnumTypeWrapper):
+    """Message types available"""
+
+MSG_GET_ID_REQ: Message.ValueType  # 0
+MSG_GET_ID_RSP: Message.ValueType  # 1
+global___Message = Message
+
+class _MessageVersion:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _MessageVersionEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_MessageVersion.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    MSG_VER_GET_ID_REQ: _MessageVersion.ValueType  # 0
+    MSG_VER_GET_ID_RSP: _MessageVersion.ValueType  # 0
+
+class MessageVersion(_MessageVersion, metaclass=_MessageVersionEnumTypeWrapper):
+    """Version of the message. This is used to ensure that the message is compatible with the receiver."""
+
+MSG_VER_GET_ID_REQ: MessageVersion.ValueType  # 0
+MSG_VER_GET_ID_RSP: MessageVersion.ValueType  # 0
+global___MessageVersion = MessageVersion
 
 @typing.final
 class GetIdRequest(google.protobuf.message.Message):

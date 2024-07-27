@@ -10,6 +10,24 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
+/* Enum definitions */
+/* System services that are available to all nodes in the network. */
+typedef enum _ichnaea_Service {
+    ichnaea_Service_SVC_IDENTITY = 0
+} ichnaea_Service;
+
+/* Message types available */
+typedef enum _ichnaea_Message {
+    ichnaea_Message_MSG_GET_ID_REQ = 0,
+    ichnaea_Message_MSG_GET_ID_RSP = 1
+} ichnaea_Message;
+
+/* Version of the message. This is used to ensure that the message is compatible with the receiver. */
+typedef enum _ichnaea_MessageVersion {
+    ichnaea_MessageVersion_MSG_VER_GET_ID_REQ = 0,
+    ichnaea_MessageVersion_MSG_VER_GET_ID_RSP = 0
+} ichnaea_MessageVersion;
+
 /* Struct definitions */
 /* This is a broadcasted message to all nodes in the network to respond with their unique identifier.
  This allows a master controller to figure out who is in the network for later communication. */
@@ -31,6 +49,22 @@ typedef struct _ichnaea_GetIdResponse {
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* Helper constants for enums */
+#define _ichnaea_Service_MIN ichnaea_Service_SVC_IDENTITY
+#define _ichnaea_Service_MAX ichnaea_Service_SVC_IDENTITY
+#define _ichnaea_Service_ARRAYSIZE ((ichnaea_Service)(ichnaea_Service_SVC_IDENTITY+1))
+
+#define _ichnaea_Message_MIN ichnaea_Message_MSG_GET_ID_REQ
+#define _ichnaea_Message_MAX ichnaea_Message_MSG_GET_ID_RSP
+#define _ichnaea_Message_ARRAYSIZE ((ichnaea_Message)(ichnaea_Message_MSG_GET_ID_RSP+1))
+
+#define _ichnaea_MessageVersion_MIN ichnaea_MessageVersion_MSG_VER_GET_ID_REQ
+#define _ichnaea_MessageVersion_MAX ichnaea_MessageVersion_MSG_VER_GET_ID_RSP
+#define _ichnaea_MessageVersion_ARRAYSIZE ((ichnaea_MessageVersion)(ichnaea_MessageVersion_MSG_VER_GET_ID_RSP+1))
+
+
+
 
 /* Initializer values for message structs */
 #define ichnaea_GetIdRequest_init_default        {mbed_rpc_Header_init_default}

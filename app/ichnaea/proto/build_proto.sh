@@ -20,7 +20,8 @@
 _cwd=$(pwd)
 
 SRC_DIR=$_cwd
-PY_DST_DIR=$_cwd/../../../app/proto
+PY_DST_DIR=$_cwd
+C_DST_DIR=$_cwd/../../../src/com/proto
 
 # Find the nanopb installation directory in the virtual environment
 NPB_ROOT=$(python -c "import os; import nanopb; print(os.path.dirname(nanopb.__file__))")
@@ -43,7 +44,7 @@ echo "Found mbedutils: $MBEDUTILS_ROOT"
 MBED_INC=$MBEDUTILS_ROOT/rpc/proto
 
 # Build the C bindings
-python "$NPB_ROOT"/generator/nanopb_generator.py --cpp-descriptors --output-dir="$SRC_DIR" --proto-path="$SRC_DIR" --proto-path="$MBED_INC" *.proto
+python "$NPB_ROOT"/generator/nanopb_generator.py --cpp-descriptors --output-dir="$C_DST_DIR" --proto-path="$SRC_DIR" --proto-path="$MBED_INC" *.proto
 
 # Build the Python bindings with mypy definitions
 protoc -I="$SRC_DIR" -I="$NPB_INC" -I="$MBED_INC" --python_out="$PY_DST_DIR" --mypy_out="$PY_DST_DIR" "$SRC_DIR"/*.proto

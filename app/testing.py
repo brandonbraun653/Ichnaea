@@ -1,13 +1,14 @@
 from time import sleep
 
-from mbedutils.rpc.client import RPCClient
+from ichnaea.ichnaea_client import IchnaeaClient
 
 if __name__ == "__main__":
-    client = RPCClient()
-    client.open(port="/dev/ttyACM1", baud=115200)
-    sleep(1)
-    if not client.ping():
-        print("Failed to ping the server")
+    client = IchnaeaClient(port="/dev/ttyACM1", baud=115200)
+    client.connect()
 
-    sleep(5)
-    client.close()
+    print("Identifying nodes")
+    nodes = client.identify_nodes()
+    for node in nodes:
+        print(f"Node {node[0]} has firmware version {node[1]}")
+
+    client.disconnect()

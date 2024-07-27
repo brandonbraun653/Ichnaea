@@ -26,19 +26,27 @@ import nanopb_pb2 as nanopb__pb2
 import mbed_rpc_pb2 as mbed__rpc__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\richnaea.proto\x12\x07ichnaea\x1a\x0cnanopb.proto\x1a\x0embed_rpc.proto\"0\n\x0cGetIdRequest\x12 \n\x06header\x18\x01 \x02(\x0b\x32\x10.mbed.rpc.Header\"\x92\x01\n\rGetIdResponse\x12 \n\x06header\x18\x01 \x02(\x0b\x32\x10.mbed.rpc.Header\x12\x11\n\tunique_id\x18\x02 \x02(\r\x12\x18\n\tver_major\x18\x03 \x02(\rB\x05\x92?\x02\x38\x08\x12\x18\n\tver_minor\x18\x04 \x02(\rB\x05\x92?\x02\x38\x08\x12\x18\n\tver_patch\x18\x05 \x02(\rB\x05\x92?\x02\x38\x08')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\richnaea.proto\x12\x07ichnaea\x1a\x0cnanopb.proto\x1a\x0embed_rpc.proto\"0\n\x0cGetIdRequest\x12 \n\x06header\x18\x01 \x02(\x0b\x32\x10.mbed.rpc.Header\"\x92\x01\n\rGetIdResponse\x12 \n\x06header\x18\x01 \x02(\x0b\x32\x10.mbed.rpc.Header\x12\x11\n\tunique_id\x18\x02 \x02(\r\x12\x18\n\tver_major\x18\x03 \x02(\rB\x05\x92?\x02\x38\x08\x12\x18\n\tver_minor\x18\x04 \x02(\rB\x05\x92?\x02\x38\x08\x12\x18\n\tver_patch\x18\x05 \x02(\rB\x05\x92?\x02\x38\x08*\x1b\n\x07Service\x12\x10\n\x0cSVC_IDENTITY\x10\x00*1\n\x07Message\x12\x12\n\x0eMSG_GET_ID_REQ\x10\x00\x12\x12\n\x0eMSG_GET_ID_RSP\x10\x01*D\n\x0eMessageVersion\x12\x16\n\x12MSG_VER_GET_ID_REQ\x10\x00\x12\x16\n\x12MSG_VER_GET_ID_RSP\x10\x00\x1a\x02\x10\x01')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ichnaea_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
+  _globals['_MESSAGEVERSION']._loaded_options = None
+  _globals['_MESSAGEVERSION']._serialized_options = b'\020\001'
   _globals['_GETIDRESPONSE'].fields_by_name['ver_major']._loaded_options = None
   _globals['_GETIDRESPONSE'].fields_by_name['ver_major']._serialized_options = b'\222?\0028\010'
   _globals['_GETIDRESPONSE'].fields_by_name['ver_minor']._loaded_options = None
   _globals['_GETIDRESPONSE'].fields_by_name['ver_minor']._serialized_options = b'\222?\0028\010'
   _globals['_GETIDRESPONSE'].fields_by_name['ver_patch']._loaded_options = None
   _globals['_GETIDRESPONSE'].fields_by_name['ver_patch']._serialized_options = b'\222?\0028\010'
+  _globals['_SERVICE']._serialized_start=255
+  _globals['_SERVICE']._serialized_end=282
+  _globals['_MESSAGE']._serialized_start=284
+  _globals['_MESSAGE']._serialized_end=333
+  _globals['_MESSAGEVERSION']._serialized_start=335
+  _globals['_MESSAGEVERSION']._serialized_end=403
   _globals['_GETIDREQUEST']._serialized_start=56
   _globals['_GETIDREQUEST']._serialized_end=104
   _globals['_GETIDRESPONSE']._serialized_start=107

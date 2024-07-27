@@ -12,6 +12,8 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "src/hw/uart.hpp"
+#include "src/com/rpc/rpc_services.hpp"
+#include "src/com/rpc/rpc_messages.hpp"
 #include <mbedutils/drivers/rpc/builtin_services.hpp>
 #include <mbedutils/drivers/rpc/rpc_common.hpp>
 #include <mbedutils/drivers/rpc/rpc_server.hpp>
@@ -22,13 +24,11 @@ namespace Control
   Static Data
   ---------------------------------------------------------------------------*/
 
-  static mb::rpc::server::Server                s_rpc_server;
-  static mb::rpc::server::ServiceStorage<5>     s_service_registry;
-  static mb::rpc::message::DescriptorStorage<5> s_message_registry;
-  static mb::rpc::StreamStorage<128>            s_rpc_rx_buffer;
-  static mb::rpc::StreamStorage<1024>           s_rpc_tx_buffer;
-  static mb::rpc::ScratchStorage<256>           s_rpc_tx_scratch;
-  static mb::rpc::ScratchStorage<128>           s_rpc_rx_scratch;
+  static mb::rpc::server::Server                    s_rpc_server;
+  static mb::rpc::server::Storage<5, 128, 256, 128> s_rpc_server_storage;
+  static mb::rpc::message::DescriptorStorage<5>     s_rpc_msg_registry;
+
+  static COM::RPC::IdentityService s_identity_service;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -41,16 +41,19 @@ namespace Control
     /*-------------------------------------------------------------------------
     Configure the RPC server
     -------------------------------------------------------------------------*/
-    message::initialize( &s_message_registry );
+    message::initialize( &s_rpc_msg_registry );
 
-    server::Config rpc_cfg;
-    rpc_cfg.iostream      = &HW::UART::getDriver( HW::UART::Channel::UART_BMS );
-    rpc_cfg.rxBuffer      = &s_rpc_rx_buffer;
-    rpc_cfg.svcReg        = &s_service_registry;
-    rpc_cfg.txScratch     = etl::span<uint8_t>{ s_rpc_tx_scratch.data(), s_rpc_tx_scratch.size() };
-    rpc_cfg.rxScratch     = etl::span<uint8_t>{ s_rpc_rx_scratch.data(), s_rpc_rx_scratch.size() };
+    auto rpc_cfg = s_rpc_server_storage.make_config( HW::UART::getDriver( HW::UART::Channel::UART_BMS ) );
+    mbed_assert_continue( s_rpc_server.open( rpc_cfg ) );
 
-    s_rpc_server.open( rpc_cfg );
+    /*-------------------------------------------------------------------------
+    Add the system services
+    -------------------------------------------------------------------------*/
+
+    /* Identity Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_identity_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::GetIdRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::GetIdResponse ) );
   }
 
   mb::rpc::server::Server &getRPCServer()

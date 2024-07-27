@@ -45,6 +45,7 @@ target_link_libraries(Ichnaea_PicoHeaders INTERFACE
   pico_stdlib_headers
   pico_sync_headers
   pico_time_headers
+  pico_unique_id_headers
 )
 
 # Some of the HW headers don't work on the host target due to inline assembly or
@@ -72,6 +73,7 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   pico_platform
   pico_stdlib
   pico_sync
+  pico_unique_id
 
   # TESTING
   freertos_config
