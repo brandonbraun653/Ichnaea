@@ -16,6 +16,8 @@ Includes
 #include "src/bsp/board_map.hpp"
 #include "src/hw/ltc7871_prv.hpp"
 #include "src/hw/ltc7871_reg.hpp"
+#include <mbedutils/osal.hpp>
+#include <mbedutils/thread.hpp>
 
 namespace HW::LTC7871::Private
 {
@@ -34,8 +36,20 @@ namespace HW::LTC7871::Private
   using spi_txfr_buffer_t = etl::array<uint8_t, 3>;
 
   /*---------------------------------------------------------------------------
+  Static Data
+  ---------------------------------------------------------------------------*/
+
+  static mb::osal::mb_recursive_mutex_t s_bus_lock; /* SPI bus lock */
+
+  /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
+
+  void initialize()
+  {
+    mbed_assert( mb::osal::buildRecursiveMutexStrategy( s_bus_lock ) );
+  }
+
 
   bool resolve_power_on_config( LTCConfig &cfg )
   {
@@ -132,6 +146,8 @@ namespace HW::LTC7871::Private
 
   void write_register( const uint8_t reg, const uint8_t data )
   {
+    mb::thread::RecursiveLockGuard lock( s_bus_lock );
+
     const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
     auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
@@ -166,6 +182,8 @@ namespace HW::LTC7871::Private
 
   uint8_t read_register( const uint8_t reg )
   {
+    mb::thread::RecursiveLockGuard lock( s_bus_lock );
+
     const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
     auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 

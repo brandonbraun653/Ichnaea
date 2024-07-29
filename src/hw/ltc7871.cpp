@@ -45,9 +45,14 @@ namespace HW::LTC7871
 
   void initialize()
   {
+    /*-------------------------------------------------------------------------
+    Initialize the driver state
+    -------------------------------------------------------------------------*/
     s_io_config   = &BSP::getIOConfig();
     s_driver_mode = DriverMode::DISABLED;
     s_fault_code  = FaultCode::NO_FAULT;
+
+    Private::initialize();
 
     /*-------------------------------------------------------------------------
     Power up the GPIO control lines
@@ -135,6 +140,14 @@ namespace HW::LTC7871
     {
       Panic::registerHandler( static_cast<Panic::ErrorCode>( ecode ), Private::on_ltc_error );
     }
+  }
+
+
+  bool available()
+  {
+    // TODO: fill this in once we get out of the board bringup phase and want to get fancy.
+    // Likely rev 2.0
+    return true;
   }
 
 

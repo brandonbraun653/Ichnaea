@@ -32,7 +32,6 @@ namespace Threads
     {
       HW::LED::toggle( HW::LED::Channel::STATUS_0 );
       sleep_ms( 500 );
-      LOG_INFO( "System time: %d", mb::time::millis() );
     }
   }
 }  // namespace Threads

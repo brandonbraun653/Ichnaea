@@ -17,7 +17,9 @@ typedef enum _ichnaea_Service {
     ichnaea_Service_SVC_SETPOINT = 101, /* Control operational setpoints */
     ichnaea_Service_SVC_MANAGER = 102, /* Control system services */
     ichnaea_Service_SVC_SENSOR = 103, /* Read sensor values */
-    ichnaea_Service_SVC_PING_NODE = 104 /* Ping a node to check if it is alive */
+    ichnaea_Service_SVC_PING_NODE = 104, /* Ping a node to check if it is alive */
+    ichnaea_Service_SVC_LTC_REG_GET = 105, /* Get a specific register on the LTC7871 */
+    ichnaea_Service_SVC_LTC_REG_SET = 106 /* Set a specific register on the LTC7871 */
 } ichnaea_Service;
 
 /* Message types available */
@@ -31,7 +33,11 @@ typedef enum _ichnaea_Message {
     ichnaea_Message_MSG_SENSOR_REQ = 106, /* Request to read sensor values */
     ichnaea_Message_MSG_SENSOR_RSP = 107, /* Response to the SensorObserverRequest message */
     ichnaea_Message_MSG_PING_NODE_REQ = 108, /* Request to ping a node */
-    ichnaea_Message_MSG_PING_NODE_RSP = 109 /* Response to the PingNodeRequest message */
+    ichnaea_Message_MSG_PING_NODE_RSP = 109, /* Response to the PingNodeRequest message */
+    ichnaea_Message_MSG_LTC_REG_SET_REQ = 110, /* Request to set a specific register on the LTC7871 */
+    ichnaea_Message_MSG_LTC_REG_SET_RSP = 111, /* Response to a register set command */
+    ichnaea_Message_MSG_LTC_REG_GET_REQ = 112, /* Request to get a specific register on the LTC7871 */
+    ichnaea_Message_MSG_LTC_REG_GET_RSP = 113 /* Response to a register get command */
 } ichnaea_Message;
 
 /* Version of the message. This is used to ensure that the message is compatible with the receiver. */
@@ -45,7 +51,11 @@ typedef enum _ichnaea_MessageVersion {
     ichnaea_MessageVersion_MSG_VER_SENSOR_REQ = 0,
     ichnaea_MessageVersion_MSG_VER_SENSOR_RSP = 0,
     ichnaea_MessageVersion_MSG_VER_PING_NODE_REQ = 0,
-    ichnaea_MessageVersion_MSG_VER_PING_NODE_RSP = 0
+    ichnaea_MessageVersion_MSG_VER_PING_NODE_RSP = 0,
+    ichnaea_MessageVersion_MSG_VER_LTC_REG_SET_REQ = 0,
+    ichnaea_MessageVersion_MSG_VER_LTC_REG_SET_RSP = 0,
+    ichnaea_MessageVersion_MSG_VER_LTC_REG_GET_REQ = 0,
+    ichnaea_MessageVersion_MSG_VER_LTC_REG_GET_RSP = 0
 } ichnaea_MessageVersion;
 
 typedef enum _ichnaea_ManagerCommand {
@@ -86,6 +96,14 @@ typedef enum _ichnaea_SensorType {
     ichnaea_SensorType_SENSOR_BOARD_TEMP_2 = 4,
     ichnaea_SensorType_SENSOR_BOARD_TEMP_3 = 5
 } ichnaea_SensorType;
+
+typedef enum _ichnaea_LTCRegisterError {
+    ichnaea_LTCRegisterError_ERR_LTC_REG_NO_ERROR = 0, /* No error */
+    ichnaea_LTCRegisterError_ERR_LTC_REG_INVALID = 1, /* Invalid register requested */
+    ichnaea_LTCRegisterError_ERR_LTC_REG_BAD_VALUE = 2, /* Bad value for the register */
+    ichnaea_LTCRegisterError_ERR_LTC_REG_READ_ONLY = 3, /* Register is read-only */
+    ichnaea_LTCRegisterError_ERR_LTC_ACCESS_FAILED = 4 /* LTC7871 access failed/unavailable */
+} ichnaea_LTCRegisterError;
 
 /* Struct definitions */
 typedef struct _ichnaea_PingNodeRequest {
@@ -157,6 +175,30 @@ typedef struct _ichnaea_SensorResponse {
     float value;
 } ichnaea_SensorResponse;
 
+typedef struct _ichnaea_LTCRegisterSetRequest {
+    mbed_rpc_Header header;
+    uint32_t node_id;
+    uint8_t reg;
+    uint8_t value;
+} ichnaea_LTCRegisterSetRequest;
+
+typedef struct _ichnaea_LTCRegisterSetResponse {
+    mbed_rpc_Header header;
+    ichnaea_LTCRegisterError status;
+} ichnaea_LTCRegisterSetResponse;
+
+typedef struct _ichnaea_LTCRegisterGetRequest {
+    mbed_rpc_Header header;
+    uint32_t node_id;
+    uint8_t reg;
+} ichnaea_LTCRegisterGetRequest;
+
+typedef struct _ichnaea_LTCRegisterGetResponse {
+    mbed_rpc_Header header;
+    ichnaea_LTCRegisterError status;
+    uint8_t value;
+} ichnaea_LTCRegisterGetResponse;
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -164,12 +206,12 @@ extern "C" {
 
 /* Helper constants for enums */
 #define _ichnaea_Service_MIN ichnaea_Service_SVC_IDENTITY
-#define _ichnaea_Service_MAX ichnaea_Service_SVC_PING_NODE
-#define _ichnaea_Service_ARRAYSIZE ((ichnaea_Service)(ichnaea_Service_SVC_PING_NODE+1))
+#define _ichnaea_Service_MAX ichnaea_Service_SVC_LTC_REG_SET
+#define _ichnaea_Service_ARRAYSIZE ((ichnaea_Service)(ichnaea_Service_SVC_LTC_REG_SET+1))
 
 #define _ichnaea_Message_MIN ichnaea_Message_MSG_GET_ID_REQ
-#define _ichnaea_Message_MAX ichnaea_Message_MSG_PING_NODE_RSP
-#define _ichnaea_Message_ARRAYSIZE ((ichnaea_Message)(ichnaea_Message_MSG_PING_NODE_RSP+1))
+#define _ichnaea_Message_MAX ichnaea_Message_MSG_LTC_REG_GET_RSP
+#define _ichnaea_Message_ARRAYSIZE ((ichnaea_Message)(ichnaea_Message_MSG_LTC_REG_GET_RSP+1))
 
 #define _ichnaea_MessageVersion_MIN ichnaea_MessageVersion_MSG_VER_GET_ID_REQ
 #define _ichnaea_MessageVersion_MAX ichnaea_MessageVersion_MSG_VER_SETPOINT_RSP
@@ -199,6 +241,10 @@ extern "C" {
 #define _ichnaea_SensorType_MAX ichnaea_SensorType_SENSOR_BOARD_TEMP_3
 #define _ichnaea_SensorType_ARRAYSIZE ((ichnaea_SensorType)(ichnaea_SensorType_SENSOR_BOARD_TEMP_3+1))
 
+#define _ichnaea_LTCRegisterError_MIN ichnaea_LTCRegisterError_ERR_LTC_REG_NO_ERROR
+#define _ichnaea_LTCRegisterError_MAX ichnaea_LTCRegisterError_ERR_LTC_ACCESS_FAILED
+#define _ichnaea_LTCRegisterError_ARRAYSIZE ((ichnaea_LTCRegisterError)(ichnaea_LTCRegisterError_ERR_LTC_ACCESS_FAILED+1))
+
 
 
 
@@ -216,6 +262,12 @@ extern "C" {
 #define ichnaea_SensorResponse_status_ENUMTYPE ichnaea_SensorError
 
 
+#define ichnaea_LTCRegisterSetResponse_status_ENUMTYPE ichnaea_LTCRegisterError
+
+
+#define ichnaea_LTCRegisterGetResponse_status_ENUMTYPE ichnaea_LTCRegisterError
+
+
 /* Initializer values for message structs */
 #define ichnaea_PingNodeRequest_init_default     {mbed_rpc_Header_init_default, 0}
 #define ichnaea_PingNodeResponse_init_default    {mbed_rpc_Header_init_default}
@@ -227,6 +279,10 @@ extern "C" {
 #define ichnaea_SetpointResponse_init_default    {mbed_rpc_Header_init_default, _ichnaea_SetpointError_MIN, false, ""}
 #define ichnaea_SensorRequest_init_default       {mbed_rpc_Header_init_default, 0, _ichnaea_SensorType_MIN}
 #define ichnaea_SensorResponse_init_default      {mbed_rpc_Header_init_default, _ichnaea_SensorError_MIN, 0}
+#define ichnaea_LTCRegisterSetRequest_init_default {mbed_rpc_Header_init_default, 0, 0, 0}
+#define ichnaea_LTCRegisterSetResponse_init_default {mbed_rpc_Header_init_default, _ichnaea_LTCRegisterError_MIN}
+#define ichnaea_LTCRegisterGetRequest_init_default {mbed_rpc_Header_init_default, 0, 0}
+#define ichnaea_LTCRegisterGetResponse_init_default {mbed_rpc_Header_init_default, _ichnaea_LTCRegisterError_MIN, 0}
 #define ichnaea_PingNodeRequest_init_zero        {mbed_rpc_Header_init_zero, 0}
 #define ichnaea_PingNodeResponse_init_zero       {mbed_rpc_Header_init_zero}
 #define ichnaea_GetIdRequest_init_zero           {mbed_rpc_Header_init_zero}
@@ -237,6 +293,10 @@ extern "C" {
 #define ichnaea_SetpointResponse_init_zero       {mbed_rpc_Header_init_zero, _ichnaea_SetpointError_MIN, false, ""}
 #define ichnaea_SensorRequest_init_zero          {mbed_rpc_Header_init_zero, 0, _ichnaea_SensorType_MIN}
 #define ichnaea_SensorResponse_init_zero         {mbed_rpc_Header_init_zero, _ichnaea_SensorError_MIN, 0}
+#define ichnaea_LTCRegisterSetRequest_init_zero  {mbed_rpc_Header_init_zero, 0, 0, 0}
+#define ichnaea_LTCRegisterSetResponse_init_zero {mbed_rpc_Header_init_zero, _ichnaea_LTCRegisterError_MIN}
+#define ichnaea_LTCRegisterGetRequest_init_zero  {mbed_rpc_Header_init_zero, 0, 0}
+#define ichnaea_LTCRegisterGetResponse_init_zero {mbed_rpc_Header_init_zero, _ichnaea_LTCRegisterError_MIN, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define ichnaea_PingNodeRequest_header_tag       1
@@ -268,6 +328,18 @@ extern "C" {
 #define ichnaea_SensorResponse_header_tag        1
 #define ichnaea_SensorResponse_status_tag        2
 #define ichnaea_SensorResponse_value_tag         3
+#define ichnaea_LTCRegisterSetRequest_header_tag 1
+#define ichnaea_LTCRegisterSetRequest_node_id_tag 2
+#define ichnaea_LTCRegisterSetRequest_reg_tag    3
+#define ichnaea_LTCRegisterSetRequest_value_tag  4
+#define ichnaea_LTCRegisterSetResponse_header_tag 1
+#define ichnaea_LTCRegisterSetResponse_status_tag 2
+#define ichnaea_LTCRegisterGetRequest_header_tag 1
+#define ichnaea_LTCRegisterGetRequest_node_id_tag 2
+#define ichnaea_LTCRegisterGetRequest_reg_tag    3
+#define ichnaea_LTCRegisterGetResponse_header_tag 1
+#define ichnaea_LTCRegisterGetResponse_status_tag 2
+#define ichnaea_LTCRegisterGetResponse_value_tag 3
 
 /* Struct field encoding specification for nanopb */
 #define ichnaea_PingNodeRequest_FIELDLIST(X, a) \
@@ -349,6 +421,38 @@ X(a, STATIC,   REQUIRED, FLOAT,    value,             3)
 #define ichnaea_SensorResponse_DEFAULT NULL
 #define ichnaea_SensorResponse_header_MSGTYPE mbed_rpc_Header
 
+#define ichnaea_LTCRegisterSetRequest_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, MESSAGE,  header,            1) \
+X(a, STATIC,   REQUIRED, UINT32,   node_id,           2) \
+X(a, STATIC,   REQUIRED, UINT32,   reg,               3) \
+X(a, STATIC,   REQUIRED, UINT32,   value,             4)
+#define ichnaea_LTCRegisterSetRequest_CALLBACK NULL
+#define ichnaea_LTCRegisterSetRequest_DEFAULT NULL
+#define ichnaea_LTCRegisterSetRequest_header_MSGTYPE mbed_rpc_Header
+
+#define ichnaea_LTCRegisterSetResponse_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, MESSAGE,  header,            1) \
+X(a, STATIC,   REQUIRED, UENUM,    status,            2)
+#define ichnaea_LTCRegisterSetResponse_CALLBACK NULL
+#define ichnaea_LTCRegisterSetResponse_DEFAULT NULL
+#define ichnaea_LTCRegisterSetResponse_header_MSGTYPE mbed_rpc_Header
+
+#define ichnaea_LTCRegisterGetRequest_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, MESSAGE,  header,            1) \
+X(a, STATIC,   REQUIRED, UINT32,   node_id,           2) \
+X(a, STATIC,   REQUIRED, UINT32,   reg,               3)
+#define ichnaea_LTCRegisterGetRequest_CALLBACK NULL
+#define ichnaea_LTCRegisterGetRequest_DEFAULT NULL
+#define ichnaea_LTCRegisterGetRequest_header_MSGTYPE mbed_rpc_Header
+
+#define ichnaea_LTCRegisterGetResponse_FIELDLIST(X, a) \
+X(a, STATIC,   REQUIRED, MESSAGE,  header,            1) \
+X(a, STATIC,   REQUIRED, UENUM,    status,            2) \
+X(a, STATIC,   REQUIRED, UINT32,   value,             3)
+#define ichnaea_LTCRegisterGetResponse_CALLBACK NULL
+#define ichnaea_LTCRegisterGetResponse_DEFAULT NULL
+#define ichnaea_LTCRegisterGetResponse_header_MSGTYPE mbed_rpc_Header
+
 extern const pb_msgdesc_t ichnaea_PingNodeRequest_msg;
 extern const pb_msgdesc_t ichnaea_PingNodeResponse_msg;
 extern const pb_msgdesc_t ichnaea_GetIdRequest_msg;
@@ -359,6 +463,10 @@ extern const pb_msgdesc_t ichnaea_SetpointRequest_msg;
 extern const pb_msgdesc_t ichnaea_SetpointResponse_msg;
 extern const pb_msgdesc_t ichnaea_SensorRequest_msg;
 extern const pb_msgdesc_t ichnaea_SensorResponse_msg;
+extern const pb_msgdesc_t ichnaea_LTCRegisterSetRequest_msg;
+extern const pb_msgdesc_t ichnaea_LTCRegisterSetResponse_msg;
+extern const pb_msgdesc_t ichnaea_LTCRegisterGetRequest_msg;
+extern const pb_msgdesc_t ichnaea_LTCRegisterGetResponse_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define ichnaea_PingNodeRequest_fields &ichnaea_PingNodeRequest_msg
@@ -371,11 +479,19 @@ extern const pb_msgdesc_t ichnaea_SensorResponse_msg;
 #define ichnaea_SetpointResponse_fields &ichnaea_SetpointResponse_msg
 #define ichnaea_SensorRequest_fields &ichnaea_SensorRequest_msg
 #define ichnaea_SensorResponse_fields &ichnaea_SensorResponse_msg
+#define ichnaea_LTCRegisterSetRequest_fields &ichnaea_LTCRegisterSetRequest_msg
+#define ichnaea_LTCRegisterSetResponse_fields &ichnaea_LTCRegisterSetResponse_msg
+#define ichnaea_LTCRegisterGetRequest_fields &ichnaea_LTCRegisterGetRequest_msg
+#define ichnaea_LTCRegisterGetResponse_fields &ichnaea_LTCRegisterGetResponse_msg
 
 /* Maximum encoded size of messages (where known) */
 #define ICHNAEA_ICHNAEA_PB_H_MAX_SIZE            ichnaea_ManagerResponse_size
 #define ichnaea_GetIdRequest_size                14
 #define ichnaea_GetIdResponse_size               29
+#define ichnaea_LTCRegisterGetRequest_size       23
+#define ichnaea_LTCRegisterGetResponse_size      19
+#define ichnaea_LTCRegisterSetRequest_size       26
+#define ichnaea_LTCRegisterSetResponse_size      16
 #define ichnaea_ManagerRequest_size              22
 #define ichnaea_ManagerResponse_size             81
 #define ichnaea_PingNodeRequest_size             20
@@ -460,6 +576,34 @@ struct MessageDescriptor<ichnaea_SensorResponse> {
     static PB_INLINE_CONSTEXPR const pb_size_t fields_array_length = 3;
     static inline const pb_msgdesc_t* fields() {
         return &ichnaea_SensorResponse_msg;
+    }
+};
+template <>
+struct MessageDescriptor<ichnaea_LTCRegisterSetRequest> {
+    static PB_INLINE_CONSTEXPR const pb_size_t fields_array_length = 4;
+    static inline const pb_msgdesc_t* fields() {
+        return &ichnaea_LTCRegisterSetRequest_msg;
+    }
+};
+template <>
+struct MessageDescriptor<ichnaea_LTCRegisterSetResponse> {
+    static PB_INLINE_CONSTEXPR const pb_size_t fields_array_length = 2;
+    static inline const pb_msgdesc_t* fields() {
+        return &ichnaea_LTCRegisterSetResponse_msg;
+    }
+};
+template <>
+struct MessageDescriptor<ichnaea_LTCRegisterGetRequest> {
+    static PB_INLINE_CONSTEXPR const pb_size_t fields_array_length = 3;
+    static inline const pb_msgdesc_t* fields() {
+        return &ichnaea_LTCRegisterGetRequest_msg;
+    }
+};
+template <>
+struct MessageDescriptor<ichnaea_LTCRegisterGetResponse> {
+    static PB_INLINE_CONSTEXPR const pb_size_t fields_array_length = 3;
+    static inline const pb_msgdesc_t* fields() {
+        return &ichnaea_LTCRegisterGetResponse_msg;
     }
 };
 }  // namespace nanopb

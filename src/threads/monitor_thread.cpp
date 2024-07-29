@@ -39,6 +39,12 @@ namespace Threads
       Sensor::getRP2040Temp( Sensor::LookupType::REFRESH );
       Sensor::getBoardTemp0( Sensor::LookupType::REFRESH );
       Sensor::getBoardTemp1( Sensor::LookupType::REFRESH );
+
+
+      // TODO BMB: I'm going to need to detect and announce an event where the
+      // input voltage drops out and the system is running on battery power. I
+      // technically need to do a full reset of the LTC7871 to ensure we power
+      // back on appropriately.
     }
   }
 }    // namespace Threads

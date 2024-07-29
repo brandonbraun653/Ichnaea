@@ -16,6 +16,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "src/com/proto/ichnaea.pb.h"
+#include "src/system/system_util.hpp"
 #include <mbedutils/rpc.hpp>
 
 namespace COM::RPC
@@ -87,6 +88,10 @@ namespace COM::RPC
      * @copydoc IService::processRequest
      */
     mb::rpc::ErrId processRequest() final override;
+
+  private:
+    mb::rpc::ErrId set_voltage_output( const float voltage );
+    mb::rpc::ErrId set_max_current_limit( const float current );
   };
 
 
@@ -97,6 +102,38 @@ namespace COM::RPC
         BaseService<ichnaea_SensorRequest, ichnaea_SensorResponse>(
             "SensorService", ichnaea_Service_SVC_SENSOR, ichnaea_Message_MSG_SENSOR_REQ, ichnaea_Message_MSG_SENSOR_RSP ) {};
     ~SensorService() = default;
+
+    /**
+     * @copydoc IService::processRequest
+     */
+    mb::rpc::ErrId processRequest() final override;
+  };
+
+
+  class LTCRegisterGetService : public mb::rpc::BaseService<ichnaea_LTCRegisterGetRequest, ichnaea_LTCRegisterGetResponse>
+  {
+  public:
+    LTCRegisterGetService() :
+        BaseService<ichnaea_LTCRegisterGetRequest, ichnaea_LTCRegisterGetResponse>(
+            "LTCRegisterGetService", ichnaea_Service_SVC_LTC_REG_GET, ichnaea_Message_MSG_LTC_REG_GET_REQ,
+            ichnaea_Message_MSG_LTC_REG_GET_RSP ) {};
+    ~LTCRegisterGetService() = default;
+
+    /**
+     * @copydoc IService::processRequest
+     */
+    mb::rpc::ErrId processRequest() final override;
+  };
+
+
+  class LTCRegisterSetService : public mb::rpc::BaseService<ichnaea_LTCRegisterSetRequest, ichnaea_LTCRegisterSetResponse>
+  {
+  public:
+    LTCRegisterSetService() :
+        BaseService<ichnaea_LTCRegisterSetRequest, ichnaea_LTCRegisterSetResponse>(
+            "LTCRegisterSetService", ichnaea_Service_SVC_LTC_REG_SET, ichnaea_Message_MSG_LTC_REG_SET_REQ,
+            ichnaea_Message_MSG_LTC_REG_SET_RSP ) {};
+    ~LTCRegisterSetService() = default;
 
     /**
      * @copydoc IService::processRequest

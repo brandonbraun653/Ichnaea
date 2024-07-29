@@ -103,6 +103,60 @@ class IchnaeaClient:
         """
         pass
 
+    def write_ltc_register(self, node_id: str, address: int, value: int) -> bool:
+        """
+        Writes a value to an LTC7871 register on a node
+        Args:
+            node_id: Which node to write
+            address: Which register to write
+            value: The value to write
+
+        Returns:
+            True if the operation succeeded, False if not
+        """
+        assert 1 <= address <= 0xB
+        assert 0 <= value <= 0xFF
+
+        msg = LTCRegisterSetRequestPBMsg()
+        msg.pb_message.node_id = int(node_id, 16)
+        msg.pb_message.reg = address
+        msg.pb_message.value = value
+
+        response = self._client.com_pipe.write_and_wait(msg=msg, timeout=0.5)
+
+        if not isinstance(response, LTCRegisterSetResponsePBMsg):
+            logger.error(f"Missing response from LTC register write on node {node_id}")
+            return False
+
+        if not response.pb_message.status == ERR_LTC_REG_NO_ERROR:
+            logger.error(f"Failed to write LTC register {address} on node {node_id}: {response.pb_message.status}")
+            return False
+
+        return True
+
+    def read_ltc_register(self, node_id: str, address: int) -> Optional[int]:
+        """
+        Reads the value of an LTC7871 register on a node
+        Args:
+            node_id: Which node to read
+            address: Which register to read
+
+        Returns:
+            The value of the register
+        """
+        assert 1 <= address <= 0xB
+
+        msg = LTCRegisterGetRequestPBMsg()
+        msg.pb_message.node_id = int(node_id, 16)
+        msg.pb_message.reg = address
+
+        response = self._client.com_pipe.write_and_wait(msg=msg, timeout=0.5)
+        if isinstance(response, LTCRegisterGetResponsePBMsg) and response.pb_message.status == ERR_LTC_REG_NO_ERROR:
+            return response.pb_message.value
+        else:
+            logger.error(f"Failed to read LTC register {address} on node {node_id}: {response.pb_message.status}")
+            return None
+
     def get_input_voltage(self, node_id: str) -> Optional[float]:
         """
         Reads the input voltage of a node

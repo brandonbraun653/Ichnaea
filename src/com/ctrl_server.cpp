@@ -26,15 +26,17 @@ namespace Control
 
   /* RPC Server Memory*/
   static mb::rpc::server::Server                     s_rpc_server;
-  static mb::rpc::server::Storage<10, 128, 256, 128> s_rpc_server_storage;
-  static mb::rpc::message::DescriptorStorage<15>     s_rpc_msg_registry;
+  static mb::rpc::server::Storage<15, 128, 256, 128> s_rpc_server_storage;
+  static mb::rpc::message::DescriptorStorage<25>     s_rpc_msg_registry;
 
   /* Service Declarations */
-  static COM::RPC::PingNodeService s_ping_node_service;
-  static COM::RPC::IdentityService s_identity_service;
-  static COM::RPC::ManagerService  s_manager_service;
-  static COM::RPC::SetpointService s_setpoint_service;
-  static COM::RPC::SensorService   s_sensor_service;
+  static COM::RPC::PingNodeService       s_ping_node_service;
+  static COM::RPC::IdentityService       s_identity_service;
+  static COM::RPC::ManagerService        s_manager_service;
+  static COM::RPC::SetpointService       s_setpoint_service;
+  static COM::RPC::SensorService         s_sensor_service;
+  static COM::RPC::LTCRegisterSetService s_ltc_register_set_service;
+  static COM::RPC::LTCRegisterGetService s_ltc_register_get_service;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -80,6 +82,16 @@ namespace Control
     mbed_assert_continue( s_rpc_server.addService( &s_sensor_service ) );
     mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::SensorRequest ) );
     mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::SensorResponse ) );
+
+    /* LTC Register Set Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_ltc_register_set_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::LTCRegisterSetRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::LTCRegisterSetResponse ) );
+
+    /* LTC Register Get Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_ltc_register_get_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::LTCRegisterGetRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::LTCRegisterGetResponse ) );
   }
 
 

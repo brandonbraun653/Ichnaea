@@ -118,6 +118,17 @@ namespace HW::LTC7871
   void initialize();
 
   /**
+   * @brief Status flag to indicate if it's safe to interact with the LTC7871.
+   *
+   * This will only be true if the LTC7871 is powered on, not in a faulted
+   * state, and the driver has performed initialization and POST steps.
+   *
+   * @return true  The LTC7871 is ready for interaction
+   * @return false The LTC7871 is not ready
+   */
+  bool available();
+
+  /**
    * @brief Perform power on self test (POST) for the LTC7871
    * @warning This function has a dependency on the BMS communication bus.
    */

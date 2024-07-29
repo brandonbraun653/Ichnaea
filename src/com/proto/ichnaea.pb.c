@@ -36,6 +36,19 @@ PB_BIND(ichnaea_SensorRequest, ichnaea_SensorRequest, AUTO)
 PB_BIND(ichnaea_SensorResponse, ichnaea_SensorResponse, AUTO)
 
 
+PB_BIND(ichnaea_LTCRegisterSetRequest, ichnaea_LTCRegisterSetRequest, AUTO)
+
+
+PB_BIND(ichnaea_LTCRegisterSetResponse, ichnaea_LTCRegisterSetResponse, AUTO)
+
+
+PB_BIND(ichnaea_LTCRegisterGetRequest, ichnaea_LTCRegisterGetRequest, AUTO)
+
+
+PB_BIND(ichnaea_LTCRegisterGetResponse, ichnaea_LTCRegisterGetResponse, AUTO)
+
+
+
 
 
 

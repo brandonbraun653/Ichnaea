@@ -32,7 +32,7 @@ namespace Threads
 
   /* Monitor Thread */
   static Task                                s_monitor_task;
-  static TaskConfigStorage<TaskMsg, 1, 1024> s_monitor_storage;
+  static TaskConfigStorage<TaskMsg, 1, 2048> s_monitor_storage;
 
   /* Control Thread */
   static Task                                s_control_task;

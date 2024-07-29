@@ -33,6 +33,7 @@ namespace HW::LTC7871
   static constexpr uint8_t REG_MFR_IDAC_VHIGH  = 0x09; /**< (RW) Program VHIGH voltage */
   static constexpr uint8_t REG_MFR_IDAC_SETCUR = 0x0A; /**< (RW) Program the SETCUR pin's sourcing current */
   static constexpr uint8_t REG_MFR_SSFM        = 0x0B; /**< (RW) Adjust the spread spectrum frequency modulation parameters */
+  static constexpr uint8_t REG_MIN_ADDR        = 0x01;
   static constexpr uint8_t REG_MAX_ADDR        = 0x0B;
 
   /*---------------------------------------------------------------------------

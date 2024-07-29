@@ -11,6 +11,8 @@ enum Service {
   SVC_MANAGER = 102; // Control system services
   SVC_SENSOR = 103; // Read sensor values
   SVC_PING_NODE = 104; // Ping a node to check if it is alive
+  SVC_LTC_REG_GET = 105; // Get a specific register on the LTC7871
+  SVC_LTC_REG_SET = 106; // Set a specific register on the LTC7871
 }
 
 // Message types available
@@ -25,6 +27,10 @@ enum Message {
   MSG_SENSOR_RSP = 107; // Response to the SensorObserverRequest message
   MSG_PING_NODE_REQ = 108; // Request to ping a node
   MSG_PING_NODE_RSP = 109; // Response to the PingNodeRequest message
+  MSG_LTC_REG_SET_REQ = 110; // Request to set a specific register on the LTC7871
+  MSG_LTC_REG_SET_RSP = 111; // Response to a register set command
+  MSG_LTC_REG_GET_REQ = 112; // Request to get a specific register on the LTC7871
+  MSG_LTC_REG_GET_RSP = 113; // Response to a register get command
 }
 
 // Version of the message. This is used to ensure that the message is compatible with the receiver.
@@ -41,6 +47,10 @@ enum MessageVersion {
   MSG_VER_SENSOR_RSP = 0;
   MSG_VER_PING_NODE_REQ = 0;
   MSG_VER_PING_NODE_RSP = 0;
+  MSG_VER_LTC_REG_SET_REQ = 0;
+  MSG_VER_LTC_REG_SET_RSP = 0;
+  MSG_VER_LTC_REG_GET_REQ = 0;
+  MSG_VER_LTC_REG_GET_RSP = 0;
 }
 
 // ****************************************************************************
@@ -166,4 +176,44 @@ message SensorResponse {
   required mbed.rpc.Header header = 1;
   required SensorError status = 2;
   required float value = 3;
+}
+
+// ****************************************************************************
+// LTC Register Set Service
+// ****************************************************************************
+
+enum LTCRegisterError {
+  ERR_LTC_REG_NO_ERROR = 0;   // No error
+  ERR_LTC_REG_INVALID = 1;    // Invalid register requested
+  ERR_LTC_REG_BAD_VALUE = 2;  // Bad value for the register
+  ERR_LTC_REG_READ_ONLY = 3;  // Register is read-only
+  ERR_LTC_ACCESS_FAILED = 4;  // LTC7871 access failed/unavailable
+}
+
+message LTCRegisterSetRequest {
+  required mbed.rpc.Header header = 1;
+  required uint32 node_id = 2;
+  required uint32 reg = 3 [(nanopb).int_size = IS_8];
+  required uint32 value = 4 [(nanopb).int_size = IS_8];
+}
+
+message LTCRegisterSetResponse {
+  required mbed.rpc.Header header = 1;
+  required LTCRegisterError status = 2;
+}
+
+// ****************************************************************************
+// LTC Register Get Service
+// ****************************************************************************
+
+message LTCRegisterGetRequest {
+  required mbed.rpc.Header header = 1;
+  required uint32 node_id = 2;
+  required uint32 reg = 3 [(nanopb).int_size = IS_8];
+}
+
+message LTCRegisterGetResponse {
+  required mbed.rpc.Header header = 1;
+  required LTCRegisterError status = 2;
+  required uint32 value = 3 [(nanopb).int_size = IS_8];
 }

@@ -93,6 +93,11 @@ namespace HW::LTC7871::Private
   ---------------------------------------------------------------------------*/
 
   /**
+   * @brief Initialize the internal driver state for the LTC7871.
+   */
+  void initialize();
+
+  /**
    * @brief Decides a safe configuration to apply to the LTC7871.
    *
    * This will resolve through several data sources to try and determine the

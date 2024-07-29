@@ -34,6 +34,10 @@ class _ServiceEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTy
     """Read sensor values"""
     SVC_PING_NODE: _Service.ValueType  # 104
     """Ping a node to check if it is alive"""
+    SVC_LTC_REG_GET: _Service.ValueType  # 105
+    """Get a specific register on the LTC7871"""
+    SVC_LTC_REG_SET: _Service.ValueType  # 106
+    """Set a specific register on the LTC7871"""
 
 class Service(_Service, metaclass=_ServiceEnumTypeWrapper):
     """System services that are available to all nodes in the network."""
@@ -48,6 +52,10 @@ SVC_SENSOR: Service.ValueType  # 103
 """Read sensor values"""
 SVC_PING_NODE: Service.ValueType  # 104
 """Ping a node to check if it is alive"""
+SVC_LTC_REG_GET: Service.ValueType  # 105
+"""Get a specific register on the LTC7871"""
+SVC_LTC_REG_SET: Service.ValueType  # 106
+"""Set a specific register on the LTC7871"""
 global___Service = Service
 
 class _Message:
@@ -76,6 +84,14 @@ class _MessageEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTy
     """Request to ping a node"""
     MSG_PING_NODE_RSP: _Message.ValueType  # 109
     """Response to the PingNodeRequest message"""
+    MSG_LTC_REG_SET_REQ: _Message.ValueType  # 110
+    """Request to set a specific register on the LTC7871"""
+    MSG_LTC_REG_SET_RSP: _Message.ValueType  # 111
+    """Response to a register set command"""
+    MSG_LTC_REG_GET_REQ: _Message.ValueType  # 112
+    """Request to get a specific register on the LTC7871"""
+    MSG_LTC_REG_GET_RSP: _Message.ValueType  # 113
+    """Response to a register get command"""
 
 class Message(_Message, metaclass=_MessageEnumTypeWrapper):
     """Message types available"""
@@ -100,6 +116,14 @@ MSG_PING_NODE_REQ: Message.ValueType  # 108
 """Request to ping a node"""
 MSG_PING_NODE_RSP: Message.ValueType  # 109
 """Response to the PingNodeRequest message"""
+MSG_LTC_REG_SET_REQ: Message.ValueType  # 110
+"""Request to set a specific register on the LTC7871"""
+MSG_LTC_REG_SET_RSP: Message.ValueType  # 111
+"""Response to a register set command"""
+MSG_LTC_REG_GET_REQ: Message.ValueType  # 112
+"""Request to get a specific register on the LTC7871"""
+MSG_LTC_REG_GET_RSP: Message.ValueType  # 113
+"""Response to a register get command"""
 global___Message = Message
 
 class _MessageVersion:
@@ -118,6 +142,10 @@ class _MessageVersionEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper.
     MSG_VER_SENSOR_RSP: _MessageVersion.ValueType  # 0
     MSG_VER_PING_NODE_REQ: _MessageVersion.ValueType  # 0
     MSG_VER_PING_NODE_RSP: _MessageVersion.ValueType  # 0
+    MSG_VER_LTC_REG_SET_REQ: _MessageVersion.ValueType  # 0
+    MSG_VER_LTC_REG_SET_RSP: _MessageVersion.ValueType  # 0
+    MSG_VER_LTC_REG_GET_REQ: _MessageVersion.ValueType  # 0
+    MSG_VER_LTC_REG_GET_RSP: _MessageVersion.ValueType  # 0
 
 class MessageVersion(_MessageVersion, metaclass=_MessageVersionEnumTypeWrapper):
     """Version of the message. This is used to ensure that the message is compatible with the receiver."""
@@ -132,6 +160,10 @@ MSG_VER_SENSOR_REQ: MessageVersion.ValueType  # 0
 MSG_VER_SENSOR_RSP: MessageVersion.ValueType  # 0
 MSG_VER_PING_NODE_REQ: MessageVersion.ValueType  # 0
 MSG_VER_PING_NODE_RSP: MessageVersion.ValueType  # 0
+MSG_VER_LTC_REG_SET_REQ: MessageVersion.ValueType  # 0
+MSG_VER_LTC_REG_SET_RSP: MessageVersion.ValueType  # 0
+MSG_VER_LTC_REG_GET_REQ: MessageVersion.ValueType  # 0
+MSG_VER_LTC_REG_GET_RSP: MessageVersion.ValueType  # 0
 global___MessageVersion = MessageVersion
 
 class _ManagerCommand:
@@ -263,6 +295,41 @@ SENSOR_BOARD_TEMP_1: SensorType.ValueType  # 3
 SENSOR_BOARD_TEMP_2: SensorType.ValueType  # 4
 SENSOR_BOARD_TEMP_3: SensorType.ValueType  # 5
 global___SensorType = SensorType
+
+class _LTCRegisterError:
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: typing_extensions.TypeAlias = ValueType
+
+class _LTCRegisterErrorEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_LTCRegisterError.ValueType], builtins.type):
+    DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
+    ERR_LTC_REG_NO_ERROR: _LTCRegisterError.ValueType  # 0
+    """No error"""
+    ERR_LTC_REG_INVALID: _LTCRegisterError.ValueType  # 1
+    """Invalid register requested"""
+    ERR_LTC_REG_BAD_VALUE: _LTCRegisterError.ValueType  # 2
+    """Bad value for the register"""
+    ERR_LTC_REG_READ_ONLY: _LTCRegisterError.ValueType  # 3
+    """Register is read-only"""
+    ERR_LTC_ACCESS_FAILED: _LTCRegisterError.ValueType  # 4
+    """LTC7871 access failed/unavailable"""
+
+class LTCRegisterError(_LTCRegisterError, metaclass=_LTCRegisterErrorEnumTypeWrapper):
+    """****************************************************************************
+    LTC Register Set Service
+    ****************************************************************************
+    """
+
+ERR_LTC_REG_NO_ERROR: LTCRegisterError.ValueType  # 0
+"""No error"""
+ERR_LTC_REG_INVALID: LTCRegisterError.ValueType  # 1
+"""Invalid register requested"""
+ERR_LTC_REG_BAD_VALUE: LTCRegisterError.ValueType  # 2
+"""Bad value for the register"""
+ERR_LTC_REG_READ_ONLY: LTCRegisterError.ValueType  # 3
+"""Register is read-only"""
+ERR_LTC_ACCESS_FAILED: LTCRegisterError.ValueType  # 4
+"""LTC7871 access failed/unavailable"""
+global___LTCRegisterError = LTCRegisterError
 
 @typing.final
 class PingNodeRequest(google.protobuf.message.Message):
@@ -511,3 +578,100 @@ class SensorResponse(google.protobuf.message.Message):
     def ClearField(self, field_name: typing.Literal["header", b"header", "status", b"status", "value", b"value"]) -> None: ...
 
 global___SensorResponse = SensorResponse
+
+@typing.final
+class LTCRegisterSetRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    HEADER_FIELD_NUMBER: builtins.int
+    NODE_ID_FIELD_NUMBER: builtins.int
+    REG_FIELD_NUMBER: builtins.int
+    VALUE_FIELD_NUMBER: builtins.int
+    node_id: builtins.int
+    reg: builtins.int
+    value: builtins.int
+    @property
+    def header(self) -> mbed_rpc_pb2.Header: ...
+    def __init__(
+        self,
+        *,
+        header: mbed_rpc_pb2.Header | None = ...,
+        node_id: builtins.int | None = ...,
+        reg: builtins.int | None = ...,
+        value: builtins.int | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["header", b"header", "node_id", b"node_id", "reg", b"reg", "value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["header", b"header", "node_id", b"node_id", "reg", b"reg", "value", b"value"]) -> None: ...
+
+global___LTCRegisterSetRequest = LTCRegisterSetRequest
+
+@typing.final
+class LTCRegisterSetResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    HEADER_FIELD_NUMBER: builtins.int
+    STATUS_FIELD_NUMBER: builtins.int
+    status: global___LTCRegisterError.ValueType
+    @property
+    def header(self) -> mbed_rpc_pb2.Header: ...
+    def __init__(
+        self,
+        *,
+        header: mbed_rpc_pb2.Header | None = ...,
+        status: global___LTCRegisterError.ValueType | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["header", b"header", "status", b"status"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["header", b"header", "status", b"status"]) -> None: ...
+
+global___LTCRegisterSetResponse = LTCRegisterSetResponse
+
+@typing.final
+class LTCRegisterGetRequest(google.protobuf.message.Message):
+    """****************************************************************************
+    LTC Register Get Service
+    ****************************************************************************
+    """
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    HEADER_FIELD_NUMBER: builtins.int
+    NODE_ID_FIELD_NUMBER: builtins.int
+    REG_FIELD_NUMBER: builtins.int
+    node_id: builtins.int
+    reg: builtins.int
+    @property
+    def header(self) -> mbed_rpc_pb2.Header: ...
+    def __init__(
+        self,
+        *,
+        header: mbed_rpc_pb2.Header | None = ...,
+        node_id: builtins.int | None = ...,
+        reg: builtins.int | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["header", b"header", "node_id", b"node_id", "reg", b"reg"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["header", b"header", "node_id", b"node_id", "reg", b"reg"]) -> None: ...
+
+global___LTCRegisterGetRequest = LTCRegisterGetRequest
+
+@typing.final
+class LTCRegisterGetResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    HEADER_FIELD_NUMBER: builtins.int
+    STATUS_FIELD_NUMBER: builtins.int
+    VALUE_FIELD_NUMBER: builtins.int
+    status: global___LTCRegisterError.ValueType
+    value: builtins.int
+    @property
+    def header(self) -> mbed_rpc_pb2.Header: ...
+    def __init__(
+        self,
+        *,
+        header: mbed_rpc_pb2.Header | None = ...,
+        status: global___LTCRegisterError.ValueType | None = ...,
+        value: builtins.int | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing.Literal["header", b"header", "status", b"status", "value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing.Literal["header", b"header", "status", b"status", "value", b"value"]) -> None: ...
+
+global___LTCRegisterGetResponse = LTCRegisterGetResponse
