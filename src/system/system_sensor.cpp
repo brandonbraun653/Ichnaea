@@ -24,6 +24,10 @@ namespace Sensor
   Constants
   ---------------------------------------------------------------------------*/
 
+  /*---------------------------------------------------------------------------
+  Static Data
+  ---------------------------------------------------------------------------*/
+
 
   /*---------------------------------------------------------------------------
   Private Functions
@@ -43,13 +47,19 @@ namespace Sensor
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  float getAverageCurrent()
+  float getAverageCurrent( const LookupType lut )
   {
     using namespace HW::LTC7871;
 
     constexpr float IMON_RNG_MIN = 0.4f;
     constexpr float IMON_RNG_MAX = 2.5f;
     constexpr float IMON_ZERO    = 1.25f;
+
+    static float s_cached_avg_current = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_avg_current;
+    }
 
     /*-------------------------------------------------------------------------
     Get operational parameters of the LTC7871
@@ -86,54 +96,88 @@ namespace Sensor
       Vimon = std::min( IMON_RNG_MAX, std::max( IMON_RNG_MIN, Vimon ) );
     }
 
-    float current = ( 6.0f * ( Vimon - IMON_ZERO ) ) / ( k * RSense );
-    return current;
+    s_cached_avg_current = ( 6.0f * ( Vimon - IMON_ZERO ) ) / ( k * RSense );
+    return s_cached_avg_current;
   }
 
 
-  float getHighSideVoltage()
+  float getHighSideVoltage( const LookupType lut )
   {
     // TODO: Pull this info from the board spec.
     constexpr float R1 = 470'000.0f;
     constexpr float R2 = 15'000.0f;
 
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
     float Vout = HW::ADC::getVoltage( HW::ADC::Channel::HV_DC_SENSE );
-    return Analog::calculateVoltageDividerInput( Vout, R1, R2 );
+    s_cached_value = Analog::calculateVoltageDividerInput( Vout, R1, R2 );
+    return s_cached_value;
   }
 
 
-  float getLowSideVoltage()
+  float getLowSideVoltage( const LookupType lut )
   {
     // TODO: Pull this info from the board spec.
     constexpr float R1 = 470'000.0f;
     constexpr float R2 = 27'000.0f;
 
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
     float Vout = HW::ADC::getVoltage( HW::ADC::Channel::LV_DC_SENSE );
-    return Analog::calculateVoltageDividerInput( Vout, R1, R2 );
+    s_cached_value = Analog::calculateVoltageDividerInput( Vout, R1, R2 );
+    return s_cached_value;
   }
 
 
-  float getRP2040Temp()
+  float getRP2040Temp( const LookupType lut )
   {
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
     /*-------------------------------------------------------------------------
     Taken from the RP2040 datasheet section 4.1.1.1
     -------------------------------------------------------------------------*/
     float temp    = HW::ADC::getVoltage( HW::ADC::Channel::RP2040_TEMP );
-    float celsius = 27.0f - ( ( temp - 0.706f ) / 0.001721 );
-    return celsius;
+    s_cached_value = 27.0f - ( ( temp - 0.706f ) / 0.001721 );
+    return s_cached_value;
   }
 
 
-  float getBoardTemp0()
+  float getBoardTemp0( const LookupType lut )
   {
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
     float vOut = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_0 );
-    return calculateThermistorTemp( vOut );
+    s_cached_value = calculateThermistorTemp( vOut );
+    return s_cached_value;
   }
 
 
-  float getBoardTemp1()
+  float getBoardTemp1( const LookupType lut )
   {
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
     float vOut = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_1 );
-    return calculateThermistorTemp( vOut );
+    s_cached_value = calculateThermistorTemp( vOut );
+    return s_cached_value;
   }
 }  // namespace Data

@@ -6,10 +6,40 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
+PB_BIND(ichnaea_PingNodeRequest, ichnaea_PingNodeRequest, AUTO)
+
+
+PB_BIND(ichnaea_PingNodeResponse, ichnaea_PingNodeResponse, AUTO)
+
+
 PB_BIND(ichnaea_GetIdRequest, ichnaea_GetIdRequest, AUTO)
 
 
 PB_BIND(ichnaea_GetIdResponse, ichnaea_GetIdResponse, AUTO)
+
+
+PB_BIND(ichnaea_ManagerRequest, ichnaea_ManagerRequest, AUTO)
+
+
+PB_BIND(ichnaea_ManagerResponse, ichnaea_ManagerResponse, AUTO)
+
+
+PB_BIND(ichnaea_SetpointRequest, ichnaea_SetpointRequest, AUTO)
+
+
+PB_BIND(ichnaea_SetpointResponse, ichnaea_SetpointResponse, AUTO)
+
+
+PB_BIND(ichnaea_SensorRequest, ichnaea_SensorRequest, AUTO)
+
+
+PB_BIND(ichnaea_SensorResponse, ichnaea_SensorResponse, AUTO)
+
+
+
+
+
+
 
 
 

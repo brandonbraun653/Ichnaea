@@ -1,20 +1,21 @@
 import logging
 import pytest
-from tests.sys.fixtures import rpc_client
+from tests.sys.fixtures import client
 
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.parametrize("rpc_client", ["TRACE"], indirect=True)
+# @pytest.mark.parametrize("client", ["INFO"], indirect=True)
 class TestBasicRPCCommunication:
     """ Tests basic communication with the RPC server. """
 
-    def test_ping(self, rpc_client):
-        """ Tests the ping command. """
-        assert rpc_client.ping()
+    def test_ping(self, client):
+        """ Tests the ping command across all nodes in the system. """
+        for node in client.available_nodes:
+            assert client.ping_node(node), f"Node {node} did not respond to ping"
 
-    def test_logging(self, rpc_client):
-        from time import sleep, time
-        LOGGER.debug("This is a debug message")
-        # TODO BMB: Get the console logging to work, then start adding messages to pull data from the system
-        #   and to inject commands for control.
+    def test_query_sensor_data(self, client):
+        """ Tests querying sensor data from all nodes in the system. """
+        for node in client.available_nodes:
+            assert client.get_input_voltage(node) is not None, f"Node {node} did not return valid input voltage"
+            assert client.get_output_voltage(node) is not None, f"Node {node} did not return valid output voltage"

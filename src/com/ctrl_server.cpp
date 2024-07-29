@@ -24,11 +24,17 @@ namespace Control
   Static Data
   ---------------------------------------------------------------------------*/
 
-  static mb::rpc::server::Server                    s_rpc_server;
-  static mb::rpc::server::Storage<5, 128, 256, 128> s_rpc_server_storage;
-  static mb::rpc::message::DescriptorStorage<5>     s_rpc_msg_registry;
+  /* RPC Server Memory*/
+  static mb::rpc::server::Server                     s_rpc_server;
+  static mb::rpc::server::Storage<10, 128, 256, 128> s_rpc_server_storage;
+  static mb::rpc::message::DescriptorStorage<15>     s_rpc_msg_registry;
 
+  /* Service Declarations */
+  static COM::RPC::PingNodeService s_ping_node_service;
   static COM::RPC::IdentityService s_identity_service;
+  static COM::RPC::ManagerService  s_manager_service;
+  static COM::RPC::SetpointService s_setpoint_service;
+  static COM::RPC::SensorService   s_sensor_service;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -50,15 +56,36 @@ namespace Control
     Add the system services
     -------------------------------------------------------------------------*/
 
+    /* Ping Node Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_ping_node_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::PingNodeRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::PingNodeResponse ) );
+
     /* Identity Service */
     mbed_assert_continue( s_rpc_server.addService( &s_identity_service ) );
     mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::GetIdRequest ) );
     mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::GetIdResponse ) );
+
+    /* Manager Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_manager_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::ManagerRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::ManagerResponse ) );
+
+    /* Setpoint Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_setpoint_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::SetpointRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::SetpointResponse ) );
+
+    /* Sensor Service */
+    mbed_assert_continue( s_rpc_server.addService( &s_sensor_service ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::SensorRequest ) );
+    mbed_assert_continue( mb::rpc::message::addDescriptor( COM::RPC::SensorResponse ) );
   }
+
 
   mb::rpc::server::Server &getRPCServer()
   {
     return s_rpc_server;
   }
 
-}  // namespace Control
+}    // namespace Control

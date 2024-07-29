@@ -54,8 +54,6 @@ namespace HW
     HW::UART::initialize();
     HW::FAN::initialize();
 
-    //HW::LTC7871::initialize();
-
     /*-------------------------------------------------------------------------
     Initialize system level modules that depend on the hardware.
     -------------------------------------------------------------------------*/
@@ -72,8 +70,6 @@ namespace HW
     HW::LED::postSequence();
     HW::ADC::postSequence();
     HW::FAN::postSequence();
-
-    //HW::LTC7871::postSequence();
     LOG_TRACE( "POST sequence complete" );
   }
 

@@ -28,7 +28,17 @@ namespace Threads
   {
     while( 1 )
     {
-      sleep_ms( 1000 );
+      sleep_ms( 25 );
+
+      /*-----------------------------------------------------------------------
+      Update all the sensors
+      -----------------------------------------------------------------------*/
+      Sensor::getAverageCurrent( Sensor::LookupType::REFRESH );
+      Sensor::getHighSideVoltage( Sensor::LookupType::REFRESH );
+      Sensor::getLowSideVoltage( Sensor::LookupType::REFRESH );
+      Sensor::getRP2040Temp( Sensor::LookupType::REFRESH );
+      Sensor::getBoardTemp0( Sensor::LookupType::REFRESH );
+      Sensor::getBoardTemp1( Sensor::LookupType::REFRESH );
     }
   }
 }    // namespace Threads
