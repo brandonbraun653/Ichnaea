@@ -92,7 +92,7 @@ namespace Sensor
     float Vimon = HW::ADC::getVoltage( HW::ADC::Channel::LTC_IMON );
     if( ( Vimon < IMON_RNG_MIN ) || ( Vimon > IMON_RNG_MAX ) )
     {
-      mbed_assert_continue_msg( false, "IMON voltage out of range: %.2f", Vimon );
+      mbed_assert_continue_msg( !HW::LTC7871::available(), "IMON voltage out of range: %.2f", Vimon );
       Vimon = std::min( IMON_RNG_MAX, std::max( IMON_RNG_MIN, Vimon ) );
     }
 

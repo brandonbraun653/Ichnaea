@@ -129,12 +129,6 @@ namespace HW::LTC7871
   bool available();
 
   /**
-   * @brief Perform power on self test (POST) for the LTC7871
-   * @warning This function has a dependency on the BMS communication bus.
-   */
-  void postSequence();
-
-  /**
    * @brief Enables the LTC7871 and configures it for normal operation.
    *
    * If successful, this will start power flowing from the solar input

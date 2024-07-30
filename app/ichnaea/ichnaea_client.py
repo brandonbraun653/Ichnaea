@@ -22,7 +22,7 @@ class IchnaeaClient:
     def available_nodes(self) -> List[str]:
         return list(self._system_nodes)
 
-    def open(self, discovery_timeout: float = 0.5) -> None:
+    def open(self, discovery_timeout: float = 1.0) -> None:
         """
         Initializes the connection to the Ichnaea system and probes for all available nodes.
 
@@ -88,9 +88,22 @@ class IchnaeaClient:
             node_id:
 
         Returns:
-
+            True if the operation succeeded, False if not
         """
-        pass
+        msg = ManagerRequestPBMsg()
+        msg.pb_message.node_id = int(node_id, 16)
+        msg.pb_message.command = CMD_ENGAGE_OUTPUT
+
+        response = self._client.com_pipe.write_and_wait(msg=msg, timeout=0.5)
+        if not isinstance(response, ManagerResponsePBMsg):
+            logger.error(f"Missing response from output engage on node {node_id}")
+            return False
+
+        if response.pb_message.status == ERR_CMD_NO_ERROR:
+            return True
+        else:
+            logger.error(f"Failed to engage output on {node_id}: {response.pb_message.message}")
+            return False
 
     def output_disengage(self, node_id: str) -> bool:
         """
@@ -101,7 +114,20 @@ class IchnaeaClient:
         Returns:
             True if the operation succeeded, False if not
         """
-        pass
+        msg = ManagerRequestPBMsg()
+        msg.pb_message.node_id = int(node_id, 16)
+        msg.pb_message.command = CMD_DISENGAGE_OUTPUT
+
+        response = self._client.com_pipe.write_and_wait(msg=msg, timeout=0.5)
+        if not isinstance(response, ManagerResponsePBMsg):
+            logger.error(f"Missing response from output disengage on node {node_id}")
+            return False
+
+        if response.pb_message.status == ERR_CMD_NO_ERROR:
+            return True
+        else:
+            logger.error(f"Failed to disengage output on {node_id}: {response.pb_message.message}")
+            return False
 
     def write_ltc_register(self, node_id: str, address: int, value: int) -> bool:
         """

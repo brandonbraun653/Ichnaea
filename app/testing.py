@@ -10,8 +10,17 @@ if __name__ == "__main__":
     client = IchnaeaClient(port="/dev/ttyACM1", baud=115200)
     client.open()
 
+    if not client.available_nodes:
+        logger.error("No nodes found in the system")
+        client.close()
+        sys.exit(1)
+
     ic = client.available_nodes[0]
     if not client.ping_node(ic):
         logger.error(f"Node {ic} is not responding")
+
+    client.output_engage(ic)
+    client.output_disengage(ic)
+    client.output_engage(ic)
 
     client.close()

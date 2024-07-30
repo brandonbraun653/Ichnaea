@@ -17,6 +17,7 @@ Includes
 #include "src/hw/ltc7871_prv.hpp"
 #include "src/hw/ltc7871_reg.hpp"
 #include "src/system/system_error.hpp"
+#include "src/system/system_sensor.hpp"
 #include <mbedutils/logging.hpp>
 
 namespace HW::LTC7871
@@ -147,11 +148,11 @@ namespace HW::LTC7871
   {
     // TODO: fill this in once we get out of the board bringup phase and want to get fancy.
     // Likely rev 2.0
-    return true;
+    return s_driver_mode == DriverMode::NORMAL_OPERATION;
   }
 
 
-  void postSequence()
+  void powerOn()
   {
     /*---------------------------------------------------------------------------
     Force proper control flow to the POST_SEQUENCE state. Don't cause a side effect
@@ -163,12 +164,24 @@ namespace HW::LTC7871
     }
 
     /*-------------------------------------------------------------------------
+    Cannot power on if we have no input power
+    -------------------------------------------------------------------------*/
+    const float threshold = 12.0f;
+    const float vHigh     = Sensor::getHighSideVoltage();
+    if( vHigh < threshold )
+    {
+      mbed_assert_continue_msg( false, "Unable to power on. Input voltage %.2fV < %.2fV", vHigh, threshold );
+      return;
+    }
+
+    /*-------------------------------------------------------------------------
     Enable the LTC chip for communication. It's highly likely that these IO are
     already in the correct state, but we should be explicit about it.
     -------------------------------------------------------------------------*/
     // TODO BMB: Add these back in when HW v2 is ready.
     // gpio_put( s_io_config->gpio.ltcRun, 0 );
     // gpio_put( s_io_config->gpio.ltcPwmEn, 0 );
+    // Sleep a few ms to allow the chip to enable and LDOs to power up.
 
     /*-------------------------------------------------------------------------
     Ensure the LTC7871 is in a known state. It's not guaranteed the RP2040 and
@@ -223,16 +236,24 @@ namespace HW::LTC7871
     Panic::assertion( faults == 0, Panic::ERR_LTC_FAULT );
 
     /*-------------------------------------------------------------------------
-    Summarize the status register
+    Decide how/if we're going to power up the system
     -------------------------------------------------------------------------*/
-    const uint8_t status = Private::read_register( REG_MFR_STATUS );
-    LOG_DEBUG( "LTC7871 Status: 0x%02X, SS_DONE: %d, MAX_CURRENT: %d, PGOOD: %d", status,
-               ( status & MFR_STATUS_SS_DONE_Msk ) != 0, ( status & MFR_STATUS_MAX_CURRENT_Msk ) != 0,
-               ( status & MFR_STATUS_PGOOD_Msk ) != 0 );
+    // Private::LTCConfig ltc;
+    // if( !Private::resolve_power_on_config( ltc ) )
+    // {
+    //   // TODO: Log this as a warning
+    //   s_driver_mode = DriverMode::FAULTED;
+    //   return;
+    // }
+
+
+    // TODO BMB: Program the LTC7871 registers using the configuration options
+
+    // TODO BMB: Power up the system
 
     /*-------------------------------------------------------------------------
     // !TESTING
-    Set the output voltage
+    Set the output voltage as low as it will possibly go
     -------------------------------------------------------------------------*/
     Private::set_mode_pin( Private::LTC_MODE_BURST );
 
@@ -241,42 +262,28 @@ namespace HW::LTC7871
     Private::idac_write_protect( true );
 
     /*-------------------------------------------------------------------------
-    Making it here means we can transition to the next state
+    Summarize the status register
     -------------------------------------------------------------------------*/
-    s_driver_mode = DriverMode::INITIALIZING;
-  }
+    const uint8_t status = Private::read_register( REG_MFR_STATUS );
+    LOG_DEBUG( "LTC7871 Status: 0x%02X, SS_DONE: %d, MAX_CURRENT: %d, PGOOD: %d", status,
+               ( status & MFR_STATUS_SS_DONE_Msk ) != 0, ( status & MFR_STATUS_MAX_CURRENT_Msk ) != 0,
+               ( status & MFR_STATUS_PGOOD_Msk ) != 0 );
 
-
-  void powerOn()
-  {
     /*-------------------------------------------------------------------------
-    Ensure we're in the correct state to power up the system
+    Check for faults during power up or out of bounds conditions
     -------------------------------------------------------------------------*/
-    if( s_driver_mode != DriverMode::INITIALIZING )
-    {
-      // TODO: Log this as a warning
-      return;
-    }
+    // TODO BMB: Add in the fault checking here, reverting to a faulted state if necessary.
 
-    // TODO: Need to remove R102 on the board. The buffers are pulling the PWMEN line low, preventing power conversion.
-    // TODO: While you're at it, may as well get R104 as well.
-    /*-------------------------------------------------------------------------
-    Decide if we're going to power up the system
-    -------------------------------------------------------------------------*/
-    Private::LTCConfig ltc;
-    if( !Private::resolve_power_on_config( ltc ) )
-    {
-      // TODO: Log this as a warning
-      s_driver_mode = DriverMode::FAULTED;
-      return;
-    }
+    s_driver_mode = DriverMode::NORMAL_OPERATION;
   }
 
 
   void powerOff()
   {
-    // Allow this to be called at any time. It should always be safe to power off.
-    s_driver_mode = DriverMode::INITIALIZING;
+    // TODO BMB: Reverse the power up sequence and safely disable power flow.
+
+    // Force the control flow to go back to the POST check
+    s_driver_mode = DriverMode::DISABLED;
   }
 
 

@@ -53,6 +53,7 @@ namespace HW
     HW::ADC::initialize();
     HW::UART::initialize();
     HW::FAN::initialize();
+    HW::LTC7871::initialize();
 
     /*-------------------------------------------------------------------------
     Initialize system level modules that depend on the hardware.

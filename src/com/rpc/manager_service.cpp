@@ -13,6 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 
 #include "src/com/rpc/rpc_services.hpp"
+#include "src/hw/ltc7871.hpp"
 #include "src/system/system_util.hpp"
 #include "src/version.hpp"
 #include <mbedutils/util.hpp>
@@ -55,15 +56,58 @@ namespace COM::RPC
 
   mb::rpc::ErrId ManagerService::engage_output()
   {
-    //HW::LTC7871::initialize();
+    /*-------------------------------------------------------------------------
+    Ignore requests that are not intended for this node
+    -------------------------------------------------------------------------*/
+    if( request.node_id != System::identity() )
+    {
+      return mbed_rpc_ErrorCode_ERR_SVC_NO_RSP;
+    }
 
-    //HW::LTC7871::postSequence();
+    response.has_message = false;
+    response.status      = ichnaea_ManagerError_ERR_CMD_NO_ERROR;
+
+    /*-------------------------------------------------------------------------
+    Engage the output if not already enabled
+    -------------------------------------------------------------------------*/
+    HW::LTC7871::powerOn();
+
+    if( auto mode = HW::LTC7871::getMode(); mode != HW::LTC7871::DriverMode::NORMAL_OPERATION )
+    {
+      response.status      = ichnaea_ManagerError_ERR_CMD_FAILED;
+      response.has_message = true;
+      snprintf( response.message, sizeof( response.message ), "Unexpected mode: %d", mode );
+    }
+
     return mbed_rpc_ErrorCode_ERR_NO_ERROR;
   }
 
 
   mb::rpc::ErrId ManagerService::disengage_output()
   {
+    /*-------------------------------------------------------------------------
+    Ignore requests that are not intended for this node
+    -------------------------------------------------------------------------*/
+    if( request.node_id != System::identity() )
+    {
+      return mbed_rpc_ErrorCode_ERR_SVC_NO_RSP;
+    }
+
+    response.has_message = false;
+    response.status      = ichnaea_ManagerError_ERR_CMD_NO_ERROR;
+
+    /*-------------------------------------------------------------------------
+    Disengage the output
+    -------------------------------------------------------------------------*/
+    HW::LTC7871::powerOff();
+
+    if( auto mode = HW::LTC7871::getMode(); mode != HW::LTC7871::DriverMode::DISABLED )
+    {
+      response.status      = ichnaea_ManagerError_ERR_CMD_FAILED;
+      response.has_message = true;
+      snprintf( response.message, sizeof( response.message ), "Unexpected mode: %d", mode );
+    }
+
     return mbed_rpc_ErrorCode_ERR_NO_ERROR;
   }
 
