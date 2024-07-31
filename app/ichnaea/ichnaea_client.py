@@ -78,7 +78,7 @@ class IchnaeaClient:
 
         return len(response) > 0
 
-    def output_engage(self, node_id: str) -> bool:
+    def engage_output(self, node_id: str) -> bool:
         """
         Instructs a node to power on its output stage. This requires the node to perform a safety check
         before engaging and may take some time to complete. Uses pre-programmed settings for the output
@@ -105,7 +105,7 @@ class IchnaeaClient:
             logger.error(f"Failed to engage output on {node_id}: {response.pb_message.message}")
             return False
 
-    def output_disengage(self, node_id: str) -> bool:
+    def disengage_output(self, node_id: str) -> bool:
         """
         Instructs a node to power off the output stage, preventing power from reaching the load.
         Args:

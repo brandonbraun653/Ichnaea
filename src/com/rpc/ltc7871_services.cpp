@@ -72,7 +72,7 @@ namespace COM::RPC
       return mbed_rpc_ErrorCode_ERR_NO_ERROR;
     }
 
-    if( request.value < HW::LTC7871::REG_MFR_CHIP_CTRL )
+    if( request.reg < HW::LTC7871::REG_MFR_CHIP_CTRL )
     {
       response.status = ichnaea_LTCRegisterError_ERR_LTC_REG_READ_ONLY;
       return mbed_rpc_ErrorCode_ERR_NO_ERROR;

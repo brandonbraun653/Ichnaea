@@ -42,12 +42,15 @@ namespace COM::RPC
     {
       case ichnaea_ManagerCommand_CMD_ENGAGE_OUTPUT:
         rpc_result = engage_output();
+        break;
 
       case ichnaea_ManagerCommand_CMD_DISENGAGE_OUTPUT:
         rpc_result = disengage_output();
+        break;
 
       default:
         response.status = ichnaea_ManagerError_ERR_CMD_INVALID;
+        break;
     }
 
     return rpc_result;

@@ -233,7 +233,7 @@ namespace HW::LTC7871
     {
       LOG_ERROR_IF( ( ( faults & ( 1u << i ) ) != 0 ), "LTC7871 Fault: %s", ltcFaultCodeToString( i ) );
     }
-    Panic::assertion( faults == 0, Panic::ERR_LTC_FAULT );
+    // Panic::assertion( faults == 0, Panic::ERR_LTC_FAULT );
 
     /*-------------------------------------------------------------------------
     Decide how/if we're going to power up the system

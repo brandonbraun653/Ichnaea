@@ -15,12 +15,10 @@ if __name__ == "__main__":
         client.close()
         sys.exit(1)
 
+    logger.info(f"Available nodes: {client.available_nodes}")
+
     ic = client.available_nodes[0]
     if not client.ping_node(ic):
         logger.error(f"Node {ic} is not responding")
-
-    client.output_engage(ic)
-    client.output_disengage(ic)
-    client.output_engage(ic)
 
     client.close()
