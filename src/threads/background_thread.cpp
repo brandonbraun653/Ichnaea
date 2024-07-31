@@ -14,6 +14,7 @@ Includes
 #include "src/bsp/board_map.hpp"
 #include "src/threads/ichnaea_threads.hpp"
 #include "src/hw/led.hpp"
+#include "src/hw/bootup.hpp"
 #include <mbedutils/logging.hpp>
 
 namespace Threads
@@ -24,7 +25,7 @@ namespace Threads
   void backgroundThread( void *arg )
   {
 
-    //HW::runPostInit();
+    HW::runPostInit();
     // TODO: Send message to all other threads to start
 
     HW::LED::setBrightness( HW::LED::Channel::STATUS_0, 0.5f );

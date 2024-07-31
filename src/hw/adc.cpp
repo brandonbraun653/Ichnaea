@@ -18,6 +18,7 @@ Includes
 #include "src/system/system_sensor.hpp"
 #include "src/system/system_util.hpp"
 #include <mbedutils/logging.hpp>
+#include <mbedutils/osal.hpp>
 
 namespace HW::ADC
 {
@@ -27,7 +28,7 @@ namespace HW::ADC
 
   static etl::array<float, Channel::NUM_OPTIONS>  s_cached_voltage;
   static etl::array<size_t, Channel::NUM_OPTIONS> s_adc_ch_sel;
-  static recursive_mutex_t                        s_adc_mutex;
+  static mb::osal::mb_recursive_mutex_t           s_adc_mutex;
   static uint                                     s_adc_select;
 
   /*---------------------------------------------------------------------------
@@ -98,7 +99,7 @@ namespace HW::ADC
     s_adc_select = map_adc_input( config.adc[ BSP::ADC_MUTLIPLEXED_SENSE ].pin );
     s_adc_ch_sel.fill( 0 );
     s_cached_voltage.fill( -1.0f );
-    recursive_mutex_init( &s_adc_mutex );
+    mbed_assert( mb::osal::buildRecursiveMutexStrategy( s_adc_mutex ) );
 
     /*-------------------------------------------------------------------------
     Map a channel to the correct ADC input channel select bits
@@ -126,12 +127,12 @@ namespace HW::ADC
       }
     }
 
-    LOG_DEBUG( "Average Current: %.2fA", Sensor::getAverageCurrent() );
-    LOG_DEBUG( "High Side Voltage: %.2fV", Sensor::getHighSideVoltage() );
-    LOG_DEBUG( "Low Side Voltage: %.2fV", Sensor::getLowSideVoltage() );
-    LOG_DEBUG( "RP2040 Temp: %.2fC", Sensor::getRP2040Temp() );
-    LOG_DEBUG( "Board Temp 0: %.2fC", Sensor::getBoardTemp0() );
-    LOG_DEBUG( "Board Temp 1: %.2fC", Sensor::getBoardTemp1() );
+    LOG_DEBUG( "Average Current: %.2fA", Sensor::getAverageCurrent( Sensor::LookupType::REFRESH ) );
+    LOG_DEBUG( "High Side Voltage: %.2fV", Sensor::getHighSideVoltage( Sensor::LookupType::REFRESH ) );
+    LOG_DEBUG( "Low Side Voltage: %.2fV", Sensor::getLowSideVoltage( Sensor::LookupType::REFRESH ) );
+    LOG_DEBUG( "RP2040 Temp: %.2fC", Sensor::getRP2040Temp( Sensor::LookupType::REFRESH ) );
+    LOG_DEBUG( "Board Temp 0: %.2fC", Sensor::getBoardTemp0( Sensor::LookupType::REFRESH ) );
+    LOG_DEBUG( "Board Temp 1: %.2fC", Sensor::getBoardTemp1( Sensor::LookupType::REFRESH ) );
   }
 
 
@@ -158,67 +159,64 @@ namespace HW::ADC
       return -1.0f;
     }
 
+    mb::thread::RecursiveLockGuard lock( s_adc_mutex );
+
     /*-------------------------------------------------------------------------
     Perform the ADC conversion
     -------------------------------------------------------------------------*/
     float result = -1.0f;
-    recursive_mutex_enter_blocking( &s_adc_mutex );
+    if( channel == Channel::RP2040_TEMP )
     {
-      if( channel == Channel::RP2040_TEMP )
-      {
-        /*---------------------------------------------------------------------
-        The RP2040 has a built in temperature sensor that can be read via the
-        ADC. This is a special case and doesn't require the 74HC4051 mux.
-        ---------------------------------------------------------------------*/
-        adc_select_input( 4 );
-        result = static_cast<float>( adc_read() ) * ADC_VOLT_PER_BIT;
-        recursive_mutex_exit( &s_adc_mutex );
-        return result;
-      }
-      /* Otherwise we're sampling through the mux */
-
-      /*-----------------------------------------------------------------------
-      Select the correct ADC channel
-      -----------------------------------------------------------------------*/
-      adc_select_input( s_adc_select );
-      gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x01 ) );
-      gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x02 ) );
-      gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL2 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x04 ) );
-
-      /*-----------------------------------------------------------------------
-      Insert >35nS delay to account for 74HC4051 switching times. See table
-      5.7 for more information. The below calculation isn't perfectly cycle
-      accurate, but it does guarantee a minimum delay, which is the goal.
-      -----------------------------------------------------------------------*/
-      constexpr size_t delay_time_ns = 50;
-      constexpr size_t max_core_freq = 133000000;
-      constexpr float  clk_period_ns = ( 1.0f / max_core_freq ) * 1e9;
-      constexpr size_t delay_cycles  = delay_time_ns / clk_period_ns;
-
-      #if defined( ICHNAEA_EMBEDDED )
-      for( size_t i = 0; i < delay_cycles; i++ )
-      {
-        __asm volatile( "nop" );
-      }
-      #endif /* ICHNAEA_EMBEDDED */
-
-      /*-----------------------------------------------------------------------
-      Average three samples to reduce noise. None of the signals we're reading
-      are high frequency, so this should be fine.
-      -----------------------------------------------------------------------*/
-      result = 0.0f;
-      for ( size_t i = 0; i < 3; i++ )
-      {
-        result += static_cast<float>( adc_read() );
-        busy_wait_us( 50 );
-      }
-
-      result /= 3.0f;
-      result *= ADC_VOLT_PER_BIT;
-
-      s_cached_voltage[ channel ] = result;
+      /*---------------------------------------------------------------------
+      The RP2040 has a built in temperature sensor that can be read via the
+      ADC. This is a special case and doesn't require the 74HC4051 mux.
+      ---------------------------------------------------------------------*/
+      adc_select_input( 4 );
+      result = static_cast<float>( adc_read() ) * ADC_VOLT_PER_BIT;
+      return result;
     }
-    recursive_mutex_exit( &s_adc_mutex );
+    /* Otherwise we're sampling through the mux */
+
+    /*-----------------------------------------------------------------------
+    Select the correct ADC channel
+    -----------------------------------------------------------------------*/
+    adc_select_input( s_adc_select );
+    gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x01 ) );
+    gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x02 ) );
+    gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL2 ].pin, static_cast<bool>( s_adc_ch_sel[ channel ] & 0x04 ) );
+
+    /*-----------------------------------------------------------------------
+    Insert >35nS delay to account for 74HC4051 switching times. See table
+    5.7 for more information. The below calculation isn't perfectly cycle
+    accurate, but it does guarantee a minimum delay, which is the goal.
+    -----------------------------------------------------------------------*/
+    constexpr size_t delay_time_ns = 50;
+    constexpr size_t max_core_freq = 133000000;
+    constexpr float  clk_period_ns = ( 1.0f / max_core_freq ) * 1e9;
+    constexpr size_t delay_cycles  = delay_time_ns / clk_period_ns;
+
+    #if defined( ICHNAEA_EMBEDDED )
+    for( size_t i = 0; i < delay_cycles; i++ )
+    {
+      __asm volatile( "nop" );
+    }
+    #endif /* ICHNAEA_EMBEDDED */
+
+    /*-----------------------------------------------------------------------
+    Average three samples to reduce noise. None of the signals we're reading
+    are high frequency, so this should be fine.
+    -----------------------------------------------------------------------*/
+    result = 0.0f;
+    for ( size_t i = 0; i < 3; i++ )
+    {
+      result += static_cast<float>( adc_read() );
+      busy_wait_us( 50 );
+    }
+
+    result /= 3.0f;
+    result *= ADC_VOLT_PER_BIT;
+
+    s_cached_voltage[ channel ] = result;
 
     return result;
   }
