@@ -1301,6 +1301,20 @@ pluggy = ">=1.5,<2"
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
+name = "pytest-check"
+version = "2.3.1"
+description = "A pytest plugin that allows multiple failures per test."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pytest_check-2.3.1-py3-none-any.whl", hash = "sha256:c54c18f0b890cac1c610c78ef2bb3d8ecb29cf33d1cf09fc1166802d6ab88e28"},
+    {file = "pytest_check-2.3.1.tar.gz", hash = "sha256:51b8f18a8ccaa426c5d913c4e0e46f014aaa7579481ea03d22d7e1f498f689b2"},
+]
+
+[package.dependencies]
+pytest = ">=7.0.0"
+
+[[package]]
 name = "pytest-loguru"
 version = "0.4.0"
 description = "Pytest Loguru"
@@ -1574,4 +1588,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "5592e24e3b313f5b2fdf87019da13b94a43e67b590d4d73a0c76fc630887855a"
+content-hash = "bb3e1ccdb18836c89324cb3b8500db3655281698523fad6da1a87874d1352f02"

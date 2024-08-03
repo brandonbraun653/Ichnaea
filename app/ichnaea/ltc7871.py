@@ -1,4 +1,6 @@
+from functools import lru_cache
 from typing import Tuple
+
 from app.ichnaea.board_values import V_LOW_FB_RB, V_LOW_FB_RA
 
 # On-chip registers
@@ -15,6 +17,9 @@ REG_MFR_IDAC_SETCUR = 0x0A
 REG_MFR_SSFM = 0x0B
 REG_MIN_ADDR = 0x01
 REG_MAX_ADDR = 0x0B
+
+# Tolerances and limits
+PWR_GOOD_TOLERANCE = 0.1  # Voltage regulation tolerance percent (0.0-1.0)
 
 # VFB LOW/HIGH IDAC Lookup Table
 idac_lookup = {
@@ -165,17 +170,20 @@ def get_mfr_idac_value(ivfb: int):
         raise ValueError(f"Invalid IVFBLOW/VFBHIGH value: {ivfb}")
 
 
-def compute_optimal_vlow_idac(vin: float, vout: float, rb: float = V_LOW_FB_RB,
-                              ra: float = V_LOW_FB_RA) -> Tuple[int, float]:
+def compute_optimal_vlow_idac(vin: float, vout: float, ra: float = V_LOW_FB_RA,
+                              rb: float = V_LOW_FB_RB) -> Tuple[int, float]:
     """
     Computes the optimal IDAC register setting to achieve an output voltage given
     the input voltage and resistor values.
 
+    See Also:
+        Page 17 of the LTC7871 datasheet
+
     Args:
         vin: Input voltage to the system
         vout: Desired output voltage
-        rb: Top resistor value in the feedback voltage divider
         ra: Bottom resistor value in the feedback voltage divider
+        rb: Top resistor value in the feedback voltage divider
 
     Returns:
         The optimal IDAC register setting and the actual output voltage
@@ -206,6 +214,30 @@ def compute_optimal_vlow_idac(vin: float, vout: float, rb: float = V_LOW_FB_RB,
     return best_idac, best_voltage
 
 
+@lru_cache(maxsize=2)
+def voltage_resolution(ra: float = V_LOW_FB_RA, rb: float = V_LOW_FB_RB) -> float:
+    """
+    Computes the controllable output voltage resolution of the LTC7871 in volts.
+
+    See Also:
+        Page 17 of the LTC7871 datasheet
+
+    Args
+        ra: Bottom resistor value in the feedback voltage divider
+        rb: Top resistor value in the feedback voltage divider
+
+    Returns:
+        The output voltage resolution in volts
+    """
+    controllable_range = []
+    for ivfb in idac_lookup.keys():
+        actual_voltage = 1.2 * (1.0 + (rb / ra)) - ((ivfb * 1e-6) * rb)
+        controllable_range.append(actual_voltage)
+
+    # Find the maximum step size in the controllable range. This is effectively
+    # the "worst-case" resolution of the circuit over then entire output voltage range.
+    return max([abs(x - y) for x, y in zip(controllable_range, controllable_range[1:])])
+
+
 if __name__ == "__main__":
-    idac_reg, act_vout = compute_optimal_vlow_idac(vin=20.5, vout=15.0)
-    print(f"IDAC Register: {hex(idac_reg)}, Actual Output Voltage: {act_vout:.2f}V")
+    print(f"Voltage resolution: {voltage_resolution()}")

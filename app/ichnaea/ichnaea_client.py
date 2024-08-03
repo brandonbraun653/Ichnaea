@@ -194,7 +194,7 @@ class IchnaeaClient:
         """
         return self._read_sensor_data(node_id, SENSOR_INPUT_VOLTAGE)
 
-    def get_output_voltage(self, node_id: str) -> float:
+    def get_output_voltage(self, node_id: str) -> Optional[float]:
         """
         Reads the output voltage of a node
         Args:
