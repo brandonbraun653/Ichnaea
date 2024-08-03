@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "IchnaeaDevelopment"
-version = "0.1.0"
+version = "0.1.1"
 description = "MPPT charge controller development environment"
 authors = ["Brandon Braun <brandonbraun653@protonmail.com>"]
 license = "MIT"
@@ -12,19 +12,21 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-matplotlib = "^3.8.3"
+python = "^3.12"
+crc = "^7.0.0"
 eseries = "^1.2.1"
-loguru = "^0.7.2"
-protobuf = "^5.27.2"
 grpcio-tools = "^1.65.0"
+loguru = "^0.7.2"
+matplotlib = "^3.8.3"
 mypy-protobuf = "^3.6.0"
+protobuf = "^5.27.2"
 pytest = "*"
+pytest-loguru = "^0.4.0"
+
 mbedutils = {path = "lib/mbedutils/python", develop = true}
 ichnaea = {path = "app", develop = true}
 
-crc = "^7.0.0"
-pytest-loguru = "^0.4.0"
+
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.2"
 
