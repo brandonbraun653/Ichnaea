@@ -13,5 +13,6 @@ def client(request) -> IchnaeaClient:
     client = IchnaeaClient(port="/dev/ttyACM1", baud=115200)
 
     client.open()
+    assert len(client.available_nodes) > 0, "No nodes found in the system"
     yield client
     client.close()

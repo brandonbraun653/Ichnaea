@@ -5,7 +5,7 @@ from ichnaea.ichnaea_client import IchnaeaClient
 
 if __name__ == "__main__":
     logger.remove()
-    logger.add(sys.stderr, level="INFO")
+    logger.add(sys.stderr, level="TRACE")
 
     client = IchnaeaClient(port="/dev/ttyACM1", baud=115200)
     client.open()
@@ -17,8 +17,16 @@ if __name__ == "__main__":
 
     logger.info(f"Available nodes: {client.available_nodes}")
 
-    ic = client.available_nodes[0]
-    if not client.ping_node(ic):
-        logger.error(f"Node {ic} is not responding")
+    node = client.available_nodes[0]
+    if not client.ping_node(node):
+        logger.error(f"Node {node} is not responding")
 
+    client.engage_output(node)
+    client.set_output_voltage(node, 12.0)
+    sleep(0.5)
+    voltage = client.get_output_voltage(node)
+    logger.info(f"Output voltage: {voltage:.2f}V")
+
+    sleep(500)
+    client.disengage_output(node)
     client.close()

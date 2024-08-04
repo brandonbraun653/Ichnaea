@@ -146,6 +146,25 @@ namespace HW::LTC7871
   void powerOff();
 
   /**
+   * @brief Single step the core controller of the LTC7871.
+   *
+   * This should be called periodically to ensure the LTC7871 is operating
+   * correctly. It will handle all the necessary state transitions and
+   * fault checking.
+   */
+  void stepController();
+
+  /**
+   * @brief Sets the system output voltage reference.
+   *
+   * Assuming the controller is in a state to accept this command, the
+   * output voltage will ultimately be adjusted to the desired level.
+   *
+   * @param voltage New voltage level to target
+   */
+  void setVoutRef( const float voltage );
+
+  /**
    * @brief Reads the fault registers of the LTC7871.
    *
    * This collapses the 3 fault registers into a single 32-bit value.

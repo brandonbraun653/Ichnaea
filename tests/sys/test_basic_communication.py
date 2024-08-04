@@ -5,7 +5,7 @@ from tests.sys.fixtures import client
 LOGGER = logging.getLogger(__name__)
 
 
-# @pytest.mark.parametrize("client", ["INFO"], indirect=True)
+@pytest.mark.parametrize("client", ["TRACE"], indirect=True)
 class TestBasicRPCCommunication:
     """ Tests basic communication with the RPC server. """
 

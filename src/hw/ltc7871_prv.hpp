@@ -19,6 +19,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
 #include "src/system/system_error.hpp"
+#include <mbedutils/osal.hpp>
 
 namespace HW::LTC7871::Private
 {
@@ -62,6 +63,11 @@ namespace HW::LTC7871::Private
    */
   static constexpr uint16_t LTC_SYNC_CNT_WRAP_OFF = LTC_SYNC_CNT_WRAP_LF_MAX + 1u;
 
+  /**
+   * @brief Indicate an invalid computation for the LTC IDAC registers
+   */
+  static constexpr uint8_t LTC_IDAC_REG_INVALID = 0xFF;
+
   /*---------------------------------------------------------------------------
   Enumerations
   ---------------------------------------------------------------------------*/
@@ -86,6 +92,29 @@ namespace HW::LTC7871::Private
     uint8_t idac_vhigh;  /* Register setting for MFR_IDAC_VHIGH */
     uint8_t idac_setcur; /* Register setting for MFR_IDAC_SETCUR */
     uint8_t ssfm;        /* Register setting for MFR_SSFM */
+  };
+
+  /**
+   * @brief Internal state of the LTC7871 driver
+   */
+  struct LTCState
+  {
+    mb::osal::mb_recursive_mutex_t rmtx; /* Recursive mutex for thread safety */
+
+    /* Static Board Properties */
+    float vlow_ra; /* Bottom resistor in VLow feedback divider */
+    float vlow_rb; /* Top resistor in VLow feedback divider */
+
+    /* Measurement Information */
+    float msr_input_voltage;   /* Measured input voltage (volts) */
+    float msr_output_voltage;  /* Measured output voltage (volts) */
+    float msr_average_current; /* Measured output current (amps) */
+
+    /* Live/Valid References */
+    float ref_output_voltage; /* Target output voltage (volts) */
+
+    /* Requests */
+    float req_output_voltage; /* Requested output voltage (volts) */
   };
 
   /*---------------------------------------------------------------------------
@@ -185,9 +214,10 @@ namespace HW::LTC7871::Private
    * This modifies the MFR_IDAC_VLOW register to set the output voltage of the
    * LTC7871.
    *
+   * @param state   Current state of the LTC7871 driver
    * @param voltage Desired setpoint in Volts
    */
-  void set_output_voltage( const float voltage );
+  void set_output_voltage( const LTCState &state, const float voltage );
 
   /**
    * @brief Sets the max average current for the LTC7871.
@@ -209,6 +239,26 @@ namespace HW::LTC7871::Private
    * @param frequency Desired frequency in kHz
    */
   void set_switching_frequency( const float frequency );
+
+  /**
+   * @brief Computes a new value for the MFR_IDAC_VLOW register to achieve vref.
+   *
+   * @param vlow  Desired output voltage
+   * @param ra    Bottom resistor in VLow feedback divider
+   * @param rb    Top resistor in VLow feedback divider
+   * @return A valid IDAC_VLOW register value, or LTC_IDAC_REG_INVALID if invalid
+   */
+  uint8_t compute_idac_vlow( const float vlow, const float ra, const float rb );
+
+  /**
+   * @brief Update core power conversion settings based on the current state.
+   *
+   * This will adjust switching frequency and conduction mode based on the
+   * user setpoints, power consumption, and system state.
+   *
+   * @param state Current system state
+   */
+  void update_operating_point( const LTCState &state );
 
 }    // namespace HW::LTC7871::Private
 

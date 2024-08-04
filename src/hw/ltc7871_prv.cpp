@@ -298,6 +298,32 @@ namespace HW::LTC7871::Private
   }
 
 
+  void set_output_voltage( const LTCState &state, const float voltage )
+  {
+    /*-------------------------------------------------------------------------
+    Ensure the input voltage is within the valid range
+    -------------------------------------------------------------------------*/
+    if( !mbed_assert_continue_msg( voltage > state.msr_input_voltage, "Cannot set voltage to %.2f when input is %.2f", voltage,
+                                   state.msr_input_voltage ) )
+    {
+      return;
+    }
+
+    /*-------------------------------------------------------------------------
+    Compute the new IDAC VLOW register value
+    -------------------------------------------------------------------------*/
+    uint8_t idac_vlow = compute_idac_vlow( voltage, state.vlow_ra, state.vlow_rb );
+    if( idac_vlow == LTC_IDAC_REG_INVALID )
+    {
+      mbed_assert_continue_msg( false, "Invalid IDAC VLOW. Ra: %.2f, Rb: %.2f, Vlow: %.2f",
+                                state.vlow_ra, state.vlow_rb, voltage );
+      return;
+    }
+
+    write_register( REG_MFR_IDAC_VLOW, idac_vlow );
+  }
+
+
   void set_switching_frequency( const float frequency )
   {
     auto pin          = BSP::getPin( mb::hw::PERIPH_PWM, BSP::PWM_LTC_SYNC );
@@ -310,5 +336,54 @@ namespace HW::LTC7871::Private
 
     pwm_set_chan_level( sync_slice, sync_channel, midpoint_level );
     pwm_set_wrap( sync_slice, clamped_wrap );
+  }
+
+
+  uint8_t compute_idac_vlow( const float vlow, const float ra, const float rb )
+  {
+    static constexpr int32_t IDAC_MIN_UA = -64;
+    static constexpr int32_t IDAC_MAX_UA = 63;
+
+    /*-------------------------------------------------------------------------
+    Ensure the input parameters are valid. If not, return an impossible value.
+    -------------------------------------------------------------------------*/
+    if( vlow < 0.0f || ra <= 0.0f || rb <= 0.0f )
+    {
+      return LTC_IDAC_REG_INVALID;
+    }
+
+    /*-------------------------------------------------------------------------
+    Compute a realizable IDAC adjustment current (pg. 17)
+    -------------------------------------------------------------------------*/
+    int32_t idac_ideal_uA  = static_cast<int32_t>( 1e6 * ( ( 1.2f * ( ( ra + rb ) / ra ) - vlow ) / rb ) );
+    int32_t idac_actual_uA = etl::clamp( idac_ideal_uA, IDAC_MIN_UA, IDAC_MAX_UA );
+
+    /*-------------------------------------------------------------------------
+    Convert the current reference to the 7-bit register value (pg. 39)
+    -------------------------------------------------------------------------*/
+    if( idac_actual_uA >= 0 )
+    {
+      return static_cast<uint8_t>( idac_actual_uA ) & 0x7F;
+    }
+    else
+    {
+      // 2's complement conversion
+      uint8_t abs_value = static_cast<uint8_t>( -idac_actual_uA - 1u );
+      return ( ~abs_value ) & 0x7F;
+    }
+  }
+
+
+  void update_operating_point( const LTCState &state )
+  {
+    set_switching_frequency( 80e3 );
+    set_mode_pin( SwitchingMode::LTC_MODE_DISC );
+
+    // Control:
+    //  - switching frequency
+    //  - conduction mode (burst, dcm, ccm)
+
+    // Most of this seems to be dependent on valid average current measurements.
+    // Probably should do some kind of calibration on boot?
   }
 }    // namespace HW::LTC7871::Private

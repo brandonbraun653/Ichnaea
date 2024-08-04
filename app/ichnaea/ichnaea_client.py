@@ -1,5 +1,8 @@
 from typing import List, Tuple, Optional
+
 from loguru import logger
+
+import ichnaea.ltc7871 as ltc
 from ichnaea.ichnaea_messages import *
 from mbedutils.rpc.client import RPCClient
 from mbedutils.rpc.message import get_module_messages
@@ -215,7 +218,9 @@ class IchnaeaClient:
         Returns:
             True if the operation succeeded, False if not
         """
-        pass
+        input_voltage = self.get_input_voltage(node_id)
+        idac_value, _ = ltc.compute_optimal_vlow_idac(input_voltage, voltage)
+        return self.write_ltc_register(node_id, ltc.REG_MFR_IDAC_VLOW, idac_value)
 
     def _read_sensor_data(self, node_id: str, sensor: int) -> Optional[float]:
         """

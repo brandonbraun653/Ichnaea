@@ -56,7 +56,6 @@ and we can technically go up to 90V.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.
-- PWM fan pin header is not the expected type. It has a peg for alignment and the latch mechanism in the back is shorter than expected.
 
 # PCB Layout
 - [ ] Improve thermal pad connections. Too hard to solder large components to the board without the hot plate.

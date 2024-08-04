@@ -49,7 +49,7 @@ namespace HW
     to most complex/dependent.
     -------------------------------------------------------------------------*/
     HW::GPIO::initialize(); /* Must be first to init IO to a safe state */
-    HW::LED::initialize();
+    //HW::LED::initialize();
     HW::ADC::initialize();
     HW::UART::initialize();
     HW::FAN::initialize();
@@ -68,7 +68,7 @@ namespace HW
   void runPostInit()
   {
     LOG_TRACE( "Running POST sequence" );
-    HW::LED::postSequence();
+    //HW::LED::postSequence();
     HW::ADC::postSequence();
     HW::FAN::postSequence();
     LOG_TRACE( "POST sequence complete" );

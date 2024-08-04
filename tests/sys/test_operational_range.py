@@ -18,7 +18,7 @@ node_under_test = '0xb04556ff'
 class TestOperationalRange:
     """ Operational range tests for the Ichnaea system. """
 
-    def test_single_idac_setting(self, client):
+    def test_voltage_sweep(self, client):
         """ Test the output voltage for a single IDAC setting. """
         assert client.engage_output(node_under_test)
         assert client.write_ltc_register(node_under_test, ltc.REG_MFR_IDAC_VLOW, 0x00)
@@ -48,21 +48,3 @@ class TestOperationalRange:
 
         assert client.write_ltc_register(node_under_test, ltc.REG_MFR_IDAC_VLOW, 0x00)
         assert client.disengage_output(node_under_test)
-
-    def test_voltage_sweep(self, client):
-        """ Test the operational range of the output voltage by sweeping the IDAC register values. """
-        logger.info("Testing the operational range of the output voltage by sweeping the IDAC register values")
-        input_voltage = client.get_input_voltage(node_under_test)
-        logger.info(f"Input voltage: {input_voltage}")
-
-        assert client.engage_output(node_under_test)
-
-        for idac in range(0, 255, 5):
-            assert client.write_ltc_register(node_under_test, ltc.REG_MFR_IDAC_VLOW, idac)
-            time.sleep(0.5)
-            input_voltage = client.get_input_voltage(node_under_test)
-            output_voltage = client.get_output_voltage(node_under_test)
-            logger.info(f"IDAC: {hex(idac)}, Output voltage: {output_voltage:.2f}, Input voltage: {input_voltage:.2f}")
-
-        # TODO: Later on you could tabulate this data and validate it against some expected percent accessible
-        #  operational range. Might be useful to also produce a graph of the data for customers.

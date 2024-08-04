@@ -19,9 +19,14 @@ Includes
 #include "src/system/system_error.hpp"
 #include "src/system/system_sensor.hpp"
 #include <mbedutils/logging.hpp>
+#include <mbedutils/osal.hpp>
+#include <mbedutils/thread.hpp>
+#include <mbedutils/util.hpp>
 
 namespace HW::LTC7871
 {
+  using namespace Private;
+
   /*---------------------------------------------------------------------------
   Constants
   ---------------------------------------------------------------------------*/
@@ -39,6 +44,8 @@ namespace HW::LTC7871
   static const BSP::IOConfig *s_io_config;
   static DriverMode           s_driver_mode;
   static FaultCode            s_fault_code;
+  static LTCState             s_ltc_state;
+
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -52,6 +59,9 @@ namespace HW::LTC7871
     s_io_config   = &BSP::getIOConfig();
     s_driver_mode = DriverMode::DISABLED;
     s_fault_code  = FaultCode::NO_FAULT;
+
+    clear_struct( s_ltc_state );
+    mbed_assert( mb::osal::buildRecursiveMutexStrategy( s_ltc_state.rmtx ) );
 
     Private::initialize();
 
@@ -213,8 +223,10 @@ namespace HW::LTC7871
     const bool is_40mv_ilim = ( cfg1_reg & MFR_CONFIG1_ILIM_SET_Msk ) == MFR_CONFIG1_ILIM_SET_40mV;
     Panic::assertion( is_40mv_ilim, Panic::ERR_LTC_HW_STRAP_FAIL );
 
-    const bool is_burst_mode = ( cfg2_reg & MFR_CONFIG2_BURST_Msk ) == MFR_CONFIG2_BURST_Msk;
-    Panic::assertion( is_burst_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
+    // TODO BMB: This is only true if the GPIO are left in default states. During a live reset, the
+    // IO do not reset. Really need to compare against what the GPIO are set to.
+    // const bool is_burst_mode = ( cfg2_reg & MFR_CONFIG2_BURST_Msk ) == MFR_CONFIG2_BURST_Msk;
+    // Panic::assertion( is_burst_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
 
     const bool is_not_dcm_mode = ( cfg2_reg & MFR_CONFIG2_DCM_Msk ) == 0;
     Panic::assertion( is_not_dcm_mode, Panic::ERR_LTC_HW_STRAP_FAIL );
@@ -284,6 +296,50 @@ namespace HW::LTC7871
 
     // Force the control flow to go back to the POST check
     s_driver_mode = DriverMode::DISABLED;
+  }
+
+
+  void stepController()
+  {
+    /*-------------------------------------------------------------------------
+    Do not perform control operations if not in the correct mode
+    -------------------------------------------------------------------------*/
+    if( s_driver_mode != DriverMode::NORMAL_OPERATION )
+    {
+      return;
+    }
+
+    /*-------------------------------------------------------------------------
+    Lock all state information so we're not interrupted
+    -------------------------------------------------------------------------*/
+    mb::thread::RecursiveLockGuard lock( s_ltc_state.rmtx );
+
+    /*-------------------------------------------------------------------------
+    Get the latest information from the monitor
+    -------------------------------------------------------------------------*/
+    s_ltc_state.msr_input_voltage   = Sensor::getHighSideVoltage();
+    s_ltc_state.msr_output_voltage  = Sensor::getLowSideVoltage();
+    s_ltc_state.msr_average_current = Sensor::getAverageCurrent();
+
+    /*-------------------------------------------------------------------------
+    Perform output voltage change requests
+    -------------------------------------------------------------------------*/
+    if( s_ltc_state.req_output_voltage > 0.0f )
+    {
+      Private::set_output_voltage( s_ltc_state, s_ltc_state.req_output_voltage );
+      s_ltc_state.req_output_voltage = 0.0f;
+    }
+
+    /*-------------------------------------------------------------------------
+    After adjusting all the new setpoints, update the operating point.
+    -------------------------------------------------------------------------*/
+    Private::update_operating_point( s_ltc_state );
+  }
+
+  void setVoutRef( const float voltage )
+  {
+    mb::thread::RecursiveLockGuard lock( s_ltc_state.rmtx );
+    s_ltc_state.req_output_voltage = voltage;
   }
 
 

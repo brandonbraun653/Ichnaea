@@ -26,6 +26,8 @@ namespace Threads
 
   void monitorThread( void *arg )
   {
+    size_t last_print = mb::time::millis();
+
     while( 1 )
     {
       sleep_ms( 25 );
@@ -40,6 +42,17 @@ namespace Threads
       Sensor::getBoardTemp0( Sensor::LookupType::REFRESH );
       Sensor::getBoardTemp1( Sensor::LookupType::REFRESH );
 
+      // if( ( mb::time::millis() - last_print ) > 1000 )
+      // {
+      //   last_print = mb::time::millis();
+      //   LOG_INFO( "Current: %.2fA, High Side: %.2fV, Low Side: %.2fV, RP2040 Temp: %.2fC, Board Temp 0: %.2fC, Board Temp 1: %.2fC",
+      //             Sensor::getAverageCurrent(),
+      //             Sensor::getHighSideVoltage(),
+      //             Sensor::getLowSideVoltage(),
+      //             Sensor::getRP2040Temp(),
+      //             Sensor::getBoardTemp0(),
+      //             Sensor::getBoardTemp1() );
+      // }
 
       // TODO BMB: I'm going to need to detect and announce an event where the
       // input voltage drops out and the system is running on battery power. I
