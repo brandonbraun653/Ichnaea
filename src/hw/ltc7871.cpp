@@ -265,12 +265,12 @@ namespace HW::LTC7871
 
     /*-------------------------------------------------------------------------
     // !TESTING
-    Set the output voltage as low as it will possibly go
+    Set the output voltage to 12.0V
     -------------------------------------------------------------------------*/
-    Private::set_mode_pin( Private::LTC_MODE_BURST );
+    Private::set_mode_pin( Private::LTC_MODE_DISC );
 
     Private::idac_write_protect( false );
-    Private::write_register( REG_MFR_IDAC_VLOW, 0x3F );
+    Private::write_register( REG_MFR_IDAC_VLOW, 0x39 );
     Private::idac_write_protect( true );
 
     /*-------------------------------------------------------------------------

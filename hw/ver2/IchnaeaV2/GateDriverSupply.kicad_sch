@@ -1,0 +1,42 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "4bf9fccb-212d-49c3-b29f-d1a6a3e39f1a")
+	(paper "A4")
+	(lib_symbols)
+	(wire
+		(pts
+			(xy 100.33 78.74) (xy 125.73 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "80a20260-d1c3-4fbe-9459-5b2814913c5d")
+	)
+	(hierarchical_label "VIN"
+		(shape input)
+		(at 100.33 78.74 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "907902f7-a4af-47c2-8b1c-566fa28c2789")
+	)
+	(hierarchical_label "VOUT"
+		(shape output)
+		(at 125.73 78.74 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c49b43ab-5bc0-494d-b1b6-4acf9102ed29")
+	)
+)

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "GateDrivers")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/GateDrivers.kicad_sym")(options "")(descr ""))
+)

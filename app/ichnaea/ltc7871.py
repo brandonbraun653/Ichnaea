@@ -170,8 +170,7 @@ def get_mfr_idac_value(ivfb: int):
         raise ValueError(f"Invalid IVFBLOW/VFBHIGH value: {ivfb}")
 
 
-def compute_optimal_vlow_idac(vin: float, vout: float, ra: float = V_LOW_FB_RA,
-                              rb: float = V_LOW_FB_RB) -> Tuple[int, float]:
+def compute_optimal_vlow_idac(vout: float, ra: float = V_LOW_FB_RA, rb: float = V_LOW_FB_RB) -> Tuple[int, float]:
     """
     Computes the optimal IDAC register setting to achieve an output voltage given
     the input voltage and resistor values.
@@ -188,7 +187,6 @@ def compute_optimal_vlow_idac(vin: float, vout: float, ra: float = V_LOW_FB_RA,
     Returns:
         The optimal IDAC register setting and the actual output voltage
     """
-    assert 0 < vin < 100, f"Input voltage must be between 0 and 100V, got {vin}"
     assert rb > 0, "Rb must be greater than 0"
     assert ra > 0, "Ra must be greater than 0"
     assert 0 < vout < 60, f"Output voltage must be between 0 and 60V, got {vout}"
@@ -240,4 +238,5 @@ def voltage_resolution(ra: float = V_LOW_FB_RA, rb: float = V_LOW_FB_RB) -> floa
 
 
 if __name__ == "__main__":
-    print(f"Voltage resolution: {voltage_resolution()}")
+    idac, _ = compute_optimal_vlow_idac(12.0)
+    print(hex(idac))

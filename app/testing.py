@@ -5,7 +5,7 @@ from ichnaea.ichnaea_client import IchnaeaClient
 
 if __name__ == "__main__":
     logger.remove()
-    logger.add(sys.stderr, level="TRACE")
+    logger.add(sys.stderr, level="INFO")
 
     client = IchnaeaClient(port="/dev/ttyACM1", baud=115200)
     client.open()
@@ -27,6 +27,6 @@ if __name__ == "__main__":
     voltage = client.get_output_voltage(node)
     logger.info(f"Output voltage: {voltage:.2f}V")
 
-    sleep(500)
+    sleep(10000)
     client.disengage_output(node)
     client.close()

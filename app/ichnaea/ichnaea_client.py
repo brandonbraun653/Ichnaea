@@ -218,8 +218,7 @@ class IchnaeaClient:
         Returns:
             True if the operation succeeded, False if not
         """
-        input_voltage = self.get_input_voltage(node_id)
-        idac_value, _ = ltc.compute_optimal_vlow_idac(input_voltage, voltage)
+        idac_value, _ = ltc.compute_optimal_vlow_idac(voltage)
         return self.write_ltc_register(node_id, ltc.REG_MFR_IDAC_VLOW, idac_value)
 
     def _read_sensor_data(self, node_id: str, sensor: int) -> Optional[float]:

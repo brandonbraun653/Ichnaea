@@ -30,7 +30,7 @@ class TestOperationalRange:
                     f"{input_voltage:.2f}V -> {ICHNAEA_OUTPUT_V_MIN:.2f}V in {len(test_voltage_range)} steps")
 
         for target in test_voltage_range:
-            idac_value, ideal_output = ltc.compute_optimal_vlow_idac(input_voltage, target)
+            idac_value, ideal_output = ltc.compute_optimal_vlow_idac(target)
 
             assert client.write_ltc_register(node_under_test, ltc.REG_MFR_IDAC_VLOW, idac_value)
             time.sleep(1.0)
