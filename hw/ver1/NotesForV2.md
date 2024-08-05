@@ -89,7 +89,7 @@ signal to GND. This will allow the RP2040 to control power ON/OFF behavior witho
 program current/voltage limits to a safe value before enabling the output.
 - [ ] Pin header for connecting to the BMS needs to change. I just ripped it off accidentally.
 - [x] Pull up on PWMEN needs to be stronger. R33 was 10k and replacing to 1k was much better.
-- [ ] Dead time resistor on HIP2210 should be 47k for the MCAC80N10Y to prevent shoot through. Validated experimentally.
+- [x] Dead time resistor on HIP2210 should be 47k for the MCAC80N10Y to prevent shoot through. Validated experimentally.
 - [ ] I think I may have sized the heatsink holes wrong? Need to double check against the fan that I have.
 - [ ] LTC SYNC pullup (R23, 10k) is too weak. Switch to 1k.
 - [ ] Screw hole near the VIN terminal doesn't allow for the nut/bolt to seat flush. Need to compress all the inductors together more.

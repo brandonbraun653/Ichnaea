@@ -2677,7 +2677,7 @@
 	)
 	(symbol
 		(lib_id "Device:L_Ferrite")
-		(at 203.2 95.25 90)
+		(at 203.2 95.25 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2685,7 +2685,7 @@
 		(dnp no)
 		(uuid "18d4d945-18d5-4095-9607-2ecbaf50b253")
 		(property "Reference" "L1"
-			(at 203.2 92.456 90)
+			(at 203.2 98.044 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2693,7 +2693,7 @@
 			)
 		)
 		(property "Value" "4.7uH"
-			(at 203.2 97.028 90)
+			(at 203.2 93.472 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2728,7 +2728,7 @@
 			)
 		)
 		(property "Digikey" "PQ2614BLA-3R3K-ND"
-			(at 203.708 99.06 90)
+			(at 202.692 91.44 90)
 			(effects
 				(font
 					(size 1.27 1.27)

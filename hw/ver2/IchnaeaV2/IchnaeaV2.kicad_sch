@@ -1344,7 +1344,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "03d738e6-6e11-46aa-8edd-eead4332bb9b")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR04"
 			(at 33.02 74.93 0)
 			(effects
 				(font
@@ -1394,7 +1394,7 @@
 		(instances
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
-					(reference "#PWR08")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -1409,7 +1409,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "45535ff5-04ed-46c3-a76b-81444a499dd4")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR03"
 			(at 33.02 54.61 0)
 			(effects
 				(font
@@ -1459,7 +1459,7 @@
 		(instances
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
-					(reference "#PWR07")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -1560,7 +1560,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5e6a5755-be7d-4764-8284-68cb2a18b431")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR06"
 			(at 44.45 35.56 0)
 			(effects
 				(font
@@ -1610,7 +1610,7 @@
 		(instances
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
-					(reference "#PWR03")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -1778,7 +1778,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8c7d88e0-aacb-48cd-b905-e73b927b044b")
-		(property "Reference" "J3"
+		(property "Reference" "J2"
 			(at 33.02 83.82 90)
 			(effects
 				(font
@@ -1878,7 +1878,7 @@
 		(instances
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
-					(reference "J3")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -2180,7 +2180,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d160fcce-fd54-436f-b851-c474c937864d")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR07"
 			(at 44.45 48.26 0)
 			(effects
 				(font
@@ -2230,7 +2230,7 @@
 		(instances
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
-					(reference "#PWR04")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -2312,7 +2312,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f24cc9db-5ac0-4fd6-90c5-9c3fb2b5bf25")
-		(property "Reference" "J2"
+		(property "Reference" "J3"
 			(at 33.02 86.36 90)
 			(effects
 				(font
@@ -2412,7 +2412,7 @@
 		(instances
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
-					(reference "J2")
+					(reference "J3")
 					(unit 1)
 				)
 			)
