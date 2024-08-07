@@ -8947,7 +8947,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-25V"
 			(at 109.22 33.0199 0)
 			(effects
 				(font
@@ -11426,7 +11426,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF-75V"
+		(property "Value" "10uF-100v"
 			(at 177.8 36.8299 0)
 			(effects
 				(font
@@ -11480,7 +11480,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "N/A"
+		(property "LCSC" "C576517"
 			(at 173.99 35.56 0)
 			(effects
 				(font
@@ -11752,7 +11752,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-25V"
 			(at 71.12 33.0199 0)
 			(effects
 				(font
@@ -11788,7 +11788,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field-1" ""
+		(property "Voltage" "25"
 			(at 67.31 31.75 0)
 			(effects
 				(font

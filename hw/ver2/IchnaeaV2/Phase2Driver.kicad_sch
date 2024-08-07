@@ -2537,7 +2537,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100v"
 			(at 242.57 102.8699 0)
 			(effects
 				(font
@@ -2728,7 +2728,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7uF"
+		(property "Value" "10uF-25V"
 			(at 87.63 97.7899 0)
 			(effects
 				(font
@@ -2782,7 +2782,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C19666"
+		(property "LCSC" "C96446"
 			(at 91.44 96.52 0)
 			(effects
 				(font
@@ -3228,7 +3228,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100v"
 			(at 231.14 102.8699 0)
 			(effects
 				(font
@@ -3528,7 +3528,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100v"
 			(at 219.71 102.8699 0)
 			(effects
 				(font
@@ -4424,7 +4424,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Z3V3"
+		(property "Value" "Z5V1"
 			(at 114.3 97.7899 90)
 			(effects
 				(font
@@ -4460,7 +4460,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C5353025"
+		(property "LCSC" "C2903912"
 			(at 116.84 96.52 90)
 			(effects
 				(font
@@ -4503,7 +4503,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100v"
 			(at 254 102.8699 0)
 			(effects
 				(font
@@ -4732,7 +4732,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF-100v"
 			(at 265.43 102.8699 0)
 			(effects
 				(font
