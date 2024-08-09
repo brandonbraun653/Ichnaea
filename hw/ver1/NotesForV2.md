@@ -53,7 +53,8 @@ and we can technically go up to 90V.
   - [ ] Re-verify all PWM channels for conflicts. Excel sheet?
 - [ ] Remove electrolytic capacitors in favor of a large amount of ceramics. They get very warm, aka terrible lifetime.
   - Might need to use bulk cheaper/smaller capacitors and array them to meet the voltage/capacity requirements.
-- [ ] Add more capacitance to the RP2040 3.3v rail. Will reset on large current loads.
+- [ ] Add more capacitance and filtering to the RP2040 3.3v rail. Will reset on large current loads.
+- [ ] Upgrade the buck controller to output 18V from AP66300
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.
