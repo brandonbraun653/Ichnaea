@@ -1327,12 +1327,6 @@
 		(uuid "410ae611-7f2d-4c4f-9f99-c10d39df8690")
 	)
 	(junction
-		(at 232.41 96.52)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4438fedc-4264-4c69-8b5b-2919c4a90c15")
-	)
-	(junction
 		(at 85.09 90.17)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1606,16 +1600,6 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 96.52) (xy 232.41 99.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3a9db765-8939-40b4-b15e-b0034dfc2bf5")
-	)
-	(wire
-		(pts
 			(xy 209.55 63.5) (xy 198.12 63.5)
 		)
 		(stroke
@@ -1716,7 +1700,7 @@
 	)
 	(wire
 		(pts
-			(xy 232.41 96.52) (xy 243.84 96.52)
+			(xy 220.98 96.52) (xy 243.84 96.52)
 		)
 		(stroke
 			(width 0)
@@ -2186,16 +2170,6 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 96.52) (xy 232.41 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f4b1cba6-66f2-4efb-8bd4-504e16c86761")
-	)
-	(wire
-		(pts
 			(xy 198.12 72.39) (xy 198.12 73.66)
 		)
 		(stroke
@@ -2506,103 +2480,6 @@
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d/54a63e50-1efe-4308-b876-98aee26e8c6e"
 					(reference "C33")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 232.41 102.87 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0fe69ac8-ac5b-47b9-b063-e68c413b934f")
-		(property "Reference" "C52"
-			(at 236.22 101.5999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10uF-100v"
-			(at 236.22 104.1399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric_Pad1.33x2.70mm_HandSolder"
-			(at 233.3752 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 232.41 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 232.41 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 232.41 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "445-CGA6P1X7R1N106M250ACCT-ND"
-			(at 232.41 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C576517"
-			(at 232.41 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c3e74810-fdc2-41b9-bbab-922dcc2a24ed")
-		)
-		(pin "2"
-			(uuid "5878597b-d1b3-40ef-b4b0-436646e98f6d")
-		)
-		(instances
-			(project "IchnaeaV2"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d/54a63e50-1efe-4308-b876-98aee26e8c6e"
-					(reference "C52")
 					(unit 1)
 				)
 			)
@@ -4315,72 +4192,6 @@
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d/54a63e50-1efe-4308-b876-98aee26e8c6e"
 					(reference "R22")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 232.41 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b6d7adca-37a0-4df7-8918-0a391ea60a31")
-		(property "Reference" "#PWR078"
-			(at 232.41 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 232.41 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 232.41 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 232.41 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 232.41 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5633f79b-e573-47bc-a2ae-91cbdb56a06e")
-		)
-		(instances
-			(project "IchnaeaV2"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d/54a63e50-1efe-4308-b876-98aee26e8c6e"
-					(reference "#PWR078")
 					(unit 1)
 				)
 			)
