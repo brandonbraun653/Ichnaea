@@ -68,7 +68,7 @@
         "connection_width": "warning",
         "copper_edge_clearance": "error",
         "copper_sliver": "warning",
-        "courtyards_overlap": "error",
+        "courtyards_overlap": "warning",
         "diff_pair_gap_out_of_range": "error",
         "diff_pair_uncoupled_length_too_long": "error",
         "drill_out_of_range": "error",
@@ -592,6 +592,18 @@
           "label": "Description",
           "name": "Description",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "JLCPCB Rotation Offset",
+          "name": "JLCPCB Rotation Offset",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Notes",
+          "name": "Notes",
+          "show": false
         }
       ],
       "filter_string": "",
@@ -667,6 +679,10 @@
     [
       "54a63e50-1efe-4308-b876-98aee26e8c6e",
       "Phase5"
+    ],
+    [
+      "f8cdf9d7-add1-4ff8-8430-918a71e3d1f9",
+      "ControlStage"
     ],
     [
       "d7eacb53-72cb-4ae3-a7a6-7938b9062ae2",
