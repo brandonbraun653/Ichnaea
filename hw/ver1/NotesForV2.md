@@ -54,7 +54,7 @@ and we can technically go up to 90V.
   - Must be small height to fit under the heat sink. Supply peak loads of 20A, average much smaller. Desktop PSU suggests ~500mA average.
   - Add controllable ENABLE signal to manually turn on when system has stabilized.
 - [x] Remove the 100 ohm series resistor with the analog switch output. Add test point.
-- [ ] Add low pass filter to analog signals. Getting lots of noise right now. 100Hz cutoff.
+- [x] Add low pass filter to analog signals. Getting lots of noise right now. 100Hz cutoff.
 - [ ] Remap LTC SYNC and LED_STATUS_2 pins to not be on the same PWM channels
   - [ ] Re-verify all PWM channels for conflicts. Excel sheet?
 - [x] Remove electrolytic capacitors in favor of a large amount of ceramics. They get very warm, aka terrible lifetime.
@@ -84,8 +84,8 @@ and we can technically go up to 90V.
 - [x] Need to add mount holes or plan out mounting situation with final inverter packaging.
 
 # Design Faults
-- [ ] Failed to connect all 1.1V rail pins together. This prevents the RP2040 from booting.
-- [ ] Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
+- [x] Failed to connect all 1.1V rail pins together. This prevents the RP2040 from booting.
+- [x] Pretty certain I screwed up the USB connection by routing it all the way over to the other side of the board.
 What I should have done is stuck with a surface mount USB micro B connector, kept the traces short, and moved the connector near the RP2040.
 - [x] LTC7871 SDO pin requires an external pull up resistor (open drain output). Missed that line in the datasheet. Pull up to 3.3V.
 - [x] Control of the RUN pin is entirely incorrect. Needs to be a single mosfet that pulls the RUN line low. An internal 2uA pullup will
