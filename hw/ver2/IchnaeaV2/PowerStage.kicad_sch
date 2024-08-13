@@ -5670,6 +5670,17 @@
 		)
 		(uuid "eaefc780-55f1-4925-87b4-3693e025cd86")
 	)
+	(label "ExtVCC"
+		(at 227.33 68.58 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b75ccb8e-8ecb-4caa-962d-174ed262e637")
+	)
 	(global_label "LTC_OV_HIGH"
 		(shape passive)
 		(at 190.5 92.71 180)
