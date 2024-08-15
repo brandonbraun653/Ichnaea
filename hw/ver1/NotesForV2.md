@@ -1,15 +1,15 @@
 # Circuit Updates
-- [ ] Add HV lightning protection, and IO ESD protection
-- [ ] Update resistors that come in contact with high voltage input to a better voltage rated part. Currently only rated to 75V
+- [x] Add HV lightning protection, and IO ESD protection
+- [x] Update resistors that come in contact with high voltage input to a better voltage rated part. Currently only rated to 75V
 and we can technically go up to 90V.
-- [ ] Add a weak pullup on LED IO to prevent ghosting.
-- [ ] Add a versioning resistor divider for one of the extra ADC pins. Can be used to identify future revisions in software.
-- [ ] Remove 0-ohm resistors on validated interfaces.
-- [ ] Remove the daisy chain HW interface. Design has solidified into micro-string inverter.
+- [x] Add a weak pullup on LED IO to prevent ghosting.
+- [x] Add a versioning resistor divider for one of the extra ADC pins. Can be used to identify future revisions in software.
+- [x] Remove 0-ohm resistors on validated interfaces.
+- [x] Remove the daisy chain HW interface. Design has solidified into micro-string inverter.
 - [ ] ~~Increase power switch height to create uniform plane for heatsink contact.~~ Sil-pads take up height diff.
-- [ ] Add a second serial interface for debug and system testing control.
+- [x] Add a second serial interface for debug and system testing control.
 - [ ] ~~Add an eeprom for saving settings from the BMS.~~
-- [ ] Add NOR flash for logging asserts/faults. Prioritize over EEPROM w/pin constraints.
+- [x] Add NOR flash for logging asserts/faults. Prioritize over EEPROM w/pin constraints.
 - [ ] ~~Add a CAN/RS485 bus serial interface for distributed control.~~ Will be added to the BMS controller. This isn't the central brain.
 - [x] Consider an integrated half-bridge mosfet solution. Might actually be cheaper than discrete components and take up less space.
 - [x] Output capacitors should be same height or shorter than inductors. You can't lay it flat on the back without it feeling unstable.
@@ -43,7 +43,7 @@ and we can technically go up to 90V.
     - [x] +3.3V
     - [x] +1.1V
   - [x] Board Versioning Resistors
-- [ ] Add back the fault indicator LEDs for `PGOOD` and `FAULT` signals. I really wish I had them right now.
+- [x] Add back the fault indicator LEDs for `PGOOD` and `FAULT` signals. I really wish I had them right now. (Using SPI status registers + controllable LEDs)
 - [x] Add bleeder resistor to SS pin to allow for fault soft start recovery.
 - [x] Add bleeder resistors to input and output capacitors. They don't fully discharge when removing power.
 - [x] Remove 10k pulldown on MOSFET power stages. Redundant when using the HIP2210 driver.
@@ -59,7 +59,7 @@ and we can technically go up to 90V.
   - [ ] Re-verify all PWM channels for conflicts. Excel sheet?
 - [x] Remove electrolytic capacitors in favor of a large amount of ceramics. They get very warm, aka terrible lifetime.
   - Might need to use bulk cheaper/smaller capacitors and array them to meet the voltage/capacity requirements.
-- [ ] Add more capacitance and filtering to the RP2040 3.3v rail. Will reset on large current loads.
+- [x] Add more capacitance and filtering to the RP2040 3.3v rail. Will reset on large current loads.
 
 # Assembly Errors
 - Forgot to order D3 (SS210) on the bottom of the board. Feeds power from VLow to AP66200. Dang this happened twice. I have two diodes like this.
