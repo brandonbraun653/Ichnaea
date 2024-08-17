@@ -2881,7 +2881,7 @@
 			(uuid "a55ac601-edee-4fff-b2be-e7a1128a362e")
 		)
 		(instances
-			(project ""
+			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
 					(reference "GD1")
 					(unit 1)
@@ -3130,7 +3130,7 @@
 			(uuid "f9ef4d66-f5c8-4686-8aca-ecaa81334742")
 		)
 		(instances
-			(project ""
+			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
 					(reference "R53")
 					(unit 1)
@@ -3492,7 +3492,7 @@
 			(uuid "3d6da659-3285-4954-9a7e-5a96341f6902")
 		)
 		(instances
-			(project ""
+			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
 					(reference "D23")
 					(unit 1)
@@ -4565,7 +4565,7 @@
 			(uuid "bc6e623e-5c3f-466f-8abb-290250ca18d5")
 		)
 		(instances
-			(project ""
+			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987"
 					(reference "D22")
 					(unit 1)
