@@ -7528,10 +7528,6 @@
 		(uuid "26cd6238-b5d2-4a84-ab82-352086cc1d9c")
 	)
 	(no_connect
-		(at 180.34 130.81)
-		(uuid "cc1cf624-52ea-44f7-9719-4095b333fc86")
-	)
-	(no_connect
 		(at 24.13 86.36)
 		(uuid "f2ffa17f-f213-4e64-88cb-85f24ee6207c")
 	)
@@ -10662,7 +10658,7 @@
 	)
 	(global_label "ADC_BOARD_REV"
 		(shape passive)
-		(at 180.34 125.73 0)
+		(at 180.34 128.27 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10672,7 +10668,7 @@
 		)
 		(uuid "033df438-6bca-4c9f-99ca-6658a4c54e69")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 197.5144 125.73 0)
+			(at 197.5144 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11056,28 +11052,6 @@
 			)
 		)
 	)
-	(global_label "ADC_IMON_FLTR"
-		(shape passive)
-		(at 243.84 81.28 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "47e180b6-89b7-4841-bce5-012d8b50f073")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 260.3492 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "LED_STATUS_3"
 		(shape passive)
 		(at 323.85 95.25 180)
@@ -11113,28 +11087,6 @@
 		(uuid "49d39531-84c3-4ebf-a896-9c5ed4a2e7a1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 63.9829 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "ADC_BOARD_REV"
-		(shape passive)
-		(at 243.84 78.74 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "4e3e7f40-430e-485d-bbf6-91ea9471b2ff")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 261.0144 78.74 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11410,7 +11362,7 @@
 	)
 	(global_label "ADC_SELECTABLE"
 		(shape passive)
-		(at 180.34 128.27 0)
+		(at 180.34 125.73 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -11420,7 +11372,7 @@
 		)
 		(uuid "738fee3d-9363-4f64-a104-fc748388542b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 198.119 128.27 0)
+			(at 198.119 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11432,7 +11384,7 @@
 	)
 	(global_label "5V0_MON"
 		(shape passive)
-		(at 147.32 242.57 0)
+		(at 147.32 240.03 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -11442,7 +11394,7 @@
 		)
 		(uuid "7abb9f7a-6866-4936-a966-e2ada5f9d7ca")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 157.7815 242.57 0)
+			(at 157.7815 240.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11784,7 +11736,7 @@
 	)
 	(global_label "TEMP_SENSE_1"
 		(shape passive)
-		(at 147.32 240.03 0)
+		(at 147.32 242.57 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -11794,7 +11746,7 @@
 		)
 		(uuid "b0710860-2292-48df-874c-f9b01090854a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 163.2241 240.03 0)
+			(at 163.2241 242.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12046,28 +11998,6 @@
 			)
 		)
 	)
-	(global_label "ADC_SELECTABLE"
-		(shape passive)
-		(at 243.84 76.2 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "e57d66e9-c45f-4109-90a1-1c530d35338c")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 261.619 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "LV_DC_SENSE"
 		(shape passive)
 		(at 147.32 255.27 0)
@@ -12274,6 +12204,18 @@
 		)
 		(uuid "8dadfcfb-757d-475d-bc25-57ad2a289607")
 	)
+	(hierarchical_label "CTL_IN_ADC_IBATT_SENSE"
+		(shape input)
+		(at 180.34 130.81 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e9f80b2b-561e-412b-a06b-79a94902ee2a")
+	)
 	(hierarchical_label "CTL_OUT_CSB"
 		(shape output)
 		(at 189.23 87.63 0)
@@ -12288,7 +12230,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 243.84 78.74 90)
+		(at 189.23 231.14 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -12296,7 +12238,7 @@
 		(dnp no)
 		(uuid "0037b9ab-62ee-4bc6-9cce-d28e69a94fc0")
 		(property "Reference" "TP87"
-			(at 237.49 78.74 90)
+			(at 182.88 231.14 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12304,7 +12246,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 240.538 76.2 90)
+			(at 185.928 228.6 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12313,7 +12255,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 243.84 73.66 0)
+			(at 189.23 226.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12322,7 +12264,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 243.84 73.66 0)
+			(at 189.23 226.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12331,7 +12273,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 243.84 78.74 0)
+			(at 189.23 231.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13763,6 +13705,71 @@
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "R77")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 267.97 264.16 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0cf424ec-c147-4c49-b030-5d1e3b6b7205")
+		(property "Reference" "TP91"
+			(at 267.97 257.81 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 270.51 260.858 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 273.05 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 273.05 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 267.97 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "84cdb2cb-4d3d-48bf-b133-c8a32ae14dfd")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP91")
 					(unit 1)
 				)
 			)
@@ -15225,71 +15232,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 128.27 236.22 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "1f797b53-a64c-43f4-9497-a28704b165f5")
-		(property "Reference" "TP67"
-			(at 128.27 229.87 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 130.81 232.918 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 133.35 236.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 133.35 236.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 128.27 236.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "753bbeae-6915-41e7-8624-e24765e8f84e")
-		)
-		(instances
-			(project "IchnaeaV2"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "TP67")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
 		(at 121.92 180.34 180)
 		(unit 1)
@@ -16282,6 +16224,71 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 391.16 231.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "285afc73-72ed-485e-a5de-9cf555609f04")
+		(property "Reference" "TP95"
+			(at 391.16 224.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 393.7 227.838 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 396.24 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 396.24 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 391.16 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "11fda128-f4ee-4062-8c39-1a4208dc0a78")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP95")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 43.18 146.05 0)
 		(mirror y)
@@ -16853,7 +16860,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 243.84 81.28 90)
+		(at 189.23 264.16 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16861,7 +16868,7 @@
 		(dnp no)
 		(uuid "31da1ffc-8529-4735-867b-e2370ca13ac0")
 		(property "Reference" "TP88"
-			(at 237.49 81.28 90)
+			(at 189.23 257.81 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16869,7 +16876,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 240.538 78.74 90)
+			(at 191.77 260.858 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16878,7 +16885,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 243.84 76.2 0)
+			(at 194.31 264.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16887,7 +16894,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 243.84 76.2 0)
+			(at 194.31 264.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16896,7 +16903,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 243.84 81.28 0)
+			(at 189.23 264.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17160,6 +17167,71 @@
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "TP79")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 227.33 264.16 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "36a1dabb-c911-415c-b4d2-f9ef5545566f")
+		(property "Reference" "TP89"
+			(at 227.33 257.81 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 229.87 260.858 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 232.41 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 232.41 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 227.33 264.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b5d039ef-9050-4945-9cc4-467899235304")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP89")
 					(unit 1)
 				)
 			)
@@ -22497,7 +22569,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 243.84 76.2 90)
+		(at 128.27 236.22 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -22505,7 +22577,7 @@
 		(dnp no)
 		(uuid "7e77dffd-3804-4b63-88c6-4a3ea762aef3")
 		(property "Reference" "TP86"
-			(at 237.49 76.2 90)
+			(at 128.27 229.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22513,7 +22585,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 240.538 73.66 90)
+			(at 130.81 232.918 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22522,7 +22594,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 243.84 71.12 0)
+			(at 133.35 236.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22531,7 +22603,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 243.84 71.12 0)
+			(at 133.35 236.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22540,7 +22612,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 243.84 76.2 0)
+			(at 128.27 236.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -25353,6 +25425,71 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
+		(at 363.22 231.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a60e1be0-d697-4bcd-888a-87fc3a8baa92")
+		(property "Reference" "TP94"
+			(at 363.22 224.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 365.76 227.838 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 368.3 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 368.3 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 363.22 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6c6b8531-a2a0-4e9d-b676-74ec9284474b")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP94")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
 		(at 124.46 250.19 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -27677,6 +27814,71 @@
 			(project "IchnaeaV2"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "R123")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 267.97 231.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c0c06130-2d4b-44f5-9c5e-42df68872455")
+		(property "Reference" "TP90"
+			(at 267.97 224.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 270.51 227.838 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 273.05 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 273.05 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 267.97 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ee162809-d408-48e0-88bb-fae1408b836c")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP90")
 					(unit 1)
 				)
 			)
@@ -30198,6 +30400,136 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
+		(at 335.28 231.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "da9d008e-dd8f-431d-8a94-7eeff7c6a5a9")
+		(property "Reference" "TP93"
+			(at 335.28 224.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 337.82 227.838 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 340.36 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 340.36 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 335.28 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d9011060-0c18-4abe-bc90-b822c7d86a48")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP93")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 307.34 231.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "db5be24b-e958-4ac8-b98e-88d05371e01a")
+		(property "Reference" "TP92"
+			(at 307.34 224.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 309.88 227.838 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 312.42 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 312.42 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 307.34 231.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "69c390fd-7873-41dc-a966-a4e0ccfdb54a")
+		)
+		(instances
+			(project "IchnaeaV2"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "TP92")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
 		(at 260.35 154.94 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -31766,7 +32098,7 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 196.85 140.97 0)
+		(at 227.33 231.14 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -31774,7 +32106,7 @@
 		(dnp no)
 		(uuid "ee2dca75-fa94-4c10-94f9-d02daa931c55")
 		(property "Reference" "TP85"
-			(at 196.85 134.62 90)
+			(at 227.33 224.79 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -31782,7 +32114,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 199.39 137.668 90)
+			(at 229.87 227.838 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -31791,7 +32123,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 201.93 140.97 0)
+			(at 232.41 231.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -31800,7 +32132,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 201.93 140.97 0)
+			(at 232.41 231.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -31809,7 +32141,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 196.85 140.97 0)
+			(at 227.33 231.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)

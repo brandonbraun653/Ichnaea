@@ -4,6 +4,6 @@
   (lib (name "Inductors")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Inductors.pretty")(options "")(descr ""))
   (lib (name "Mosfets")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Mosfets")(options "")(descr ""))
   (lib (name "DFN")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/DFN.pretty")(options "")(descr ""))
-  (lib (name "Jumper")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Jumper.pretty")(options "")(descr ""))
   (lib (name "Jumpers")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Jumpers.pretty")(options "")(descr ""))
+  (lib (name "Resistors")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Resistors.pretty")(options "")(descr ""))
 )
