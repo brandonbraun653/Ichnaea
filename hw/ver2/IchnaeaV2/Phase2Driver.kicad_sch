@@ -2790,6 +2790,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 53.34 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "40e3d99f-c63c-462a-8350-76e03b233083")
 		)
@@ -3104,6 +3113,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 52.07 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 52.07 85.09 0)
 			(effects
 				(font
@@ -3706,6 +3724,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 156.21 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b8c2a277-52a0-42ec-b63a-dac1a35e4833")
 		)
@@ -3868,6 +3895,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 102.87 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "763d30ac-ab2b-4374-a480-a7d46e58af6d")
 		)
@@ -3925,6 +3961,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 189.23 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 189.23 67.31 0)
 			(effects
 				(font
@@ -4385,6 +4430,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 102.87 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 102.87 109.22 0)
 			(effects
 				(font
@@ -4907,7 +4961,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "N/A"
+		(property "LCSC" "C3017007"
 			(at 163.83 87.63 0)
 			(effects
 				(font
@@ -5084,6 +5138,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 153.67 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 153.67 87.63 0)
 			(effects
 				(font
@@ -5685,6 +5748,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 102.87 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 102.87 101.6 0)
 			(effects
 				(font

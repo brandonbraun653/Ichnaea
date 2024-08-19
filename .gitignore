@@ -7,3 +7,4 @@ _autosave*
 __pycache__/
 build/
 docs/
+hw/**/production

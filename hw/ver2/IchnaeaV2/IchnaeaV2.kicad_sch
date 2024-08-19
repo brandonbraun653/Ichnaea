@@ -5360,6 +5360,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 100.33 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "17c8a462-da55-43c0-ad46-7cfaf19bc068")
 		)
@@ -6331,6 +6340,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 105.41 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 105.41 123.19 0)
 			(effects
 				(font

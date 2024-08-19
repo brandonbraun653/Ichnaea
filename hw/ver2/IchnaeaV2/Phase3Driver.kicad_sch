@@ -3866,6 +3866,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 153.67 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b077930d-892c-4185-ab50-d702668fe2ba")
 		)
@@ -3931,6 +3940,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 101.6 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "98ee36c5-6e4b-4187-80da-73140c51dad2")
 		)
@@ -3988,6 +4006,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 186.69 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 186.69 62.23 0)
 			(effects
 				(font
@@ -4428,6 +4455,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "N/A"
+			(at 151.13 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3fcc08ec-944e-4571-a59e-46f1df50940c")
 		)
@@ -4813,7 +4849,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "N/A"
+		(property "LCSC" "C3017007"
 			(at 161.29 82.55 0)
 			(effects
 				(font
@@ -4882,6 +4918,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 101.6 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 101.6 102.87 0)
 			(effects
 				(font
@@ -5626,6 +5671,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 52.07 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "N/A"
 			(at 52.07 80.01 0)
 			(effects
 				(font

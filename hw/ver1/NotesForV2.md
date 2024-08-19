@@ -55,8 +55,8 @@ and we can technically go up to 90V.
   - Add controllable ENABLE signal to manually turn on when system has stabilized.
 - [x] Remove the 100 ohm series resistor with the analog switch output. Add test point.
 - [x] Add low pass filter to analog signals. Getting lots of noise right now. 100Hz cutoff.
-- [ ] Remap LTC SYNC and LED_STATUS_2 pins to not be on the same PWM channels
-  - [ ] Re-verify all PWM channels for conflicts. Excel sheet?
+- [x] Remap LTC SYNC and LED_STATUS_2 pins to not be on the same PWM channels
+  - [x] Re-verify all PWM channels for conflicts. Excel sheet?
 - [x] Remove electrolytic capacitors in favor of a large amount of ceramics. They get very warm, aka terrible lifetime.
   - Might need to use bulk cheaper/smaller capacitors and array them to meet the voltage/capacity requirements.
 - [x] Add more capacitance and filtering to the RP2040 3.3v rail. Will reset on large current loads.
@@ -93,10 +93,10 @@ automatically start the converter without an external pullup. It's expected that
 - [x] Control of output ON/OFF is entirely incorrect (see previous comments about the RUN pin). Need to add a MOSFET on the PWMEN pin to pull the
 signal to GND. This will allow the RP2040 to control power ON/OFF behavior without disabling communication with the LTC7871. I need to be able to
 program current/voltage limits to a safe value before enabling the output.
-- [ ] Pin header for connecting to the BMS needs to change. I just ripped it off accidentally.
+- [x] Pin header for connecting to the BMS needs to change. I just ripped it off accidentally.
 - [x] Pull up on PWMEN needs to be stronger. R33 was 10k and replacing to 1k was much better.
 - [x] Dead time resistor on HIP2210 should be 47k for the MCAC80N10Y to prevent shoot through. Validated experimentally.
 - [x] I think I may have sized the heatsink holes wrong? Need to double check against the fan that I have.
 - [x] LTC SYNC pullup (R23, 10k) is too weak. Switch to 1k.
 - [x] Screw hole near the VIN terminal doesn't allow for the nut/bolt to seat flush. Need to compress all the inductors together more.
-- [ ] I've inadvertently mapped the RP2040 SYNC (4) and LED_STATUS_2 (20) pins to the same PWM channel (PWM2A).
+- [x] I've inadvertently mapped the RP2040 SYNC (4) and LED_STATUS_2 (20) pins to the same PWM channel (PWM2A).
