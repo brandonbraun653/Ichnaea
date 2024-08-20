@@ -6439,6 +6439,26 @@
 		)
 		(uuid "0190694c-ea81-43cc-87a4-59f7dadf9480")
 	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 74.168 141.224 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3c3b7711-9c63-46b4-afeb-f55247ee4f19")
+	)
+	(text "V2: Switch to surface mount micro-b"
+		(exclude_from_sim no)
+		(at 60.706 52.832 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "4f15d5dd-ee09-4f8c-ad3c-7dc27ee75fd4")
+	)
 	(text "I2C0"
 		(exclude_from_sim no)
 		(at 200.406 56.134 0)
@@ -6449,6 +6469,16 @@
 		)
 		(uuid "69b2a855-0ffe-4689-9ace-0c9dadad97c3")
 	)
+	(text "V2: Swap for Mosfet pull down control."
+		(exclude_from_sim no)
+		(at 37.338 141.224 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "7cc11a69-0e37-41b0-a389-a072c94acfb3")
+	)
 	(text "PWM3B"
 		(exclude_from_sim no)
 		(at 200.406 114.554 0)
@@ -6458,6 +6488,16 @@
 			)
 		)
 		(uuid "948a9975-4ef7-4bd7-86f6-65f7ca83e71e")
+	)
+	(text "V2: Need to pull up SDO to V3.3. Open drain @LTC.\nAdded a 10k pull up on board and removed the 2k pull down. Seems to work?"
+		(exclude_from_sim no)
+		(at 53.34 161.798 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a4932f90-549a-4232-97d4-88ac592620d0")
 	)
 	(text "Externally pulled up to V5"
 		(exclude_from_sim no)

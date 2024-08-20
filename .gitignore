@@ -5,3 +5,6 @@
 _autosave*
 \#auto_saved_files\#
 __pycache__/
+build/
+docs/
+hw/**/production

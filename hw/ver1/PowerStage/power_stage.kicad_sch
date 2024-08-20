@@ -5851,6 +5851,16 @@
 		)
 		(uuid "1a58c047-1abb-455f-89da-09372e83f0a0")
 	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 384.048 107.95 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2084947e-1340-45c4-9606-cc7f9f4bb45e")
+	)
 	(text "Current comparator compensation from LTSpice Sim"
 		(exclude_from_sim no)
 		(at 144.018 219.456 0)
@@ -5872,6 +5882,16 @@
 		)
 		(uuid "32994f9c-e7f1-43af-af5c-3b75b9f1c74b")
 	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 384.048 36.83 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "32fb150a-81a1-43f5-8b54-cb8981276c75")
+	)
 	(text "DRVcc bypass. Place close to pin."
 		(exclude_from_sim no)
 		(at 54.356 38.862 0)
@@ -5881,6 +5901,36 @@
 			)
 		)
 		(uuid "3d87319b-0924-4430-9727-2d37acf5424f")
+	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 365.76 144.526 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "5443c9c5-2098-4d81-985b-ba2ccedbc34f")
+	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 280.924 103.886 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "6116201d-0560-4a36-a620-5360b991ffa6")
+	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 332.232 106.426 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "676b516a-9c67-4aa8-b74d-f47cacd36998")
 	)
 	(text "V5 bypass. Place close to pin."
 		(exclude_from_sim no)
@@ -5903,6 +5953,36 @@
 		)
 		(uuid "7ffcacfb-434e-4bb9-9441-37ef61d4dd16")
 	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 383.286 72.644 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "88a7eb6e-ec2b-4442-a90b-2620b1b036d8")
+	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 332.232 37.846 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "907fa9b1-1f85-4083-ab67-459e6e20f9bb")
+	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 279.4 139.446 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "97bee45c-3626-47dd-b1ab-d0bb6a7d8621")
+	)
 	(text "Input Filtering"
 		(exclude_from_sim no)
 		(at 231.14 15.494 0)
@@ -5913,6 +5993,16 @@
 			(justify left)
 		)
 		(uuid "99bd11e4-2f62-4926-9f5c-5a957e032e70")
+	)
+	(text "V2: Delete"
+		(exclude_from_sim no)
+		(at 332.486 71.374 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a01f83aa-7419-4af1-a850-b15de6fac265")
 	)
 	(text "CCM=0, DCM=0: Burst Mode\nCCM=0, DCM=1: Discontinuous Conduction Mode\nCCM=1, DCM=0: Forced Continuous Conduction Mode\nCCM=1, DCM=1: Forced Continuous Conduction Mode"
 		(exclude_from_sim no)

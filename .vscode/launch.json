@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Use another RPI Pico for debugging. Supports SMP with openocd.
+      "name": "Pico SMP Debug",
+      "cwd": "${workspaceRoot}",
+      "executable": "${command:cmake.launchTargetPath}",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "openocd",
+      "gdbPath": "arm-none-eabi-gdb",
+      "device": "RP2040",
+      "configFiles": [
+        "interface/cmsis-dap.cfg",
+        "target/rp2040.cfg"
+      ],
+      "svdFile": "${workspaceRoot}/lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
+      "searchDir": [
+        "/usr/share/openocd/scripts"
+      ]
+    },
+    {
+      // Black Magic Probe Debugging. Haven't figured out how to support SMP in the
+      // same way that openocd does, so you're limited to a single core.
+      "name": "BMP Debug Core 0",
+      "cwd": "${workspaceRoot}",
+      "executable": "./build/mbed/debug/src/IchnaeaApp.elf",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "bmp",
+      "interface": "swd",
+      "device": "RP2040",
+      "svdFile": "${workspaceRoot}/lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
+      "gdbPath": "arm-none-eabi-gdb",
+      "BMPGDBSerialPort": "/dev/ttyACM0",
+      //"runToEntryPoint": "main",
+      "preLaunchCommands": [
+        "attach 1",
+        "set mem inaccessible-by-default off",
+        "set scheduler-locking off",
+        "set schedule-multiple on",
+        "monitor frequency 2000000"
+      ],
+      "numberOfProcessors": 2,
+      "preRestartCommands": [
+        "enable breakpoint"
+      ]
+    }
+  ]
+}

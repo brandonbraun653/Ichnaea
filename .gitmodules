@@ -4,3 +4,21 @@
 [submodule "hw/lib/KiCadLib"]
 	path = hw/lib/KiCadLib
 	url = https://github.com/brandonbraun653/KiCadLib.git
+[submodule "lib/pico-sdk"]
+	path = lib/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git
+[submodule "lib/cpputest"]
+	path = lib/cpputest
+	url = https://github.com/cpputest/cpputest.git
+[submodule "lib/pico-mock"]
+	path = lib/pico-mock
+	url = https://github.com/brandonbraun653/pico-mock.git
+[submodule "lib/etl"]
+	path = lib/etl
+	url = https://github.com/ETLCPP/etl.git
+[submodule "lib/mbedutils"]
+	path = lib/mbedutils
+	url = https://github.com/brandonbraun653/mbedutils.git
+[submodule "lib/freertos-kernel"]
+	path = lib/freertos-kernel
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git

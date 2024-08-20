@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "Ichnaea"
+version = "0.1.0"
+description = "MPPT charge controller python library"
+authors = ["Brandon Braun <brandonbraun653@protonmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.10"
