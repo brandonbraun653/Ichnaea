@@ -148,7 +148,7 @@ namespace HW::LTC7871::Private
   {
     mb::thread::RecursiveLockGuard lock( s_bus_lock );
 
-    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS_LTC );
     auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
     /*-------------------------------------------------------------------------
@@ -184,7 +184,7 @@ namespace HW::LTC7871::Private
   {
     mb::thread::RecursiveLockGuard lock( s_bus_lock );
 
-    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS_LTC );
     auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
     /*-------------------------------------------------------------------------

@@ -126,7 +126,7 @@ namespace HW::LTC7871
     gpio_pull_up(
         s_io_config->spi[ BSP::SPI_LTC7871 ].miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
 
-    pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS_LTC );
     gpio_init( pin );
     gpio_set_dir( pin, GPIO_OUT );
     gpio_pull_up( pin );

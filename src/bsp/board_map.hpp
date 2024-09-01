@@ -66,7 +66,17 @@ namespace BSP
 
   enum ADCPorts : size_t
   {
-    ADC_MUTLIPLEXED_SENSE,
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
+    ADC_MUTLIPLEXED_SENSE,  /**< Analog switch */
+
+    /*-------------------------------------------------------------------------
+    Version 2+
+    -------------------------------------------------------------------------*/
+    ADC_BOARD_REV,          /**< Board revision */
+    ADC_IMON_FLTR,          /**< Filtered inductor avg current from LTC7871 */
+    ADC_IMON_BATT,          /**< Battery charge current */
 
     ADC_MAX_PORTS
   };
@@ -80,41 +90,64 @@ namespace BSP
    */
   enum GPIOPorts : size_t
   {
-    GPIO_LTC_DCM,
-    GPIO_LTC_CCM,
-    GPIO_LTC_RUN,
-    GPIO_LTC_ADCSEL0,
-    GPIO_LTC_ADCSEL1,
-    GPIO_LTC_ADCSEL2,
-    GPIO_SPI_CS0,
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
+    GPIO_LTC_ADCSEL0,   /**< Multiplexed ADC channel select */
+    GPIO_LTC_ADCSEL1,   /**< Multiplexed ADC channel select */
+    GPIO_LTC_ADCSEL2,   /**< Multiplexed ADC channel select */
+    GPIO_SPI_CS_LTC,    /**< SPI chip select for LTC7871 */
+
+    /*-------------------------------------------------------------------------
+    Version 2+
+    -------------------------------------------------------------------------*/
+    GPIO_SPI_CS_NOR,    /**< NOR flash SPI chip select */
 
     GPIO_MAX_PORTS
   };
 
   enum PWMPorts : size_t
   {
-    PWM_LTC_SYNC,
-    PWM_FAN_CONTROL,
-    PWM_FAN_SENSE,
-    PWM_LED_STATUS_0,
-    PWM_LED_STATUS_1,
-    PWM_LED_STATUS_2,
-    PWM_LED_STATUS_3,
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
+    PWM_LTC_SYNC,       /**< Frequency synchronization for LTC7871 */
+    PWM_FAN_CONTROL,    /**< Fan speed control */
+    PWM_FAN_SENSE,      /**< Fan speed sense */
+    PWM_LED_STATUS_0,   /**< Output LED status */
+    PWM_LED_STATUS_1,   /**< Output LED status */
+    PWM_LED_STATUS_2,   /**< Output LED status */
+    PWM_LED_STATUS_3,   /**< Output LED status */
 
     PWM_MAX_PORTS
   };
 
   enum SPIPorts : size_t
   {
-    SPI_LTC7871,
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
+    SPI_LTC7871,    /**< LTC7871 Power Controller */
+
+    /*-------------------------------------------------------------------------
+    Version 2+
+    -------------------------------------------------------------------------*/
+    SPI_NOR_FLASH,  /**< NOR Flash Memory */
 
     SPI_MAX_PORTS
   };
 
   enum UARTPorts : size_t
   {
-    UART_DEBUG,
-    UART_BMS,
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
+    UART_BMS,   /**< Battery Management System Interface*/
+
+    /*-------------------------------------------------------------------------
+    Version 2+
+    -------------------------------------------------------------------------*/
+    UART_DEBUG, /**< Debug Interface */
 
     UART_MAX_PORTS
   };
