@@ -30,7 +30,8 @@ namespace HW::UART
 
   enum Channel : size_t
   {
-    UART_BMS, /**< Battery management system interface */
+    UART_BMS,   /**< Battery management system interface */
+    UART_DEBUG, /**< Debugging interface */
 
     NUM_OPTIONS
   };
@@ -44,6 +45,12 @@ namespace HW::UART
    */
   void initialize();
 
+  /**
+   * @brief Gets the driver for a particular UART channel
+   *
+   * @param channel  UART channel to get the driver for
+   * @return mb::hw::serial::SerialDriver&
+   */
   mb::hw::serial::SerialDriver &getDriver( const Channel channel );
 
 }  // namespace HW::UART

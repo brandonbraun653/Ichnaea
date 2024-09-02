@@ -160,6 +160,7 @@ namespace BSP
       s_board_map.gpio[ GPIO_LTC_CCM ].pin         = BSPV2::GPIO::PIN_OUT_LTC_CCM;
       s_board_map.gpio[ GPIO_LTC_DCM ].pin         = BSPV2::GPIO::PIN_OUT_LTC_DCM;
       s_board_map.gpio[ GPIO_LTC_RUN ].pin         = BSPV2::GPIO::PIN_OUT_LTC_RUN;
+      s_board_map.gpio[ GPIO_LTC_PWMEN ].pin       = BSPV2::GPIO::PIN_OUT_LTC_PWMEN;
       s_board_map.gpio[ GPIO_SPI_CS_LTC ].pin      = BSPV2::SPI::PIN_LTC_CS_0;
       s_board_map.gpio[ GPIO_SPI_CS_NOR ].pin      = BSPV2::SPI::PIN_NOR_CS_0;
       s_board_map.pwm[ PWM_FAN_CONTROL ].pin       = BSPV2::PWM::PIN_OUT_FAN_CTL;
@@ -235,5 +236,11 @@ namespace BSP
         mbed_assert_always();
         return nullptr;
     }
+  }
+
+
+  uint8_t getBoardRevision()
+  {
+    return s_board_map.majorVersion;
   }
 }    // namespace BSP

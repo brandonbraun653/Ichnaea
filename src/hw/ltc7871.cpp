@@ -66,14 +66,32 @@ namespace HW::LTC7871
     Private::initialize();
 
     /*-------------------------------------------------------------------------
-    Power up the GPIO control lines
+    Power up the GPIO control lines. This will disable the LTC controller,
+    causing the system to power off if a battery or USB power is not present.
     -------------------------------------------------------------------------*/
-    /* Ensures the controller is off */
-    // TODO BMB: This needs to be swapped over to an output for mosfet control in V2.
-    uint pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_RUN );
-    gpio_init( pin );
-    gpio_set_dir( pin, GPIO_IN );
-    gpio_pull_up( pin );
+
+    // TODO BMB: Need to think about this power sequencing later. For now, just
+    //   ensure we don't accidentally cook an attached battery. May want to sense
+    //   the environment extremely quickly to make a snap decision on if we should
+    //   power up the LTC or not. If we are, at the very least, we need to disable
+    //   the power conversion logic (PWMEN).
+
+    uint pin = 0;
+
+    if( BSP::getBoardRevision() >= 2 )
+    {
+      /* Disable PWM controllers (inverted) */
+      pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_PWMEN );
+      gpio_init( pin );
+      gpio_set_dir( pin, GPIO_OUT );
+      gpio_put( pin, 1 );
+
+      /* Disable the LTC itself (inverted) */
+      pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_RUN );
+      gpio_init( pin );
+      gpio_set_dir( pin, GPIO_OUT );
+      gpio_put( pin, 1 );
+    }
 
     /* Set the mode control to Burst */
     pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_CCM );
@@ -123,8 +141,12 @@ namespace HW::LTC7871
 
     gpio_init( s_io_config->spi[ BSP::SPI_LTC7871 ].miso );
     gpio_set_function( s_io_config->spi[ BSP::SPI_LTC7871 ].miso, GPIO_FUNC_SPI );
-    gpio_pull_up(
-        s_io_config->spi[ BSP::SPI_LTC7871 ].miso );    // TODO BMB: This is a hack in V1. LTC SDO requires external pullup.
+
+    if( BSP::getBoardRevision() == 1 )
+    {
+      // V1 has a PCB issue where we need the software to pull up the MISO line.
+      gpio_pull_up( s_io_config->spi[ BSP::SPI_LTC7871 ].miso );
+    }
 
     pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS_LTC );
     gpio_init( pin );
@@ -177,7 +199,7 @@ namespace HW::LTC7871
     Cannot power on if we have no input power
     -------------------------------------------------------------------------*/
     const float threshold = 12.0f;
-    const float vHigh     = Sensor::getHighSideVoltage();
+    const float vHigh     = Sensor::getMeasurement( Sensor::Element::VMON_SOLAR_INPUT );
     if( vHigh < threshold )
     {
       mbed_assert_continue_msg( false, "Unable to power on. Input voltage %.2fV < %.2fV", vHigh, threshold );
@@ -188,10 +210,11 @@ namespace HW::LTC7871
     Enable the LTC chip for communication. It's highly likely that these IO are
     already in the correct state, but we should be explicit about it.
     -------------------------------------------------------------------------*/
-    // TODO BMB: Add these back in when HW v2 is ready.
-    // gpio_put( s_io_config->gpio.ltcRun, 0 );
-    // gpio_put( s_io_config->gpio.ltcPwmEn, 0 );
-    // Sleep a few ms to allow the chip to enable and LDOs to power up.
+    if( BSP::getBoardRevision() >= 2 )
+    {
+      gpio_put( s_io_config->gpio[ BSP::GPIO_LTC_RUN ].pin, 0 );
+      sleep_ms( 500 );
+    }
 
     /*-------------------------------------------------------------------------
     Ensure the LTC7871 is in a known state. It's not guaranteed the RP2040 and
@@ -317,9 +340,9 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Get the latest information from the monitor
     -------------------------------------------------------------------------*/
-    s_ltc_state.msr_input_voltage   = Sensor::getHighSideVoltage();
-    s_ltc_state.msr_output_voltage  = Sensor::getLowSideVoltage();
-    s_ltc_state.msr_average_current = Sensor::getAverageCurrent();
+    s_ltc_state.msr_input_voltage   = Sensor::getMeasurement( Sensor::Element::VMON_SOLAR_INPUT );
+    s_ltc_state.msr_output_voltage  = Sensor::getMeasurement( Sensor::Element::VMON_BATT_OUTPUT );
+    s_ltc_state.msr_average_current = Sensor::getMeasurement( Sensor::Element::IMON_LTC_AVG );
 
     /*-------------------------------------------------------------------------
     Perform output voltage change requests

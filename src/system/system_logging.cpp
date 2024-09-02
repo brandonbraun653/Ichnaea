@@ -27,8 +27,13 @@ namespace Logging
   Static Data
   ---------------------------------------------------------------------------*/
 
+  /* Logging via RPC service */
   static RPCSink                      s_rpc_sink;
   static mb::logging::SinkHandle_rPtr s_nanopb_handle;
+
+  /* Logging via Debug port */
+  static mb::logging::SerialSink      s_debug_sink;
+  static mb::logging::SinkHandle_rPtr s_debug_handle;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -45,19 +50,29 @@ namespace Logging
     mb::logging::initialize();
 
     /*-------------------------------------------------------------------------
-    Configure a SerialSink to use the BMS UART channel
+    Configure and register the RPC sink to output warnings and above.
     -------------------------------------------------------------------------*/
     s_rpc_sink.assignDriver( Control::getRPCServer() );
-    s_rpc_sink.logLevel = Level::LVL_TRACE;
+    s_rpc_sink.logLevel = Level::LVL_WARN;
     s_rpc_sink.enabled  = true;
 
-    /*-------------------------------------------------------------------------
-    Register the sink with the logging framework and set it as the root output
-    for all log messages.
-    -------------------------------------------------------------------------*/
     s_nanopb_handle = SinkHandle_rPtr( &s_rpc_sink );
     mbed_assert( ErrCode::ERR_OK == registerSink( s_nanopb_handle ) );
-    mbed_assert( ErrCode::ERR_OK == setRootSink( s_nanopb_handle ) );
+
+    /*-------------------------------------------------------------------------
+    Configure and register the Debug sink to output everything.
+    -------------------------------------------------------------------------*/
+    s_debug_sink.assignDriver( HW::UART::getDriver( HW::UART::Channel::UART_DEBUG ) );
+    s_debug_sink.logLevel = Level::LVL_TRACE;
+    s_debug_sink.enabled  = true;
+
+    s_debug_handle = SinkHandle_rPtr( &s_debug_sink );
+    mbed_assert( ErrCode::ERR_OK == registerSink( s_debug_handle ) );
+
+    /*-------------------------------------------------------------------------
+    Assign the root logger
+    -------------------------------------------------------------------------*/
+    mbed_assert( ErrCode::ERR_OK == setRootSink( s_debug_handle ) );
   }
 
   /*---------------------------------------------------------------------------

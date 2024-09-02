@@ -26,8 +26,6 @@ namespace Threads
 
   void monitorThread( void *arg )
   {
-    size_t last_print = mb::time::millis();
-
     while( 1 )
     {
       sleep_ms( 25 );
@@ -35,24 +33,11 @@ namespace Threads
       /*-----------------------------------------------------------------------
       Update all the sensors
       -----------------------------------------------------------------------*/
-      Sensor::getAverageCurrent( Sensor::LookupType::REFRESH );
-      Sensor::getHighSideVoltage( Sensor::LookupType::REFRESH );
-      Sensor::getLowSideVoltage( Sensor::LookupType::REFRESH );
-      Sensor::getRP2040Temp( Sensor::LookupType::REFRESH );
-      Sensor::getBoardTemp0( Sensor::LookupType::REFRESH );
-      Sensor::getBoardTemp1( Sensor::LookupType::REFRESH );
-
-      if( ( mb::time::millis() - last_print ) > 1000 )
+      for( size_t i = 0; i < static_cast<size_t>( Sensor::Element::NUM_OPTIONS ); i++ )
       {
-        last_print = mb::time::millis();
-        LOG_INFO( "Current: %.2fA, High Side: %.2fV, Low Side: %.2fV, RP2040 Temp: %.2fC, Board Temp 0: %.2fC, Board Temp 1: %.2fC",
-                  Sensor::getAverageCurrent(),
-                  Sensor::getHighSideVoltage(),
-                  Sensor::getLowSideVoltage(),
-                  Sensor::getRP2040Temp(),
-                  Sensor::getBoardTemp0(),
-                  Sensor::getBoardTemp1() );
+        Sensor::getMeasurement( static_cast<Sensor::Element>( i ), Sensor::LookupType::REFRESH );
       }
+
 
       // TODO BMB: I'm going to need to detect and announce an event where the
       // input voltage drops out and the system is running on battery power. I

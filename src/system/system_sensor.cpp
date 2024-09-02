@@ -12,6 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <algorithm>
+#include "src/bsp/board_map.hpp"
 #include "src/system/system_sensor.hpp"
 #include "src/hw/ltc7871.hpp"
 #include "src/hw/adc.hpp"
@@ -21,19 +22,74 @@ Includes
 namespace Sensor
 {
   /*---------------------------------------------------------------------------
-  Constants
-  ---------------------------------------------------------------------------*/
-
-  /*---------------------------------------------------------------------------
-  Static Data
-  ---------------------------------------------------------------------------*/
-
-
-  /*---------------------------------------------------------------------------
   Private Functions
   ---------------------------------------------------------------------------*/
 
-  static float calculateThermistorTemp( const float vOut )
+  static float calc_thermistor_temp( const float vOut );
+  static float get_ltc_avg_current( const LookupType lut );
+  static float get_high_side_voltage( const LookupType lut );
+  static float get_low_side_voltage( const LookupType lut );
+  static float get_rp2040_temp( const LookupType lut );
+  static float get_board_temp0( const LookupType lut );
+  static float get_board_temp1( const LookupType lut );
+  static float get_imon_batt( const LookupType lut );
+  static float get_vmon_1v1( const LookupType lut );
+  static float get_vmon_3v3( const LookupType lut );
+  static float get_vmon_5v0( const LookupType lut );
+  static float get_vmon_12v( const LookupType lut );
+
+  /*---------------------------------------------------------------------------
+  Public Functions
+  ---------------------------------------------------------------------------*/
+
+  float getMeasurement( const Element channel, const LookupType lut )
+  {
+    switch( channel )
+    {
+      case Element::RP2040_TEMP:
+        return get_rp2040_temp( lut );
+
+      case Element::BOARD_TEMP_0:
+        return get_board_temp0( lut );
+
+      case Element::BOARD_TEMP_1:
+        return get_board_temp1( lut );
+
+      case Element::IMON_LTC_AVG:
+        return get_ltc_avg_current( lut );
+
+      case Element::VMON_SOLAR_INPUT:
+        return get_high_side_voltage( lut );
+
+      case Element::VMON_BATT_OUTPUT:
+        return get_low_side_voltage( lut );
+
+      case Element::IMON_BATT:
+        return get_imon_batt( lut );
+
+      case Element::VMON_1V1:
+        return get_vmon_1v1( lut );
+
+      case Element::VMON_3V3:
+        return get_vmon_3v3( lut );
+
+      case Element::VMON_5V0:
+        return get_vmon_5v0( lut );
+
+      case Element::VMON_12V:
+        return get_vmon_12v( lut );
+
+      default:
+        mbed_assert_continue_msg( false, "Invalid sensor element: %d", static_cast<size_t>( channel ) );
+        return 0.0f;
+    }
+  }
+
+  /*---------------------------------------------------------------------------
+  Private Function Implementations
+  ---------------------------------------------------------------------------*/
+
+  static float calc_thermistor_temp( const float vOut )
   {
     constexpr float t0      = 25.0f;     /* NTC Nomnal 25C */
     constexpr float r0      = 10'000.0f; /* NTC Nomnal 10k */
@@ -43,11 +99,8 @@ namespace Sensor
     return Analog::calculateTempBeta( vOut, 5.0f, beta, r_fixed, r0, t0 );
   }
 
-  /*---------------------------------------------------------------------------
-  Public Functions
-  ---------------------------------------------------------------------------*/
 
-  float getAverageCurrent( const LookupType lut )
+  static float get_ltc_avg_current( const LookupType lut )
   {
     using namespace HW::LTC7871;
 
@@ -101,7 +154,7 @@ namespace Sensor
   }
 
 
-  float getHighSideVoltage( const LookupType lut )
+  static float get_high_side_voltage( const LookupType lut )
   {
     // TODO: Pull this info from the board spec.
     constexpr float R1 = 470'000.0f;
@@ -119,7 +172,7 @@ namespace Sensor
   }
 
 
-  float getLowSideVoltage( const LookupType lut )
+  static float get_low_side_voltage( const LookupType lut )
   {
     // TODO: Pull this info from the board spec.
     constexpr float R1 = 470'000.0f;
@@ -137,7 +190,7 @@ namespace Sensor
   }
 
 
-  float getRP2040Temp( const LookupType lut )
+  static float get_rp2040_temp( const LookupType lut )
   {
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
@@ -154,7 +207,7 @@ namespace Sensor
   }
 
 
-  float getBoardTemp0( const LookupType lut )
+  static float get_board_temp0( const LookupType lut )
   {
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
@@ -163,12 +216,12 @@ namespace Sensor
     }
 
     float vOut = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_0 );
-    s_cached_value = calculateThermistorTemp( vOut );
+    s_cached_value = calc_thermistor_temp( vOut );
     return s_cached_value;
   }
 
 
-  float getBoardTemp1( const LookupType lut )
+  static float get_board_temp1( const LookupType lut )
   {
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
@@ -177,7 +230,105 @@ namespace Sensor
     }
 
     float vOut = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_1 );
-    s_cached_value = calculateThermistorTemp( vOut );
+    s_cached_value = calc_thermistor_temp( vOut );
+    return s_cached_value;
+  }
+
+
+  static float get_imon_batt( const LookupType lut )
+  {
+    static constexpr float IMON_R_SENSE = 0.0002f; // 0.2mOhm
+
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    float vOut = HW::ADC::getVoltage( HW::ADC::Channel::IMON_BATT );
+    float vMsr = Analog::calculateVoltageDividerInput( vOut, 5'100.0f, 10'000.0f );
+
+    s_cached_value = vMsr / IMON_R_SENSE;
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_1v1( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    s_cached_value = HW::ADC::getVoltage( HW::ADC::Channel::VMON_1V1 );
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_3v3( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    float vOut = HW::ADC::getVoltage( HW::ADC::Channel::VMON_3V3 );
+    s_cached_value = Analog::calculateVoltageDividerInput( vOut, 10'000.0f, 10'000.0f );
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_5v0( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    float vOut = HW::ADC::getVoltage( HW::ADC::Channel::VMON_5V0 );
+    s_cached_value = Analog::calculateVoltageDividerInput( vOut, 10'000.0f, 10'000.0f );
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_12v( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    float vOut = HW::ADC::getVoltage( HW::ADC::Channel::VMON_12V );
+    s_cached_value = Analog::calculateVoltageDividerInput( vOut, 100'000.0f, 10'000.0f );
     return s_cached_value;
   }
 }  // namespace Data

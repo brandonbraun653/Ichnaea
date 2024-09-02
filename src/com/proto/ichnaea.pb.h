@@ -94,7 +94,12 @@ typedef enum _ichnaea_SensorType {
     ichnaea_SensorType_SENSOR_AVG_OUTPUT_CURRENT = 2,
     ichnaea_SensorType_SENSOR_BOARD_TEMP_1 = 3,
     ichnaea_SensorType_SENSOR_BOARD_TEMP_2 = 4,
-    ichnaea_SensorType_SENSOR_BOARD_TEMP_3 = 5
+    ichnaea_SensorType_SENSOR_BOARD_TEMP_3 = 5,
+    ichnaea_SensorType_SENSOR_CHARGE_CURRENT = 6,
+    ichnaea_SensorType_SENSOR_VMON_1V1 = 7,
+    ichnaea_SensorType_SENSOR_VMON_3V3 = 8,
+    ichnaea_SensorType_SENSOR_VMON_5V = 9,
+    ichnaea_SensorType_SENSOR_VMON_12V = 10
 } ichnaea_SensorType;
 
 typedef enum _ichnaea_LTCRegisterError {
@@ -238,8 +243,8 @@ extern "C" {
 #define _ichnaea_SensorError_ARRAYSIZE ((ichnaea_SensorError)(ichnaea_SensorError_ERR_SENSOR_UNKNOWN+1))
 
 #define _ichnaea_SensorType_MIN ichnaea_SensorType_SENSOR_OUTPUT_VOLTAGE
-#define _ichnaea_SensorType_MAX ichnaea_SensorType_SENSOR_BOARD_TEMP_3
-#define _ichnaea_SensorType_ARRAYSIZE ((ichnaea_SensorType)(ichnaea_SensorType_SENSOR_BOARD_TEMP_3+1))
+#define _ichnaea_SensorType_MAX ichnaea_SensorType_SENSOR_VMON_12V
+#define _ichnaea_SensorType_ARRAYSIZE ((ichnaea_SensorType)(ichnaea_SensorType_SENSOR_VMON_12V+1))
 
 #define _ichnaea_LTCRegisterError_MIN ichnaea_LTCRegisterError_ERR_LTC_REG_NO_ERROR
 #define _ichnaea_LTCRegisterError_MAX ichnaea_LTCRegisterError_ERR_LTC_ACCESS_FAILED

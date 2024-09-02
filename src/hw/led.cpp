@@ -26,7 +26,6 @@ namespace HW::LED
   static constexpr float    POST_RAMP_STEP_SZ  = 1.0f / POST_RAMP_STEPS;
   static constexpr uint32_t POST_RAMP_SLEEP_US = static_cast<uint32_t>( 1000.0f * ( 0.5f * POST_RAMP_TIME_MS / POST_RAMP_STEPS ) );
   static constexpr uint16_t PWM_COUNTER_WRAP   = 1000; /**< Arbitrary value to overflow the timer at */
-  static constexpr uint16_t PWM_COUNTER_OFF    = PWM_COUNTER_WRAP + 1;
 
   /*---------------------------------------------------------------------------
   Structures
@@ -37,7 +36,8 @@ namespace HW::LED
     uint     pin;         /**< Which pin this is physically mapped to */
     uint     pwm_slice;   /**< Which PWM slice is controlling this LED */
     uint     pwm_channel; /**< Which PWM channel is controlling this LED */
-    uint16_t level;       /**< PWM output level */
+    uint16_t on_level;    /**< PWM level when ON */
+    uint16_t off_level;   /**< PWM level when OFF */
     bool     enabled;     /**< Is the LED currently enabled */
   };
 
@@ -81,18 +81,32 @@ namespace HW::LED
       state.pwm_slice   = pwm_gpio_to_slice_num( state.pin );
       state.pwm_channel = pwm_gpio_to_channel( state.pin );
 
+      switch( BSP::getBoardRevision() )
+      {
+        case 1:
+          state.off_level = PWM_COUNTER_WRAP + 1;
+          break;
+
+        case 2:
+        default:
+          state.off_level = 0;
+          break;
+      }
+
+      state.on_level  = state.off_level;
+
       /*-----------------------------------------------------------------------
       Configure the GPIO pin for PWM output with pullups. The LEDs can ghost
       a bit if the pullups are not enabled.
       -----------------------------------------------------------------------*/
       gpio_set_function( state.pin, GPIO_FUNC_PWM );
-      gpio_set_pulls( state.pin, true, false );
+      gpio_set_pulls( state.pin, false, false );
 
       /*-----------------------------------------------------------------------
       Initialize the PWM output to drive the LED off first. Inverted logic!
       -----------------------------------------------------------------------*/
       pwm_set_wrap( state.pwm_slice, PWM_COUNTER_WRAP );
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, PWM_COUNTER_OFF );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.off_level );
       pwm_set_clkdiv( state.pwm_slice, divisor );
       pwm_set_counter( state.pwm_slice, 0 );
     }
@@ -148,7 +162,7 @@ namespace HW::LED
     }
 
     auto &state = s_led_map[ channel ];
-    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.level );
+    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.on_level );
     state.enabled = true;
   }
 
@@ -161,7 +175,7 @@ namespace HW::LED
     }
 
     auto &state = s_led_map[ channel ];
-    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, PWM_COUNTER_OFF );
+    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.off_level );
     state.enabled = true;
   }
 
@@ -178,11 +192,11 @@ namespace HW::LED
 
     if( state.enabled )
     {
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.level );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.on_level );
     }
     else
     {
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, PWM_COUNTER_OFF );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.off_level );
     }
   }
 
@@ -213,11 +227,11 @@ namespace HW::LED
     update the hardware.
     -------------------------------------------------------------------------*/
     auto &state = s_led_map[ channel ];
-    state.level = approx_level;
+    state.on_level = approx_level;
 
     if( state.enabled )
     {
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.level );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.on_level );
     }
   }
 

@@ -128,7 +128,7 @@ namespace HW::FAN
 
   void postSequence()
   {
-    setSpeedPercent( 1.00f );
+    setSpeedPercent( 0.25f );
     sleep_ms( 2000 );
     setSpeedPercent( 0.1f );
   }

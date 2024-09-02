@@ -32,59 +32,48 @@ namespace Sensor
     REFRESH /**< Access hardware and perform a new measurement. */
   };
 
+
+  /**
+   * @brief Specific sensing elements in the system
+   */
+  enum class Element : uint8_t
+  {
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
+    RP2040_TEMP,      /**< Internal temperature sensor on the RP2040 (Celcius)*/
+    BOARD_TEMP_0,     /**< External temperature sensor 0 (Celcius)*/
+    BOARD_TEMP_1,     /**< External temperature sensor 1 (Celcius)*/
+    IMON_LTC_AVG,     /**< Average current output from the LTC7871 (Amps) */
+    VMON_SOLAR_INPUT, /**< Solar high voltage input sense (Volts) */
+    VMON_BATT_OUTPUT, /**< Buck converter voltage output sense (Volts) */
+
+    /*-------------------------------------------------------------------------
+    Version 2+
+    -------------------------------------------------------------------------*/
+    IMON_BATT, /**< Battery charge current (Amps)*/
+    VMON_1V1,  /**< 1.1V voltage rail (Votls) */
+    VMON_3V3,  /**< 3.3V voltage rail (Votls) */
+    VMON_5V0,  /**< 5.0V voltage rail (Votls) */
+    VMON_12V,  /**< 12V voltage rail (Volts) */
+
+    NUM_OPTIONS
+  };
+
+
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
   /**
-   * @brief Gets the average current reported by the LTC7871 (Amps)
+   * @brief Get the specific system sensor measurement
    *
-   * @param lut What type of lookup to perform
+   * @param channel Which sensor to read
+   * @param lut    How to look up the data
    * @return float
    */
-  float getAverageCurrent( const LookupType lut = LookupType::CACHED );
+  float getMeasurement( const Element channel, const LookupType lut = LookupType::CACHED );
 
-  /**
-   * @brief Gets the solar panel high side input (Volts)
-   *
-   * @param lut What type of lookup to perform
-   * @return float
-   */
-  float getHighSideVoltage( const LookupType lut = LookupType::CACHED );
+}    // namespace Sensor
 
-  /**
-   * @brief Gets the regulated low side output voltage (Volts)
-   *
-   * @param lut What type of lookup to perform
-   * @return float
-   */
-  float getLowSideVoltage( const LookupType lut = LookupType::CACHED );
-
-  /**
-   * @brief Gets the temperature of the RP2040 (Celsius)
-   *
-   * @param lut What type of lookup to perform
-   * @return float
-   */
-  float getRP2040Temp( const LookupType lut = LookupType::CACHED );
-
-  /**
-   * @brief Gets the board temperature from sensor 0 (Celsius)
-   * @warning This will not give a valid reading unless the LTC7871 is in normal operation.
-   *
-   * @param lut What type of lookup to perform
-   * @return float
-   */
-  float getBoardTemp0( const LookupType lut = LookupType::CACHED );
-
-  /**
-   * @brief Gets the board temperature from sensor 1 (Celsius)
-   *
-   * @param lut What type of lookup to perform
-   * @return float
-   */
-  float getBoardTemp1( const LookupType lut = LookupType::CACHED );
-
-}  // namespace Data
-
-#endif  /* !ICHNAEA_SYSTEM_SENSOR_HPP */
+#endif /* !ICHNAEA_SYSTEM_SENSOR_HPP */

@@ -43,27 +43,47 @@ namespace COM::RPC
     switch( request.sensor )
     {
       case ichnaea_SensorType_SENSOR_INPUT_VOLTAGE:
-        response.value = getHighSideVoltage();
+        response.value = getMeasurement( Element::VMON_SOLAR_INPUT );
         break;
 
       case ichnaea_SensorType_SENSOR_OUTPUT_VOLTAGE:
-        response.value = getLowSideVoltage();
+        response.value = getMeasurement( Element::VMON_BATT_OUTPUT );
         break;
 
       case ichnaea_SensorType_SENSOR_AVG_OUTPUT_CURRENT:
-        response.value = getAverageCurrent();
+        response.value = getMeasurement( Element::IMON_LTC_AVG );
         break;
 
       case ichnaea_SensorType_SENSOR_BOARD_TEMP_1:
-        response.value = getRP2040Temp();
+        response.value = getMeasurement( Element::RP2040_TEMP );
         break;
 
       case ichnaea_SensorType_SENSOR_BOARD_TEMP_2:
-        response.value = getBoardTemp0();
+        response.value = getMeasurement( Element::BOARD_TEMP_0 );
         break;
 
       case ichnaea_SensorType_SENSOR_BOARD_TEMP_3:
-        response.value = getBoardTemp1();
+        response.value = getMeasurement( Element::BOARD_TEMP_1 );
+        break;
+
+      case ichnaea_SensorType_SENSOR_CHARGE_CURRENT:
+        response.value = getMeasurement( Element::IMON_BATT );
+        break;
+
+      case ichnaea_SensorType_SENSOR_VMON_1V1:
+        response.value = getMeasurement( Element::VMON_1V1 );
+        break;
+
+      case ichnaea_SensorType_SENSOR_VMON_3V3:
+        response.value = getMeasurement( Element::VMON_3V3 );
+        break;
+
+      case ichnaea_SensorType_SENSOR_VMON_5V:
+        response.value = getMeasurement( Element::VMON_5V0 );
+        break;
+
+      case ichnaea_SensorType_SENSOR_VMON_12V:
+        response.value = getMeasurement( Element::VMON_12V );
         break;
 
       default:

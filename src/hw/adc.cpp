@@ -185,6 +185,8 @@ namespace HW::ADC
 
   void postSequence()
   {
+    using namespace Sensor;
+
     /*-------------------------------------------------------------------------
     Make sure we get something for each channel. Can't really determine true
     accuracy here, but we can at least verify that the ADC is working.
@@ -198,12 +200,17 @@ namespace HW::ADC
       }
     }
 
-    LOG_DEBUG( "Average Current: %.2fA", Sensor::getAverageCurrent( Sensor::LookupType::REFRESH ) );
-    LOG_DEBUG( "High Side Voltage: %.2fV", Sensor::getHighSideVoltage( Sensor::LookupType::REFRESH ) );
-    LOG_DEBUG( "Low Side Voltage: %.2fV", Sensor::getLowSideVoltage( Sensor::LookupType::REFRESH ) );
-    LOG_DEBUG( "RP2040 Temp: %.2fC", Sensor::getRP2040Temp( Sensor::LookupType::REFRESH ) );
-    LOG_DEBUG( "Board Temp 0: %.2fC", Sensor::getBoardTemp0( Sensor::LookupType::REFRESH ) );
-    LOG_DEBUG( "Board Temp 1: %.2fC", Sensor::getBoardTemp1( Sensor::LookupType::REFRESH ) );
+    LOG_DEBUG( "RP2040 Temp: %.2fC", getMeasurement( Element::RP2040_TEMP, LookupType::REFRESH ) );
+    LOG_DEBUG( "Board Temp 0: %.2fC", getMeasurement( Element::BOARD_TEMP_0, LookupType::REFRESH ) );
+    LOG_DEBUG( "Board Temp 1: %.2fC", getMeasurement( Element::BOARD_TEMP_1, LookupType::REFRESH ) );
+    LOG_DEBUG( "LTC Current: %.2fA", getMeasurement( Element::IMON_LTC_AVG, LookupType::REFRESH ) );
+    LOG_DEBUG( "Charge Current: %.2fA", getMeasurement( Element::IMON_BATT, LookupType::REFRESH ) );
+    LOG_DEBUG( "1.1V Rail: %.2fV", getMeasurement( Element::VMON_1V1, LookupType::REFRESH ) );
+    LOG_DEBUG( "3.3V Rail: %.2fV", getMeasurement( Element::VMON_3V3, LookupType::REFRESH ) );
+    LOG_DEBUG( "5.0V Rail: %.2fV", getMeasurement( Element::VMON_5V0, LookupType::REFRESH ) );
+    LOG_DEBUG( "12V Rail: %.2fV", getMeasurement( Element::VMON_12V, LookupType::REFRESH ) );
+    LOG_DEBUG( "Solar Voltage: %.2fV", getMeasurement( Element::VMON_SOLAR_INPUT, LookupType::REFRESH ) );
+    LOG_DEBUG( "Batt Voltage: %.2fV", getMeasurement( Element::VMON_BATT_OUTPUT, LookupType::REFRESH ) );
   }
 
 

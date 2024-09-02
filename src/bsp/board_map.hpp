@@ -88,6 +88,7 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Version 2+
     -------------------------------------------------------------------------*/
+    GPIO_LTC_PWMEN,  /**< LTC7871 PWM enable */
     GPIO_SPI_CS_NOR, /**< NOR flash SPI chip select */
 
     GPIO_MAX_PORTS
@@ -224,6 +225,13 @@ namespace BSP
    * @return void*
    */
   void *getHardware( const mb::hw::Peripheral type, const size_t port );
+
+  /**
+   * @brief Get the current board revision
+   * @return uint8_t
+   */
+  uint8_t getBoardRevision();
+
 }    // namespace BSP
 
 #endif /* !ICHNAEA_BOARD_MAP_HPP */

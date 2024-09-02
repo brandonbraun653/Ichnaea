@@ -285,6 +285,11 @@ class _SensorTypeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._Enu
     SENSOR_BOARD_TEMP_1: _SensorType.ValueType  # 3
     SENSOR_BOARD_TEMP_2: _SensorType.ValueType  # 4
     SENSOR_BOARD_TEMP_3: _SensorType.ValueType  # 5
+    SENSOR_CHARGE_CURRENT: _SensorType.ValueType  # 6
+    SENSOR_VMON_1V1: _SensorType.ValueType  # 7
+    SENSOR_VMON_3V3: _SensorType.ValueType  # 8
+    SENSOR_VMON_5V: _SensorType.ValueType  # 9
+    SENSOR_VMON_12V: _SensorType.ValueType  # 10
 
 class SensorType(_SensorType, metaclass=_SensorTypeEnumTypeWrapper): ...
 
@@ -294,6 +299,11 @@ SENSOR_AVG_OUTPUT_CURRENT: SensorType.ValueType  # 2
 SENSOR_BOARD_TEMP_1: SensorType.ValueType  # 3
 SENSOR_BOARD_TEMP_2: SensorType.ValueType  # 4
 SENSOR_BOARD_TEMP_3: SensorType.ValueType  # 5
+SENSOR_CHARGE_CURRENT: SensorType.ValueType  # 6
+SENSOR_VMON_1V1: SensorType.ValueType  # 7
+SENSOR_VMON_3V3: SensorType.ValueType  # 8
+SENSOR_VMON_5V: SensorType.ValueType  # 9
+SENSOR_VMON_12V: SensorType.ValueType  # 10
 global___SensorType = SensorType
 
 class _LTCRegisterError:
