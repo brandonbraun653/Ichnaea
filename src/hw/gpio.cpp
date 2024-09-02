@@ -49,6 +49,7 @@ namespace HW::GPIO
     Set any active low pins to high to disable them.
     -------------------------------------------------------------------------*/
     gpio_put( cfg.gpio[ BSP::GPIO_SPI_CS_LTC ].pin, true );
+    gpio_put( cfg.gpio[ BSP::GPIO_SPI_CS_NOR ].pin, true );
   }
 
 

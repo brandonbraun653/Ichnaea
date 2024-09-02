@@ -37,41 +37,6 @@ namespace Panic::Handlers
 
   PANIC_HANDLER_DEF( FailToReadBoardVersion )
   {
-    using namespace BSP::Internal;
-
-    /*-------------------------------------------------------------------------
-    Init the expected board LEDs. This is constant for all versions.
-    -------------------------------------------------------------------------*/
-    constexpr uint32_t LED_DELAY_HI = 250;
-    constexpr uint32_t LED_DELAY_LO = 100;
-
-    for( size_t i = 0; i < UNMAPPED_LED_NUM; i++ )
-    {
-      gpio_init( UNMAPPED_LED_PINS[ i ] );
-      gpio_set_dir( UNMAPPED_LED_PINS[ i ], GPIO_OUT );
-      gpio_put( UNMAPPED_LED_PINS[ i ], 1 );
-    }
-
-    /*-------------------------------------------------------------------------
-    Flash the LEDs in a pattern to indicate the error.
-    -------------------------------------------------------------------------*/
-    for( size_t i = 0; i < 3; i++ )
-    {
-      for( size_t j = 0; j < UNMAPPED_LED_NUM; j++ )
-      {
-        gpio_put( UNMAPPED_LED_PINS[ j ], 0 );
-      }
-
-      sleep_ms( LED_DELAY_HI );
-
-      for( size_t j = 0; j < UNMAPPED_LED_NUM; j++ )
-      {
-        gpio_put( UNMAPPED_LED_PINS[ j ], 1 );
-      }
-
-      sleep_ms( LED_DELAY_LO );
-    }
-
     /*-------------------------------------------------------------------------
     Reset the board to prevent further operation. If there truly is a problem
     with the board versioning, it's not safe to continue.

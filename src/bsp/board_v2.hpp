@@ -25,49 +25,60 @@ namespace BSPV2
 
   namespace ADC
   {
-    static constexpr size_t PIN_SENSE = 26;
+    static constexpr size_t PIN_IMON_FLTR = 26; // Channel 1
+    static constexpr size_t PIN_MULTIPLEX = 27; // Channel 2
+    static constexpr size_t PIN_BOARD_REV = 28; // Channel 3
+    static constexpr size_t PIN_IMON_BATT = 29; // Channel 4
   }    // namespace ADC
 
   namespace GPIO
   {
-    static constexpr size_t PIN_OUT_LTC_DCM      = 2;
-    static constexpr size_t PIN_OUT_LTC_CCM      = 3;
-    static constexpr size_t PIN_IN_LTC_SLAVE     = 24;
-    static constexpr size_t PIN_IO_LTC_RUN       = 25;
-    static constexpr size_t PIN_OUT_ADC_SEL_0    = 5;
-    static constexpr size_t PIN_OUT_ADC_SEL_1    = 6;
-    static constexpr size_t PIN_OUT_ADC_SEL_2    = 7;
-    static constexpr size_t PIN_OUT_LED_STATUS_0 = 18;
-    static constexpr size_t PIN_OUT_LED_STATUS_1 = 19;
-    static constexpr size_t PIN_OUT_LED_STATUS_2 = 20;
-    static constexpr size_t PIN_OUT_LED_STATUS_3 = 21;
+    static constexpr size_t PIN_OUT_LTC_PWMEN = 11;
+    static constexpr size_t PIN_OUT_LTC_DCM   = 9;
+    static constexpr size_t PIN_OUT_LTC_CCM   = 8;
+    static constexpr size_t PIN_OUT_LTC_RUN   = 7;
+    static constexpr size_t PIN_OUT_ADC_SEL_0 = 6;
+    static constexpr size_t PIN_OUT_ADC_SEL_1 = 5;
+    static constexpr size_t PIN_OUT_ADC_SEL_2 = 4;
   }    // namespace GPIO
-
-  namespace I2C
-  {
-    static constexpr size_t PIN_SDA = 0;
-    static constexpr size_t PIN_SCK = 1;
-  }    // namespace I2C
 
   namespace PWM
   {
-    static constexpr size_t PIN_OUT_LTC_SYNC = 4;
-    static constexpr size_t PIN_OUT_FAN_CTL  = 22;
-    static constexpr size_t PIN_IN_FAN_SENSE = 23;
+    static constexpr size_t PIN_OUT_LTC_SYNC = 10;
+
+    static constexpr size_t PIN_OUT_FAN_CTL  = 24;
+    static constexpr size_t PIN_IN_FAN_SENSE = 25;
+
+    static constexpr size_t PIN_OUT_LED_STATUS_0 = 18;
+    static constexpr size_t PIN_OUT_LED_STATUS_1 = 19;
+    static constexpr size_t PIN_OUT_LED_STATUS_2 = 22;
+    static constexpr size_t PIN_OUT_LED_STATUS_3 = 23;
   }    // namespace PWM
 
   namespace SPI
   {
-    static constexpr size_t PIN_SCK  = 10;
-    static constexpr size_t PIN_MOSI = 11;
-    static constexpr size_t PIN_MISO = 12;
-    static constexpr size_t PIN_CS_0 = 13;
+    /* SPI0 */
+    static constexpr size_t PIN_NOR_SCK  = 2;
+    static constexpr size_t PIN_NOR_MOSI = 3;
+    static constexpr size_t PIN_NOR_MISO = 0;
+    static constexpr size_t PIN_NOR_CS_0 = 1;
+
+    /* SPI1 */
+    static constexpr size_t PIN_LTC_SCK  = 14;
+    static constexpr size_t PIN_LTC_MOSI = 15;
+    static constexpr size_t PIN_LTC_MISO = 12;
+    static constexpr size_t PIN_LTC_CS_0 = 13;
   }    // namespace SPI
 
   namespace UART
   {
-    static constexpr size_t PIN_TX = 16;
-    static constexpr size_t PIN_RX = 17;
+    /* UART0 */
+    static constexpr size_t PIN_BMS_TX = 16;
+    static constexpr size_t PIN_BMS_RX = 17;
+
+    /* UART1 */
+    static constexpr size_t PIN_DEBUG_TX = 20;
+    static constexpr size_t PIN_DEBUG_RX = 21;
   }    // namespace UART
 }    // namespace BSPV2
 

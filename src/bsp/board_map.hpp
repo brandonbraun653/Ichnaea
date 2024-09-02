@@ -45,22 +45,6 @@ Includes
 namespace BSP
 {
   /*---------------------------------------------------------------------------
-  Constants
-  ---------------------------------------------------------------------------*/
-
-  namespace Internal
-  {
-    /**
-     * @brief LED pins to use in the event the board version cannot be determined.
-     *
-     * These must be defined here because the board version is not known at compile
-     * time. Ideally these pins do not change in future hardware revisions.
-     */
-    static constexpr size_t UNMAPPED_LED_PINS[] = { 18, 19, 20, 21 };
-    static constexpr size_t UNMAPPED_LED_NUM    = sizeof( UNMAPPED_LED_PINS ) / sizeof( UNMAPPED_LED_PINS[ 0 ] );
-  }    // namespace Internal
-
-  /*---------------------------------------------------------------------------
   Enumerations
   ---------------------------------------------------------------------------*/
 
@@ -69,14 +53,14 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Version 1+
     -------------------------------------------------------------------------*/
-    ADC_MUTLIPLEXED_SENSE,  /**< Analog switch */
+    ADC_MUTLIPLEXED_SENSE, /**< Analog switch */
 
     /*-------------------------------------------------------------------------
     Version 2+
     -------------------------------------------------------------------------*/
-    ADC_BOARD_REV,          /**< Board revision */
-    ADC_IMON_FLTR,          /**< Filtered inductor avg current from LTC7871 */
-    ADC_IMON_BATT,          /**< Battery charge current */
+    ADC_BOARD_REV, /**< Board revision */
+    ADC_IMON_FLTR, /**< Filtered inductor avg current from LTC7871 */
+    ADC_IMON_BATT, /**< Battery charge current */
 
     ADC_MAX_PORTS
   };
@@ -93,15 +77,18 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Version 1+
     -------------------------------------------------------------------------*/
-    GPIO_LTC_ADCSEL0,   /**< Multiplexed ADC channel select */
-    GPIO_LTC_ADCSEL1,   /**< Multiplexed ADC channel select */
-    GPIO_LTC_ADCSEL2,   /**< Multiplexed ADC channel select */
-    GPIO_SPI_CS_LTC,    /**< SPI chip select for LTC7871 */
+    GPIO_LTC_ADCSEL0, /**< Multiplexed ADC channel select */
+    GPIO_LTC_ADCSEL1, /**< Multiplexed ADC channel select */
+    GPIO_LTC_ADCSEL2, /**< Multiplexed ADC channel select */
+    GPIO_LTC_DCM,     /**< LTC7871 DCM mode */
+    GPIO_LTC_CCM,     /**< LTC7871 CCM mode */
+    GPIO_LTC_RUN,     /**< LTC7871 Run mode */
+    GPIO_SPI_CS_LTC,  /**< SPI chip select for LTC7871 */
 
     /*-------------------------------------------------------------------------
     Version 2+
     -------------------------------------------------------------------------*/
-    GPIO_SPI_CS_NOR,    /**< NOR flash SPI chip select */
+    GPIO_SPI_CS_NOR, /**< NOR flash SPI chip select */
 
     GPIO_MAX_PORTS
   };
@@ -111,13 +98,13 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Version 1+
     -------------------------------------------------------------------------*/
-    PWM_LTC_SYNC,       /**< Frequency synchronization for LTC7871 */
-    PWM_FAN_CONTROL,    /**< Fan speed control */
-    PWM_FAN_SENSE,      /**< Fan speed sense */
-    PWM_LED_STATUS_0,   /**< Output LED status */
-    PWM_LED_STATUS_1,   /**< Output LED status */
-    PWM_LED_STATUS_2,   /**< Output LED status */
-    PWM_LED_STATUS_3,   /**< Output LED status */
+    PWM_LTC_SYNC,     /**< Frequency synchronization for LTC7871 */
+    PWM_FAN_CONTROL,  /**< Fan speed control */
+    PWM_FAN_SENSE,    /**< Fan speed sense */
+    PWM_LED_STATUS_0, /**< Output LED status */
+    PWM_LED_STATUS_1, /**< Output LED status */
+    PWM_LED_STATUS_2, /**< Output LED status */
+    PWM_LED_STATUS_3, /**< Output LED status */
 
     PWM_MAX_PORTS
   };
@@ -127,12 +114,12 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Version 1+
     -------------------------------------------------------------------------*/
-    SPI_LTC7871,    /**< LTC7871 Power Controller */
+    SPI_LTC7871, /**< LTC7871 Power Controller */
 
     /*-------------------------------------------------------------------------
     Version 2+
     -------------------------------------------------------------------------*/
-    SPI_NOR_FLASH,  /**< NOR Flash Memory */
+    SPI_NOR_FLASH, /**< NOR Flash Memory */
 
     SPI_MAX_PORTS
   };
@@ -142,7 +129,7 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Version 1+
     -------------------------------------------------------------------------*/
-    UART_BMS,   /**< Battery Management System Interface*/
+    UART_BMS, /**< Battery Management System Interface*/
 
     /*-------------------------------------------------------------------------
     Version 2+

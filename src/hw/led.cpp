@@ -196,20 +196,24 @@ namespace HW::LED
 
     /*-------------------------------------------------------------------------
     Clamp the brightness level to a valid range and convert it to a PWM level.
-    Hardware is logic low to turn on the LED, so invert the brightness level.
-    It's easier to control individual LED brightness this way, IMO without
-    getting super into the weeds of the PWM registers.
     -------------------------------------------------------------------------*/
     const float    clamped_brightness = MAX( 0.0f, MIN( brightness, 0.99f ) );
-    const uint16_t approx_level       = MIN( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_brightness ) );
-    const uint16_t inverted_level     = PWM_COUNTER_WRAP - approx_level;
+    uint16_t       approx_level       = MIN( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_brightness ) );
+
+    /*-------------------------------------------------------------------------
+    Invert the brightness level if the board is version 1. Direct drive LEDs.
+    -------------------------------------------------------------------------*/
+    if( BSP::getIOConfig().majorVersion == 1 )
+    {
+      approx_level = PWM_COUNTER_WRAP - approx_level;
+    }
 
     /*-------------------------------------------------------------------------
     Apply the updates to the cache to track for future state changes and then
     update the hardware.
     -------------------------------------------------------------------------*/
     auto &state = s_led_map[ channel ];
-    state.level = inverted_level;
+    state.level = approx_level;
 
     if( state.enabled )
     {

@@ -35,13 +35,12 @@ namespace BSP
    * correct IO map.
    */
   static constexpr size_t PIN_ADC_BOARD_VERSION     = 28;
-  static constexpr size_t ADC_CHANNEL_BOARD_VERSION = 3;
+  static constexpr size_t ADC_CHANNEL_BOARD_VERSION = 2;
 
   static constexpr size_t ADC_BIT_SIZE     = 12u;
   static constexpr float  ADC_REF_VOLTAGE  = 3.3f;
   static constexpr float  ADC_MAX_VALUE    = static_cast<float>( ( 1u << ADC_BIT_SIZE ) - 1u );
   static constexpr float  ADC_VOLT_PER_BIT = ADC_REF_VOLTAGE / ADC_MAX_VALUE;
-
 
   /*---------------------------------------------------------------------------
   Static Data
@@ -54,11 +53,11 @@ namespace BSP
   ---------------------------------------------------------------------------*/
 
   template<typename T>
-  constexpr bool isInArray(T value, const T* array, size_t size)
+  constexpr bool isInArray( T value, const T *array, size_t size )
   {
-    for (size_t i = 0; i < size; ++i)
+    for( size_t i = 0; i < size; ++i )
     {
-      if (array[i] == value)
+      if( array[ i ] == value )
       {
         return true;
       }
@@ -67,11 +66,17 @@ namespace BSP
   }
 
 
-  static int convert_adc_to_version( const float voltage )
+  /**
+   * @brief Converts the board revision voltage to a version number
+   *
+   * @param voltage Voltage measured from the board revision pin
+   * @return int Version number of the board
+   */
+  static int convert_analog_board_rev_to_version( const float voltage )
   {
-    if( 0.0 <= voltage && voltage < 1.0 )
+    if( 0.25f <= voltage && voltage < 0.35f )
     {
-      return 1;
+      return 2;
     }
     else
     {
@@ -82,19 +87,6 @@ namespace BSP
     return -1;
   }
 
-  /*---------------------------------------------------------------------------
-  Assertions
-  ---------------------------------------------------------------------------*/
-
-  static_assert( isInArray( BSPV1::GPIO::PIN_OUT_LED_STATUS_0, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-  static_assert( isInArray( BSPV1::GPIO::PIN_OUT_LED_STATUS_1, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-  static_assert( isInArray( BSPV1::GPIO::PIN_OUT_LED_STATUS_2, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-  static_assert( isInArray( BSPV1::GPIO::PIN_OUT_LED_STATUS_3, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-
-  static_assert( isInArray( BSPV2::GPIO::PIN_OUT_LED_STATUS_0, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-  static_assert( isInArray( BSPV2::GPIO::PIN_OUT_LED_STATUS_1, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-  static_assert( isInArray( BSPV2::GPIO::PIN_OUT_LED_STATUS_2, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
-  static_assert( isInArray( BSPV2::GPIO::PIN_OUT_LED_STATUS_3, Internal::UNMAPPED_LED_PINS, Internal::UNMAPPED_LED_NUM ) );
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -112,18 +104,15 @@ namespace BSP
     -------------------------------------------------------------------------*/
     adc_init();
     adc_gpio_init( PIN_ADC_BOARD_VERSION );
-    gpio_set_pulls( PIN_ADC_BOARD_VERSION, false, true );
+    gpio_set_pulls( PIN_ADC_BOARD_VERSION, false, false );
     adc_select_input( ADC_CHANNEL_BOARD_VERSION );
     const float version_voltage = static_cast<float>( adc_read() ) * ADC_VOLT_PER_BIT;
 
-    int selected_version = convert_adc_to_version( version_voltage );
-    if ( selected_version < 0 )
+    int selected_version = convert_analog_board_rev_to_version( version_voltage );
+    if( selected_version < 0 )
     {
       Panic::throwError( Panic::ErrorCode::ERR_BOARD_VERSION_READ_FAIL );
     }
-
-    s_board_map.majorVersion = BSPV1::BOARD_VERSION_MAJOR;
-    s_board_map.minorVersion = BSPV1::BOARD_VERSION_MINOR;
 
     /*-------------------------------------------------------------------------
     Select the correct IO map based on the board version
@@ -141,7 +130,7 @@ namespace BSP
       s_board_map.gpio[ GPIO_LTC_CCM ].pin         = BSPV1::GPIO::PIN_OUT_LTC_CCM;
       s_board_map.gpio[ GPIO_LTC_DCM ].pin         = BSPV1::GPIO::PIN_OUT_LTC_DCM;
       s_board_map.gpio[ GPIO_LTC_RUN ].pin         = BSPV1::GPIO::PIN_IO_LTC_RUN;
-      s_board_map.gpio[ GPIO_SPI_CS_LTC ].pin         = BSPV1::SPI::PIN_CS_0;
+      s_board_map.gpio[ GPIO_SPI_CS_LTC ].pin      = BSPV1::SPI::PIN_CS_0;
       s_board_map.pwm[ PWM_FAN_CONTROL ].pin       = BSPV1::PWM::PIN_OUT_FAN_CTL;
       s_board_map.pwm[ PWM_FAN_SENSE ].pin         = BSPV1::PWM::PIN_IN_FAN_SENSE;
       s_board_map.pwm[ PWM_LED_STATUS_0 ].pin      = BSPV1::GPIO::PIN_OUT_LED_STATUS_0;
@@ -156,40 +145,44 @@ namespace BSP
       s_board_map.uart[ UART_DEBUG ].rx            = BSPV1::UART::PIN_RX;
       s_board_map.uart[ UART_DEBUG ].tx            = BSPV1::UART::PIN_TX;
       s_board_map.uart[ UART_DEBUG ].pHw           = uart0;
-
-      /* Dead interfaces */
-      s_board_map.uart[ UART_BMS ].rx = 0;
-      s_board_map.uart[ UART_BMS ].tx = 0;
-      s_board_map.uart[ UART_BMS ].pHw = nullptr;
-
-      s_board_map.spi[ SPI_NOR
     }
     else if( selected_version == 2 )
     {
-      s_board_map.majorVersion                     = BSPV1::BOARD_VERSION_MAJOR;
-      s_board_map.minorVersion                     = BSPV1::BOARD_VERSION_MINOR;
-      s_board_map.adc[ ADC_MUTLIPLEXED_SENSE ].pin = BSPV1::ADC::PIN_SENSE;
-      s_board_map.gpio[ GPIO_LTC_ADCSEL0 ].pin     = BSPV1::GPIO::PIN_OUT_ADC_SEL_0;
-      s_board_map.gpio[ GPIO_LTC_ADCSEL1 ].pin     = BSPV1::GPIO::PIN_OUT_ADC_SEL_1;
-      s_board_map.gpio[ GPIO_LTC_ADCSEL2 ].pin     = BSPV1::GPIO::PIN_OUT_ADC_SEL_2;
-      s_board_map.gpio[ GPIO_LTC_CCM ].pin         = BSPV1::GPIO::PIN_OUT_LTC_CCM;
-      s_board_map.gpio[ GPIO_LTC_DCM ].pin         = BSPV1::GPIO::PIN_OUT_LTC_DCM;
-      s_board_map.gpio[ GPIO_LTC_RUN ].pin         = BSPV1::GPIO::PIN_IO_LTC_RUN;
-      s_board_map.gpio[ GPIO_SPI_CS_LTC ].pin         = BSPV1::SPI::PIN_CS_0;
-      s_board_map.pwm[ PWM_FAN_CONTROL ].pin       = BSPV1::PWM::PIN_OUT_FAN_CTL;
-      s_board_map.pwm[ PWM_FAN_SENSE ].pin         = BSPV1::PWM::PIN_IN_FAN_SENSE;
-      s_board_map.pwm[ PWM_LED_STATUS_0 ].pin      = BSPV1::GPIO::PIN_OUT_LED_STATUS_0;
-      s_board_map.pwm[ PWM_LED_STATUS_1 ].pin      = BSPV1::GPIO::PIN_OUT_LED_STATUS_1;
-      s_board_map.pwm[ PWM_LED_STATUS_2 ].pin      = BSPV1::GPIO::PIN_OUT_LED_STATUS_2;
-      s_board_map.pwm[ PWM_LED_STATUS_3 ].pin      = BSPV1::GPIO::PIN_OUT_LED_STATUS_3;
-      s_board_map.pwm[ PWM_LTC_SYNC ].pin          = BSPV1::PWM::PIN_OUT_LTC_SYNC;
-      s_board_map.spi[ SPI_LTC7871 ].miso          = BSPV1::SPI::PIN_MISO;
-      s_board_map.spi[ SPI_LTC7871 ].mosi          = BSPV1::SPI::PIN_MOSI;
-      s_board_map.spi[ SPI_LTC7871 ].sck           = BSPV1::SPI::PIN_SCK;
+      s_board_map.majorVersion                     = BSPV2::BOARD_VERSION_MAJOR;
+      s_board_map.minorVersion                     = BSPV2::BOARD_VERSION_MINOR;
+      s_board_map.adc[ ADC_MUTLIPLEXED_SENSE ].pin = BSPV2::ADC::PIN_MULTIPLEX;
+      s_board_map.adc[ ADC_BOARD_REV ].pin         = BSPV2::ADC::PIN_BOARD_REV;
+      s_board_map.adc[ ADC_IMON_BATT ].pin         = BSPV2::ADC::PIN_IMON_BATT;
+      s_board_map.adc[ ADC_IMON_FLTR ].pin         = BSPV2::ADC::PIN_IMON_FLTR;
+      s_board_map.gpio[ GPIO_LTC_ADCSEL0 ].pin     = BSPV2::GPIO::PIN_OUT_ADC_SEL_0;
+      s_board_map.gpio[ GPIO_LTC_ADCSEL1 ].pin     = BSPV2::GPIO::PIN_OUT_ADC_SEL_1;
+      s_board_map.gpio[ GPIO_LTC_ADCSEL2 ].pin     = BSPV2::GPIO::PIN_OUT_ADC_SEL_2;
+      s_board_map.gpio[ GPIO_LTC_CCM ].pin         = BSPV2::GPIO::PIN_OUT_LTC_CCM;
+      s_board_map.gpio[ GPIO_LTC_DCM ].pin         = BSPV2::GPIO::PIN_OUT_LTC_DCM;
+      s_board_map.gpio[ GPIO_LTC_RUN ].pin         = BSPV2::GPIO::PIN_OUT_LTC_RUN;
+      s_board_map.gpio[ GPIO_SPI_CS_LTC ].pin      = BSPV2::SPI::PIN_LTC_CS_0;
+      s_board_map.gpio[ GPIO_SPI_CS_NOR ].pin      = BSPV2::SPI::PIN_NOR_CS_0;
+      s_board_map.pwm[ PWM_FAN_CONTROL ].pin       = BSPV2::PWM::PIN_OUT_FAN_CTL;
+      s_board_map.pwm[ PWM_FAN_SENSE ].pin         = BSPV2::PWM::PIN_IN_FAN_SENSE;
+      s_board_map.pwm[ PWM_LED_STATUS_0 ].pin      = BSPV2::PWM::PIN_OUT_LED_STATUS_0;
+      s_board_map.pwm[ PWM_LED_STATUS_1 ].pin      = BSPV2::PWM::PIN_OUT_LED_STATUS_1;
+      s_board_map.pwm[ PWM_LED_STATUS_2 ].pin      = BSPV2::PWM::PIN_OUT_LED_STATUS_2;
+      s_board_map.pwm[ PWM_LED_STATUS_3 ].pin      = BSPV2::PWM::PIN_OUT_LED_STATUS_3;
+      s_board_map.pwm[ PWM_LTC_SYNC ].pin          = BSPV2::PWM::PIN_OUT_LTC_SYNC;
+      s_board_map.spi[ SPI_NOR_FLASH ].miso        = BSPV2::SPI::PIN_NOR_MISO;
+      s_board_map.spi[ SPI_NOR_FLASH ].mosi        = BSPV2::SPI::PIN_NOR_MOSI;
+      s_board_map.spi[ SPI_NOR_FLASH ].sck         = BSPV2::SPI::PIN_NOR_SCK;
+      s_board_map.spi[ SPI_NOR_FLASH ].pHw         = spi0;
+      s_board_map.spi[ SPI_LTC7871 ].miso          = BSPV2::SPI::PIN_LTC_MISO;
+      s_board_map.spi[ SPI_LTC7871 ].mosi          = BSPV2::SPI::PIN_LTC_MOSI;
+      s_board_map.spi[ SPI_LTC7871 ].sck           = BSPV2::SPI::PIN_LTC_SCK;
       s_board_map.spi[ SPI_LTC7871 ].pHw           = spi1;
-      s_board_map.uart[ UART_DEBUG ].rx            = BSPV1::UART::PIN_RX;
-      s_board_map.uart[ UART_DEBUG ].tx            = BSPV1::UART::PIN_TX;
-      s_board_map.uart[ UART_DEBUG ].pHw           = uart0;
+      s_board_map.uart[ UART_BMS ].rx              = BSPV2::UART::PIN_BMS_RX;
+      s_board_map.uart[ UART_BMS ].tx              = BSPV2::UART::PIN_BMS_TX;
+      s_board_map.uart[ UART_BMS ].pHw             = uart0;
+      s_board_map.uart[ UART_DEBUG ].rx            = BSPV2::UART::PIN_DEBUG_RX;
+      s_board_map.uart[ UART_DEBUG ].tx            = BSPV2::UART::PIN_DEBUG_TX;
+      s_board_map.uart[ UART_DEBUG ].pHw           = uart1;
     }
     else
     {
