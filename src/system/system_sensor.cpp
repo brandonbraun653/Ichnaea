@@ -250,10 +250,14 @@ namespace Sensor
       return s_cached_value;
     }
 
+    /*-------------------------------------------------------------------------
+    Reverse the voltage divider + op-amp gain to get the current. The INA180A4
+    has a gain of 200V/V.
+    -------------------------------------------------------------------------*/
     float vOut = HW::ADC::getVoltage( HW::ADC::Channel::IMON_BATT );
     float vMsr = Analog::calculateVoltageDividerInput( vOut, 5'100.0f, 10'000.0f );
 
-    s_cached_value = vMsr / IMON_R_SENSE;
+    s_cached_value = ( vMsr / IMON_R_SENSE ) * ( 1.0f / 200.0f );
     return s_cached_value;
   }
 

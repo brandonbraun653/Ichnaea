@@ -246,7 +246,7 @@ namespace HW::ADC
 
     adc_select_input( adc_cfg.phy_adc_input );
 
-    if( adc_cfg.adc_mux_sel > 0 )
+    if( adc_cfg.adc_mux_sel >= 0 )
     {
       gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL0 ].pin, static_cast<bool>( adc_cfg.adc_mux_sel & 0x01 ) );
       gpio_put( BSP::getIOConfig().gpio[ BSP::GPIO_LTC_ADCSEL1 ].pin, static_cast<bool>( adc_cfg.adc_mux_sel & 0x02 ) );

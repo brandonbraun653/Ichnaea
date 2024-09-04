@@ -73,12 +73,12 @@ namespace BSPV2
   namespace UART
   {
     /* UART0 */
-    static constexpr size_t PIN_BMS_TX = 16;
-    static constexpr size_t PIN_BMS_RX = 17;
+    static constexpr size_t PIN_DEBUG_TX = 16;
+    static constexpr size_t PIN_DEBUG_RX = 17;
 
     /* UART1 */
-    static constexpr size_t PIN_DEBUG_TX = 20;
-    static constexpr size_t PIN_DEBUG_RX = 21;
+    static constexpr size_t PIN_BMS_TX = 20;
+    static constexpr size_t PIN_BMS_RX = 21;
   }    // namespace UART
 }    // namespace BSPV2
 
