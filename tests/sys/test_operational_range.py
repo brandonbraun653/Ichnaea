@@ -11,7 +11,8 @@ from tests.sys.fixtures import client
 
 LOGGER = logging.getLogger(__name__)
 
-node_under_test = '0xb04556ff'
+# node_under_test = '0xb04556ff' # V1 Hardware
+node_under_test = '0x65235ba1' # V2 Hardware
 
 
 # @pytest.mark.parametrize("client", ["INFO"], indirect=True)

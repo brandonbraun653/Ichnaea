@@ -298,6 +298,26 @@ namespace HW::LTC7871::Private
   }
 
 
+  void set_run_pin( const bool enable )
+  {
+    if( BSP::getBoardRevision() >= 2 )
+    {
+      uint pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_RUN );
+      gpio_put( pin, !enable );
+    }
+  }
+
+
+  void set_pwmen_pin( const bool enable )
+  {
+    if( BSP::getBoardRevision() >= 2 )
+    {
+      uint pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_PWMEN );
+      gpio_put( pin, !enable );
+    }
+  }
+
+
   void set_output_voltage( const LTCState &state, const float voltage )
   {
     /*-------------------------------------------------------------------------

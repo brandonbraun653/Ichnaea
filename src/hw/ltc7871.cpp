@@ -66,34 +66,37 @@ namespace HW::LTC7871
     Private::initialize();
 
     /*-------------------------------------------------------------------------
-    Power up the GPIO control lines. This will disable the LTC controller,
-    causing the system to power off if a battery or USB power is not present.
+    Power up the GPIO control lines, de-energizing the power stage for safety.
     -------------------------------------------------------------------------*/
-
-    // TODO BMB: Need to think about this power sequencing later. For now, just
-    //   ensure we don't accidentally cook an attached battery. May want to sense
-    //   the environment extremely quickly to make a snap decision on if we should
-    //   power up the LTC or not. If we are, at the very least, we need to disable
-    //   the power conversion logic (PWMEN).
-
     uint pin = 0;
 
     if( BSP::getBoardRevision() >= 2 )
     {
-      /* Disable PWM controllers (inverted) */
+      /*-----------------------------------------------------------------------
+      The LTC7871 has a PWMEN pin that can be used to enable/disable the power
+      stage drivers. Ensure it's disabled to prevent energizing the output
+      without knowing the state of the system.
+      -----------------------------------------------------------------------*/
       pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_PWMEN );
       gpio_init( pin );
       gpio_set_dir( pin, GPIO_OUT );
-      gpio_put( pin, 1 );
+      gpio_put( pin, 1 ); // Drives a mosfet pulldown on the PWMEN pin when active
 
-      /* Disable the LTC itself (inverted) */
+      /*-----------------------------------------------------------------------
+      The LTC7871 has a RUN pin that can be used to enable/disable the entire
+      controller. Ensure it's enabled to allow the LTC to power the RP2040. We
+      bootstrap from a regulator on the LTC itself, supplied via the solar
+      input.
+      -----------------------------------------------------------------------*/
       pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_RUN );
       gpio_init( pin );
       gpio_set_dir( pin, GPIO_OUT );
-      gpio_put( pin, 1 );
+      gpio_put( pin, 0 ); // Drives a mosfet pulldown on the RUN pin when active
     }
 
-    /* Set the mode control to Burst */
+    /*-------------------------------------------------------------------------
+    Set the control mode to BURST.
+    -------------------------------------------------------------------------*/
     pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_CCM );
     gpio_init( pin );
     gpio_set_dir( pin, GPIO_OUT );
@@ -210,11 +213,8 @@ namespace HW::LTC7871
     Enable the LTC chip for communication. It's highly likely that these IO are
     already in the correct state, but we should be explicit about it.
     -------------------------------------------------------------------------*/
-    if( BSP::getBoardRevision() >= 2 )
-    {
-      gpio_put( s_io_config->gpio[ BSP::GPIO_LTC_RUN ].pin, 0 );
-      sleep_ms( 500 );
-    }
+    set_run_pin( true );
+    sleep_ms( 500 );
 
     /*-------------------------------------------------------------------------
     Ensure the LTC7871 is in a known state. It's not guaranteed the RP2040 and
@@ -268,7 +268,13 @@ namespace HW::LTC7871
     {
       LOG_ERROR_IF( ( ( faults & ( 1u << i ) ) != 0 ), "LTC7871 Fault: %s", ltcFaultCodeToString( i ) );
     }
-    // Panic::assertion( faults == 0, Panic::ERR_LTC_FAULT );
+
+    if( faults != 0 )
+    {
+      s_driver_mode = DriverMode::FAULTED;
+      mbed_assert_continue_msg( false, "LTC7871 fault code present before power on: %d", faults );
+      return;
+    }
 
     /*-------------------------------------------------------------------------
     Decide how/if we're going to power up the system
@@ -276,8 +282,8 @@ namespace HW::LTC7871
     // Private::LTCConfig ltc;
     // if( !Private::resolve_power_on_config( ltc ) )
     // {
-    //   // TODO: Log this as a warning
     //   s_driver_mode = DriverMode::FAULTED;
+    //   mbed_assert_continue_msg( false, "Unable to resolve a safe power on configuration" );
     //   return;
     // }
 
@@ -295,6 +301,9 @@ namespace HW::LTC7871
     Private::idac_write_protect( false );
     Private::write_register( REG_MFR_IDAC_VLOW, 0x39 );
     Private::idac_write_protect( true );
+
+    set_pwmen_pin( true );
+    sleep_ms( 150 );
 
     /*-------------------------------------------------------------------------
     Summarize the status register

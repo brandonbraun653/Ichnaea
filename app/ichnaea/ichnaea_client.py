@@ -97,7 +97,7 @@ class IchnaeaClient:
         msg.pb_message.node_id = int(node_id, 16)
         msg.pb_message.command = CMD_ENGAGE_OUTPUT
 
-        response = self._client.com_pipe.write_and_wait(msg=msg, timeout=0.5)
+        response = self._client.com_pipe.write_and_wait(msg=msg, timeout=2.0)
         if not isinstance(response, ManagerResponsePBMsg):
             logger.error(f"Missing response from output engage on node {node_id}")
             return False

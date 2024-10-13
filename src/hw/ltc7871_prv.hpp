@@ -209,6 +209,28 @@ namespace HW::LTC7871::Private
   void set_mode_pin( const uint8_t mode );
 
   /**
+   * @brief Set the state of the LTC RUN pin.
+   *
+   * This controls the logic level present on pin 27 of the LTC7871. This will either
+   * enable or disable the controller logic.
+   *
+   * @param enable True to set RUN logic high, false to set RUN logic low
+   */
+  void set_run_pin( const bool enable );
+
+  /**
+   * @brief Enable or disable the power stage drivers.
+   *
+   * The LTC7871 normally controls pin 28 (PWMEN) to activate the power stage, however
+   * this can be overridden by the user with an attached pulldown. This funtion acts
+   * like a half-gate mechanism. Disabling forces PWMEN low, but enabling only allows the
+   * LTC7871 to control the pin if it wants to. It does not force any other state.
+   *
+   * @param enable False to forcefully disable PWMEN, true to release PWMEN control
+   */
+  void set_pwmen_pin( const bool enable );
+
+  /**
    * @brief Set the output voltage of the LTC7871.
    *
    * This modifies the MFR_IDAC_VLOW register to set the output voltage of the
