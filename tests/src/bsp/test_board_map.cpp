@@ -12,3 +12,8 @@ TEST( BoardMap, Placeholder )
   STRCMP_EQUAL("hello", "hello");
   BSP::powerUp();
 }
+
+int main(int argc, char** argv)
+{
+    return RUN_ALL_TESTS(argc, argv);
+}
