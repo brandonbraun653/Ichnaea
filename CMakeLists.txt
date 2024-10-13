@@ -82,6 +82,11 @@ add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(lib/pico-mock)
 add_subdirectory(lib/mbedutils)
+add_subdirectory(lib/mbedutils_freertos)
+add_subdirectory(lib/mbedutils_pico)
+add_subdirectory(lib/mbedutils_sim)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/etl)
 
 # Extend the mbedutils header target to find integration dependencies
 target_include_directories(mbedutils_headers INTERFACE

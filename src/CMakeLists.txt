@@ -79,12 +79,6 @@ target_link_libraries(Ichnaea_PicoLibs INTERFACE
   freertos_config
 )
 
-# target_include_directories(Ichnaea_PicoLibs INTERFACE
-# ${CMAKE_CURRENT_SOURCE_DIR}/integration/freertos
-# ${FREERTOS_RP2040_PORT_PATH}/include
-# )
-
-
 # Some of the HW libraries don't work on the host target due to inline assembly or
 # other HW specific code. Redirect to the mock library which has the same API.
 if(${PICO_PLATFORM} STREQUAL "rp2040")

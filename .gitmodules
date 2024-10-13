@@ -22,3 +22,12 @@
 [submodule "lib/freertos-kernel"]
 	path = lib/freertos-kernel
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "lib/mbedutils_freertos"]
+	path = lib/mbedutils_freertos
+	url = https://github.com/brandonbraun653/mbedutils_freertos.git
+[submodule "lib/mbedutils_pico"]
+	path = lib/mbedutils_pico
+	url = https://github.com/brandonbraun653/mbedutils_pico.git
+[submodule "lib/mbedutils_sim"]
+	path = lib/mbedutils_sim
+	url = https://github.com/brandonbraun653/mbedutils_sim.git
