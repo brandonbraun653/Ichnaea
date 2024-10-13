@@ -29,32 +29,28 @@ target_link_libraries(Ichnaea_Headers INTERFACE
 # Pico Interface Headers
 # -----------------------------------------------------------------------------
 add_library(Ichnaea_PicoHeaders INTERFACE)
-target_link_libraries(Ichnaea_PicoHeaders INTERFACE
-  # These headers work on all platforms
-  hardware_gpio_headers
-  hardware_sync_headers
-  hardware_timer_headers
-  hardware_uart_headers
-  pico_bit_ops_headers
-  pico_multicore_headers
-  pico_platform_headers
-  pico_stdio_headers
-  pico_stdlib_headers
-  pico_sync_headers
-  pico_time_headers
-  pico_unique_id_headers
-)
 
 # Some of the HW headers don't work on the host target due to inline assembly or
 # other HW specific code. Redirect to the mock library which has the same API.
 if(${PICO_PLATFORM} STREQUAL "rp2040")
-  target_link_libraries(Ichnaea_PicoHeaders INTERFACE
+  target_link_libraries(Ichnaea_PicoHeaders INTERFACE  hardware_gpio_headers
     hardware_adc_headers
-    hardware_dma_headers
     hardware_clocks_headers
+    hardware_dma_headers
     hardware_irq_headers
     hardware_pwm_headers
     hardware_spi_headers
+    hardware_sync_headers
+    hardware_timer_headers
+    hardware_uart_headers
+    pico_unique_id_headers
+    pico_bit_ops_headers
+    pico_multicore_headers
+    pico_platform_headers
+    pico_stdio_headers
+    pico_stdlib_headers
+    pico_sync_headers
+    pico_time_headers
     )
 elseif(${PICO_PLATFORM} STREQUAL "host")
   target_link_libraries(Ichnaea_PicoHeaders INTERFACE pico_mock_headers)

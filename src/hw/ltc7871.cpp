@@ -174,7 +174,8 @@ namespace HW::LTC7871
     -------------------------------------------------------------------------*/
     for( size_t ecode = Panic::_ERR_LTC_START; ecode < Panic::_ERR_LTC_END; ecode++ )
     {
-      Panic::registerHandler( static_cast<Panic::ErrorCode>( ecode ), Private::on_ltc_error );
+      auto cb = Panic::ErrorCallback::create<Private::on_ltc_error>();
+      Panic::registerHandler( static_cast<Panic::ErrorCode>( ecode ), cb );
     }
   }
 

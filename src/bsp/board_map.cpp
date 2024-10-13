@@ -97,7 +97,8 @@ namespace BSP
     /*-------------------------------------------------------------------------
     Route error handling behavior through the panic system
     -------------------------------------------------------------------------*/
-    Panic::registerHandler( Panic::ErrorCode::ERR_BOARD_VERSION_READ_FAIL, Panic::Handlers::FailToReadBoardVersion );
+    auto cb = Panic::ErrorCallback::create<Panic::Handlers::FailToReadBoardVersion>();
+    Panic::registerHandler( Panic::ErrorCode::ERR_BOARD_VERSION_READ_FAIL, cb );
 
     /*-------------------------------------------------------------------------
     Initialize and read the ADC pin used for board versioning

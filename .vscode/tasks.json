@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "Run Unittests",
+      "command": "cmake",
+      "args": [
+        "--build",
+        "${workspaceFolder}/build/host/debug",
+        "--parallel",
+        "14",
+        "--target",
+        "UnitTests"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "type": "shell",
+      "label": "Generate Mock/Expect (Current File)",
+      "command": "${workspaceFolder}/tests/generate_mock_expect.sh",
+      "args": [
+        "${file}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/tests"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

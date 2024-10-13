@@ -33,7 +33,10 @@ namespace Panic
   void powerUp()
   {
     s_last_error = ErrorCode::NO_ERROR;
-    memset( s_error_handlers, 0, sizeof( s_error_handlers ) );
+    for( size_t x = 0; x < static_cast<size_t>( ErrorCode::NUM_OPTIONS ); x++ )
+    {
+      s_error_handlers[ x ] = {};
+    }
   }
 
 
@@ -52,7 +55,7 @@ namespace Panic
     /*-------------------------------------------------------------------------
     Call the appropriate error handler
     -------------------------------------------------------------------------*/
-    if( ( code < ErrorCode::NUM_OPTIONS ) && ( s_error_handlers[ static_cast<size_t>( code ) ] != nullptr ) )
+    if( ( code < ErrorCode::NUM_OPTIONS ) && ( s_error_handlers[ static_cast<size_t>( code ) ] ) )
     {
       return s_error_handlers[ static_cast<size_t>( code ) ]( code );
     }

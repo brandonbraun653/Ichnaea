@@ -1,5 +1,3 @@
-include(test_target.cmake)
-
 project(IchnaeaTesting)
 
 # Import CppUTest
@@ -7,12 +5,13 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/../lib/cpputest ${CMAKE_CURRENT_BINARY_DI
 
 # Include Dependent Headers
 set(TESTING_INCLUDE_DIRECTORIES
-    ${PROJECT_SOURCE_DIR}/../lib/cpputest/include
-    # ${PROJECT_SOURCE_DIR}/../lib/etl/include
-    # ${PROJECT_SOURCE_DIR}/expect
-    # ${PROJECT_SOURCE_DIR}/fake
-    # ${PROJECT_SOURCE_DIR}/harness
-    # ${PROJECT_SOURCE_DIR}/mock
+  ${MBEDUTILS_TEST_EXPECT_DIR}
+  ${MBEDUTILS_TEST_FAKE_DIR}
+  ${MBEDUTILS_TEST_HARNESS_DIR}
+  ${MBEDUTILS_TEST_MOCK_DIR}
+  ${PROJECT_SOURCE_DIR}/../lib/cpputest/include
+  ${PROJECT_SOURCE_DIR}/expect
+  ${PROJECT_SOURCE_DIR}/mock
 )
 
 add_subdirectory(src/bsp)

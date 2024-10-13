@@ -17,13 +17,14 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
 #include <cstddef>
+#include <etl/delegate.h>
 
 /*-----------------------------------------------------------------------------
 Macros
 -----------------------------------------------------------------------------*/
 
-#define PANIC_HANDLER_DECL( NAME ) bool NAME( const ErrorCode &code )
-#define PANIC_HANDLER_DEF( NAME ) bool NAME( const ErrorCode &code )
+#define PANIC_HANDLER_DECL( NAME ) bool NAME( const Panic::ErrorCode &code )
+#define PANIC_HANDLER_DEF( NAME ) bool NAME( const Panic::ErrorCode &code )
 
 namespace Panic
 {
@@ -69,7 +70,7 @@ namespace Panic
   Aliases
   ---------------------------------------------------------------------------*/
 
-  using ErrorCallback = bool ( * )( const ::Panic::ErrorCode & );
+  using ErrorCallback = etl::delegate<bool( const ::Panic::ErrorCode & )>;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -86,7 +87,7 @@ namespace Panic
    * @param code  Error code to report
    * @return bool True if the handler was able to recover, false otherwise
    */
-  bool throwError( const ErrorCode code );
+  bool throwError( const Panic::ErrorCode code );
 
   /**
    * @brief Throws an error if the predicate is false
@@ -94,13 +95,13 @@ namespace Panic
    * @param predicate Condition to evaluate
    * @param code    Error code to throw if the predicate is false
    */
-  void assertion( const bool predicate, const ErrorCode code );
+  void assertion( const bool predicate, const Panic::ErrorCode code );
 
   /**
    * @brief Get the last thrown error code
    * @return ErrorCode
    */
-  ErrorCode getLastError();
+  Panic::ErrorCode getLastError();
 
   /**
    * @brief Resets the error code back to NO_ERROR
@@ -113,7 +114,7 @@ namespace Panic
    * @param code    Error code to register the handler for
    * @param handler Function to call when the error occurs
    */
-  void registerHandler( const ErrorCode code, ErrorCallback handler );
+  void registerHandler( const Panic::ErrorCode code, Panic::ErrorCallback handler );
 
 }    // namespace Panic
 
