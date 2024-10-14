@@ -19,7 +19,9 @@ Includes
 #include "src/hw/gpio.hpp"
 #include "src/hw/led.hpp"
 #include "src/hw/ltc7871.hpp"
+#include "src/hw/nor.hpp"
 #include "src/hw/uart.hpp"
+#include "src/system/system_config.hpp"
 #include "src/system/system_error.hpp"
 #include "src/system/system_logging.hpp"
 #include "src/threads/ichnaea_threads.hpp"
@@ -53,6 +55,7 @@ namespace HW
     HW::ADC::initialize();
     HW::UART::initialize();
     HW::FAN::initialize();
+    HW::NOR::initialize();
     HW::LTC7871::initialize();
 
     /*-------------------------------------------------------------------------
@@ -60,6 +63,10 @@ namespace HW
     -------------------------------------------------------------------------*/
     Control::initialize();
     Logging::initialize();
+    System::Config::initialize();
+
+
+
     Threads::initialize();
 
     LOG_TRACE( "Driver initialization complete" );
