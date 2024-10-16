@@ -55,7 +55,6 @@ namespace HW
     HW::ADC::initialize();
     HW::UART::initialize();
     HW::FAN::initialize();
-    HW::NOR::initialize();
     HW::LTC7871::initialize();
 
     /*-------------------------------------------------------------------------
@@ -65,10 +64,11 @@ namespace HW
     Logging::initialize();
     System::Config::initialize();
 
-
-
+    /*-------------------------------------------------------------------------
+    Finally initialize the threading system. This should be the last thing to
+    set up before the system is considered ready to execute.
+    -------------------------------------------------------------------------*/
     Threads::initialize();
-
     LOG_TRACE( "Driver initialization complete" );
   }
 
