@@ -50,6 +50,11 @@ namespace HW
     Initialize the hardware peripherals. Ordered by least complex/dependent
     to most complex/dependent.
     -------------------------------------------------------------------------*/
+
+    /* HAL driver initialization */ // TODO: Maybe I should move this elsewehre...
+    mb::hw::gpio::intf::driver_setup();
+    mb::hw::spi::intf::driver_setup();
+
     HW::GPIO::initialize(); /* Must be first to init IO to a safe state */
     HW::LED::initialize();
     HW::ADC::initialize();
@@ -58,11 +63,10 @@ namespace HW
     HW::LTC7871::initialize();
 
     /*-------------------------------------------------------------------------
-    Initialize system level modules that depend on the hardware.
+    Initialize system modules that depend on the hardware, but not threads.
     -------------------------------------------------------------------------*/
     Control::initialize();
     Logging::initialize();
-    System::Config::initialize();
 
     /*-------------------------------------------------------------------------
     Finally initialize the threading system. This should be the last thing to
@@ -74,6 +78,10 @@ namespace HW
 
   void runPostInit()
   {
+    // This should be in a threaded context now
+    System::Config::initialize();
+
+
     LOG_TRACE( "Running POST sequence" );
     HW::LED::postSequence();
     HW::ADC::postSequence();

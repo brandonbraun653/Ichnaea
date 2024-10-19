@@ -175,10 +175,12 @@ namespace BSP
       s_board_map.spi[ SPI_NOR_FLASH ].mosi        = BSPV2::SPI::PIN_NOR_MOSI;
       s_board_map.spi[ SPI_NOR_FLASH ].sck         = BSPV2::SPI::PIN_NOR_SCK;
       s_board_map.spi[ SPI_NOR_FLASH ].pHw         = spi0;
+      s_board_map.spi[ SPI_NOR_FLASH ].port        = 0;
       s_board_map.spi[ SPI_LTC7871 ].miso          = BSPV2::SPI::PIN_LTC_MISO;
       s_board_map.spi[ SPI_LTC7871 ].mosi          = BSPV2::SPI::PIN_LTC_MOSI;
       s_board_map.spi[ SPI_LTC7871 ].sck           = BSPV2::SPI::PIN_LTC_SCK;
       s_board_map.spi[ SPI_LTC7871 ].pHw           = spi1;
+      s_board_map.spi[ SPI_LTC7871 ].port          = 1;
       s_board_map.uart[ UART_DEBUG ].rx            = BSPV2::UART::PIN_DEBUG_RX;
       s_board_map.uart[ UART_DEBUG ].tx            = BSPV2::UART::PIN_DEBUG_TX;
       s_board_map.uart[ UART_DEBUG ].pHw           = uart0;

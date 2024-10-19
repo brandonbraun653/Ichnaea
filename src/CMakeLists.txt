@@ -1,4 +1,10 @@
 # -----------------------------------------------------------------------------
+# Integration Libraries
+# -----------------------------------------------------------------------------
+
+target_include_directories(mbedutils_lib_db PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/integration/flashdb)
+
+# -----------------------------------------------------------------------------
 # Project Libraries
 # -----------------------------------------------------------------------------
 add_subdirectory(bsp)
@@ -99,6 +105,7 @@ target_link_libraries(IchnaeaApp
   Ichnaea_System
   Ichnaea_Threads
   mbedutils_lib_core
+  mbedutils_lib_db
   mbedutils_lib_freertos
   mbedutils_lib_hardware
   mbedutils_lib_nvm

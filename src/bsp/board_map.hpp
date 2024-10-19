@@ -35,6 +35,8 @@ Includes
 
 #include <mbedutils/assert.hpp>
 #include <mbedutils/drivers/hardware/utility.hpp>
+#include <mbedutils/interfaces/gpio_intf.hpp>
+#include <mbedutils/interfaces/spi_intf.hpp>
 
 #if defined( PICO_RP2040 ) && ( PICO_RP2040 == 1 )
 #define ICHNAEA_EMBEDDED
@@ -172,10 +174,11 @@ namespace BSP
 
     struct SPI
     {
-      size_t      sck;  /**< Pin selected for SCK */
-      size_t      mosi; /**< Pin selected for MOSI */
-      size_t      miso; /**< Pin selected for MISO */
-      spi_inst_t *pHw;  /**< Reference to the HW register/instance */
+      size_t              sck;  /**< Pin selected for SCK */
+      size_t              mosi; /**< Pin selected for MOSI */
+      size_t              miso; /**< Pin selected for MISO */
+      spi_inst_t         *pHw;  /**< Reference to the HW register/instance */
+      mb::hw::spi::Port_t port; /**< Physical peripheral instance id */
     };
     etl::array<SPI, SPI_MAX_PORTS> spi;
 
