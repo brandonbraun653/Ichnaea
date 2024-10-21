@@ -33,7 +33,13 @@ Using flash abstraction layer
 #define FDB_USING_FAL_MODE
 #define FAL_PART_HAS_TABLE_CFG
 
-#define FDB_PRINT(...)
+/*-----------------------------------------------------------------------------
+Override the default printf function
+-----------------------------------------------------------------------------*/
+
+extern int ichnaea_printf( const char *format, ... );
+
+#define FDB_PRINT(...)  ichnaea_printf( __VA_ARGS__ )
 
 #ifdef __cplusplus
 }

@@ -1,9 +1,9 @@
 /******************************************************************************
  *  File Name:
- *    test_system_config.cpp
+ *    test_system_db.cpp
  *
  *  Description:
- *    Tests system_config.cpp
+ *    Tests system_db.cpp
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -11,7 +11,7 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/system/system_config.hpp"
+#include "src/system/system_db.hpp"
 
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"

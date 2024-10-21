@@ -16,12 +16,12 @@ set(TESTING_INCLUDE_DIRECTORIES
 
 add_subdirectory(src/bsp)
 add_subdirectory(src/hw/nor)
-add_subdirectory(src/system/system_config)
+add_subdirectory(src/system/system_db)
 
 # Add test targets
 add_custom_target(BuildAllTests)
 add_dependencies(BuildAllTests
   TestBoardMap
   TestNor
-  TestSystemConfig
+  TestSystemDB
 )

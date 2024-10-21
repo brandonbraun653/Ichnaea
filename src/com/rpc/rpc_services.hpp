@@ -15,7 +15,7 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/com/proto/ichnaea.pb.h"
+#include "src/app/proto/ichnaea_rpc.pb.h"
 #include "src/system/system_util.hpp"
 #include <mbedutils/rpc.hpp>
 

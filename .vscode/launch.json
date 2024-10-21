@@ -25,7 +25,7 @@
       // same way that openocd does, so you're limited to a single core.
       "name": "BMP Debug Core 0",
       "cwd": "${workspaceRoot}",
-      "executable": "./build/mbed/debug/src/IchnaeaApp.elf",
+      "executable": "./build/mbed/debug/src/Ichnaea.elf",
       "request": "launch",
       "type": "cortex-debug",
       "servertype": "bmp",

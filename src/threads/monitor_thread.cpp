@@ -11,7 +11,6 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/app/app_decl.hpp"
 #include "src/bsp/board_map.hpp"
 #include "src/threads/ichnaea_threads.hpp"
 #include "src/system/system_sensor.hpp"
@@ -37,7 +36,6 @@ namespace Threads
       {
         Sensor::getMeasurement( static_cast<Sensor::Element>( i ), Sensor::LookupType::REFRESH );
       }
-
 
       // TODO BMB: I'm going to need to detect and announce an event where the
       // input voltage drops out and the system is running on battery power. I

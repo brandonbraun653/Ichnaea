@@ -16,7 +16,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/rpc.hpp>
-#include "src/com/proto/ichnaea.pb.h"
+#include "src/app/proto/ichnaea_rpc.pb.h"
 
 namespace COM::RPC
 {

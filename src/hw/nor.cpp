@@ -42,16 +42,7 @@ namespace HW::NOR
     /*-------------------------------------------------------------------------
     Initialize the GPIO pins for SPI control
     -------------------------------------------------------------------------*/
-    gpio::PinConfig pin_cfg;
-
     /* SCK */
-    pin_cfg.pin       = io_cfg.spi[ BSP::SPI_NOR_FLASH ].sck;
-    pin_cfg.drive     = GPIO_DRIVE_STRENGTH_12MA;
-    pin_cfg.mode      = gpio::Mode_t::MODE_OUTPUT;
-    pin_cfg.speed     = GPIO_SLEW_RATE_FAST;
-    pin_cfg.pull      = gpio::Pull_t::PULL_DOWN;
-    pin_cfg.alternate = GPIO_FUNC_SPI;
-
     gpio_init( io_cfg.spi[ BSP::SPI_NOR_FLASH ].sck );
     gpio_set_function( io_cfg.spi[ BSP::SPI_NOR_FLASH ].sck, GPIO_FUNC_SPI );
     gpio_pull_down( io_cfg.spi[ BSP::SPI_NOR_FLASH ].sck );

@@ -1,11 +1,11 @@
 include(${MBEDUTILS_TEST_DIR}/test_target.cmake)
 create_test_target(
     TARGET
-        TestSystemConfig
+        TestSystemDB
     TEST_SOURCES
-        test_system_config.cpp
+        test_system_db.cpp
     INSTRUMENTED_SOURCES
-        ${PROJECT_SOURCE_DIR}/../src/system/system_config.cpp
+        ${PROJECT_SOURCE_DIR}/../src/system/system_db.cpp
     DEPENDENT_SOURCES
         ${MBEDUTILS_TEST_MOCK_DIR}/assert_mock.cpp
         ${PROJECT_SOURCE_DIR}/mock/panic_handlers_mock.cpp

@@ -1,38 +1,24 @@
 /******************************************************************************
  *  File Name:
- *    bootup.hpp
+ *    app_pdi.cpp
  *
  *  Description:
- *    Initialization routines for the hardware on bootup
+ *    Application Programmable Data Item (PDI) interface implementation
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
 
-#pragma once
-#ifndef ICHNAEA_HW_BOOTUP_HPP
-#define ICHNAEA_HW_BOOTUP_HPP
-
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
+#include <src/app/app_pdi.hpp>
 
-
-namespace HW
+namespace App::PDI
 {
   /*---------------------------------------------------------------------------
-  Public Functions
+  Public Data
   ---------------------------------------------------------------------------*/
 
-  /**
-   * @brief Initialize hardware drivers for the system
-   */
-  void initDrivers();
+  PDIData Internal::RAMCache; /**< RAM cache for the PDI database */
 
-  /**
-   * @brief Performs the Power On Self Test (POST) for the hardware
-   */
-  void runPostInit();
-
-}  // namespace HW
-
-#endif  /* !ICHNAEA_HW_BOOTUP_HPP */
+}  // namespace App::PDI

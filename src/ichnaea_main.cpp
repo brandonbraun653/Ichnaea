@@ -12,7 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "pico/multicore.h"
-#include "src/hw/bootup.hpp"
+#include "src/system/system_bootup.hpp"
 #include "src/system/system_error.hpp"
 #include "src/threads/ichnaea_threads.hpp"
 #include <mbedutils/thread.hpp>
@@ -34,7 +34,7 @@ int main()
   /*---------------------------------------------------------------------------
   Start the world
   ---------------------------------------------------------------------------*/
-  HW::initDrivers();
+  System::Boot::initDrivers();
   mb::thread::startScheduler();
 
   /*---------------------------------------------------------------------------

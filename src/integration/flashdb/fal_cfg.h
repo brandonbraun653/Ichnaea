@@ -24,9 +24,9 @@ Includes
 Literals
 -----------------------------------------------------------------------------*/
 
-#define FAL_PRINTF
+#define FAL_PRINTF ichnaea_printf
 #define ICHNAEA_DB_FLASH_DEV_NAME "nor_flash_0"
-#define ICHNAEA_DB_GAIN_RGN_NAME "gain"
+#define ICHNAEA_DB_PDI_RGN_NAME "gain"
 #define ICHNAEA_DB_CAL_RGN_NAME "cal"
 #define ICHNAEA_DB_LOG_RGN_NAME "log"
 
@@ -39,7 +39,7 @@ extern const struct fal_flash_dev fdb_nor_flash0;
     /*                  partition,        device,     start,    length     */
 #define FAL_PART_TABLE                                                         \
 {                                                                              \
-  { FAL_PART_MAGIC_WORD, ICHNAEA_DB_GAIN_RGN_NAME, ICHNAEA_DB_FLASH_DEV_NAME,           0, 1024 * 1024, 0 }, \
+  { FAL_PART_MAGIC_WORD, ICHNAEA_DB_PDI_RGN_NAME, ICHNAEA_DB_FLASH_DEV_NAME,           0, 1024 * 1024, 0 }, \
   { FAL_PART_MAGIC_WORD,  ICHNAEA_DB_CAL_RGN_NAME, ICHNAEA_DB_FLASH_DEV_NAME, 1024 * 1024, 1024 * 1024, 0 }, \
   { FAL_PART_MAGIC_WORD,  ICHNAEA_DB_LOG_RGN_NAME, ICHNAEA_DB_FLASH_DEV_NAME, 2048 * 1024, 2048 * 1024, 0 }, \
 }

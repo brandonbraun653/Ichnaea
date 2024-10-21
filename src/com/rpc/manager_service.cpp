@@ -79,7 +79,12 @@ namespace COM::RPC
     {
       response.status      = ichnaea_ManagerError_ERR_CMD_FAILED;
       response.has_message = true;
+
+
+      #pragma GCC diagnostic push
+      #pragma GCC diagnostic ignored "-Wformat"
       snprintf( response.message, sizeof( response.message ), "Unexpected mode: %d", mode );
+      #pragma GCC diagnostic pop
     }
 
     return mbed_rpc_ErrorCode_ERR_NO_ERROR;
@@ -108,7 +113,11 @@ namespace COM::RPC
     {
       response.status      = ichnaea_ManagerError_ERR_CMD_FAILED;
       response.has_message = true;
+
+      #pragma GCC diagnostic push
+      #pragma GCC diagnostic ignored "-Wformat"
       snprintf( response.message, sizeof( response.message ), "Unexpected mode: %d", mode );
+      #pragma GCC diagnostic pop
     }
 
     return mbed_rpc_ErrorCode_ERR_NO_ERROR;

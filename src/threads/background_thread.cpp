@@ -11,11 +11,12 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/bsp/board_map.hpp"
-#include "src/threads/ichnaea_threads.hpp"
-#include "src/hw/led.hpp"
-#include "src/hw/bootup.hpp"
 #include <mbedutils/logging.hpp>
+#include <src/app/app_stats.hpp>
+#include <src/bsp/board_map.hpp>
+#include <src/hw/led.hpp>
+#include <src/system/system_bootup.hpp>
+#include <src/threads/ichnaea_threads.hpp>
 
 namespace Threads
 {
@@ -24,9 +25,21 @@ namespace Threads
   ---------------------------------------------------------------------------*/
   void backgroundThread( void *arg )
   {
+    /*-------------------------------------------------------------------------
+    Finish the remainder of the bootup sequence
+    -------------------------------------------------------------------------*/
+    System::Boot::initTech();
+    System::Boot::runPostInit();
 
-    HW::runPostInit();
-    // TODO: Send message to all other threads to start
+    /*-------------------------------------------------------------------------
+    Start powering on application level drivers
+    -------------------------------------------------------------------------*/
+    App::Stats::initialize();
+
+    /*-------------------------------------------------------------------------
+    Signal the next thread in the sequence to start
+    -------------------------------------------------------------------------*/
+    // TODO BMB: Probably should start the monitor thread next.
 
     HW::LED::setBrightness( HW::LED::Channel::STATUS_0, 0.5f );
     while( 1 )

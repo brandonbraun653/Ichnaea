@@ -1,36 +1,33 @@
 /******************************************************************************
  *  File Name:
- *    app_decl.hpp
+ *    app_stats.hpp
  *
  *  Description:
- *    Application function declarations
+ *    Interface for storing and retrieving application statistics
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
 
 #pragma once
-#ifndef ICHNAEA_APP_DECLARATIONS_HPP
-#define ICHNAEA_APP_DECLARATIONS_HPP
+#ifndef ICHNAEA_APP_STATS_HPP
+#define ICHNAEA_APP_STATS_HPP
 
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
 
 
-namespace App
+namespace App::Stats
 {
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
   /**
-   * @brief Process measured system data
-   *
-   * This function is responsible for measuring the raw system data and
-   * publishing it to the appropriate data structures for consumption by
-   * the rest of the system.
+   * @brief Initialize the statistics tracking system
    */
-  void procSystemMeasurements();
-}  // namespace App
+  void initialize();
 
-#endif  /* !ICHNAEA_APP_DECLARATIONS_HPP */
+}  // namespace App::Stats
+
+#endif  /* !ICHNAEA_APP_STATS_HPP */

@@ -1,0 +1,9 @@
+syntax = "proto2";
+import "nanopb.proto";
+
+package ichnaea;
+
+/* KEY_BOOT_COUNT */
+message PDI_BootCount {
+  required uint32 boot_count = 1 [(nanopb).int_size = IS_32];
+}

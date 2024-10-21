@@ -11,13 +11,16 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
+#include "src/bsp/board_map.hpp"
+#include "src/com/ctrl_server.hpp"
 #include "src/hw/uart.hpp"
 #include "src/system/system_logging.hpp"
-#include "src/com/ctrl_server.hpp"
+#include <cstdarg>
 #include <etl/string.h>
 #include <mbedutils/assert.hpp>
 #include <mbedutils/logging.hpp>
 #include <mbedutils/util.hpp>
+#include <mbedutils/drivers/nanoprintf.hpp>
 
 namespace Logging
 {
@@ -164,3 +167,33 @@ namespace Logging
     mRpcServer = &server;
   }
 }    // namespace Logging
+
+
+/**
+ * @brief Custom printf redirect for integrating libraries to project loggers
+ *
+ * @param format  The format string
+ * @param ...     Variable arguments
+ * @return int    Number of bytes written
+ */
+extern "C" int ichnaea_printf( const char *format, ... )
+{
+  using namespace mb::logging;
+
+  static etl::array<char, 512> log_buffer;
+
+  va_list argptr;
+  va_start( argptr, format );
+  const int write_size = npf_vsnprintf( log_buffer.data(), log_buffer.max_size(), format, argptr );
+  va_end( argptr );
+
+  if( write_size > 0 )
+  {
+    Logging::s_debug_sink.insert( Level::LVL_DEBUG, log_buffer.data(), static_cast<size_t>( write_size ) );
+    return write_size;
+  }
+  else
+  {
+    return 0;
+  }
+}
