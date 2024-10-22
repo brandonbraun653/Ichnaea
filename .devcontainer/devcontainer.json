@@ -6,6 +6,9 @@
     "context": "..",
     "dockerfile": "../Dockerfile"
   },
+  "runArgs": [
+    "--device=/dev/ttyACM0"
+  ],
 
   // These users match the default user in the container
   "remoteUser": "ubuntu",

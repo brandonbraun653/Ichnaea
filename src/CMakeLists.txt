@@ -130,6 +130,7 @@ target_link_options(Ichnaea PRIVATE -Wl,--start-group)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(Ichnaea)
+pico_set_linker_script(Ichnaea ${CMAKE_CURRENT_SOURCE_DIR}/ichnaea_linker.ld)
 
 # Dump a summary of the memory usage for embedded platforms
 if( ${PICO_PLATFORM} STREQUAL "rp2040" )

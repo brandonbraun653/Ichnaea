@@ -59,7 +59,6 @@ namespace System::Database
   static mb::db::KVNodeVector<PDI_MAX_COUNT>     s_kv_nodes;         /**< Storage for KV pair descriptors */
   static etl::array<uint8_t, PDI_TRANSCODE_SIZE> s_transcode_buffer; /**< Storage for encoding/decoding largest data */
 
-
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
