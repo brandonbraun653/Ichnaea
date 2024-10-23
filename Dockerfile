@@ -29,6 +29,7 @@ RUN sudo apt-get update && \
     dotnet-runtime-8.0 \
     dotnet-sdk-8.0 \
     doxygen \
+    dwarves \
     g++ \
     gcc \
     gcovr \
@@ -36,6 +37,7 @@ RUN sudo apt-get update && \
     git \
     libclang-dev \
     llvm-dev \
+    minicom \
     ninja-build \
     python3-pip \
     python3.12 \
@@ -50,11 +52,12 @@ RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3
 RUN sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # Download and install arm-none-eabi-gcc for ARM Cortex-M cross-compilation
-ENV ARM_GCC_URL=https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v13.3.1-1.1/xpack-arm-none-eabi-gcc-13.3.1-1.1-linux-x64.tar.gz
+# ENV ARM_GCC_URL=https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v13.3.1-1.1/xpack-arm-none-eabi-gcc-13.3.1-1.1-linux-x64.tar.gz
+ENV ARM_GCC_URL=https://github.com/xpack-dev-tools/arm-none-eabi-gcc-xpack/releases/download/v12.3.1-1.2/xpack-arm-none-eabi-gcc-12.3.1-1.2-linux-x64.tar.gz
 RUN wget $ARM_GCC_URL -O /tmp/arm-none-eabi-gcc.tar.gz && \
     sudo tar -xzf /tmp/arm-none-eabi-gcc.tar.gz -C /opt/ && \
     sudo rm /tmp/arm-none-eabi-gcc.tar.gz && \
-    sudo ln -s /opt/xpack-arm-none-eabi-gcc-13.3.1-1.1/bin/* /usr/local/bin/
+    sudo ln -s /opt/xpack-arm-none-eabi-gcc-12.3.1-1.2/bin/* /usr/local/bin/
 
 # Install the latest version of poetry and configure it for in-project virtual environments
 RUN curl -sSL https://install.python-poetry.org | python3 -

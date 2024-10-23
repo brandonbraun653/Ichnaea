@@ -18,7 +18,6 @@ Includes
 #include "src/hw/gpio.hpp"
 #include "src/hw/led.hpp"
 #include "src/hw/ltc7871.hpp"
-#include "src/hw/nor.hpp"
 #include "src/hw/uart.hpp"
 #include "src/system/system_bootup.hpp"
 #include "src/system/system_db.hpp"
@@ -79,6 +78,8 @@ namespace System::Boot
     Control::initialize();
     Logging::initialize();
     System::Database::initialize();
+
+
     LOG_TRACE( "Tech stack initialization complete" );
   }
 

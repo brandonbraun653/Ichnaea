@@ -45,6 +45,6 @@
     "clangd.arguments": ["-log=verbose",
                          "-pretty",
                          "--background-index",
-                         //"--query-driver=/bin/arm-buildroot-linux-gnueabihf-g++", //for cross compile usage
-                         "--compile-commands-dir=${workspaceFolder}/build/mbed/debug",]
+                         "--query-driver=/bin/arm-none-eabi-g++", //for cross compile usage
+                         "--compile-commands-dir=${workspaceFolder}/build/mbed/debug"],
 }

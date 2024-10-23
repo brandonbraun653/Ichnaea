@@ -43,6 +43,7 @@ namespace App::Stats
     node.flags     = KV_FLAG_DEFAULT_PERSISTENT;
 
     mbed_assert( pdi_insert_and_create( node, node.datacache, node.dataSize ) );
+    System::Database::pdiDB().sync( node.hashKey );
   }
 
   /*---------------------------------------------------------------------------

@@ -88,7 +88,7 @@ namespace Threads
     cfg.msg_pool   = &s_monitor_storage.msg_pool;
     cfg.msg_queue  = &s_monitor_storage.msg_queue;
 
-    s_monitor_task = mb::thread::create( cfg );
+    //s_monitor_task = mb::thread::create( cfg );
 
     /*-------------------------------------------------------------------------
     Add the control thread
@@ -106,6 +106,6 @@ namespace Threads
     cfg.msg_pool   = &s_control_storage.msg_pool;
     cfg.msg_queue  = &s_control_storage.msg_queue;
 
-    s_control_task = mb::thread::create( cfg );
+    //s_control_task = mb::thread::create( cfg );
   }
 }  // namespace Threads
