@@ -39,7 +39,7 @@
             "--proto_path=${workspaceFolder}/lib/mbedutils/python/mbedutils/rpc/proto"
         ]
     },
-    "cortex-debug.variableUseNaturalFormat": false,
+    "cortex-debug.variableUseNaturalFormat": true,
     "C_Cpp.intelliSenseEngine": "disabled",
     "clangd.path": "clangd",
     "clangd.arguments": ["-log=verbose",

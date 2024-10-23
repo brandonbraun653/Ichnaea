@@ -28,7 +28,7 @@ namespace Threads
 
   /* Background Thread */
   static Task                                s_background_task;
-  static TaskConfigStorage<TaskMsg, 1, 2048> s_background_storage;
+  static TaskConfigStorage<TaskMsg, 1, 4096> s_background_storage;
 
   /* Monitor Thread */
   static Task                                s_monitor_task;

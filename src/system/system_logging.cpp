@@ -190,7 +190,6 @@ extern "C" int ichnaea_printf( const char *format, ... )
   if( write_size > 0 )
   {
     LOG_DEBUG( "%s\r\n", log_buffer.data() );
-    //Logging::s_debug_sink.insert( Level::LVL_DEBUG, log_buffer.data(), static_cast<size_t>( write_size ) );
     return write_size;
   }
   else

@@ -22,7 +22,7 @@ Includes
 /*-----------------------------------------------------------------------------
 Module Literals
 -----------------------------------------------------------------------------*/
-#define NOR_DEBUG
+#define NOR_DEBUG 0
 
 namespace HW::NOR
 {
@@ -34,10 +34,6 @@ namespace HW::NOR
   ---------------------------------------------------------------------------*/
 
   static DeviceDriver s_flash_mem;
-
-  #if defined( NOR_DEBUG )
-  static etl::array<uint8_t, 512> s_debug_buffer;
-  #endif
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -77,7 +73,7 @@ namespace HW::NOR
     /*-------------------------------------------------------------------------
     Initialize the SPI peripheral
     -------------------------------------------------------------------------*/
-    constexpr uint32_t spi_clk_rate = 1'000'000;
+    constexpr uint32_t spi_clk_rate = 21'000'000;
 
     auto pSPI = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_NOR_FLASH ) );
 
@@ -127,25 +123,29 @@ namespace HW::NOR
 
   int read( long offset, uint8_t* buf, size_t size )
   {
+    // LOG_TRACE_IF( NOR_DEBUG, "Read 0x%08X, %d bytes", offset, size );
     return s_flash_mem.read( offset, buf, size ) == Status::ERR_OK ? size : -1;
   }
 
 
   int write( long offset, const uint8_t* buf, size_t size )
   {
+    LOG_TRACE_IF( NOR_DEBUG, "Write 0x%08X, %d bytes", offset, size );
     int result = s_flash_mem.write( offset, buf, size ) == Status::ERR_OK ? size : -1;
 
     /*-------------------------------------------------------------------------
     Integrity check to make sure the data was written correctly
     -------------------------------------------------------------------------*/
-    #if defined( NOR_DEBUG )
+    #if NOR_DEBUG
+    static etl::array<uint8_t, 512> s_debug_buffer;
+
     if( result > 0 )
     {
       s_flash_mem.read( offset, s_debug_buffer.data(), size );
       if( memcmp( buf, s_debug_buffer.data(), size ) != 0 )
       {
         result = -1;
-        LOG_ERROR( "NOR write %d bytes at 0x%08X miscompare", size, offset );
+        LOG_ERROR( "Write 0x%08X miscompare", offset );
       }
     }
     #endif
