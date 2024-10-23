@@ -16,10 +16,19 @@ extern "C" {
 #endif
 
 /*-----------------------------------------------------------------------------
+Using FlashDB debug logging feature
+-----------------------------------------------------------------------------*/
+// #define FDB_DEBUG_ENABLE
+
+/*-----------------------------------------------------------------------------
 Using Key-Value Database feature
 -----------------------------------------------------------------------------*/
 #define FDB_USING_KVDB
-#define FDB_KV_AUTO_UPDATE
+// #define FDB_KV_AUTO_UPDATE
+
+// #define FDB_KV_CACHE_TABLE_SIZE 0
+// #define FDB_SECTOR_CACHE_TABLE_SIZE 0
+// #define FDB_FILE_CACHE_TABLE_SIZE 0
 
 /*-----------------------------------------------------------------------------
 Using Time-Series Database feature

@@ -11,12 +11,18 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
+#include "mbedutils/drivers/logging/logging_macros.hpp"
 #include <mbedutils/interfaces/gpio_intf.hpp>
 #include <mbedutils/interfaces/spi_intf.hpp>
 #include <mbedutils/memory.hpp>
 #include <src/bsp/board_map.hpp>
 #include <src/hw/nor.hpp>
 #include <src/system/system_error.hpp>
+
+/*-----------------------------------------------------------------------------
+Module Literals
+-----------------------------------------------------------------------------*/
+#define NOR_DEBUG
 
 namespace HW::NOR
 {
@@ -28,6 +34,10 @@ namespace HW::NOR
   ---------------------------------------------------------------------------*/
 
   static DeviceDriver s_flash_mem;
+
+  #if defined( NOR_DEBUG )
+  static etl::array<uint8_t, 512> s_debug_buffer;
+  #endif
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -123,7 +133,24 @@ namespace HW::NOR
 
   int write( long offset, const uint8_t* buf, size_t size )
   {
-    return s_flash_mem.write( offset, buf, size ) == Status::ERR_OK ? size : -1;
+    int result = s_flash_mem.write( offset, buf, size ) == Status::ERR_OK ? size : -1;
+
+    /*-------------------------------------------------------------------------
+    Integrity check to make sure the data was written correctly
+    -------------------------------------------------------------------------*/
+    #if defined( NOR_DEBUG )
+    if( result > 0 )
+    {
+      s_flash_mem.read( offset, s_debug_buffer.data(), size );
+      if( memcmp( buf, s_debug_buffer.data(), size ) != 0 )
+      {
+        result = -1;
+        LOG_ERROR( "NOR write %d bytes at 0x%08X miscompare", size, offset );
+      }
+    }
+    #endif
+
+    return result;
   }
 
 

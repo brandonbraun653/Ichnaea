@@ -20,6 +20,7 @@ Includes
 #include <src/system/system_error.hpp>
 #include <src/hw/nor.hpp>
 #include "fal_def.h"
+#include "mbedutils/drivers/logging/logging_macros.hpp"
 
 namespace System::Database
 {
@@ -105,10 +106,35 @@ namespace System::Database
     /*-------------------------------------------------------------------------
     Power on the KVDB driver. After this call the system should be ready.
     -------------------------------------------------------------------------*/
-    if( !s_pdi_kvdb.init() )
+    bool success = s_pdi_kvdb.init();
+    if( !success )
     {
-      Panic::throwError( Panic::ErrorCode::ERR_SYSTEM_INIT_FAIL );
-      return;
+      LOG_DEBUG( "Initial PDI database init failed. Resetting to factory defaults." );
+      s_pdi_kvdb.deinit();
+
+      /*-----------------------------------------------------------------------
+      Erase the entire PDI region to ensure a clean slate
+      -----------------------------------------------------------------------*/
+      static constexpr size_t BIG_ERASE_BLOCK_SIZE = 64 * 1024;
+      static_assert ( ( ICHNAEA_DB_PDI_RGN_SIZE % BIG_ERASE_BLOCK_SIZE ) == 0, "PDI region size must be a multiple of 64k" );
+
+      for( size_t address = ICHNAEA_DB_PDI_RGN_START; address < ICHNAEA_DB_PDI_RGN_SIZE; address += BIG_ERASE_BLOCK_SIZE )
+      {
+        LOG_DEBUG( "Erasing 64kB @ addr: 0x%08X", address );
+        HW::NOR::erase( address, BIG_ERASE_BLOCK_SIZE );
+      }
+
+      /*-----------------------------------------------------------------------
+      Attempt to reinitialize the database. If this fails, the system is in a
+      degraded state and needs to be investigated.
+      -----------------------------------------------------------------------*/
+      LOG_DEBUG( "Re-init the PDI database. This can take a few seconds." );
+      if( !s_pdi_kvdb.init() )
+      {
+        mbed_assert_continue_msg( false, "PDI database init permanently disabled." );
+        return;
+      }
+      LOG_DEBUG( "Success" );
     }
 
     s_db_ready = DRIVER_INITIALIZED_KEY;
