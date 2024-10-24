@@ -38,10 +38,8 @@ namespace App::Stats
     node.writer    = KVWriter_Memcpy;
     node.reader    = KVReader_Memcpy;
     node.datacache = &PDI::Internal::RAMCache.bootCount;
-    node.dataSize  = sizeof( PDI::Internal::RAMCache.bootCount );
-    node.pbFields  = nullptr;
-    // node.dataSize  = ichnaea_PDI_BootCount_size;
-    // node.pbFields  = ichnaea_PDI_BootCount_fields;
+    node.dataSize  = ichnaea_PDI_BootCount_size;
+    node.pbFields  = ichnaea_PDI_BootCount_fields;
     node.flags     = KV_FLAG_DEFAULT_PERSISTENT;
 
     mbed_assert( pdi_insert_and_create( node, node.datacache, node.dataSize ) );
@@ -67,8 +65,6 @@ namespace App::Stats
     boot_count++;
     System::Database::pdiDB().write( PDI::KEY_BOOT_COUNT, &boot_count, sizeof( boot_count ) );
     System::Database::pdiDB().flush();
-    System::Database::pdiDB().sync( PDI::KEY_BOOT_COUNT );
-    System::Database::pdiDB().read( PDI::KEY_BOOT_COUNT, &boot_count, sizeof( boot_count ) );
 
     LOG_INFO( "Boot Count = %d", boot_count );
   }

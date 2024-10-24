@@ -47,18 +47,13 @@ namespace System::Database
     .write_gran = 1
   };
 
-
   /*---------------------------------------------------------------------------
   Private Data
   ---------------------------------------------------------------------------*/
 
-  static size_t                                                      s_db_ready;
-  static mb::db::NvmKVDB                                             s_pdi_kvdb;
-  // static mb::db::NvmKVDB::Storage<PDI_MAX_COUNT, PDI_TRANSCODE_SIZE> s_kvdb_storage;
-
-  static mb::db::RamKVDB                         s_kv_ram_db;        /**< RAM manager for KV pair cache */
-  static mb::db::KVNodeVector<PDI_MAX_COUNT>     s_kv_nodes;         /**< Storage for KV pair descriptors */
-  static etl::array<uint8_t, PDI_TRANSCODE_SIZE> s_transcode_buffer; /**< Storage for encoding/decoding largest data */
+  static size_t                                             s_db_ready;
+  static mb::db::NvmKVDB                                    s_pdi_kvdb;
+  static mb::db::Storage<PDI_MAX_COUNT, PDI_TRANSCODE_SIZE> s_kvdb_storage;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -75,27 +70,15 @@ namespace System::Database
     }
 
     /*-------------------------------------------------------------------------
-    Configure the RAM based KVDB driver (subcomponent of NVM driver)
-    -------------------------------------------------------------------------*/
-    RamKVDB::Config ram_cfg;
-    ram_cfg.node_storage     = &s_kv_nodes;
-    ram_cfg.transcode_buffer = s_transcode_buffer;
-
-    if( s_kv_ram_db.configure( ram_cfg ) != DB_ERR_NONE )
-    {
-      Panic::throwError( Panic::ErrorCode::ERR_SYSTEM_INIT_FAIL );
-      return;
-    }
-
-    /*-------------------------------------------------------------------------
     Configure the NVM based KVDB driver
     -------------------------------------------------------------------------*/
     NvmKVDB::Config cfg;
 
-    cfg.dev_name        = ICHNAEA_DB_FLASH_DEV_NAME;
-    cfg.part_name       = ICHNAEA_DB_PDI_RGN_NAME;
-    cfg.ram_kvdb        = &s_kv_ram_db;
-    cfg.dev_sector_size = HW::NOR::ERASE_BLOCK_SIZE;
+    cfg.dev_name         = ICHNAEA_DB_FLASH_DEV_NAME;
+    cfg.part_name        = ICHNAEA_DB_PDI_RGN_NAME;
+    cfg.dev_sector_size  = HW::NOR::ERASE_BLOCK_SIZE;
+    cfg.node_storage     = &s_kvdb_storage.kv_nodes;
+    cfg.transcode_buffer = s_kvdb_storage.transcode_buffer;
 
     if( s_pdi_kvdb.configure( cfg ) != DB_ERR_NONE )
     {
@@ -116,7 +99,7 @@ namespace System::Database
       Erase the entire PDI region to ensure a clean slate
       -----------------------------------------------------------------------*/
       static constexpr size_t BIG_ERASE_BLOCK_SIZE = 64 * 1024;
-      static_assert ( ( ICHNAEA_DB_PDI_RGN_SIZE % BIG_ERASE_BLOCK_SIZE ) == 0, "PDI region size must be a multiple of 64k" );
+      static_assert( ( ICHNAEA_DB_PDI_RGN_SIZE % BIG_ERASE_BLOCK_SIZE ) == 0, "PDI region size must be a multiple of 64k" );
 
       for( size_t address = ICHNAEA_DB_PDI_RGN_START; address < ICHNAEA_DB_PDI_RGN_SIZE; address += BIG_ERASE_BLOCK_SIZE )
       {
