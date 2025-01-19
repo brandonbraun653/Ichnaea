@@ -12,8 +12,8 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include "pico/unique_id.h"
-#include "src/bsp/board_map.hpp"
-#include "src/system/system_util.hpp"
+#include <src/bsp/board_map.hpp>
+#include <src/system/system_util.hpp>
 #include <etl/crc32.h>
 #include <mbedutils/util.hpp>
 
@@ -51,7 +51,11 @@ namespace System
     Get the unique board ID (64 bits NOR flash id)
     -------------------------------------------------------------------------*/
     pico_unique_board_id_t board_data;
+    #if defined( ICHNAEA_EMBEDDED )
     pico_get_unique_board_id( &board_data );
+    #else
+    memset( &board_data, 0, sizeof( pico_unique_board_id_t ) );
+    #endif
 
     /*-------------------------------------------------------------------------
     Generate a 32-bit hash to serve as the actual unique ID. This is done

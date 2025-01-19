@@ -3,7 +3,8 @@
  *    ltc7871_prv.cpp
  *
  *  Description:
- *    Internal driver details for the LTC7871
+ *    Internal driver details for the LTC7871. Mostly methods for direct
+ *    register access/interpretation on the device.
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -11,13 +12,16 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "etl/array.h"
+
 #include <etl/algorithm.h>
-#include "src/bsp/board_map.hpp"
-#include "src/hw/ltc7871_prv.hpp"
-#include "src/hw/ltc7871_reg.hpp"
+#include <etl/array.h>
+#include <mbedutils/assert.hpp>
 #include <mbedutils/osal.hpp>
-#include <mbedutils/thread.hpp>
+#include <mbedutils/threading.hpp>
+
+#include <src/bsp/board_map.hpp>
+#include <src/hw/ltc7871_prv.hpp>
+#include <src/hw/ltc7871_reg.hpp>
 
 namespace HW::LTC7871::Private
 {
@@ -48,51 +52,6 @@ namespace HW::LTC7871::Private
   void initialize()
   {
     mbed_assert( mb::osal::buildRecursiveMutexStrategy( s_bus_lock ) );
-  }
-
-
-  bool resolve_power_on_config( LTCConfig &cfg )
-  {
-    /*-------------------------------------------------------------------------
-    *IMPORTANT* Really need to read any configuration data from the
-    previous power cycle to ensure we don't boot up and immediately change
-    output voltage/current limts. If a battery is connected and we reconfigure
-    all willy nilly, it could be catastrophic.
-
-    There should be a layered approach:
-      1. If any of the following are true, return an invalid configuration:
-        - Output voltage is present and no input voltage
-        - Output voltage is higher than input voltage
-        - No voltage on either the input or output
-        - Any voltage is outside the expected operational range
-
-      2. With a BMS attached, read and validate the configuration. If it's
-         invalid, return false and do not boot. The BMS acts as a single
-         point of truth to describe the connected storage system. It's also
-         responsible for isolation from this buck converter.
-
-      2. If the BMS is unavailable and no voltage is present on the output,
-         we can assume there is no battery and power up to some sane values
-         based on the input voltage. This will essentially be "free running"
-         mode where we try and provide max power the solar panel can provide.
-
-        2a. When free running, use the last programmed system limits for voltage
-            and current and ramp to those points as a kind of "soft-start".
-            This thing *is* still programmable via other interfaces after all.
-
-    Log all boot decisions to the system log for later analysis.
-
-    Update:
-    - May want to always reset the LTC7871 to OFF unless the BMS commands it to
-      turn on. This might be annoying if the system suddenly resets, but it
-      ensures safety.
-
-    - May want a button input to allow someone to manually turn the system on
-      without the BMS. Would be interesting. We'd have to match output voltage
-      already present or just simply refuse to boot if we see output voltage.
-    -------------------------------------------------------------------------*/
-
-    return false;
   }
 
 
@@ -148,7 +107,7 @@ namespace HW::LTC7871::Private
   {
     mb::thread::RecursiveLockGuard lock( s_bus_lock );
 
-    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS_LTC );
     auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
     /*-------------------------------------------------------------------------
@@ -184,7 +143,7 @@ namespace HW::LTC7871::Private
   {
     mb::thread::RecursiveLockGuard lock( s_bus_lock );
 
-    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS0 );
+    const auto cs_pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_SPI_CS_LTC );
     auto       pSPI   = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_LTC7871 ) );
 
     /*-------------------------------------------------------------------------
@@ -251,14 +210,20 @@ namespace HW::LTC7871::Private
 
   bool on_ltc_error( const Panic::ErrorCode &err )
   {
+    ( void )err;
+
     // Unrecoverable:
-    // - ERR_LTC_PEC_READ_FAIL
-    // - ERR_LTC_PEC_WRITE_FAIL
     // - ERR_LTC_DATA_READ_FAIL
     // - ERR_LTC_DATA_WRITE_FAIL
+    // - ERR_LTC_PWR_DWN_FAIL
 
-    // Potentially Recoverable:
+    // Potentially Recoverable: (clear communication fault)
     // - ERR_LTC_CMD_FAIL
+    // - ERR_LTC_PEC_READ_FAIL
+    // - ERR_LTC_PEC_WRITE_FAIL
+
+    // Track frequency of occurrence and reset if necessary. Clear periodically to not
+    // get stuck in a faulted state.
 
     // Key off DriverMode to determine the final error behavior.
     return true;
@@ -298,29 +263,23 @@ namespace HW::LTC7871::Private
   }
 
 
-  void set_output_voltage( const LTCState &state, const float voltage )
+  void set_run_pin( const bool enable )
   {
-    /*-------------------------------------------------------------------------
-    Ensure the input voltage is within the valid range
-    -------------------------------------------------------------------------*/
-    if( !mbed_assert_continue_msg( voltage > state.msr_input_voltage, "Cannot set voltage to %.2f when input is %.2f", voltage,
-                                   state.msr_input_voltage ) )
+    if( BSP::getBoardRevision() >= 2 )
     {
-      return;
+      uint pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_RUN );
+      gpio_put( pin, !enable );
     }
+  }
 
-    /*-------------------------------------------------------------------------
-    Compute the new IDAC VLOW register value
-    -------------------------------------------------------------------------*/
-    uint8_t idac_vlow = compute_idac_vlow( voltage, state.vlow_ra, state.vlow_rb );
-    if( idac_vlow == LTC_IDAC_REG_INVALID )
+
+  void set_pwmen_pin( const bool enable )
+  {
+    if( BSP::getBoardRevision() >= 2 )
     {
-      mbed_assert_continue_msg( false, "Invalid IDAC VLOW. Ra: %.2f, Rb: %.2f, Vlow: %.2f",
-                                state.vlow_ra, state.vlow_rb, voltage );
-      return;
+      uint pin = BSP::getPin( mb::hw::PERIPH_GPIO, BSP::GPIO_LTC_PWMEN );
+      gpio_put( pin, !enable );
     }
-
-    write_register( REG_MFR_IDAC_VLOW, idac_vlow );
   }
 
 
@@ -374,16 +333,57 @@ namespace HW::LTC7871::Private
   }
 
 
-  void update_operating_point( const LTCState &state )
+  uint8_t compute_idac_setcur( const float ilim_gain, const float current, const float dcr )
   {
-    set_switching_frequency( 80e3 );
-    set_mode_pin( SwitchingMode::LTC_MODE_DISC );
+    static constexpr int32_t IDAC_MAX_UA = 31;
 
-    // Control:
-    //  - switching frequency
-    //  - conduction mode (burst, dcm, ccm)
+    /*-------------------------------------------------------------------------
+    Ensure the input parameters are valid. If not, return an impossible value.
+    -------------------------------------------------------------------------*/
+    if( current < 0.0f || dcr <= 0.0f )
+    {
+      return LTC_IDAC_REG_INVALID;
+    }
 
-    // Most of this seems to be dependent on valid average current measurements.
-    // Probably should do some kind of calibration on boot?
+    /*-------------------------------------------------------------------------
+    Compute a realizable IDAC adjustment current (pg. 16)
+    -------------------------------------------------------------------------*/
+    auto    ioConfig     = BSP::getIOConfig();
+    float   vResistor    = ( ilim_gain * current * dcr ) / 6.0f;
+    int32_t iResistor_uA = static_cast<int32_t>( ( vResistor / ioConfig.ltc_setcur_rfb ) * 1e6f );
+
+    mbed_dbg_assert( iResistor_uA >= 0 );
+    mbed_dbg_assert( iResistor_uA <= IDAC_MAX_UA );
+
+    if( iResistor_uA > IDAC_MAX_UA )
+    {
+      return LTC_IDAC_REG_INVALID;
+    }
+
+    /*-------------------------------------------------------------------------
+    Return 5-bit two's complement value
+    -------------------------------------------------------------------------*/
+    uint8_t abs_value =  static_cast<uint8_t>( -iResistor_uA - 1u );
+    return ( ~abs_value ) & 0x1F;
   }
+
+  bool min_on_time_satisfied(const float vout, const float vin)
+  {
+    /*-------------------------------------------------------------------------
+    Input Protection
+    -------------------------------------------------------------------------*/
+    if( vout <= 0.0f || vin <= 0.0f )
+    {
+      return false;
+    }
+
+    /*-------------------------------------------------------------------------
+    Validate minimum on-time requirements (pg. 29)
+    -------------------------------------------------------------------------*/
+    const float min_on_time = 150e-9f; // 150ns
+    const float act_on_time = vout / vin;
+
+    return act_on_time >= min_on_time;
+  }
+
 }    // namespace HW::LTC7871::Private

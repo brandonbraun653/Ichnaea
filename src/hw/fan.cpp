@@ -12,9 +12,11 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
-#include "src/hw/fan.hpp"
-#include "src/bsp/board_map.hpp"
+#include <etl/algorithm.h>
 #include <mbedutils/logging.hpp>
+#include <mbedutils/threading.hpp>
+#include <src/bsp/board_map.hpp>
+#include <src/hw/fan.hpp>
 
 namespace HW::FAN
 {
@@ -60,6 +62,9 @@ namespace HW::FAN
    */
   static void gpio_callback( uint gpio, uint32_t events )
   {
+    ( void )gpio;
+    ( void )events;
+
     s_fan.tach_count = s_fan.tach_count + 1u;
 
     // Calculate RPM every 2 seconds
@@ -128,19 +133,19 @@ namespace HW::FAN
 
   void postSequence()
   {
-    setSpeedPercent( 1.00f );
-    sleep_ms( 2000 );
-    setSpeedPercent( 0.1f );
+    setSpeedRPM( 0.25f );
+    mb::thread::this_thread::sleep_for( 2000 );
+    setSpeedRPM( 0.1f );
   }
 
 
-  void setSpeedPercent( const float speed )
+  void setSpeedRPM( const float speed )
   {
     /*-------------------------------------------------------------------------
     Clamp the brightness level to a valid range and convert it to a PWM level.
     -------------------------------------------------------------------------*/
-    const float    clamped_speed = MAX( 0.0f, MIN( speed, 0.99f ) );
-    const uint16_t approx_level  = MIN( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_speed ) );
+    const float    clamped_speed = etl::max( 0.0f, etl::min( speed, 0.99f ) );
+    const uint16_t approx_level  = etl::min( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_speed ) );
 
     /*-------------------------------------------------------------------------
     Apply the updates

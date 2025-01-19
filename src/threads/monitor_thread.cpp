@@ -11,12 +11,11 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/app/app_decl.hpp"
-#include "src/bsp/board_map.hpp"
-#include "src/threads/ichnaea_threads.hpp"
-#include "src/system/system_sensor.hpp"
-#include "src/hw/led.hpp"
+#include <src/threads/ichnaea_threads.hpp>
+#include <src/system/system_sensor.hpp>
+#include <src/app/app_monitor.hpp>
 #include <mbedutils/logging.hpp>
+#include <mbedutils/threading.hpp>
 
 namespace Threads
 {
@@ -26,38 +25,62 @@ namespace Threads
 
   void monitorThread( void *arg )
   {
-    size_t last_print = mb::time::millis();
+    ( void )arg;
+
+    /*-------------------------------------------------------------------------
+    Start up the control thread
+    -------------------------------------------------------------------------*/
+    startThread( SystemTask::TSK_CONTROL_ID );
 
     while( 1 )
     {
-      sleep_ms( 25 );
-
       /*-----------------------------------------------------------------------
-      Update all the sensors
+      Check for a kill request
       -----------------------------------------------------------------------*/
-      Sensor::getAverageCurrent( Sensor::LookupType::REFRESH );
-      Sensor::getHighSideVoltage( Sensor::LookupType::REFRESH );
-      Sensor::getLowSideVoltage( Sensor::LookupType::REFRESH );
-      Sensor::getRP2040Temp( Sensor::LookupType::REFRESH );
-      Sensor::getBoardTemp0( Sensor::LookupType::REFRESH );
-      Sensor::getBoardTemp1( Sensor::LookupType::REFRESH );
-
-      if( ( mb::time::millis() - last_print ) > 1000 )
+      if( mb::thread::this_thread::task()->killPending() )
       {
-        last_print = mb::time::millis();
-        LOG_INFO( "Current: %.2fA, High Side: %.2fV, Low Side: %.2fV, RP2040 Temp: %.2fC, Board Temp 0: %.2fC, Board Temp 1: %.2fC",
-                  Sensor::getAverageCurrent(),
-                  Sensor::getHighSideVoltage(),
-                  Sensor::getLowSideVoltage(),
-                  Sensor::getRP2040Temp(),
-                  Sensor::getBoardTemp0(),
-                  Sensor::getBoardTemp1() );
+        break;
       }
 
-      // TODO BMB: I'm going to need to detect and announce an event where the
-      // input voltage drops out and the system is running on battery power. I
-      // technically need to do a full reset of the LTC7871 to ensure we power
-      // back on appropriately.
+      /*-------------------------------------------------------------------------
+      Refresh the sensor data
+      -------------------------------------------------------------------------*/
+      System::Sensor::getMeasurement( System::Sensor::Element::IMON_LOAD, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::VMON_1V1, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::VMON_3V3, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::VMON_5V0, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::VMON_12V, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::BOARD_TEMP_0, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::BOARD_TEMP_1, System::Sensor::LookupType::REFRESH );
+      System::Sensor::getMeasurement( System::Sensor::Element::FAN_SPEED, System::Sensor::LookupType::REFRESH );
+
+      /*-----------------------------------------------------------------------
+      Update all monitors
+      -----------------------------------------------------------------------*/
+      /* High Priority */
+      App::Monitor::monitorOutputCurrent();
+      App::Monitor::monitorOutputVoltage();
+      App::Monitor::monitorInputVoltage();
+
+      /* Lower priority */
+      App::Monitor::monitor1V1Voltage();
+      App::Monitor::monitor3V3Voltage();
+      App::Monitor::monitor5V0Voltage();
+      App::Monitor::monitor12V0Voltage();
+      App::Monitor::monitorTemperature();
+      App::Monitor::monitorFanSpeed();
+
+      /*-----------------------------------------------------------------------
+      Yield to other threads
+      -----------------------------------------------------------------------*/
+      mb::thread::this_thread::sleep_for( 5 );
     }
+
+    /*-------------------------------------------------------------------------
+    Shutdown sequence
+    -------------------------------------------------------------------------*/
+    LOG_INFO( "Monitor thread shutting down" );
   }
 }    // namespace Threads

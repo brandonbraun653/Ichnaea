@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package sim;
+
+// A floating point value that can be used to set the value of a parameter in
+// the simulator.
+message FloatingPointValue {
+  float value = 1;
+}
+
+
+// The EnvironmentSpoofer service is used to inject fake environmental data into
+// the Ichnaea system. This is useful for testing the system in a controlled
+// manner that might otherwise be destructive or difficult to reproduce on real
+// hardware.
+service EnvironmentSpoofer {
+
+  // Apply a resistive load to the output of the power converter. The simulator
+  // will do some very basic calculations to draw the appropriate current from
+  // the power converter.
+  rpc ApplyResistiveLoad(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Update the solar open circuit input voltage to the Ichnaea system.
+  rpc SetSolarOCV(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Set the voltage of the 12V rail on the board.
+  rpc SetBoard12VRail(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Set the voltage of the 5V rail on the board.
+  rpc SetBoard5VRail(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Set the voltage of the 3.3V rail on the board.
+  rpc SetBoard3V3Rail(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Set the voltage of the 1.1V rail on the board.
+  rpc SetBoard1V1Rail(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Set the temperature of the board in degrees Celsius.
+  rpc SetBoardTemperature(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Set the RPM of the fan on the board.
+  rpc SetBoardFanSpeed(FloatingPointValue) returns (google.protobuf.Empty) {}
+
+  // Forcefully sets the measured output voltage of the power converter.
+  rpc SetOutputVoltage(FloatingPointValue) returns (google.protobuf.Empty) {}
+}

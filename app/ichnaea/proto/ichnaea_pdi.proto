@@ -1,0 +1,150 @@
+syntax = "proto2";
+import "nanopb.proto";
+
+package ichnaea;
+
+// PDI data that can be read from the node
+// ** DO NOT CHANGE THE VALUE OF THE ENUMERATION ONCE SET **
+enum PDI_ID{
+  // System information
+  BOOT_COUNT = 0; // Number of times the system has booted
+  SERIAL_NUMBER = 1; // Unique serial number of the system
+  MFG_DATE = 2; // Date the system was manufactured
+  CAL_DATE = 3; // Date the system was last calibrated
+
+  // Power system configuration data
+  TARGET_SYSTEM_VOLTAGE_OUTPUT = 25; // Requested voltage target (lower than rated limit)
+  CONFIG_SYSTEM_VOLTAGE_OUTPUT_RATED_LIMIT = 26; // Maximum rated voltage the system can produce
+  TARGET_SYSTEM_CURRENT_OUTPUT = 27; // Requested max current output (lower than rated limit)
+  CONFIG_SYSTEM_CURRENT_OUTPUT_RATED_LIMIT = 28; // Maximum rated current that may be drawn from the whole system
+  TARGET_PHASE_CURRENT_OUTPUT = 29; // Requested max phase current output (lower than rated limit)
+  CONFIG_PHASE_CURRENT_OUTPUT_RATED_LIMIT = 30; // Maximum rated current that may be drawn from a single phase
+  CONFIG_MIN_SYSTEM_VOLTAGE_INPUT = 31; // Minimum voltage that the system will operate at (below this, the system will shut down)
+  CONFIG_MIN_SYSTEM_VOLTAGE_INPUT_RATED_LIMIT = 32; // Hard limit voltage at which the system will shut down
+  CONFIG_MAX_SYSTEM_VOLTAGE_INPUT = 33; // Maximum voltage that the system will operate at (above this, the system will shut down)
+  CONFIG_MAX_SYSTEM_VOLTAGE_INPUT_RATED_LIMIT = 34; // Hard limit voltage at which the system will shut down
+  CONFIG_PGOOD_MONITOR_TIMEOUT_MS = 35; // Time in milliseconds to wait for PGOOD signal to be asserted on power up
+
+  // Tunable hardware parameters
+  CONFIG_LTC_PHASE_INDUCTOR_DCR = 50; // Inductor DCR value in Ohms
+
+  // Misc Configurations
+  TARGET_FAN_SPEED_RPM = 60; // Requested fan speed in RPM
+  CONFIG_MIN_TEMP_LIMIT = 61; // Minimum temperature limit in degrees Celsius
+  CONFIG_MAX_TEMP_LIMIT = 62; // Maximum temperature limit in degrees Celsius
+
+  // Monitor parameters
+  CONFIG_MON_INPUT_VOLTAGE_OOR_ENTRY_DELAY_MS = 80; // Time in milliseconds to wait before tripping input voltage fault entry
+  CONFIG_MON_INPUT_VOLTAGE_OOR_EXIT_DELAY_MS = 81; // Time in milliseconds to wait before tripping input voltage fault exit
+  CONFIG_MON_LOAD_OVERCURRENT_OOR_ENTRY_DELAY_MS = 82; // Time in milliseconds to wait before tripping overcurrent fault entry
+  CONFIG_MON_LOAD_OVERCURRENT_OOR_EXIT_DELAY_MS = 83; // Time in milliseconds to wait before tripping overcurrent fault exit
+  CONFIG_MON_LOAD_VOLTAGE_PCT_ERROR_OOR_LIMIT = 84; // Percent error limit to trip voltage regulation fault
+  CONFIG_MON_LOAD_VOLTAGE_PCT_ERROR_OOR_ENTRY_DELAY_MS = 85; // Time in milliseconds to wait before tripping voltage regulation fault entry
+  CONFIG_MON_LOAD_VOLTAGE_PCT_ERROR_OOR_EXIT_DELAY_MS = 86; // Time in milliseconds to wait before tripping voltage regulation fault exit
+  CONFIG_MON_FAN_SPEED_PCT_ERROR_OOR_LIMIT = 87; // Percent error from target to trip fan speed fault
+  CONFIG_MON_FAN_SPEED_OOR_ENTRY_DELAY_MS = 88; // Time in milliseconds to wait before tripping fan speed fault entry
+  CONFIG_MON_FAN_SPEED_OOR_EXIT_DELAY_MS = 89; // Time in milliseconds to wait before tripping fan speed fault exit
+  CONFIG_MON_TEMPERATURE_OOR_ENTRY_DELAY_MS = 90; // Time in milliseconds to wait before tripping temperature fault entry
+  CONFIG_MON_TEMPERATURE_OOR_EXIT_DELAY_MS = 91; // Time in milliseconds to wait before tripping temperature fault exit
+  CONFIG_MON_FILTER_INPUT_VOLTAGE = 92; // Filter configuration for input voltage
+  CONFIG_MON_FILTER_OUTPUT_CURRENT = 93; // Filter configuration for output current
+  CONFIG_MON_FILTER_OUTPUT_VOLTAGE = 94; // Filter configuration for output voltage
+  CONFIG_MON_FILTER_1V1_VOLTAGE = 95; // Filter configuration for 1V1 voltage
+  CONFIG_MON_FILTER_3V3_VOLTAGE = 96; // Filter configuration for 3V3 voltage
+  CONFIG_MON_FILTER_5V0_VOLTAGE = 97; // Filter configuration for 5V0 voltage
+  CONFIG_MON_FILTER_12V0_VOLTAGE = 98; // Filter configuration for 12V0 voltage
+  CONFIG_MON_FILTER_TEMPERATURE = 99; // Filter configuration for temperature
+  CONFIG_MON_FILTER_FAN_SPEED = 100; // Filter configuration for fan speed
+
+  // Realtime volatile data
+  MON_INPUT_VOLTAGE_RAW = 200; // Raw input voltage to the system
+  MON_INPUT_VOLTAGE_FILTERED = 201; // Filtered input voltage to the system
+  MON_OUTPUT_CURRENT_RAW = 202; // Raw output current from the system
+  MON_OUTPUT_CURRENT_FILTERED = 203; // Filtered output current from the system
+  MON_OUTPUT_VOLTAGE_RAW = 204; // Raw output voltage from the system
+  MON_OUTPUT_VOLTAGE_FILTERED = 205; // Filtered output voltage from the system
+  MON_1V1_VOLTAGE_FILTERED = 206; // Filtered 1V1 voltage from the system
+  MON_3V3_VOLTAGE_FILTERED = 207; // Filtered 3V3 voltage from the system
+  MON_5V0_VOLTAGE_FILTERED = 208; // Filtered 5V0 voltage from the system
+  MON_12V0_VOLTAGE_FILTERED = 209; // Filtered 12V0 voltage from the system
+  MON_TEMPERATURE_FILTERED = 210; // Filtered temperature from the system
+  MON_FAN_SPEED_FILTERED = 211; // Filtered fan speed from the system
+  MON_INPUT_VOLTAGE_VALID = 212; // Validity of input voltage reading
+  MON_OUTPUT_CURRENT_VALID = 213; // Validity of output current reading
+  MON_OUTPUT_VOLTAGE_VALID = 214; // Validity of output voltage reading
+  MON_1V1_VOLTAGE_VALID = 215; // Validity of 1V1 voltage reading
+  MON_3V3_VOLTAGE_VALID = 216; // Validity of 3V3 voltage reading
+  MON_5V0_VOLTAGE_VALID = 217; // Validity of 5V0 voltage reading
+  MON_12V0_VOLTAGE_VALID = 218; // Validity of 12V0 voltage reading
+  MON_TEMPERATURE_VALID = 219; // Validity of temperature reading
+  MON_FAN_SPEED_VALID = 220; // Validity of fan speed reading
+
+  // Calibration data
+  CONFIG_CAL_OUTPUT_CURRENT = 300; // Calibration data for output current sensor
+}
+
+/* BOOT_COUNT */
+message PDI_BootCount {
+  required uint32 boot_count = 1 [(nanopb).int_size = IS_32];
+}
+
+/* SERIAL_NUMBER */
+message PDI_SerialNumber {
+  required string serial_number = 1 [(nanopb).max_size = 32];
+}
+
+/* MFG_DATE */
+message PDI_ManufactureDate {
+  required uint32 day = 1 [(nanopb).int_size = IS_8];
+  required uint32 month = 2 [(nanopb).int_size = IS_8];
+  required uint32 year = 3 [(nanopb).int_size = IS_16];
+}
+
+/* CAL_DATE */
+message PDI_CalibrationDate {
+  required uint32 day = 1 [(nanopb).int_size = IS_8];
+  required uint32 month = 2 [(nanopb).int_size = IS_8];
+  required uint32 year = 3 [(nanopb).int_size = IS_16];
+}
+
+message PDI_FloatConfiguration {
+  required float value = 1;
+}
+
+message PDI_Uint32Configuration {
+  required uint32 value = 1 [(nanopb).int_size = IS_32];
+}
+
+message PDI_BooleanConfiguration {
+  required bool value = 1;
+}
+
+// Storage for the configuration of a generic IIR filter. It's sized to hold
+// the maximum number of coefficients and state values for a filter of order 6.
+// Expects implementation using the CMSIS-DSP library biQuad filter.
+//
+// Example:
+//   order = 6
+//   coefficients = 5*(order/2) = 15
+//
+// See: https://github.com/ARM-software/CMSIS-DSP
+// See: https://github.com/matteoscordino/iir-designer-cmsis-dsp
+message PDI_IIRFilterConfig
+{
+  enum MaxFilterOrder {
+    MAX_FILTER_ORDER = 6;
+  }
+
+  required uint32 order = 1 [(nanopb).int_size = IS_8]; // Filter order (max 6)
+  required uint32 sampleRateMs = 2 [(nanopb).int_size = IS_32]; // Sample rate in milliseconds
+  repeated float coefficients = 3 [(nanopb).max_count = 15, (nanopb).fixed_count = true]; // Filter coefficients
+}
+
+// Storage for the most basic sensor calibration data. This is a simple offset
+// and gain calibration with a valid range, of the form y = m*x - b.
+message PDI_BasicCalibration {
+  required float offset = 1;    // b term in y = m*x + b
+  required float gain = 2;      // m term in y = m*x + b
+  required float valid_min = 3; // Minimum valid value for the sensor
+  required float valid_max = 4; // Maximum valid value for the sensor
+}

@@ -25,12 +25,25 @@ namespace HW::ADC
 
   enum Channel : size_t
   {
+    /*-------------------------------------------------------------------------
+    Version 1+
+    -------------------------------------------------------------------------*/
     RP2040_TEMP,  /**< Internal temperature sensor on the RP2040 */
-    LTC_IMON,     /**< Average current output from the LTC7871 */
     TEMP_SENSE_0, /**< External temperature sensor 0 */
     TEMP_SENSE_1, /**< External temperature sensor 1 */
+    LTC_IMON,     /**< Average current output from the LTC7871 */
     HV_DC_SENSE,  /**< Solar high voltage input sense */
     LV_DC_SENSE,  /**< Buck converter voltage output sense */
+
+    /*-------------------------------------------------------------------------
+    Version 2+
+    -------------------------------------------------------------------------*/
+    BOARD_REV, /**< Board revision voltage */
+    IMON_LOAD, /**< Output load current */
+    VMON_1V1,  /**< 1.1V voltage rail */
+    VMON_3V3,  /**< 3.3V voltage rail */
+    VMON_5V0,  /**< 5.0V voltage rail */
+    VMON_12V,  /**< 12V voltage rail */
 
     NUM_OPTIONS
   };

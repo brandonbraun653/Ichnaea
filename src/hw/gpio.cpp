@@ -11,9 +11,9 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "etl/array.h"
-#include "src/hw/gpio.hpp"
-#include "src/bsp/board_map.hpp"
+#include <etl/array.h>
+#include <src/hw/gpio.hpp>
+#include <src/bsp/board_map.hpp>
 
 namespace HW::GPIO
 {
@@ -48,7 +48,8 @@ namespace HW::GPIO
     /*-------------------------------------------------------------------------
     Set any active low pins to high to disable them.
     -------------------------------------------------------------------------*/
-    gpio_put( cfg.gpio[ BSP::GPIO_SPI_CS0 ].pin, true );
+    gpio_put( cfg.gpio[ BSP::GPIO_SPI_CS_LTC ].pin, true );
+    gpio_put( cfg.gpio[ BSP::GPIO_SPI_CS_NOR ].pin, true );
   }
 
 

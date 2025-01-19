@@ -3,7 +3,10 @@
  *    ltc7871.hpp
  *
  *  Description:
- *    Ichnaea LTC7871 driver interface
+ *    Ichnaea LTC7871 driver interface. This layer is intended to provide
+ *    high level direct control of the power converter. Minimal safety checks
+ *    are in place as most system level guardrails are done the the application
+ *    layer. Use with caution.
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -25,17 +28,6 @@ namespace HW::LTC7871
   ---------------------------------------------------------------------------*/
 
   /**
-   * @brief Specific reasons why the LTC7871 faulted
-   */
-  enum class FaultCode : size_t
-  {
-    NO_FAULT = 0,
-
-    NUM_OPTIONS
-  };
-
-
-  /**
    * @brief Internal classification of modes the driver can be in.
    *
    * This is extremely helpful for error handling and command parsing to ensure
@@ -43,26 +35,9 @@ namespace HW::LTC7871
    */
   enum class DriverMode : size_t
   {
-    DISABLED,         /* System is at an idle state an not operating */
-    FAULTED,          /* Error state due to abnormal behavior */
-    POST_SEQUENCE,    /* Running the power on self test */
-    INITIALIZING,     /* Booting up and checking for ability to operate */
-    NORMAL_OPERATION, /* System running normally */
-  };
-
-
-  /**
-   * @brief Discrete voltage levels that can be set/detected on the ILIM pin.
-   *
-   * This controls the current comparator threshold for the LTC7871.
-   */
-  enum class ILim : size_t
-  {
-    Unknown, /**< ILIM pin voltage is unknown */
-    V0,      /**< ILIM pin voltage is zero */
-    V1_4,    /**< ILIM pin voltage is 1/4 V5 */
-    V3_4,    /**< ILIM pin voltage is 3/4 V5 */
-    V5       /**< ILIM pin voltage is V5 */
+    DISABLED, /* System is at an idle state an not operating */
+    FAULTED,  /* Error state due to abnormal behavior */
+    ENABLED,  /* System running normally */
   };
 
   /**
@@ -98,16 +73,6 @@ namespace HW::LTC7871
     LTC_FAULT_COUNT
   };
 
-
-  enum LTCStatusBits : uint32_t
-  {
-    LTC_STATUS_PGOOD       = 0, /**< Regulated VLow/VHigh is within +/-10% */
-    LTC_STATUS_MAX_CURRENT = 1, /**< Maximum current limit reached */
-    LTC_STATUS_SS_DONE     = 2, /**< Soft-start sequence is complete */
-
-    LTC_STATUS_COUNT
-  };
-
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
@@ -115,78 +80,17 @@ namespace HW::LTC7871
   /**
    * @brief Initializes the LTC7871 driver
    */
-  void initialize();
+  void driver_init();
 
   /**
-   * @brief Status flag to indicate if it's safe to interact with the LTC7871.
-   *
-   * This will only be true if the LTC7871 is powered on, not in a faulted
-   * state, and the driver has performed initialization and POST steps.
-   *
-   * @return true  The LTC7871 is ready for interaction
-   * @return false The LTC7871 is not ready
+   * @brief Deinitializes the LTC7871 driver
    */
-  bool available();
+  void driver_deinit();
 
   /**
-   * @brief Enables the LTC7871 and configures it for normal operation.
-   *
-   * If successful, this will start power flowing from the solar input
-   * to the low voltage output. If unsuccessful, the LTC7871 will be
-   * returned back to a safe state and the system will be shutdown.
+   * @brief POST sequence for the LTC7871
    */
-  void powerOn();
-
-  /**
-   * @brief Disables the LTC7871 and puts it into a low power state.
-   *
-   * This will cut off power conversion and prevent the LTC7871 from
-   * interacting with the system until the power up sequence is run.
-   */
-  void powerOff();
-
-  /**
-   * @brief Single step the core controller of the LTC7871.
-   *
-   * This should be called periodically to ensure the LTC7871 is operating
-   * correctly. It will handle all the necessary state transitions and
-   * fault checking.
-   */
-  void stepController();
-
-  /**
-   * @brief Sets the system output voltage reference.
-   *
-   * Assuming the controller is in a state to accept this command, the
-   * output voltage will ultimately be adjusted to the desired level.
-   *
-   * @param voltage New voltage level to target
-   */
-  void setVoutRef( const float voltage );
-
-  /**
-   * @brief Reads the fault registers of the LTC7871.
-   *
-   * This collapses the 3 fault registers into a single 32-bit value.
-   *
-   * @return A bit field of LTCFaultBits
-   */
-  uint32_t readLTCFaults();
-
-  /**
-   * @brief Reads the status register of the LTC7871.
-   *
-   * @return uint32_t
-   */
-  uint32_t readLTCStatus();
-
-  /**
-   * @brief Converts a fault code to a human readable string
-   *
-   * @param code  Fault code to convert
-   * @return Loggable/printable error message of the code
-   */
-  const char *ltcFaultCodeToString( const uint32_t code );
+  void postSequence();
 
   /**
    * @brief Gets the current operational mode of the driver
@@ -196,31 +100,71 @@ namespace HW::LTC7871
   DriverMode getMode();
 
   /**
-   * @brief Gets the latest fault code from the driver
+   * @brief Reads the fault registers of the LTC7871.
    *
-   * @return FaultCode
+   * This collapses the 3 fault registers into a single 32-bit value with the
+   * faulted bit positions corresponding to the LTCFaultBits enumeration.
+   *
+   * @return A bit field of LTCFaultBits
    */
-  FaultCode getFaultCode();
+  uint32_t getFaults();
 
   /**
-   * @brief Resets the fault code to NO_FAULT
+   * @brief Resets LTC7871 fault status bits
    */
-  void clearFaultCode();
+  void clearFaults();
 
   /**
-   * @brief Gets the detected ILIM pin setting from HW strapping.
+   * @brief Enables the LTC7871 power stage output.
    *
-   * @return ILim
+   * This will go through a series of checks to make sure the system is in a safe
+   * state to enable the power converter. If any of the checks fail, the system
+   * will be placed into a faulted state and the power converter will not be enabled.
+   *
+   * @param vout Desired output voltage (Volts)
+   * @param iout Desired output current limit (Amps)
+   * @return True if the power converter was successfully enabled, false otherwise
    */
-  ILim getILim();
+  bool enablePowerConverter( const float vout, const float iout );
 
   /**
-   * @brief Gets the inductor current sense resistor value
-   *
-   * @return float
+   * @brief Disables the LTC7871 power stage output.
    */
-  float getRSense();
+  void disablePowerConverter();
 
-}  // namespace HW::LTC7871
+  /**
+   * @brief Sets the system output voltage reference.
+   *
+   * Assuming the controller is in a state to accept this command, the
+   * output voltage will ultimately be adjusted to the desired level.
+   *
+   * @param voltage New voltage level to target (Volts)
+   */
+  void setVoutRef( const float voltage );
 
-#endif  /* !ICHNAEA_LTC7871_HPP */
+  /**
+   * @brief Sets the system output current reference.
+   *
+   * Assuming the controller is in a state to accept this command, the
+   * output current limit will be adjusted to the desired level.
+   *
+   * @param current New current level to target (Amps)
+   */
+  void setIoutRef( const float current );
+
+  /**
+   * @brief Gets the reported average output current from the LTC7871.
+   *
+   * @param voltage Measured voltage from the IMON pin (Volts)
+   * @return float Average output current (Amps)
+   */
+  float getAverageOutputCurrent( float voltage );
+
+  /**
+   * @brief Monitors the LTC7871 for faults and transitions the system state as needed.
+   */
+  void runFaultMonitoring();
+
+}    // namespace HW::LTC7871
+
+#endif /* !ICHNAEA_LTC7871_HPP */

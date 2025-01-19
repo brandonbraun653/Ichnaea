@@ -16,7 +16,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/rpc.hpp>
-#include "src/com/proto/ichnaea.pb.h"
+#include <src/app/proto/ichnaea_rpc.pb.h>
 
 namespace COM::RPC
 {
@@ -56,23 +56,23 @@ namespace COM::RPC
   static constexpr Descriptor ManagerResponse{ ichnaea_Message_MSG_MANAGER_RSP, ichnaea_MessageVersion_MSG_VER_MANAGER_RSP,
                                                ichnaea_ManagerResponse_fields, ichnaea_ManagerResponse_size };
 
-  static constexpr Descriptor LTCRegisterGetRequest{ ichnaea_Message_MSG_LTC_REG_GET_REQ,
-                                                     ichnaea_MessageVersion_MSG_VER_LTC_REG_GET_REQ,
-                                                     ichnaea_LTCRegisterGetRequest_fields, ichnaea_LTCRegisterGetRequest_size };
+  static constexpr Descriptor PDIReadRequest{ ichnaea_Message_MSG_PDI_READ_REQ, ichnaea_MessageVersion_MSG_VER_PDI_READ_REQ,
+                                              ichnaea_PDIReadRequest_fields, ichnaea_PDIReadRequest_size };
 
-  static constexpr Descriptor LTCRegisterGetResponse{ ichnaea_Message_MSG_LTC_REG_GET_RSP,
-                                                      ichnaea_MessageVersion_MSG_VER_LTC_REG_GET_RSP,
-                                                      ichnaea_LTCRegisterGetResponse_fields,
-                                                      ichnaea_LTCRegisterGetResponse_size };
+  static constexpr Descriptor PDIReadResponse{ ichnaea_Message_MSG_PDI_READ_RSP, ichnaea_MessageVersion_MSG_VER_PDI_READ_RSP,
+                                               ichnaea_PDIReadResponse_fields, ichnaea_PDIReadResponse_size };
 
-  static constexpr Descriptor LTCRegisterSetRequest{ ichnaea_Message_MSG_LTC_REG_SET_REQ,
-                                                     ichnaea_MessageVersion_MSG_VER_LTC_REG_SET_REQ,
-                                                     ichnaea_LTCRegisterSetRequest_fields, ichnaea_LTCRegisterSetRequest_size };
+  static constexpr Descriptor PDIWriteRequest{ ichnaea_Message_MSG_PDI_WRITE_REQ, ichnaea_MessageVersion_MSG_VER_PDI_WRITE_REQ,
+                                               ichnaea_PDIWriteRequest_fields, ichnaea_PDIWriteRequest_size };
 
-  static constexpr Descriptor LTCRegisterSetResponse{ ichnaea_Message_MSG_LTC_REG_SET_RSP,
-                                                      ichnaea_MessageVersion_MSG_VER_LTC_REG_SET_RSP,
-                                                      ichnaea_LTCRegisterSetResponse_fields,
-                                                      ichnaea_LTCRegisterSetResponse_size };
+  static constexpr Descriptor PDIWriteResponse{ ichnaea_Message_MSG_PDI_WRITE_RSP, ichnaea_MessageVersion_MSG_VER_PDI_WRITE_RSP,
+                                                ichnaea_PDIWriteResponse_fields, ichnaea_PDIWriteResponse_size };
+
+  static constexpr Descriptor SystemStatusRequest{ ichnaea_Message_MSG_SYSTEM_STATUS_REQ, ichnaea_MessageVersion_MSG_VER_SYSTEM_STATUS_REQ,
+                                                   ichnaea_SystemStatusRequest_fields, ichnaea_SystemStatusRequest_size };
+
+  static constexpr Descriptor SystemStatusResponse{ ichnaea_Message_MSG_SYSTEM_STATUS_RSP, ichnaea_MessageVersion_MSG_VER_SYSTEM_STATUS_RSP,
+                                                    ichnaea_SystemStatusResponse_fields, ichnaea_SystemStatusResponse_size };
 }    // namespace COM::RPC
 
 #endif /* !ICHNAEA_RPC_MESSAGES_HPP */

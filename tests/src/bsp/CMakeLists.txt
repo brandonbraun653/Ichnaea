@@ -1,0 +1,24 @@
+include(${MBEDUTILS_TEST_DIR}/test_target.cmake)
+create_test_target(
+    TARGET
+        TestBoardMap
+    TEST_SOURCES
+        test_board_map.cpp
+    INSTRUMENTED_SOURCES
+        ${PROJECT_SOURCE_DIR}/../src/bsp/board_map.cpp
+    DEPENDENT_SOURCES
+        ${MBEDUTILS_TEST_MOCK_DIR}/assert_mock.cpp
+        ${PROJECT_SOURCE_DIR}/mock/panic_handlers_mock.cpp
+        ${PROJECT_SOURCE_DIR}/mock/system_error_mock.cpp
+    INCLUDE_DIRS
+        ${TESTING_INCLUDE_DIRECTORIES}
+        ${MBEDUTILS_TEST_EXPECT_DIR}
+    LIBRARIES
+        Ichnaea_Headers
+        Ichnaea_PicoHeaders
+        mbedutils_headers
+        mbedutils_internal_headers
+        pico_mock_headers
+        pico_mock_lib
+    EXPORT_DIR ${CMAKE_CURRENT_BINARY_DIR}
+)

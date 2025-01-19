@@ -12,11 +12,19 @@
 Includes
 -----------------------------------------------------------------------------*/
 
-#include "src/com/rpc/rpc_services.hpp"
-#include "src/hw/ltc7871.hpp"
-#include "src/system/system_util.hpp"
-#include "src/version.hpp"
+#include <mbedutils/rpc.hpp>
+#include <mbedutils/threading.hpp>
 #include <mbedutils/util.hpp>
+#include <src/app/app_power.hpp>
+#include <src/app/proto/ichnaea_rpc.pb.h>
+#include <src/com/rpc/rpc_services.hpp>
+#include <src/hw/ltc7871.hpp>
+#include <src/system/system_db.hpp>
+#include <src/system/system_sensor.hpp>
+#include <src/system/system_shutdown.hpp>
+#include <src/system/system_util.hpp>
+#include <src/threads/ichnaea_threads.hpp>
+#include <src/version.hpp>
 
 namespace COM::RPC
 {
@@ -27,6 +35,14 @@ namespace COM::RPC
   mb::rpc::ErrId ManagerService::processRequest()
   {
     mb::rpc::ErrId rpc_result = mbed_rpc_ErrorCode_ERR_NO_ERROR;
+
+    /*-------------------------------------------------------------------------
+    Ensure the request is intended for this node
+    -------------------------------------------------------------------------*/
+    if( request.node_id != System::identity() )
+    {
+      return mbed_rpc_ErrorCode_ERR_SVC_NO_RSP;
+    }
 
     /*-------------------------------------------------------------------------
     Default initialize the response
@@ -40,6 +56,10 @@ namespace COM::RPC
     -------------------------------------------------------------------------*/
     switch( request.command )
     {
+      case ichnaea_ManagerCommand_CMD_REBOOT:
+        rpc_result = reboot();
+        break;
+
       case ichnaea_ManagerCommand_CMD_ENGAGE_OUTPUT:
         rpc_result = engage_output();
         break;
@@ -48,12 +68,31 @@ namespace COM::RPC
         rpc_result = disengage_output();
         break;
 
+      case ichnaea_ManagerCommand_CMD_FLUSH_PDI_CACHE:
+        System::Database::pdiDB().flush();
+        break;
+
+      case ichnaea_ManagerCommand_CMD_ZERO_OUTPUT_CURRENT:
+        System::Sensor::Calibration::calibrateImonNoLoadOffset();
+        break;
+
       default:
         response.status = ichnaea_ManagerError_ERR_CMD_INVALID;
         break;
     }
 
     return rpc_result;
+  }
+
+
+  mb::rpc::ErrId ManagerService::reboot()
+  {
+    System::Shutdown::initiate();
+
+    response.has_message = false;
+    response.status      = ichnaea_ManagerError_ERR_CMD_NO_ERROR;
+
+    return mbed_rpc_ErrorCode_ERR_NO_ERROR;
   }
 
 
@@ -71,15 +110,12 @@ namespace COM::RPC
     response.status      = ichnaea_ManagerError_ERR_CMD_NO_ERROR;
 
     /*-------------------------------------------------------------------------
-    Engage the output if not already enabled
+    Attempt to engage the output
     -------------------------------------------------------------------------*/
-    HW::LTC7871::powerOn();
-
-    if( auto mode = HW::LTC7871::getMode(); mode != HW::LTC7871::DriverMode::NORMAL_OPERATION )
+    if( !App::Power::engageOutput() )
     {
       response.status      = ichnaea_ManagerError_ERR_CMD_FAILED;
-      response.has_message = true;
-      snprintf( response.message, sizeof( response.message ), "Unexpected mode: %d", mode );
+      response.has_message = false;
     }
 
     return mbed_rpc_ErrorCode_ERR_NO_ERROR;
@@ -102,16 +138,9 @@ namespace COM::RPC
     /*-------------------------------------------------------------------------
     Disengage the output
     -------------------------------------------------------------------------*/
-    HW::LTC7871::powerOff();
-
-    if( auto mode = HW::LTC7871::getMode(); mode != HW::LTC7871::DriverMode::DISABLED )
-    {
-      response.status      = ichnaea_ManagerError_ERR_CMD_FAILED;
-      response.has_message = true;
-      snprintf( response.message, sizeof( response.message ), "Unexpected mode: %d", mode );
-    }
+    App::Power::disengageOutput();
 
     return mbed_rpc_ErrorCode_ERR_NO_ERROR;
   }
 
-}  // namespace COM::RPC
+}    // namespace COM::RPC

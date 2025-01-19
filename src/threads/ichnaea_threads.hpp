@@ -16,7 +16,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
-#include <mbedutils/thread.hpp>
+#include <mbedutils/threading.hpp>
 
 namespace Threads
 {
@@ -26,11 +26,18 @@ namespace Threads
 
   enum SystemTask : mb::thread::TaskId
   {
-    TSK_BACKGROUND_ID = 0,
+    TSK_BACKGROUND_ID,
     TSK_MONITOR_ID,
     TSK_CONTROL_ID,
 
     TSK_COUNT_MAX
+  };
+
+  enum TaskMsgId : mb::thread::MessageId
+  {
+    TSK_MSG_SHUTDOWN,
+
+    TSK_MSG_COUNT
   };
 
   /*---------------------------------------------------------------------------
@@ -42,14 +49,15 @@ namespace Threads
    */
   struct TaskMsg
   {
-    mb::thread::TaskMsgId id;
+    TaskMsgId id;
+
     union _MsgType
     {
       // Temporary for now
       float    a;
       uint32_t b;
       uint8_t  c;
-    } msg;
+    } data;
   };
 
   /*---------------------------------------------------------------------------
@@ -60,6 +68,46 @@ namespace Threads
    * @brief Initialize the project threading system.
    */
   void initialize();
+
+  /**
+   * @brief Start execution of a system task
+   *
+   * @param task Which task to begin executing
+   */
+  void startThread( SystemTask task );
+
+  /**
+   * @brief Stops execution of a system task.
+   *
+   * Once called, the task cannot be started again until the system is reset.
+   * This functionality is intended to support system shutdown procedures.
+   *
+   * @param task Which task to stop executing
+   */
+  void stopThread( SystemTask task );
+
+  /**
+   * @brief Waits for a system task to finish executing.
+   *
+   * @param task Which task to wait for
+   */
+  void join( SystemTask task );
+
+  /**
+   * @brief Sends a signal to a system task.
+   *
+   * @param task Which task to send the signal to
+   * @param id   The message ID to send
+   */
+  void sendSignal( const SystemTask task, const TaskMsgId id );
+
+  /**
+   * @brief Sends a message to a system task.
+   *
+   * @param task Which task to send the message to
+   * @param msg  The message to send
+   */
+  void sendMessage( const SystemTask, TaskMsg &msg );
 
   /**
    * @brief Low priority background thread to handle non-critical tasks.

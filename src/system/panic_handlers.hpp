@@ -30,12 +30,12 @@ namespace Panic::Handlers
    * @param code  Error code to report
    * @return bool True if the handler was able to recover, false otherwise
    */
-  PANIC_HANDLER_DECL( DefaultHandler );
+  bool DefaultHandler( const Panic::ErrorCode &code );
 
   /**
    * @brief This handler does absolutely nothing.
    */
-  PANIC_HANDLER_DECL( NoopHandler );
+  bool NoopHandler( const Panic::ErrorCode &code );
 
   /**
    * @brief Safe the system if the board version cannot be determined.
@@ -43,7 +43,7 @@ namespace Panic::Handlers
    * This is a critical error and the board should not be allowed to start
    * operating if the IO version cannot be determined.
    */
-  PANIC_HANDLER_DECL( FailToReadBoardVersion );
+  bool FailToReadBoardVersion( const Panic::ErrorCode &code );
 }    // namespace Panic::Handlers
 
 #endif /* !ICHNAEA_PANIC_HANDLERS_HPP */

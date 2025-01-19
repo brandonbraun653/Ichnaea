@@ -1,34 +1,27 @@
 project(IchnaeaTesting)
 
 # Import CppUTest
-add_subdirectory(../lib/cpputest ${CMAKE_CURRENT_BINARY_DIR}/cpputest)
+add_subdirectory(${PROJECT_SOURCE_DIR}/../lib/cpputest ${CMAKE_CURRENT_BINARY_DIR}/cpputest)
 
-# Add the Ichnaea source code as a library compiled with coverage flags
-file(GLOB_RECURSE ICHNAEA_SOURCES ${PROJECT_SOURCE_DIR}/../src/*.cpp)
-add_library(Ichnaea_CoverageLib STATIC ${ICHNAEA_SOURCES})
-target_compile_options(Ichnaea_CoverageLib PRIVATE -fprofile-arcs -ftest-coverage --coverage -g -O0)
-target_link_options(Ichnaea_CoverageLib PRIVATE -fprofile-arcs -ftest-coverage)
-target_link_libraries(Ichnaea_CoverageLib PRIVATE Ichnaea_Headers pico_mock_headers gcov)
-#target_include_directories(Ichnaea_CoverageLib PRIVATE ${PROJECT_SOURCE_DIR}/../)
-
-# Add test drivers
-add_library(Ichnaea_SystemTests STATIC
-  ${PROJECT_SOURCE_DIR}/src/bsp/test_board_map.cpp
-  ${PROJECT_SOURCE_DIR}/src/system/test_system_error.cpp
+# Include Dependent Headers
+set(TESTING_INCLUDE_DIRECTORIES
+  ${MBEDUTILS_TEST_EXPECT_DIR}
+  ${MBEDUTILS_TEST_FAKE_DIR}
+  ${MBEDUTILS_TEST_HARNESS_DIR}
+  ${MBEDUTILS_TEST_MOCK_DIR}
+  ${PROJECT_SOURCE_DIR}/../lib/cpputest/include
+  ${PROJECT_SOURCE_DIR}/expect
+  ${PROJECT_SOURCE_DIR}/mock
 )
-target_link_libraries(Ichnaea_SystemTests PRIVATE Ichnaea_Headers pico_mock_headers CppUTest)
 
-# Add the test executable
-add_executable(IchnaeaTests main_test_entry.cpp)
-target_include_directories(IchnaeaTests PRIVATE ../lib/cpputest/include)
-target_link_libraries(IchnaeaTests PRIVATE
-  CppUTest
-  CppUTestExt
-  gcov
-  Ichnaea_SystemTests
-  Ichnaea_CoverageLib
-  pico_mock_lib
-  )
+add_subdirectory(src/bsp)
+add_subdirectory(src/hw/nor)
+add_subdirectory(src/system/system_db)
 
-add_test(NAME IchnaeaTests COMMAND IchnaeaTests)
-
+# Add test targets
+add_custom_target(BuildAllTests)
+add_dependencies(BuildAllTests
+  TestBoardMap
+  TestNor
+  TestSystemDB
+)

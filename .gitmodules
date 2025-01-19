@@ -22,3 +22,27 @@
 [submodule "lib/freertos-kernel"]
 	path = lib/freertos-kernel
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "lib/mbedutils_freertos"]
+	path = lib/mbedutils_freertos
+	url = https://github.com/brandonbraun653/mbedutils_freertos.git
+[submodule "lib/mbedutils_pico"]
+	path = lib/mbedutils_pico
+	url = https://github.com/brandonbraun653/mbedutils_pico.git
+[submodule "lib/mbedutils_sim"]
+	path = lib/mbedutils_sim
+	url = https://github.com/brandonbraun653/mbedutils_sim.git
+[submodule "lib/mbedutils_test"]
+	path = lib/mbedutils_test
+	url = https://github.com/brandonbraun653/mbedutils_test.git
+[submodule "lib/pico-sim"]
+	path = lib/pico-sim
+	url = https://github.com/brandonbraun653/pico-sim.git
+[submodule "lib/cmsis-dsp"]
+	path = lib/cmsis-dsp
+	url = https://github.com/ARM-software/CMSIS-DSP.git
+[submodule "lib/iir-designer-cmsis-dsp"]
+	path = lib/iir-designer-cmsis-dsp
+	url = https://github.com/matteoscordino/iir-designer-cmsis-dsp.git
+[submodule "lib/cmsis-6"]
+	path = lib/cmsis-6
+	url = https://github.com/ARM-software/CMSIS_6.git

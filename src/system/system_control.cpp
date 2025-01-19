@@ -11,8 +11,8 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/bsp/board_map.hpp"
-#include "src/system/system_control.hpp"
+#include <src/bsp/board_map.hpp>
+#include <src/system/system_control.hpp>
 
 namespace System
 {

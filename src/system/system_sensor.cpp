@@ -3,7 +3,7 @@
  *    system_sensor.cpp
  *
  *  Description:
- *    Ichnaea system sensor measurement routines
+ *    Ichnaea system sensor measurement and data conversion routines
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -11,133 +11,179 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include <algorithm>
-#include "src/system/system_sensor.hpp"
-#include "src/hw/ltc7871.hpp"
-#include "src/hw/adc.hpp"
-#include <mbedutils/logging.hpp>
+#include "mbedutils/drivers/threading/thread.hpp"
+#include <etl/algorithm.h>
 #include <mbedutils/drivers/hardware/analog.hpp>
+#include <mbedutils/logging.hpp>
+#include <src/app/pdi/cal_output_current.hpp>
+#include <src/bsp/board_map.hpp>
+#include <src/hw/adc.hpp>
+#include <src/hw/fan.hpp>
+#include <src/hw/ltc7871.hpp>
+#include <src/system/system_sensor.hpp>
 
-namespace Sensor
+namespace System::Sensor
 {
-  /*---------------------------------------------------------------------------
-  Constants
-  ---------------------------------------------------------------------------*/
-
-  /*---------------------------------------------------------------------------
-  Static Data
-  ---------------------------------------------------------------------------*/
-
-
   /*---------------------------------------------------------------------------
   Private Functions
   ---------------------------------------------------------------------------*/
 
-  static float calculateThermistorTemp( const float vOut )
-  {
-    constexpr float t0      = 25.0f;     /* NTC Nomnal 25C */
-    constexpr float r0      = 10'000.0f; /* NTC Nomnal 10k */
-    constexpr float r_fixed = 10'000.0f; /* 10k Upper resistor*/
-    constexpr float beta    = 3'380.0f;  /* NTC Beta: 445-2550-1-ND */
-
-    return Analog::calculateTempBeta( vOut, 5.0f, beta, r_fixed, r0, t0 );
-  }
+  static float calc_thermistor_temp( const float vOut );
+  static float get_ltc_avg_current( const LookupType lut );
+  static float get_high_side_voltage( const LookupType lut );
+  static float get_low_side_voltage( const LookupType lut );
+  static float get_rp2040_temp( const LookupType lut );
+  static float get_board_temp0( const LookupType lut );
+  static float get_board_temp1( const LookupType lut );
+  static float read_imon_load();
+  static float get_imon_load( const LookupType lut );
+  static float get_vmon_1v1( const LookupType lut );
+  static float get_vmon_3v3( const LookupType lut );
+  static float get_vmon_5v0( const LookupType lut );
+  static float get_vmon_12v( const LookupType lut );
 
   /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  float getAverageCurrent( const LookupType lut )
+  void initialize()
   {
-    using namespace HW::LTC7871;
+    /*-------------------------------------------------------------------------
+    Register sensor calibration PDI keys
+    -------------------------------------------------------------------------*/
+    App::PDI::pdi_register_key_cal_output_current();
+  }
 
-    constexpr float IMON_RNG_MIN = 0.4f;
-    constexpr float IMON_RNG_MAX = 2.5f;
-    constexpr float IMON_ZERO    = 1.25f;
 
+  float getMeasurement( const Element channel, const LookupType lut )
+  {
+    switch( channel )
+    {
+      case Element::RP2040_TEMP:
+        return get_rp2040_temp( lut );
+
+      case Element::BOARD_TEMP_0:
+        return get_board_temp0( lut );
+
+      case Element::BOARD_TEMP_1:
+        return get_board_temp1( lut );
+
+      case Element::IMON_LTC_AVG:
+        return get_ltc_avg_current( lut );
+
+      case Element::VMON_SOLAR_INPUT:
+        return get_high_side_voltage( lut );
+
+      case Element::VMON_LOAD:
+        return get_low_side_voltage( lut );
+
+      case Element::IMON_LOAD:
+        return get_imon_load( lut );
+
+      case Element::VMON_1V1:
+        return get_vmon_1v1( lut );
+
+      case Element::VMON_3V3:
+        return get_vmon_3v3( lut );
+
+      case Element::VMON_5V0:
+        return get_vmon_5v0( lut );
+
+      case Element::VMON_12V:
+        return get_vmon_12v( lut );
+
+      case Element::FAN_SPEED:
+        return HW::FAN::getFanSpeed();
+
+      default:
+        mbed_assert_continue_msg( false, "Invalid sensor element: %d", static_cast<size_t>( channel ) );
+        return 0.0f;
+    }
+  }
+
+
+  void Calibration::calibrateImonNoLoadOffset()
+  {
+    constexpr size_t NUM_SAMPLES = 10;
+
+    /*-------------------------------------------------------------------------
+    Take a few samples and average them to get the offset value.
+    -------------------------------------------------------------------------*/
+    float offset = 0.0f;
+    for( size_t i = 0; i < NUM_SAMPLES; i++ )
+    {
+      offset += read_imon_load();
+      mb::thread::this_thread::sleep_for( 5 );
+    }
+
+    offset /= static_cast<float>( NUM_SAMPLES );
+
+    /*-------------------------------------------------------------------------
+    Update the calibration data
+    -------------------------------------------------------------------------*/
+    ichnaea_PDI_BasicCalibration calData;
+    App::PDI::getCalOutputCurrent( calData );
+    calData.offset = offset;
+    App::PDI::setCalOutputCurrent( calData );
+  }
+
+  /*---------------------------------------------------------------------------
+  Private Function Implementations
+  ---------------------------------------------------------------------------*/
+
+  static float calc_thermistor_temp( const float vOut )
+  {
+    auto ioConfig = BSP::getIOConfig();
+    return Analog::calculateTempBeta( vOut, ioConfig.tmon_vdiv_input, ioConfig.tmon_beta_25C, ioConfig.tmon_vdiv_r1_fixed,
+                                      ioConfig.tmon_vdiv_r2_thermistor, 25.0f );
+  }
+
+
+  static float get_ltc_avg_current( const LookupType lut )
+  {
     static float s_cached_avg_current = 0.0f;
     if( lut == LookupType::CACHED )
     {
       return s_cached_avg_current;
     }
 
-    /*-------------------------------------------------------------------------
-    Get operational parameters of the LTC7871
-    -------------------------------------------------------------------------*/
-    float k = 0;
-    switch( getILim() )
-    {
-      case ILim::V0:
-      case ILim::V1_4:
-        k = 40.0f;
-        break;
-
-      case ILim::V3_4:
-      case ILim::V5:
-        k = 20.0f;
-        break;
-
-      default:
-        mbed_assert_continue_msg( false, "Invalid ILim value: %d", static_cast<size_t>( getILim() ) );
-        return 0.0f;
-    }
-
-    // TODO: Pull this info from the board spec.
-    float RSense = getRSense();
-    mbed_dbg_assert_msg( RSense > 0.0f, "Invalid RSense value: %.2f", RSense );
-
-    /*-------------------------------------------------------------------------
-    Calculate the current based on the IMON voltage (pg. 16)
-    -------------------------------------------------------------------------*/
-    float Vimon = HW::ADC::getVoltage( HW::ADC::Channel::LTC_IMON );
-    if( ( Vimon < IMON_RNG_MIN ) || ( Vimon > IMON_RNG_MAX ) )
-    {
-      mbed_assert_continue_msg( !HW::LTC7871::available(), "IMON voltage out of range: %.2f", Vimon );
-      Vimon = std::min( IMON_RNG_MAX, std::max( IMON_RNG_MIN, Vimon ) );
-    }
-
-    s_cached_avg_current = ( 6.0f * ( Vimon - IMON_ZERO ) ) / ( k * RSense );
+    float imon           = HW::ADC::getVoltage( HW::ADC::Channel::LTC_IMON );
+    s_cached_avg_current = HW::LTC7871::getAverageOutputCurrent( imon );
     return s_cached_avg_current;
   }
 
 
-  float getHighSideVoltage( const LookupType lut )
+  static float get_high_side_voltage( const LookupType lut )
   {
-    // TODO: Pull this info from the board spec.
-    constexpr float R1 = 470'000.0f;
-    constexpr float R2 = 15'000.0f;
-
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
     {
       return s_cached_value;
     }
 
-    float Vout = HW::ADC::getVoltage( HW::ADC::Channel::HV_DC_SENSE );
-    s_cached_value = Analog::calculateVoltageDividerInput( Vout, R1, R2 );
+    auto  ioConfig = BSP::getIOConfig();
+    float Vout     = HW::ADC::getVoltage( HW::ADC::Channel::HV_DC_SENSE );
+    s_cached_value = Analog::calculateVoltageDividerInput( Vout, ioConfig.vmon_solar_vdiv_r1, ioConfig.vmon_solar_vdiv_r2 );
     return s_cached_value;
   }
 
 
-  float getLowSideVoltage( const LookupType lut )
+  static float get_low_side_voltage( const LookupType lut )
   {
-    // TODO: Pull this info from the board spec.
-    constexpr float R1 = 470'000.0f;
-    constexpr float R2 = 27'000.0f;
-
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
     {
       return s_cached_value;
     }
 
-    float Vout = HW::ADC::getVoltage( HW::ADC::Channel::LV_DC_SENSE );
-    s_cached_value = Analog::calculateVoltageDividerInput( Vout, R1, R2 );
+    auto  ioConfig = BSP::getIOConfig();
+    float Vout     = HW::ADC::getVoltage( HW::ADC::Channel::LV_DC_SENSE );
+    s_cached_value = Analog::calculateVoltageDividerInput( Vout, ioConfig.vmon_load_vdiv_r1, ioConfig.vmon_load_vdiv_r2 );
     return s_cached_value;
   }
 
 
-  float getRP2040Temp( const LookupType lut )
+  static float get_rp2040_temp( const LookupType lut )
   {
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
@@ -148,13 +194,13 @@ namespace Sensor
     /*-------------------------------------------------------------------------
     Taken from the RP2040 datasheet section 4.1.1.1
     -------------------------------------------------------------------------*/
-    float temp    = HW::ADC::getVoltage( HW::ADC::Channel::RP2040_TEMP );
+    float temp     = HW::ADC::getVoltage( HW::ADC::Channel::RP2040_TEMP );
     s_cached_value = 27.0f - ( ( temp - 0.706f ) / 0.001721 );
     return s_cached_value;
   }
 
 
-  float getBoardTemp0( const LookupType lut )
+  static float get_board_temp0( const LookupType lut )
   {
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
@@ -162,13 +208,13 @@ namespace Sensor
       return s_cached_value;
     }
 
-    float vOut = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_0 );
-    s_cached_value = calculateThermistorTemp( vOut );
+    float vOut     = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_0 );
+    s_cached_value = calc_thermistor_temp( vOut );
     return s_cached_value;
   }
 
 
-  float getBoardTemp1( const LookupType lut )
+  static float get_board_temp1( const LookupType lut )
   {
     static float s_cached_value = 0.0f;
     if( lut == LookupType::CACHED )
@@ -176,8 +222,133 @@ namespace Sensor
       return s_cached_value;
     }
 
-    float vOut = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_1 );
-    s_cached_value = calculateThermistorTemp( vOut );
+    float vOut     = HW::ADC::getVoltage( HW::ADC::Channel::TEMP_SENSE_1 );
+    s_cached_value = calc_thermistor_temp( vOut );
     return s_cached_value;
   }
-}  // namespace Data
+
+
+  /**
+   * @brief Reads the IMON_LOAD channel and calculates the current in amps.
+   *
+   * @return float
+   */
+  static float read_imon_load()
+  {
+    auto  ioConfig = BSP::getIOConfig();
+    float vOut     = HW::ADC::getVoltage( HW::ADC::Channel::IMON_LOAD );
+    float vMsr     = Analog::calculateVoltageDividerInput( vOut, ioConfig.imon_load_vdiv_r1, ioConfig.imon_load_vdiv_r2 );
+    return ( vMsr / ioConfig.imon_load_rsense ) * ( 1.0f / ioConfig.imon_load_opamp_gain );
+  }
+
+
+  /**
+   * @brief Computes the calibrated IMON_LOAD current value in amps.
+   *
+   * @param lut Type of lookup to perform
+   * @return float
+   */
+  static float get_imon_load( const LookupType lut )
+  {
+    static float s_cached_value = 0.0f;
+
+    if( ( lut == LookupType::CACHED ) || ( BSP::getBoardRevision() < 2 ) )
+    {
+      return s_cached_value;
+    }
+
+    /*-------------------------------------------------------------------------
+    Read the raw IMON_LOAD value
+    -------------------------------------------------------------------------*/
+    float iSenseRaw = read_imon_load();
+
+    /*-------------------------------------------------------------------------
+    Apply the calibration data to get the final current value
+    -------------------------------------------------------------------------*/
+    ichnaea_PDI_BasicCalibration calData;
+    App::PDI::getCalOutputCurrent( calData );
+
+    float iSenseCal = iSenseRaw * calData.gain - calData.offset;
+    s_cached_value  = etl::clamp( iSenseCal, calData.valid_min, calData.valid_max );
+
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_1v1( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    s_cached_value = HW::ADC::getVoltage( HW::ADC::Channel::VMON_1V1 );
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_3v3( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    auto  ioConfig = BSP::getIOConfig();
+    float vOut     = HW::ADC::getVoltage( HW::ADC::Channel::VMON_3V3 );
+    s_cached_value = Analog::calculateVoltageDividerInput( vOut, ioConfig.vmon_3v3_vdiv_r1, ioConfig.vmon_3v3_vdiv_r2 );
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_5v0( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    auto  ioConfig = BSP::getIOConfig();
+    float vOut     = HW::ADC::getVoltage( HW::ADC::Channel::VMON_5V0 );
+    s_cached_value = Analog::calculateVoltageDividerInput( vOut, ioConfig.vmon_5v0_vdiv_r1, ioConfig.vmon_5v0_vdiv_r2 );
+    return s_cached_value;
+  }
+
+
+  static float get_vmon_12v( const LookupType lut )
+  {
+    if( BSP::getBoardRevision() < 2 )
+    {
+      return 0.0f;
+    }
+
+    static float s_cached_value = 0.0f;
+    if( lut == LookupType::CACHED )
+    {
+      return s_cached_value;
+    }
+
+    auto  ioConfig = BSP::getIOConfig();
+    float vOut     = HW::ADC::getVoltage( HW::ADC::Channel::VMON_12V );
+    s_cached_value = Analog::calculateVoltageDividerInput( vOut, ioConfig.vmon_12v_vdiv_r1, ioConfig.vmon_12v_vdiv_r2 );
+    return s_cached_value;
+  }
+}    // namespace System::Sensor

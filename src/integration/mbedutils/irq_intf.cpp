@@ -13,7 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
 #include <mbedutils/interfaces/irq_intf.hpp>
-#include "src/system/system_util.hpp"
+#include <src/system/system_util.hpp>
 #include "hardware/sync.h"
 
 namespace mb::irq
@@ -36,13 +36,17 @@ namespace mb::irq
 
   void disable_interrupts()
   {
+    #if defined( ICHNAEA_EMBEDDED )
     s_saved_interrupt_mask = save_and_disable_interrupts();
+    #endif
   }
 
 
   void enable_interrupts()
   {
+    #if defined( ICHNAEA_EMBEDDED )
     restore_interrupts( s_saved_interrupt_mask );
+    #endif
   }
 
 }    // namespace mb::irq

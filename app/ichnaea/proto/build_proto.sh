@@ -21,7 +21,7 @@ _cwd=$(pwd)
 
 SRC_DIR=$_cwd
 PY_DST_DIR=$_cwd
-C_DST_DIR=$_cwd/../../../src/com/proto
+C_DST_DIR=$_cwd/../../../src/app/proto
 
 # Find the nanopb installation directory in the virtual environment
 NPB_ROOT=$(python -c "import os; import nanopb; print(os.path.dirname(nanopb.__file__))")

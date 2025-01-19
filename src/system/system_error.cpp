@@ -11,11 +11,13 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/bsp/board_map.hpp"
-#include "src/system/panic_handlers.hpp"
-#include "src/system/system_error.hpp"
 #include <cstddef>
 #include <cstring>
+#include <mbedutils/util.hpp>
+#include <src/bsp/board_map.hpp>
+#include <src/ichnaea_config.hpp>
+#include <src/system/panic_handlers.hpp>
+#include <src/system/system_error.hpp>
 
 namespace Panic
 {
@@ -33,7 +35,10 @@ namespace Panic
   void powerUp()
   {
     s_last_error = ErrorCode::NO_ERROR;
-    memset( s_error_handlers, 0, sizeof( s_error_handlers ) );
+    for( size_t x = 0; x < static_cast<size_t>( ErrorCode::NUM_OPTIONS ); x++ )
+    {
+      s_error_handlers[ x ] = {};
+    }
   }
 
 
@@ -42,17 +47,17 @@ namespace Panic
     s_last_error = code;
 
     /*-------------------------------------------------------------------------
-    Break into the debugger if it's attached. It's likely we want to inspect
-    the state of the system at this point.
+    Trap the system if configured and an error occurs
     -------------------------------------------------------------------------*/
-    #if defined( ICHNAEA_EMBEDDED )
-    __asm volatile( "bkpt #0" );
-    #endif  /* ICHNAEA_EMBEDDED */
+    if constexpr( Config::DEBUG_BREAK_ON_PANIC )
+    {
+      mb::util::breakpoint();
+    }
 
     /*-------------------------------------------------------------------------
     Call the appropriate error handler
     -------------------------------------------------------------------------*/
-    if( ( code < ErrorCode::NUM_OPTIONS ) && ( s_error_handlers[ static_cast<size_t>( code ) ] != nullptr ) )
+    if( ( code < ErrorCode::NUM_OPTIONS ) && ( s_error_handlers[ static_cast<size_t>( code ) ] ) )
     {
       return s_error_handlers[ static_cast<size_t>( code ) ]( code );
     }
@@ -65,11 +70,17 @@ namespace Panic
 
   void assertion( const bool predicate, const ErrorCode code )
   {
+    /*-------------------------------------------------------------------------
+    If the predicate is false, throw the error, which should attempt to recover
+    from the error condition. If the error handler fails to recover, the system
+    will reset.
+    -------------------------------------------------------------------------*/
     if( !predicate )
     {
-      throwError( code );
+      mbed_assert( throwError( code ) );
     }
   }
+
 
   ErrorCode getLastError()
   {

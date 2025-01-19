@@ -22,14 +22,18 @@ namespace HW::LED
   /*---------------------------------------------------------------------------
   Enumerations
   ---------------------------------------------------------------------------*/
-  enum Channel : uint
+  enum Channel : unsigned int
   {
-    STATUS_0,
-    STATUS_1,
-    STATUS_2,
-    STATUS_3,
+    STATUS_0,    // Yellow
+    STATUS_1,    // Yellow
+    STATUS_2,    // Green
+    STATUS_3,    // Green
 
-    NUM_OPTIONS
+    NUM_OPTIONS,
+
+    // Aliases
+    FAULT     = STATUS_0,
+    HEARTBEAT = STATUS_3,
   };
 
   /*---------------------------------------------------------------------------
@@ -51,21 +55,21 @@ namespace HW::LED
    *
    * @param channel   Which LED to turn on
    */
-  void enable( const uint channel );
+  void enable( const unsigned int channel );
 
   /**
    * @brief Turns off the LED
    *
    * @param channel   Which LED to turn off
    */
-  void disable( const uint channel );
+  void disable( const unsigned int channel );
 
   /**
    * @brief Toggles the logical state of the led
    *
    * @param channel   Which LED to toggle
    */
-  void toggle( const uint channel );
+  void toggle( const unsigned int channel );
 
   /**
    * @brief Set the brightness of the LED when it's enabled
@@ -73,7 +77,7 @@ namespace HW::LED
    * @param channel   Which LED to adjust
    * @param brightness  Brightness level from 0.0 to 1.0
    */
-  void setBrightness( const uint channel, const float brightness );
+  void setBrightness( const unsigned int channel, const float brightness );
 
 }    // namespace HW::LED
 

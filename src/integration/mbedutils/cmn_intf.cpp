@@ -12,7 +12,7 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/interfaces/cmn_intf.hpp>
-#include "src/bsp/board_map.hpp"
+#include <src/bsp/board_map.hpp>
 
 namespace mb::hw
 {

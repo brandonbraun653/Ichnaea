@@ -1,0 +1,1 @@
+These generated files are originating from the app/ichnaea/simulator/proto/build_proto.sh script.

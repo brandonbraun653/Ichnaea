@@ -12,9 +12,9 @@
 Includes
 -----------------------------------------------------------------------------*/
 
-#include "src/com/rpc/rpc_services.hpp"
-#include "src/system/system_util.hpp"
-#include "src/version.hpp"
+#include <src/com/rpc/rpc_services.hpp>
+#include <src/system/system_util.hpp>
+#include <src/version.hpp>
 
 namespace COM::RPC
 {

@@ -32,11 +32,49 @@
         "**/Thumbs.db": true,
         "**/__pycache__": true,
     },
-    "protoc":{
+    "protoc": {
         "compile_on_save": false,
         "options": [
-            "--proto_path=${workspaceFolder}/src/com/proto",
+            "--proto_path=${workspaceFolder}/app/ichnaea/proto",
+            "--proto_path=${workspaceFolder}/app/ichnaea/simulator/proto",
             "--proto_path=${workspaceFolder}/lib/mbedutils/python/mbedutils/rpc/proto"
         ]
+    },
+    "cortex-debug.variableUseNaturalFormat": true,
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "clangd.path": "clangd",
+    "clangd.arguments": [
+        "-log=verbose",
+        "-pretty",
+        "--background-index",
+        // Must explicitly set compilers (set by dockerfile): https://github.com/clangd/clangd/issues/1654
+        "--query-driver=/usr/local/bin/arm-none-eabi-gcc,/usr/local/bin/arm-none-eabi-g++", //for cross compile usage
+        "--compile-commands-dir=${workspaceFolder}/artifacts"
+    ],
+    "editor.semanticHighlighting.enabled": true,
+    "git.detectSubmodulesLimit": 100,
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "python.testing.pytestArgs": [
+        "tests", // Run tests in the 'tests' directory
+        "-v", // Increase verbosity of the output
+        // "--capture=tee-sys" // Capture stdout and stderr and display it in real-time
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "editor.formatOnSave": true,
+    "flake8.enabled": true,
+    "[python]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.unusedImports": "explicit",
+        }
+    },
+    "[cpp]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
     }
 }

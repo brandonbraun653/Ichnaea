@@ -15,15 +15,8 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include <cstdint>
 #include <cstddef>
-
-/*-----------------------------------------------------------------------------
-Macros
------------------------------------------------------------------------------*/
-
-#define PANIC_HANDLER_DECL( NAME ) bool NAME( const ErrorCode &code )
-#define PANIC_HANDLER_DEF( NAME ) bool NAME( const ErrorCode &code )
+#include <etl/delegate.h>
 
 namespace Panic
 {
@@ -60,7 +53,21 @@ namespace Panic
     ERR_LTC_CMD_FAIL,                         /* A commanded interaction failed to apply as expected */
     ERR_LTC_HW_STRAP_FAIL,                    /* The hardware strap configuration is invalid */
     ERR_LTC_FAULT,                            /* The LTC7871 has thrown a fault code */
+    ERR_LTC_PWR_DWN_FAIL,                     /* Failed to power down the LTC7871. Likely HW failure. */
     _ERR_LTC_END,
+
+    /*-------------------------------------------------------------------------
+    Monitoring Errors
+    -------------------------------------------------------------------------*/
+    _ERR_MONITOR_START,
+
+    ERR_MONITOR_12V0_OOR = _ERR_MONITOR_START, /* 12V rail entered invalid range */
+    ERR_MONITOR_VIN_OOR,                       /* Input voltage entered invalid range */
+    ERR_MONITOR_VOUT_OOR,                      /* Output voltage entered invalid range */
+    ERR_MONITOR_IOUT_OOR,                      /* Output current entered invalid range */
+    ERR_MONITOR_TEMP_OOR,                      /* Temperature entered invalid range */
+    ERR_MONITOR_FAN_SPEED_OOR,                 /* Fan speed entered invalid range */
+    _ERR_MONITOR_END,
 
     NUM_OPTIONS
   };
@@ -69,7 +76,7 @@ namespace Panic
   Aliases
   ---------------------------------------------------------------------------*/
 
-  using ErrorCallback = bool ( * )( const ::Panic::ErrorCode & );
+  using ErrorCallback = etl::delegate<bool( const ::Panic::ErrorCode & )>;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -86,7 +93,7 @@ namespace Panic
    * @param code  Error code to report
    * @return bool True if the handler was able to recover, false otherwise
    */
-  bool throwError( const ErrorCode code );
+  bool throwError( const Panic::ErrorCode code );
 
   /**
    * @brief Throws an error if the predicate is false
@@ -94,13 +101,13 @@ namespace Panic
    * @param predicate Condition to evaluate
    * @param code    Error code to throw if the predicate is false
    */
-  void assertion( const bool predicate, const ErrorCode code );
+  void assertion( const bool predicate, const Panic::ErrorCode code );
 
   /**
    * @brief Get the last thrown error code
    * @return ErrorCode
    */
-  ErrorCode getLastError();
+  Panic::ErrorCode getLastError();
 
   /**
    * @brief Resets the error code back to NO_ERROR
@@ -113,7 +120,7 @@ namespace Panic
    * @param code    Error code to register the handler for
    * @param handler Function to call when the error occurs
    */
-  void registerHandler( const ErrorCode code, ErrorCallback handler );
+  void registerHandler( const Panic::ErrorCode code, Panic::ErrorCallback handler );
 
 }    // namespace Panic
 

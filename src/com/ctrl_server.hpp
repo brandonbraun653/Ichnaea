@@ -29,6 +29,11 @@ namespace Control
    */
   void initialize();
 
+  /**
+   * @brief Retrieves the RPC server instance
+   *
+   * @return mb::rpc::server::Server&
+   */
   mb::rpc::server::Server &getRPCServer();
 
 }  // namespace Control

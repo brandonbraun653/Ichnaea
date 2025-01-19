@@ -1,0 +1,25 @@
+syntax = "proto2";
+import "nanopb.proto";
+import "mbed_rpc.proto";
+
+package ichnaea;
+
+// Asynchronous messages that can be sent between nodes in the network and are not RPCs. Usually this is
+// for system health monitoring and other non-critical messages occurring in the background. These messages
+// start at 500 to avoid conflicts with the mbed_rpc.proto messages and ichnaea_rpc.proto messages.
+enum AsyncMessageId {
+  MSG_HEARTBEAT = 200;
+}
+
+enum AsyncMessageVersion {
+  // option allow_alias = true;
+  MSG_VER_HEARTBEAT = 0;
+}
+
+/* MSG_HEARTBEAT */
+message Heartbeat {
+  required mbed.rpc.Header header = 1;
+  required uint32 boot_count = 2 [(nanopb).int_size = IS_32];
+  required uint32 node_id = 3 [(nanopb).int_size = IS_32];
+  required uint32 timestamp = 4 [(nanopb).int_size = IS_32];
+}

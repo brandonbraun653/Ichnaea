@@ -11,13 +11,15 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/bsp/board_map.hpp"
-#include "src/hw/uart.hpp"
+#include <src/bsp/board_map.hpp>
+#include <src/hw/uart.hpp>
 #include <etl/bip_buffer_spsc_atomic.h>
 #include <mbedutils/drivers/hardware/pico/pico_serial.hpp>
 
 namespace HW::UART
 {
+  static_assert( ( size_t )Channel::NUM_OPTIONS == ( size_t )BSP::UART_MAX_PORTS, "UART channel mismatch" );
+
   /*---------------------------------------------------------------------------
   Static Data
   ---------------------------------------------------------------------------*/
@@ -25,6 +27,10 @@ namespace HW::UART
   static mb::hw::serial::SerialDriver              s_bms_driver;
   static etl::bip_buffer_spsc_atomic<uint8_t, 512> s_bms_tx_buffer;
   static etl::bip_buffer_spsc_atomic<uint8_t, 512> s_bms_rx_buffer;
+
+  static mb::hw::serial::SerialDriver              s_debug_driver;
+  static etl::bip_buffer_spsc_atomic<uint8_t, 512> s_debug_tx_buffer;
+  static etl::bip_buffer_spsc_atomic<uint8_t, 512> s_debug_rx_buffer;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -63,6 +69,30 @@ namespace HW::UART
     serial_cfg.txBuffer = &s_bms_tx_buffer;
 
     mbed_assert( s_bms_driver.open( serial_cfg ) );
+
+    /*-------------------------------------------------------------------------
+    Configure the Debug UART channel
+    -------------------------------------------------------------------------*/
+    if( BSP::getBoardRevision() >= 2 )
+    {
+      uart_cfg.reset();
+      uart_cfg.uart        = io_cfg.uart[ UART_DEBUG ].pHw;
+      uart_cfg.baudrate    = 115200;
+      uart_cfg.data_bits   = 8;
+      uart_cfg.stop_bits   = 1;
+      uart_cfg.parity      = UART_PARITY_NONE;
+      uart_cfg.tx_pin      = io_cfg.uart[ UART_DEBUG ].tx;
+      uart_cfg.rx_pin      = io_cfg.uart[ UART_DEBUG ].rx;
+      uart_cfg.usr_channel = UART_DEBUG;
+
+      pico::configure( uart_cfg );
+
+      serial_cfg.channel = HW::UART::UART_DEBUG;
+      serial_cfg.rxBuffer = &s_debug_rx_buffer;
+      serial_cfg.txBuffer = &s_debug_tx_buffer;
+
+      mbed_assert( s_debug_driver.open( serial_cfg ) );
+    }
   }
 
 
@@ -72,6 +102,9 @@ namespace HW::UART
     {
       case UART_BMS:
         return s_bms_driver;
+
+      case UART_DEBUG:
+        return s_debug_driver;
 
       default:
         break;

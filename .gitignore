@@ -5,6 +5,10 @@
 _autosave*
 \#auto_saved_files\#
 __pycache__/
+artifacts/
 build/
 docs/
 hw/**/production
+hw/**/*.lck
+*.bin
+*.log

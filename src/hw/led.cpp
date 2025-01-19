@@ -11,9 +11,11 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "etl/array.h"
-#include "src/bsp/board_map.hpp"
-#include "src/hw/led.hpp"
+#include <etl/algorithm.h>
+#include <etl/array.h>
+#include <src/bsp/board_map.hpp>
+#include <src/hw/led.hpp>
+#include <mbedutils/interfaces/time_intf.hpp>
 
 namespace HW::LED
 {
@@ -26,7 +28,6 @@ namespace HW::LED
   static constexpr float    POST_RAMP_STEP_SZ  = 1.0f / POST_RAMP_STEPS;
   static constexpr uint32_t POST_RAMP_SLEEP_US = static_cast<uint32_t>( 1000.0f * ( 0.5f * POST_RAMP_TIME_MS / POST_RAMP_STEPS ) );
   static constexpr uint16_t PWM_COUNTER_WRAP   = 1000; /**< Arbitrary value to overflow the timer at */
-  static constexpr uint16_t PWM_COUNTER_OFF    = PWM_COUNTER_WRAP + 1;
 
   /*---------------------------------------------------------------------------
   Structures
@@ -37,7 +38,8 @@ namespace HW::LED
     uint     pin;         /**< Which pin this is physically mapped to */
     uint     pwm_slice;   /**< Which PWM slice is controlling this LED */
     uint     pwm_channel; /**< Which PWM channel is controlling this LED */
-    uint16_t level;       /**< PWM output level */
+    uint16_t on_level;    /**< PWM level when ON */
+    uint16_t off_level;   /**< PWM level when OFF */
     bool     enabled;     /**< Is the LED currently enabled */
   };
 
@@ -67,7 +69,7 @@ namespace HW::LED
     Figure out the correct clock divider to get roughly 1kHz PWM frequency
     -------------------------------------------------------------------------*/
     const float f_clk_peri = static_cast<float>( frequency_count_khz( CLOCKS_FC0_SRC_VALUE_CLK_PERI ) );
-    const float f_pwm      = 1000.0f;
+    const float f_pwm      = 1'000.0f;
     const float divisor    = f_clk_peri / f_pwm;
 
     /*-------------------------------------------------------------------------
@@ -81,18 +83,32 @@ namespace HW::LED
       state.pwm_slice   = pwm_gpio_to_slice_num( state.pin );
       state.pwm_channel = pwm_gpio_to_channel( state.pin );
 
+      switch( BSP::getBoardRevision() )
+      {
+        case 1:
+          state.off_level = PWM_COUNTER_WRAP + 1;
+          break;
+
+        case 2:
+        default:
+          state.off_level = 0;
+          break;
+      }
+
+      state.on_level  = state.off_level;
+
       /*-----------------------------------------------------------------------
       Configure the GPIO pin for PWM output with pullups. The LEDs can ghost
       a bit if the pullups are not enabled.
       -----------------------------------------------------------------------*/
       gpio_set_function( state.pin, GPIO_FUNC_PWM );
-      gpio_set_pulls( state.pin, true, false );
+      gpio_set_pulls( state.pin, false, false );
 
       /*-----------------------------------------------------------------------
       Initialize the PWM output to drive the LED off first. Inverted logic!
       -----------------------------------------------------------------------*/
       pwm_set_wrap( state.pwm_slice, PWM_COUNTER_WRAP );
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, PWM_COUNTER_OFF );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.off_level );
       pwm_set_clkdiv( state.pwm_slice, divisor );
       pwm_set_counter( state.pwm_slice, 0 );
     }
@@ -124,14 +140,14 @@ namespace HW::LED
       {
         current_brightness += POST_RAMP_STEP_SZ;
         setBrightness( channel, current_brightness );
-        sleep_us( POST_RAMP_SLEEP_US );
+        mb::time::delayMicroseconds( POST_RAMP_SLEEP_US );
       }
 
       for( uint32_t i = 0; i < POST_RAMP_STEPS; i++ )
       {
         current_brightness -= POST_RAMP_STEP_SZ;
         setBrightness( channel, current_brightness );
-        sleep_us( POST_RAMP_SLEEP_US );
+        mb::time::delayMicroseconds( POST_RAMP_SLEEP_US );
       }
 
       setBrightness( channel, 0.0f );
@@ -148,7 +164,7 @@ namespace HW::LED
     }
 
     auto &state = s_led_map[ channel ];
-    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.level );
+    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.on_level );
     state.enabled = true;
   }
 
@@ -161,7 +177,7 @@ namespace HW::LED
     }
 
     auto &state = s_led_map[ channel ];
-    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, PWM_COUNTER_OFF );
+    pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.off_level );
     state.enabled = true;
   }
 
@@ -178,11 +194,11 @@ namespace HW::LED
 
     if( state.enabled )
     {
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.level );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.on_level );
     }
     else
     {
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, PWM_COUNTER_OFF );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.off_level );
     }
   }
 
@@ -196,24 +212,28 @@ namespace HW::LED
 
     /*-------------------------------------------------------------------------
     Clamp the brightness level to a valid range and convert it to a PWM level.
-    Hardware is logic low to turn on the LED, so invert the brightness level.
-    It's easier to control individual LED brightness this way, IMO without
-    getting super into the weeds of the PWM registers.
     -------------------------------------------------------------------------*/
-    const float    clamped_brightness = MAX( 0.0f, MIN( brightness, 0.99f ) );
-    const uint16_t approx_level       = MIN( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_brightness ) );
-    const uint16_t inverted_level     = PWM_COUNTER_WRAP - approx_level;
+    const float    clamped_brightness = etl::max( 0.0f, etl::min( brightness, 0.99f ) );
+    uint16_t       approx_level       = etl::min( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_brightness ) );
+
+    /*-------------------------------------------------------------------------
+    Invert the brightness level if the board is version 1. Direct drive LEDs.
+    -------------------------------------------------------------------------*/
+    if( BSP::getIOConfig().majorVersion == 1 )
+    {
+      approx_level = PWM_COUNTER_WRAP - approx_level;
+    }
 
     /*-------------------------------------------------------------------------
     Apply the updates to the cache to track for future state changes and then
     update the hardware.
     -------------------------------------------------------------------------*/
     auto &state = s_led_map[ channel ];
-    state.level = inverted_level;
+    state.on_level = approx_level;
 
     if( state.enabled )
     {
-      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.level );
+      pwm_set_chan_level( state.pwm_slice, state.pwm_channel, state.on_level );
     }
   }
 

@@ -11,11 +11,12 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "src/bsp/board_map.hpp"
-#include "src/com/ctrl_server.hpp"
-#include "src/threads/ichnaea_threads.hpp"
-#include "src/hw/ltc7871.hpp"
 #include <mbedutils/logging.hpp>
+#include <mbedutils/threading.hpp>
+#include <src/app/app_power.hpp>
+#include <src/com/ctrl_server.hpp>
+#include <src/hw/ltc7871.hpp>
+#include <src/threads/ichnaea_threads.hpp>
 
 namespace Threads
 {
@@ -25,11 +26,22 @@ namespace Threads
 
   void controlThread( void *arg )
   {
-    sleep_ms( 100 );
+    ( void )arg;
 
     while( 1 )
     {
-      sleep_ms( 25 );
+      /*-----------------------------------------------------------------------
+      Perform work periodically
+      -----------------------------------------------------------------------*/
+      mb::thread::this_thread::sleep_for( 25 );
+
+      /*-----------------------------------------------------------------------
+      Check for a kill request
+      -----------------------------------------------------------------------*/
+      if( mb::thread::this_thread::task()->killPending() )
+      {
+        break;
+      }
 
       /*-----------------------------------------------------------------------
       Update the system with any new control commands, data, etc.
@@ -39,7 +51,12 @@ namespace Threads
       /*-----------------------------------------------------------------------
       Consume new system state to make control decisions
       -----------------------------------------------------------------------*/
-      HW::LTC7871::stepController();
+      App::Power::periodicProcessing();
     }
+
+    /*-------------------------------------------------------------------------
+    Shutdown sequence
+    -------------------------------------------------------------------------*/
+    LOG_INFO( "Control thread shutting down" );
   }
 }    // namespace Threads

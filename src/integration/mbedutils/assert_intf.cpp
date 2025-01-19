@@ -11,8 +11,11 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
+#include <src/bsp/board_map.hpp>
 #include <mbedutils/interfaces/assert_intf.hpp>
+#include <mbedutils/interfaces/system_intf.hpp>
 #include <mbedutils/logging.hpp>
+#include <mbedutils/util.hpp>
 
 namespace mb::assert
 {
@@ -22,16 +25,19 @@ namespace mb::assert
 
   void on_assert_fail( const bool halt, const etl::string_view &msg )
   {
-    if( halt )
-    {
-      // TODO: Implement a system reset here
-      __asm volatile( "bkpt #0" );
-    }
-
     /*-------------------------------------------------------------------------
     Log the error message to the debug output
     -------------------------------------------------------------------------*/
     logging::log( logging::Level::LVL_ERROR, msg.data(), msg.size() );
+
+    /*-------------------------------------------------------------------------
+    Halt the system if requested
+    -------------------------------------------------------------------------*/
+    if( halt )
+    {
+      mb::util::breakpoint();
+      mb::system::intf::warm_reset();
+    }
   }
 
-}  // namespace mb::assert
+}    // namespace mb::assert

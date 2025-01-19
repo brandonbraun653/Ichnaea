@@ -12,9 +12,10 @@
 Includes
 -----------------------------------------------------------------------------*/
 
-#include "src/com/rpc/rpc_services.hpp"
-#include "src/system/system_util.hpp"
-#include "src/version.hpp"
+#include "mbed_rpc.pb.h"
+#include <src/com/rpc/rpc_services.hpp>
+#include <src/system/system_util.hpp>
+#include <src/version.hpp>
 
 namespace COM::RPC
 {
@@ -67,13 +68,15 @@ namespace COM::RPC
 
   mb::rpc::ErrId SetpointService::set_voltage_output( const float voltage )
   {
-    return mbed_rpc_ErrorCode_ERR_NO_ERROR;
+    ( void )voltage;
+    return mbed_rpc_ErrorCode_ERR_SVC_FAILED;
   }
 
 
   mb::rpc::ErrId SetpointService::set_max_current_limit( const float current )
   {
-    return mbed_rpc_ErrorCode_ERR_NO_ERROR;
+    ( void )current;
+    return mbed_rpc_ErrorCode_ERR_SVC_FAILED;
   }
 
 }  // namespace COM::RPC

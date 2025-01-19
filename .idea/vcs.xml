@@ -2,17 +2,27 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build/host/debug/_deps/catch2-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hw/lib/KiCadLib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hw/lib/espressif" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/cmsis-6" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/cmsis-dsp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/cpputest" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/etl" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/freertos-kernel" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/freertos-kernel/portable/ThirdParty/Community-Supported-Ports" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/freertos-kernel/portable/ThirdParty/Partner-Supported-Ports" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/iir-designer-cmsis-dsp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/mbedutils" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/mbedutils/lib/cobs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/mbedutils/lib/flashdb" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/mbedutils/lib/nanopb" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/mbedutils/lib/nanoprintf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/mbedutils_freertos" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/mbedutils_pico" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/mbedutils_sim" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/mbedutils_sim/lib/cppzmq" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/mbedutils_test" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/pico-mock" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/pico-mock/CppUMockGen" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/pico-mock/CppUMockGen/app/libs/cxxopts" vcs="Git" />
@@ -22,5 +32,6 @@
     <mapping directory="$PROJECT_DIR$/lib/pico-sdk/lib/lwip" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/pico-sdk/lib/mbedtls" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/pico-sdk/lib/tinyusb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/pico-sim" vcs="Git" />
   </component>
 </project>

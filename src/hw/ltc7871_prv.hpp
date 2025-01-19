@@ -18,7 +18,8 @@
 Includes
 -----------------------------------------------------------------------------*/
 #include <cstdint>
-#include "src/system/system_error.hpp"
+#include <src/system/system_error.hpp>
+#include <src/hw/ltc7871.hpp>
 #include <mbedutils/osal.hpp>
 
 namespace HW::LTC7871::Private
@@ -84,37 +85,32 @@ namespace HW::LTC7871::Private
   ---------------------------------------------------------------------------*/
 
   /**
-   * @brief Register values to control power conversion setpoints
-   */
-  struct LTCConfig
-  {
-    uint8_t idac_vlow;   /* Register setting for MFR_IDAC_VLOW */
-    uint8_t idac_vhigh;  /* Register setting for MFR_IDAC_VHIGH */
-    uint8_t idac_setcur; /* Register setting for MFR_IDAC_SETCUR */
-    uint8_t ssfm;        /* Register setting for MFR_SSFM */
-  };
-
-  /**
    * @brief Internal state of the LTC7871 driver
    */
   struct LTCState
   {
-    mb::osal::mb_recursive_mutex_t rmtx; /* Recursive mutex for thread safety */
-
     /* Static Board Properties */
-    float vlow_ra; /* Bottom resistor in VLow feedback divider */
-    float vlow_rb; /* Top resistor in VLow feedback divider */
+    float vlow_ra;     /* Bottom resistor in VLow feedback divider */
+    float vlow_rb;     /* Top resistor in VLow feedback divider */
+    float ilim_gain_k; /**< K gain constant based on ILIM setting (pg. 16) */
 
     /* Measurement Information */
-    float msr_input_voltage;   /* Measured input voltage (volts) */
-    float msr_output_voltage;  /* Measured output voltage (volts) */
-    float msr_average_current; /* Measured output current (amps) */
+    float msr_input_voltage;     /* Measured input voltage (volts) */
+    float msr_output_voltage;    /* Measured output voltage (volts) */
+    float msr_average_current;   /* Measured average current (amps) */
+    float msr_immediate_current; /* Measured output current (amps) */
 
     /* Live/Valid References */
-    float ref_output_voltage; /* Target output voltage (volts) */
+    float tgt_output_voltage; /* Target output voltage (volts) */
 
     /* Requests */
     float req_output_voltage; /* Requested output voltage (volts) */
+    float req_output_current; /* Requested output current (amps) */
+
+    /* Status */
+    DriverMode driver_mode;       /* Current operational mode of the driver */
+    uint32_t   fault_bits;        /* Bitfield to indicate if a fault has occurred */
+    uint32_t   fault_code_logged; /* Bitfield to indicate if a fault has been logged */
   };
 
   /*---------------------------------------------------------------------------
@@ -125,20 +121,6 @@ namespace HW::LTC7871::Private
    * @brief Initialize the internal driver state for the LTC7871.
    */
   void initialize();
-
-  /**
-   * @brief Decides a safe configuration to apply to the LTC7871.
-   *
-   * This will resolve through several data sources to try and determine the
-   * best configuration to apply to the LTC7871 when turning on the high power
-   * conversion hardware. If no configuration can be determined safely, this
-   * function will return false.
-   *
-   * @param cfg Configuration to update
-   * @return true  The resolved configuration is safe
-   * @return false Unable to safely resolve a configuration
-   */
-  bool resolve_power_on_config( LTCConfig &cfg );
 
   /**
    * @brief Clears the CML bit in the MFR_CHIP_CTRL register
@@ -209,26 +191,26 @@ namespace HW::LTC7871::Private
   void set_mode_pin( const uint8_t mode );
 
   /**
-   * @brief Set the output voltage of the LTC7871.
+   * @brief Set the state of the LTC RUN pin.
    *
-   * This modifies the MFR_IDAC_VLOW register to set the output voltage of the
-   * LTC7871.
+   * This controls the logic level present on pin 27 of the LTC7871. This will either
+   * enable or disable the controller logic.
    *
-   * @param state   Current state of the LTC7871 driver
-   * @param voltage Desired setpoint in Volts
+   * @param enable True to set RUN logic high, false to set RUN logic low
    */
-  void set_output_voltage( const LTCState &state, const float voltage );
+  void set_run_pin( const bool enable );
 
   /**
-   * @brief Sets the max average current for the LTC7871.
+   * @brief Enable or disable the power stage drivers.
    *
-   * This modifies the MFR_IDAC_SETCUR register to set the maximum average
-   * current that the LTC7871 will allow to flow through the load. Each
-   * phase on the board will share the load equally.
+   * The LTC7871 normally controls pin 28 (PWMEN) to activate the power stage, however
+   * this can be overridden by the user with an attached pulldown. This funtion acts
+   * like a half-gate mechanism. Disabling forces PWMEN low, but enabling only allows the
+   * LTC7871 to control the pin if it wants to. It does not force any other state.
    *
-   * @param current Desired setpoint in Amps
+   * @param enable False to forcefully disable PWMEN, true to release PWMEN control
    */
-  void set_max_avg_current( const float current );
+  void set_pwmen_pin( const bool enable );
 
   /**
    * @brief Sets the switching frequency of the LTC7871.
@@ -251,14 +233,25 @@ namespace HW::LTC7871::Private
   uint8_t compute_idac_vlow( const float vlow, const float ra, const float rb );
 
   /**
-   * @brief Update core power conversion settings based on the current state.
+   * @brief Computes a MFR_IDAC_SETCUR register value for max current limit
    *
-   * This will adjust switching frequency and conduction mode based on the
-   * user setpoints, power consumption, and system state.
-   *
-   * @param state Current system state
+   * @param ilim_gain Gain constant based on ILIM setting (pg. 16)
+   * @param current Desired max current (A)
+   * @param dcr     Phase inductor DCR (Ohms)
+   * @return A valid IDAC_SETCUR register value, or LTC_IDAC_REG_INVALID if invalid
    */
-  void update_operating_point( const LTCState &state );
+  uint8_t compute_idac_setcur( const float ilim_gain, const float current, const float dcr );
+
+  /**
+   * @brief Check if the minimum on-time requirement is satisfied.
+   *
+   * See page 29 of the datasheet
+   *
+   * @param vout Output voltage of the LTC7871
+   * @param vin  Input voltage of the LTC7871
+   * @return True if the requirement is satisfied, false otherwise
+   */
+  bool min_on_time_satisfied( const float vout, const float vin );
 
 }    // namespace HW::LTC7871::Private
 
