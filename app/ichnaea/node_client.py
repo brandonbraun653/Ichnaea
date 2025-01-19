@@ -179,7 +179,8 @@ class NodeClient:
         """
         # TODO BMB: This is assuming a direct connection to the node. Needs updates for meshed network.
         log_client = LoggerRPCClient(rpc_client=self._net_client.rpc_client, logger_id=0)
-        return log_client.write(message.encode("utf-8"), level=level)
+        data_to_send = message.encode("utf-8")
+        return log_client.write(data_to_send, level=level)
 
     def log_read(self, count: int = 1, direction: bool = True) -> List[str]:
         """

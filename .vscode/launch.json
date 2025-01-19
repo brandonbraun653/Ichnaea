@@ -9,7 +9,7 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "(gdb) Simulator Debug",
+      "name": "Simulator Debug",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/artifacts/host/Debug/Ichnaea",
@@ -54,7 +54,7 @@
     {
       // Black Magic Probe Debugging. Haven't figured out how to support SMP in the
       // same way that openocd does, so you're limited to a single core.
-      "name": "BMP Debug Core 0",
+      "name": "BMP Debug",
       "cwd": "${workspaceRoot}",
       "executable": "./build/mbed/debug/src/Ichnaea.elf",
       "request": "launch",
@@ -77,6 +77,19 @@
       "preRestartCommands": [
         "enable breakpoint"
       ]
+    },
+    {
+      "name": "BMP Attach",
+      "cwd": "${workspaceRoot}",
+      "executable": "./build/mbed/debug/src/Ichnaea.elf",
+      "request": "attach",
+      "type": "cortex-debug",
+      "servertype": "bmp",
+      "interface": "swd",
+      "device": "RP2040",
+      "svdFile": "${workspaceRoot}/lib/pico-sdk/src/rp2040/hardware_regs/rp2040.svd",
+      "gdbPath": "arm-none-eabi-gdb",
+      "BMPGDBSerialPort": "/dev/ttyACM0",
     }
   ]
 }
