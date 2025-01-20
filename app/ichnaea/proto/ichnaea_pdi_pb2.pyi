@@ -494,7 +494,7 @@ global___PDI_IIRFilterConfig = PDI_IIRFilterConfig
 @typing.final
 class PDI_BasicCalibration(google.protobuf.message.Message):
     """Storage for the most basic sensor calibration data. This is a simple offset
-    and gain calibration with a valid range, of the form y = m*x + b.
+    and gain calibration with a valid range, of the form y = m*x - b.
     """
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor

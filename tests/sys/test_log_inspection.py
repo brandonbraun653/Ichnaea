@@ -23,7 +23,7 @@ class TestLogInspection:
 
     def test_write_log(self):
         """Test writing a log entry to the device."""
-        if self.platform == "simulator":
+        if self.platform == Platform.Simulator:
             assert self.node_link.log_erase()
         assert self.node_link.log_write(
             "Test log entry", level=LoggerWriteRequest.Level.LEVEL_FATAL
@@ -31,7 +31,7 @@ class TestLogInspection:
 
     def test_read_log(self):
         """Test reading a log entry from the device."""
-        if self.platform == "simulator":
+        if self.platform == Platform.Simulator:
             assert self.node_link.log_erase()
         assert self.node_link.log_write(message="Hello, world!", level=LoggerWriteRequest.Level.LEVEL_FATAL)
         logs = self.node_link.log_read()
@@ -40,18 +40,18 @@ class TestLogInspection:
 
     def test_read_log_multiple(self):
         """Test reading multiple log entries from the device."""
-        if self.platform == "simulator":
+        if self.platform == Platform.Simulator:
             assert self.node_link.log_erase()
         assert self.node_link.log_write(message="Hello, world!", level=LoggerWriteRequest.Level.LEVEL_FATAL)
         assert self.node_link.log_write(message="Goodbye, world!", level=LoggerWriteRequest.Level.LEVEL_FATAL)
-        logs = self.node_link.log_read(count=2)
+        logs = self.node_link.log_read(count=2, direction=True)
         assert len(logs) == 2
         assert logs[0] == "Hello, world!"
         assert logs[1] == "Goodbye, world!"
 
     def test_read_log_multiple_reverse(self):
         """Test reading multiple log entries from the device in reverse order."""
-        if self.platform == "simulator":
+        if self.platform == Platform.Simulator:
             assert self.node_link.log_erase()
         assert self.node_link.log_write(message="Hello, world!", level=LoggerWriteRequest.Level.LEVEL_FATAL)
         assert self.node_link.log_write(message="Goodbye, world!", level=LoggerWriteRequest.Level.LEVEL_FATAL)

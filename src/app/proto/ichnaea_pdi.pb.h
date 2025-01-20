@@ -142,7 +142,7 @@ typedef struct _ichnaea_PDI_IIRFilterConfig {
 } ichnaea_PDI_IIRFilterConfig;
 
 /* Storage for the most basic sensor calibration data. This is a simple offset
- and gain calibration with a valid range, of the form y = m*x + b. */
+ and gain calibration with a valid range, of the form y = m*x - b. */
 typedef struct _ichnaea_PDI_BasicCalibration {
     float offset; /* b term in y = m*x + b */
     float gain; /* m term in y = m*x + b */
