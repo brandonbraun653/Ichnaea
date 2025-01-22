@@ -20,6 +20,27 @@ Includes
 namespace Threads
 {
   /*---------------------------------------------------------------------------
+  Static Functions
+  ---------------------------------------------------------------------------*/
+
+  void logMeasurements()
+  {
+    static uint32_t lastCallTime = 0;
+    uint32_t        currentTime  = mb::time::millis();
+
+    if( currentTime - lastCallTime >= 1000 )
+    {
+      lastCallTime = currentTime;
+
+      auto inputVoltage  = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
+      auto outputVoltage = System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD );
+      auto outputCurrent = System::Sensor::getMeasurement( System::Sensor::Element::IMON_LOAD );
+      LOG_INFO( "Input Voltage: %.2f V, Output Voltage: %.2f V, Output Current: %.2f A", inputVoltage, outputVoltage,
+                outputCurrent );
+    }
+  }
+
+  /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
@@ -71,6 +92,8 @@ namespace Threads
       App::Monitor::monitor12V0Voltage();
       App::Monitor::monitorTemperature();
       App::Monitor::monitorFanSpeed();
+
+      logMeasurements();
 
       /*-----------------------------------------------------------------------
       Yield to other threads
