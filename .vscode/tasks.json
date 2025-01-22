@@ -32,6 +32,26 @@
         "cwd": "${workspaceFolder}/tests"
       },
       "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "label": "System Tests: Simulator",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": [
+        "-m",
+        "pytest",
+        "-k",
+        "simulator",
+        "${workspaceFolder}/tests"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/tests"
+      },
+      "problemMatcher": []
     }
   ]
 }
