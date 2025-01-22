@@ -1,5 +1,20 @@
 {
   "version": "2.0.0",
+  "presentation": {
+    "reveal": "always",
+    "panel": "shared",
+    "showReuseMessage": false,
+    "clear": true
+  },
+  "options": {
+    "shell": {
+      "executable": "bash",
+      "args": [
+        "-c",
+        "source $(poetry env info --path)/bin/activate && $0 $*"
+      ]
+    }
+  },
   "tasks": [
     {
       "type": "shell",
@@ -36,13 +51,10 @@
     {
       "type": "shell",
       "label": "System Tests: Simulator",
-      "command": "${workspaceFolder}/.venv/bin/python",
+      "command": "pytest",
       "args": [
-        "-m",
-        "pytest",
         "-k",
-        "simulator",
-        "${workspaceFolder}/tests"
+        "simulator"
       ],
       "group": {
         "kind": "test",
