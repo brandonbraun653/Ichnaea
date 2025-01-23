@@ -9,7 +9,7 @@ from tests.sys.fixtures import *
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.parametrize("product_config", ["hardware"], indirect=True)
+@pytest.mark.parametrize("product_config", ["simulator"], indirect=True)
 class TestSandbox:
     """Human in the loop playground testing with the hardware platform"""
 
@@ -49,8 +49,6 @@ class TestSandbox:
 
         # Program user defined operational limits for the device
         assert self.node_link.pdi_write(PDI_ID.TARGET_SYSTEM_CURRENT_OUTPUT, PDI_FloatConfiguration(value=25.0))
-        # assert self.node_link.pdi_write(PDI_ID.CONFIG_MIN_SYSTEM_VOLTAGE_INPUT, PDI_FloatConfiguration(value=15.0))
-        # assert self.node_link.pdi_write(PDI_ID.CONFIG_MAX_SYSTEM_VOLTAGE_INPUT, PDI_FloatConfiguration(value=80.0))
 
     def teardown_method(self) -> None:
         """Common teardown routines after each test case"""
@@ -67,7 +65,7 @@ class TestSandbox:
         voltage_target = max(input_voltage / 2.0, 12.0)
         ilim_target = 1.0
 
-        assert self.node_link.set_output_voltage_target(voltage_target), "Unable to set output voltage"
+        assert self.node_link.set_output_voltage_target(20.0), "Unable to set output voltage"
         assert self.node_link.set_output_current_target(ilim_target), "Unable to set output current limit"
 
         # Engage the output, wait for the system to enable and stabilize

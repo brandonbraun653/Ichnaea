@@ -352,7 +352,7 @@ namespace App::Monitor
         s_monitor_state[ idx ].sample_rate_ms              = App::PDI::getMonFilter12V0Voltage().sampleRateMs;
         s_monitor_state[ idx ].pdi.voltage.nominal_voltage = 12.0f;
         s_monitor_state[ idx ].pdi.voltage.pct_error_lim   = 0.05f;
-        s_monitor_state[ idx ].oor_enter_delay_ms          = 500;
+        s_monitor_state[ idx ].oor_enter_delay_ms          = 2000;    // Must account for LTC startup time from near zero
         s_monitor_state[ idx ].oor_exit_delay_ms           = 10;
 
         force_monitor_invalid( s_monitor_state[ idx ] );

@@ -479,7 +479,7 @@ namespace HW::LTC7871
     accepted &= Private::min_on_time_satisfied( voltage, s_ltc_state.msr_input_voltage );
     LOG_WARN_IF( !accepted, "Vin/Vout ratio too high. Cannot set voltage to %.2f", voltage );
 
-    accepted &= voltage >= App::PDI::getSystemVoltageOutputRatedLimit();
+    accepted &= voltage <= App::PDI::getSystemVoltageOutputRatedLimit();
     LOG_WARN_IF( !accepted, "Voltage request too high: %.2f", voltage );
 
     if( accepted )
@@ -699,8 +699,9 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Ensure the input voltage is within the valid range
     -------------------------------------------------------------------------*/
-    if( !mbed_assert_continue_msg( voltage > s_ltc_state.msr_input_voltage, "Cannot set voltage to %.2f when input is %.2f",
-                                   voltage, s_ltc_state.msr_input_voltage ) )
+    if( !mbed_assert_continue_msg( voltage < s_ltc_state.msr_input_voltage,
+                                   "Requested output voltage (%.2f V) exceeds input voltage (%.2f V).", voltage,
+                                   s_ltc_state.msr_input_voltage ) )
     {
       return;
     }

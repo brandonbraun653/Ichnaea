@@ -46,6 +46,7 @@ namespace System::Shutdown
     LOG_INFO( "Shutdown procedure invoked" );
     stopThread( SystemTask::TSK_CONTROL_ID );
     stopThread( SystemTask::TSK_MONITOR_ID );
+    stopThread( SystemTask::TSK_DELAYED_IO_ID );
 
     // Only publish the kill request. Don't join yet.
     mb::thread::this_thread::task()->kill();

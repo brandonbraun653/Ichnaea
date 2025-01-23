@@ -1,9 +1,9 @@
 /******************************************************************************
  *  File Name:
- *    control_thread.cpp
+ *    delayed_io_thread.cpp
  *
  *  Description:
- *    Control thread to implement MPPT and other system control behaviors
+ *    Thread to handle delayed I/O operations
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -13,9 +13,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <mbedutils/logging.hpp>
 #include <mbedutils/threading.hpp>
-#include <src/app/app_power.hpp>
-#include <src/com/ctrl_server.hpp>
-#include <src/hw/ltc7871.hpp>
+#include <src/system/system_db.hpp>
 #include <src/threads/ichnaea_threads.hpp>
 
 namespace Threads
@@ -24,31 +22,51 @@ namespace Threads
   Public Functions
   ---------------------------------------------------------------------------*/
 
-  void controlThread( void *arg )
+  void delayedIOThread( void *arg )
   {
     ( void )arg;
 
+    mb::thread::Message tsk_msg;
+    Threads::TaskMsg    signal;
+
+    tsk_msg.data = &signal;
+    tsk_msg.size = sizeof( signal );
+
+    /*-------------------------------------------------------------------------
+    Signal the next thread in the sequence to start
+    -------------------------------------------------------------------------*/
+    startThread( SystemTask::TSK_MONITOR_ID );
+
+    /*-------------------------------------------------------------------------
+    Run the task
+    -------------------------------------------------------------------------*/
     while( !mb::thread::this_thread::task()->killPending() )
     {
       /*-----------------------------------------------------------------------
-      Perform work periodically
+      Receive Messages
       -----------------------------------------------------------------------*/
-      mb::thread::this_thread::sleep_for( 25 );
+      if( mb::thread::this_thread::awaitMessage( tsk_msg, 100 ) )
+      {
+        switch( signal.id )
+        {
+          case TSK_MSG_FLUSH_PDI:
+            System::Database::pdiDB().flush();
+            break;
+
+          default:
+            break;
+        }
+      }
 
       /*-----------------------------------------------------------------------
-      Update the system with any new control commands, data, etc.
+      Perform delayed I/O operations
       -----------------------------------------------------------------------*/
-      Control::getRPCServer().runServices();
-
-      /*-----------------------------------------------------------------------
-      Consume new system state to make control decisions
-      -----------------------------------------------------------------------*/
-      App::Power::periodicProcessing();
+      System::Database::pdiDB().flush();
     }
 
     /*-------------------------------------------------------------------------
     Shutdown sequence
     -------------------------------------------------------------------------*/
-    LOG_INFO( "Control thread shutting down" );
+    LOG_INFO( "Delayed I/O thread shutting down" );
   }
 }    // namespace Threads

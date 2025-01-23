@@ -38,8 +38,7 @@ namespace App::Stats
     System::Database::pdiDB().read( PDI::KEY_BOOT_COUNT, &boot_count, sizeof( boot_count ) );
     boot_count++;
     System::Database::pdiDB().write( PDI::KEY_BOOT_COUNT, &boot_count, sizeof( boot_count ) );
-    System::Database::pdiDB().flush();
 
     LOG_INFO( "Boot Count = %d", boot_count );
   }
-}  // namespace App::Stats
+}    // namespace App::Stats

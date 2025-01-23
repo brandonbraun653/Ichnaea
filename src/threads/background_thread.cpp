@@ -24,7 +24,6 @@ Includes
 #include <src/hw/led.hpp>
 #include <src/sim/sim_lifetime.hpp>
 #include <src/system/system_bootup.hpp>
-#include <src/system/system_db.hpp>
 #include <src/system/system_shutdown.hpp>
 #include <src/system/system_util.hpp>
 #include <src/threads/ichnaea_threads.hpp>
@@ -83,7 +82,7 @@ namespace Threads
     /*-------------------------------------------------------------------------
     Signal the next thread in the sequence to start
     -------------------------------------------------------------------------*/
-    startThread( SystemTask::TSK_MONITOR_ID );
+    startThread( SystemTask::TSK_DELAYED_IO_ID );
 
     HW::LED::setBrightness( HW::LED::Channel::HEARTBEAT, 0.5f );
 
@@ -96,7 +95,7 @@ namespace Threads
     tsk_msg.data = &signal;
     tsk_msg.size = sizeof( signal );
 
-    while( 1 )
+    while( !mb::thread::this_thread::task()->killPending() )
     {
       /*-----------------------------------------------------------------------
       Receive Messages
@@ -115,19 +114,10 @@ namespace Threads
       }
 
       /*-----------------------------------------------------------------------
-      Check for a kill request
-      -----------------------------------------------------------------------*/
-      if( mb::thread::this_thread::task()->killPending() )
-      {
-        break;
-      }
-
-      /*-----------------------------------------------------------------------
       Run background tasks
       -----------------------------------------------------------------------*/
       emitHeartbeat();
       HW::LED::toggle( HW::LED::Channel::HEARTBEAT );
-      System::Database::pdiDB().flush();
     }
 
     /*-------------------------------------------------------------------------

@@ -29,6 +29,7 @@ namespace Threads
     TSK_BACKGROUND_ID,
     TSK_MONITOR_ID,
     TSK_CONTROL_ID,
+    TSK_DELAYED_IO_ID,
 
     TSK_COUNT_MAX
   };
@@ -36,6 +37,7 @@ namespace Threads
   enum TaskMsgId : mb::thread::MessageId
   {
     TSK_MSG_SHUTDOWN,
+    TSK_MSG_FLUSH_PDI,
 
     TSK_MSG_COUNT
   };
@@ -114,7 +116,7 @@ namespace Threads
    *
    * @param arg Unused
    */
-  void backgroundThread( void* arg );
+  void backgroundThread( void *arg );
 
   /**
    * @brief Monitors the system for proper operation and reports any issues.
@@ -125,7 +127,7 @@ namespace Threads
    *
    * @param arg Unused
    */
-  void monitorThread( void* arg );
+  void monitorThread( void *arg );
 
   /**
    * @brief A high priority low latency thread to directly control the system.
@@ -135,8 +137,14 @@ namespace Threads
    *
    * @param arg Unused
    */
-  void controlThread( void* arg );
+  void controlThread( void *arg );
 
+  /**
+   * @brief A thread to handle delayed I/O operations.
+   *
+   * @param arg Unused
+   */
+  void delayedIOThread( void *arg );
 }    // namespace Threads
 
 #endif /* !ICHNAEA_THREADS_HPP */

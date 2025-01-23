@@ -1,3 +1,4 @@
+#include "mbedutils/drivers/database/db_kv_node.hpp"
 #include <mbedutils/assert.hpp>
 #include <src/app/app_monitor.hpp>
 #include <src/app/app_pdi.hpp>
@@ -22,11 +23,7 @@ namespace App::PDI
 
   static void onWrite__target_system_voltage_output( mb::db::KVNode &node )
   {
-    /*-------------------------------------------------------------------------
-    Drive the HW setpoint to the new value
-    -------------------------------------------------------------------------*/
-    ichnaea_PDI_FloatConfiguration *msg = static_cast<ichnaea_PDI_FloatConfiguration *>( node.datacache );
-    App::Power::setOutputVoltage( msg->value );
+    ( void )node;
 
     /*-------------------------------------------------------------------------
     Reset the monitor to account for the new voltage output
@@ -51,7 +48,7 @@ namespace App::PDI
     node.datacache = &PDI::Internal::RAMCache.targetSystemVoltageOutput;
     node.dataSize  = ichnaea_PDI_FloatConfiguration_size;
     node.pbFields  = ichnaea_PDI_FloatConfiguration_fields;
-    node.flags     = KV_FLAG_DEFAULT_PERSISTENT;
+    node.flags     = KV_FLAG_DEFAULT_VOLATILE;
     node.onWrite   = VisitorFunc::create<onWrite__target_system_voltage_output>();
 
     pdi_insert_and_create( node, node.datacache, node.dataSize );

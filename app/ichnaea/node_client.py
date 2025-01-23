@@ -133,9 +133,13 @@ class NodeClient:
         Args:
             pdi: The ID of the PDI to write
             msg: The PDI value to write, as a protobuf message
-        """
 
-        return self._net_client.pdi_write(self._node_id, pdi, msg.SerializeToString())  # noqa: F821
+        Returns:
+            True if the write was successfully committed, False if not
+        """
+        if self._net_client.pdi_write(self._node_id, pdi, msg.SerializeToString()):
+            return self.pdi_read(pdi) == msg
+        return False
 
     def pdi_flush(self) -> None:
         """

@@ -73,7 +73,7 @@ namespace HW::NOR
     /*-------------------------------------------------------------------------
     Initialize the SPI peripheral
     -------------------------------------------------------------------------*/
-    constexpr uint32_t spi_clk_rate = 21'000'000;
+    constexpr uint32_t spi_clk_rate = 31'250'000;
 
     auto pSPI = reinterpret_cast<spi_inst_t *>( BSP::getHardware( mb::hw::PERIPH_SPI, BSP::SPI_NOR_FLASH ) );
 
@@ -121,22 +121,22 @@ namespace HW::NOR
   }
 
 
-  int read( long offset, uint8_t* buf, size_t size )
+  int read( long offset, uint8_t *buf, size_t size )
   {
-    // LOG_TRACE_IF( NOR_DEBUG, "Read 0x%08X, %d bytes", offset, size );
+    LOG_TRACE_IF( NOR_DEBUG, "Read 0x%08X, %d bytes", offset, size );
     return s_flash_mem.read( offset, buf, size ) == Status::ERR_OK ? size : -1;
   }
 
 
-  int write( long offset, const uint8_t* buf, size_t size )
+  int write( long offset, const uint8_t *buf, size_t size )
   {
     LOG_TRACE_IF( NOR_DEBUG, "Write 0x%08X, %d bytes", offset, size );
     int result = s_flash_mem.write( offset, buf, size ) == Status::ERR_OK ? size : -1;
 
-    /*-------------------------------------------------------------------------
-    Integrity check to make sure the data was written correctly
-    -------------------------------------------------------------------------*/
-    #if NOR_DEBUG
+/*-------------------------------------------------------------------------
+Integrity check to make sure the data was written correctly
+-------------------------------------------------------------------------*/
+#if NOR_DEBUG
     static etl::array<uint8_t, 512> s_debug_buffer;
 
     if( result > 0 )
@@ -148,7 +148,7 @@ namespace HW::NOR
         LOG_ERROR( "Write 0x%08X miscompare", offset );
       }
     }
-    #endif
+#endif
 
     return result;
   }
@@ -160,4 +160,4 @@ namespace HW::NOR
   }
 
 
-}  // namespace HW::NOR
+}    // namespace HW::NOR

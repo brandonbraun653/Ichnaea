@@ -20,6 +20,21 @@ namespace Threads
   using namespace mb::thread;
 
   /*---------------------------------------------------------------------------
+  Local Enumerations
+  ---------------------------------------------------------------------------*/
+
+  /**
+   * @brief System thread priorites, higher is more important.
+   */
+  enum ThreadPriority
+  {
+    PRIORITY_DELAYED_IO = 5,  /**< Always preemptible. Slow stuff here. */
+    PRIORITY_BACKGROUND = 10, /**< Low priority background software */
+    PRIORITY_CONTROL    = 15, /**< Control is fairly important */
+    PRIORITY_MONITOR    = 20, /**< Monitor trumps all. System safety net. */
+  };
+
+  /*---------------------------------------------------------------------------
   Static Data
   ---------------------------------------------------------------------------*/
 
@@ -35,7 +50,11 @@ namespace Threads
 
   /* Control Thread */
   static Task                            s_control_task;
-  static Task::Storage<8192, TaskMsg, 1> s_control_storage;
+  static Task::Storage<4096, TaskMsg, 1> s_control_storage;
+
+  /* Delayed I/O Thread */
+  static Task                            s_delayed_io_task;
+  static Task::Storage<4096, TaskMsg, 1> s_delayed_io_storage;
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -62,7 +81,7 @@ namespace Threads
     cfg.id                  = TSK_BACKGROUND_ID;
     cfg.func                = backgroundThread;
     cfg.affinity            = 0x3;
-    cfg.priority            = 10;
+    cfg.priority            = PRIORITY_BACKGROUND;
     cfg.stack_buf           = s_background_storage.stack;
     cfg.stack_size          = count_of_array( s_background_storage.stack );
     cfg.msg_queue_cfg.pool  = &s_background_storage.msg_queue_storage.pool;
@@ -83,7 +102,7 @@ namespace Threads
     cfg.id                  = TSK_MONITOR_ID;
     cfg.func                = monitorThread;
     cfg.affinity            = 0x3;
-    cfg.priority            = 15;
+    cfg.priority            = PRIORITY_MONITOR;
     cfg.stack_buf           = s_monitor_storage.stack;
     cfg.stack_size          = count_of_array( s_monitor_storage.stack );
     cfg.msg_queue_cfg.pool  = &s_monitor_storage.msg_queue_storage.pool;
@@ -103,7 +122,7 @@ namespace Threads
     cfg.id                  = TSK_CONTROL_ID;
     cfg.func                = controlThread;
     cfg.affinity            = 0x3;
-    cfg.priority            = 20;
+    cfg.priority            = PRIORITY_CONTROL;
     cfg.stack_buf           = s_control_storage.stack;
     cfg.stack_size          = count_of_array( s_control_storage.stack );
     cfg.msg_queue_cfg.pool  = &s_control_storage.msg_queue_storage.pool;
@@ -112,6 +131,26 @@ namespace Threads
     cfg.block_on_create     = true;
 
     s_control_task = mb::thread::create( cfg );
+
+    /*-------------------------------------------------------------------------
+    Add the delayed I/O thread
+    -------------------------------------------------------------------------*/
+    s_delayed_io_storage.name = "DelayedIO";
+
+    cfg.reset();
+    cfg.name                = s_delayed_io_storage.name;
+    cfg.id                  = TSK_DELAYED_IO_ID;
+    cfg.func                = delayedIOThread;
+    cfg.affinity            = 0x3;
+    cfg.priority            = PRIORITY_DELAYED_IO;
+    cfg.stack_buf           = s_delayed_io_storage.stack;
+    cfg.stack_size          = count_of_array( s_delayed_io_storage.stack );
+    cfg.msg_queue_cfg.pool  = &s_delayed_io_storage.msg_queue_storage.pool;
+    cfg.msg_queue_cfg.queue = &s_delayed_io_storage.msg_queue_storage.queue;
+    cfg.msg_queue_inst      = &s_delayed_io_storage.msg_queue;
+    cfg.block_on_create     = true;
+
+    s_delayed_io_task = mb::thread::create( cfg );
   }
 
 
@@ -129,6 +168,10 @@ namespace Threads
 
       case TSK_CONTROL_ID:
         s_control_task.start();
+        break;
+
+      case TSK_DELAYED_IO_ID:
+        s_delayed_io_task.start();
         break;
 
       default:
@@ -156,6 +199,11 @@ namespace Threads
         s_control_task.join();
         break;
 
+      case TSK_DELAYED_IO_ID:
+        s_delayed_io_task.kill();
+        s_delayed_io_task.join();
+        break;
+
       default:
         break;
     }
@@ -176,6 +224,10 @@ namespace Threads
 
       case TSK_CONTROL_ID:
         s_control_task.join();
+        break;
+
+      case TSK_DELAYED_IO_ID:
+        s_delayed_io_task.join();
         break;
 
       default:

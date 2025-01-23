@@ -69,7 +69,7 @@ namespace COM::RPC
         break;
 
       case ichnaea_ManagerCommand_CMD_FLUSH_PDI_CACHE:
-        System::Database::pdiDB().flush();
+        Threads::sendSignal( Threads::SystemTask::TSK_BACKGROUND_ID, Threads::TSK_MSG_FLUSH_PDI );
         break;
 
       case ichnaea_ManagerCommand_CMD_ZERO_OUTPUT_CURRENT:
