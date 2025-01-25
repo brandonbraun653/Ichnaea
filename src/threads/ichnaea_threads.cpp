@@ -62,6 +62,8 @@ namespace Threads
 
   void initialize()
   {
+    mb::thread::Task::Config cfg;
+
     /*-------------------------------------------------------------------------
     Initialize the threading module
     -------------------------------------------------------------------------*/
@@ -69,28 +71,6 @@ namespace Threads
     mod_cfg.tsk_control_blocks = &s_tsk_cb;
 
     mb::thread::driver_setup( mod_cfg );
-
-    /*-------------------------------------------------------------------------
-    Add the background thread
-    -------------------------------------------------------------------------*/
-    s_background_storage.name = "Background";
-
-    mb::thread::Task::Config cfg;
-    cfg.reset();
-    cfg.name                = s_background_storage.name;
-    cfg.id                  = TSK_BACKGROUND_ID;
-    cfg.func                = backgroundThread;
-    cfg.affinity            = 0x3;
-    cfg.priority            = PRIORITY_BACKGROUND;
-    cfg.stack_buf           = s_background_storage.stack;
-    cfg.stack_size          = count_of_array( s_background_storage.stack );
-    cfg.msg_queue_cfg.pool  = &s_background_storage.msg_queue_storage.pool;
-    cfg.msg_queue_cfg.queue = &s_background_storage.msg_queue_storage.queue;
-    cfg.msg_queue_inst      = &s_background_storage.msg_queue;
-    cfg.block_on_create     = false;    // Starting before the scheduler is running
-
-    s_background_task = mb::thread::create( cfg );
-    s_background_task.start();
 
     /*-------------------------------------------------------------------------
     Add the monitor thread
@@ -151,6 +131,27 @@ namespace Threads
     cfg.block_on_create     = true;
 
     s_delayed_io_task = mb::thread::create( cfg );
+
+    /*-------------------------------------------------------------------------
+    Add the background thread
+    -------------------------------------------------------------------------*/
+    s_background_storage.name = "Background";
+
+    cfg.reset();
+    cfg.name                = s_background_storage.name;
+    cfg.id                  = TSK_BACKGROUND_ID;
+    cfg.func                = backgroundThread;
+    cfg.affinity            = 0x3;
+    cfg.priority            = PRIORITY_BACKGROUND;
+    cfg.stack_buf           = s_background_storage.stack;
+    cfg.stack_size          = count_of_array( s_background_storage.stack );
+    cfg.msg_queue_cfg.pool  = &s_background_storage.msg_queue_storage.pool;
+    cfg.msg_queue_cfg.queue = &s_background_storage.msg_queue_storage.queue;
+    cfg.msg_queue_inst      = &s_background_storage.msg_queue;
+    cfg.block_on_create     = false;    // Allowed to start immediately once the scheduler is running
+
+    s_background_task = mb::thread::create( cfg );
+    s_background_task.start();
   }
 
 

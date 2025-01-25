@@ -11,6 +11,7 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
+#include "mbedutils/drivers/threading/thread.hpp"
 #include <mbedutils/logging.hpp>
 #include <src/app/app_config.hpp>
 #include <src/app/app_filter.hpp>
@@ -80,8 +81,10 @@ namespace Threads
     App::Monitor::driver_init();
 
     /*-------------------------------------------------------------------------
-    Signal the next thread in the sequence to start
+    Signal the next thread in the sequence to start. Simulators must wait b/c
+    the above steps execute too fast. Other threads aren't ready to start.
     -------------------------------------------------------------------------*/
+    mb::thread::this_thread::sleep_for( 5 );
     startThread( SystemTask::TSK_DELAYED_IO_ID );
 
     HW::LED::setBrightness( HW::LED::Channel::HEARTBEAT, 0.5f );
