@@ -322,17 +322,20 @@ class NodeClient:
         assert 0.0 <= target, f"Output voltage out of range: {target:.2f} V"
 
         msg = SetpointRequestPBMsg()
-        msg.pb_message.node_id = self._node_id
+        msg.pb_message.node_id = self._net_client.unique_id_from_string(self._node_id)
         msg.pb_message.field = SETPOINT_OUTPUT_VOLTAGE
         msg.pb_message.float_type = target
 
         rsp = self._net_client.rpc_client.com_pipe.write_and_wait(msg, timeout=2.0)
-        assert isinstance(rsp, SetpointResponsePBMsg), f"Unexpected response type: {type(rsp)}"
+        if (
+            rsp
+            and all(isinstance(r, SetpointResponsePBMsg) for r in rsp)
+            and rsp[0].pb_message.status == ERR_SETPOINT_NO_ERROR
+        ):
+            return True
 
-        if not rsp.pb_message.status == ERR_SETPOINT_NO_ERROR:
-            logger.error(f"Failed to set output voltage to {target:.2f} V, error: {rsp.pb_message.status}")
-            return False
-        return True
+        logger.error(f"Failed to set output voltage to {target:.2f} V")
+        return False
 
     def get_output_voltage_target(self) -> Optional[float]:
         """
@@ -422,17 +425,21 @@ class NodeClient:
         assert 0.0 <= target, f"Output current out of range: {target:.2f} A"
 
         msg = SetpointRequestPBMsg()
-        msg.pb_message.node_id = self._node_id
+        msg.pb_message.node_id = self._net_client.unique_id_from_string(self._node_id)
         msg.pb_message.field = SETPOINT_OUTPUT_CURRENT
         msg.pb_message.float_type = target
 
         rsp = self._net_client.rpc_client.com_pipe.write_and_wait(msg, timeout=2.0)
-        assert isinstance(rsp, SetpointResponsePBMsg), f"Unexpected response type: {type(rsp)}"
 
-        if not rsp.pb_message.status == ERR_SETPOINT_NO_ERROR:
-            logger.error(f"Failed to set output current to {target:.2f} A, error: {rsp.pb_message.status}")
-            return False
-        return True
+        if (
+            rsp
+            and all(isinstance(r, SetpointResponsePBMsg) for r in rsp)
+            and rsp[0].pb_message.status == ERR_SETPOINT_NO_ERROR
+        ):
+            return True
+
+        logger.error(f"Failed to set output current to {target:.2f} A")
+        return False
 
     def get_output_current_target(self) -> Optional[float]:
         """

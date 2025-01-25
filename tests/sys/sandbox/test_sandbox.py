@@ -9,7 +9,7 @@ from tests.sys.fixtures import *
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.parametrize("product_config", ["simulator"], indirect=True)
+@pytest.mark.parametrize("product_config", ["hardware"], indirect=True)
 class TestSandbox:
     """Human in the loop playground testing with the hardware platform"""
 
@@ -29,6 +29,9 @@ class TestSandbox:
             tolerance=None,
         )
         assert input_voltage >= self.TestParam_MinInputVoltage, "Input voltage too low"
+
+        # Ensure we start out in a known state
+        self.node_link.disengage_output()
 
         # Program operational limits for the device
         assert self.node_link.pdi_write(
@@ -65,7 +68,7 @@ class TestSandbox:
         voltage_target = max(input_voltage / 2.0, 12.0)
         ilim_target = 1.0
 
-        assert self.node_link.set_output_voltage_target(20.0), "Unable to set output voltage"
+        assert self.node_link.set_output_voltage_target(12.0), "Unable to set output voltage"
         assert self.node_link.set_output_current_target(ilim_target), "Unable to set output current limit"
 
         # Engage the output, wait for the system to enable and stabilize

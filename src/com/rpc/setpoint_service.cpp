@@ -11,7 +11,6 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "etl/char_traits.h"
 #include "mbed_rpc.pb.h"
 #include <src/app/app_power.hpp>
 #include <src/com/rpc/rpc_services.hpp>

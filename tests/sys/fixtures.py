@@ -26,7 +26,7 @@ SIMULATOR_CONFIG = {
     "host": "localhost",
     "port": "ipc:///tmp/ichnaea_sim/5556",
     "sim_path": (Path(__file__).parent.parent.parent / "artifacts" / "host" / "Debug" / "Ichnaea").as_posix(),
-    "sim_debug": True,  # Set this to True to connect to an existing instance of the sim
+    "sim_debug": False,  # Set this to True to connect to an existing instance of the sim
 }
 
 # Used to mark tests that should be run serially. Typically these are integration Sim/HW tests

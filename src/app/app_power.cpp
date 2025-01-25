@@ -60,16 +60,14 @@ namespace App::Power
 
   static bool is_voltage_target_valid( const float request )
   {
-    const float vin_max  = App::PDI::getConfigMaxSystemVoltageInput();
-    const float vin_min  = App::PDI::getConfigMinSystemVoltageInput();
     const float vout_lim = App::PDI::getSystemVoltageOutputRatedLimit();
+    const float vin_max  = App::PDI::getConfigMaxSystemVoltageInput();
     const float vin_act  = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
 
     bool valid = true;
 
     valid &= request >= 0.0f;        // Does not fall below zero
     valid &= request <= vin_max;     // Does not exceed configured max input voltage
-    valid &= request >= vin_min;     // Does fall below configured min input voltage
     valid &= request <= vout_lim;    // Does not exceed electrical system output voltage limit
     valid &= request <= vin_act;     // Does not exceed actual input voltage (Buck converter requirement)
 
@@ -218,7 +216,7 @@ namespace App::Power
     }
 
     s_voltage_request = voltage;
-    return true;
+    return App::PDI::setTargetSystemVoltageOutput( voltage );
   }
 
 
@@ -230,7 +228,7 @@ namespace App::Power
     }
 
     s_current_request = current;
-    return true;
+    return App::PDI::setTargetSystemCurrentOutput( current );
   }
 
 
@@ -247,14 +245,12 @@ namespace App::Power
       case HW::LTC7871::DriverMode::ENABLED:
         if( s_voltage_request >= 0.0f )
         {
-          App::PDI::setTargetSystemVoltageOutput( s_voltage_request );
           HW::LTC7871::setVoutRef( s_voltage_request );
           s_voltage_request = INVALID_SETPOINT_REQUEST;
         }
 
         if( s_current_request >= 0.0f )
         {
-          App::PDI::setTargetSystemCurrentOutput( s_current_request );
           HW::LTC7871::setIoutRef( s_current_request );
           s_current_request = INVALID_SETPOINT_REQUEST;
         }

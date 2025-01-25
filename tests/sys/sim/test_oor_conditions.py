@@ -26,16 +26,15 @@ class TestOutofRangeConditions:
         assert self.node_link.log_erase()
 
         # Check testing environment conditions to ensure we're ready to run
-        if self.platform == Platform.Simulator:
-            self.env = EnvironmentSpoofer()
-            self.env.disconnect_load()
-            self.env.set_solar_ocv(48.0)
-            self.env.set_board_1v1_rail(1.1)
-            self.env.set_board_3v3_rail(3.3)
-            self.env.set_board_5v_rail(5.0)
-            self.env.set_board_12v_rail(12.0)
-            self.env.set_board_temperature(25.0)
-            self.env.set_board_fan_speed(200.0)
+        self.env = EnvironmentSpoofer()
+        self.env.disconnect_load()
+        self.env.set_solar_ocv(48.0)
+        self.env.set_board_1v1_rail(1.1)
+        self.env.set_board_3v3_rail(3.3)
+        self.env.set_board_5v_rail(5.0)
+        self.env.set_board_12v_rail(12.0)
+        self.env.set_board_temperature(25.0)
+        self.env.set_board_fan_speed(200.0)
 
         # Check preconditions for the test
         input_voltage = self.node_link.await_sensor_value(
@@ -92,11 +91,10 @@ class TestOutofRangeConditions:
         assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_VOLTAGE, target=voltage_target)
 
         # Apply a simple load to the system to get non-zero current measurements
-        if self.platform == Platform.Simulator:
-            r_load = 48  # Ohms
-            expected_current = voltage_target / r_load
-            self.env.apply_load(r_load)
-            assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_CURRENT, target=expected_current)
+        r_load = 48  # Ohms
+        expected_current = voltage_target / r_load
+        self.env.apply_load(r_load)
+        assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_CURRENT, target=expected_current)
 
         # Disengage the output and ensure the voltage drops (safety)
         assert self.node_link.disengage_output()
@@ -106,6 +104,9 @@ class TestOutofRangeConditions:
             )
             is not None
         )
+
+        # Try to power on again without setting a new voltage target. This should fail.
+        assert self.node_link.engage_output() == False
 
     def test_12v_out_of_range_low(self):
         """Inject an OOR voltage and ensure the system shuts down"""
@@ -121,10 +122,9 @@ class TestOutofRangeConditions:
 
         # Drive a 12v rail OOR condition
         self.env.set_board_12v_rail(10.0)
-        self.node_link.sleep_on_node_time(1.0)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_12v_out_of_range_high(self):
         """Inject an OOR voltage and ensure the system shuts down"""
@@ -140,10 +140,9 @@ class TestOutofRangeConditions:
 
         # Drive a 12v rail OOR condition
         self.env.set_board_12v_rail(15.1)
-        self.node_link.sleep_on_node_time(1.0)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_vin_out_of_range_low(self):
         """Inject an OOR voltage and ensure the system shuts down"""
@@ -163,10 +162,9 @@ class TestOutofRangeConditions:
 
         test_input_voltage = max(pdi_vin_limit_min.value - 1.0, 0.0)
         self.env.set_solar_ocv(test_input_voltage)
-        self.node_link.sleep_on_node_time(1.0)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_vin_out_of_range_high(self):
         """Inject an OOR voltage and ensure the system shuts down"""
@@ -186,10 +184,9 @@ class TestOutofRangeConditions:
 
         test_input_voltage = pdi_vin_limit_max.value + 1.0
         self.env.set_solar_ocv(test_input_voltage)
-        self.node_link.sleep_on_node_time(0.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_iout_system_limit_exceeded(self):
         """Inject +5% over-current system rated limit condition and ensure the system shuts down"""
@@ -208,10 +205,9 @@ class TestOutofRangeConditions:
         assert isinstance(pdi_ilim_limit, PDI_FloatConfiguration)
         test_load = target_voltage / (pdi_ilim_limit.value * 1.05)
         self.env.apply_load(resistance=test_load)
-        self.node_link.sleep_on_node_time(0.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_iout_target_out_of_range_high(self):
         """Inject +5% over-current user defined limit condition and ensure the system shuts down"""
@@ -236,10 +232,9 @@ class TestOutofRangeConditions:
         assert isinstance(pdi_ilim_limit, PDI_FloatConfiguration)
         test_load = target_voltage / (pdi_ilim_limit.value * 1.05)
         self.env.apply_load(resistance=test_load)
-        self.node_link.sleep_on_node_time(0.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_vout_system_limit_exceeded(self):
         """Inject an OOR voltage and ensure the system shuts down"""
@@ -267,10 +262,9 @@ class TestOutofRangeConditions:
         assert self.node_link.pdi_write(
             PDI_ID.CONFIG_SYSTEM_VOLTAGE_OUTPUT_RATED_LIMIT, PDI_FloatConfiguration(value=new_rated_limit)
         )
-        self.node_link.sleep_on_node_time(1.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
         # Program back the old rated limit
         assert self.node_link.pdi_write(
@@ -291,10 +285,9 @@ class TestOutofRangeConditions:
 
         # Simulate another system being connected that has a lower output voltage.
         self.env.set_output_voltage(10.0)
-        self.node_link.sleep_on_node_time(1.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_vout_out_of_range_high(self):
         """Inject an OOR voltage and ensure the system shuts down"""
@@ -310,10 +303,9 @@ class TestOutofRangeConditions:
 
         # Simulate another system being connected that has a higher output voltage.
         self.env.set_output_voltage(30.0)
-        self.node_link.sleep_on_node_time(1.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_temperature_out_of_range_low(self):
         """Inject an OOR temperature and ensure the system shuts down"""
@@ -333,10 +325,9 @@ class TestOutofRangeConditions:
 
         # Simulate an OOR temperature condition
         self.env.set_board_temperature(5.0)
-        self.node_link.sleep_on_node_time(1.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_temperature_out_of_range_high(self):
         """Inject an OOR temperature and ensure the system shuts down"""
@@ -356,10 +347,9 @@ class TestOutofRangeConditions:
 
         # Simulate an OOR temperature condition
         self.env.set_board_temperature(75.0)
-        self.node_link.sleep_on_node_time(1.5)
 
         # Check the expectation that the system will shut down
-        assert self.node_link.engagement_state() == EngageState.DISENGAGED
+        assert self.node_link.wait_for_engagement_state(target=EngageState.DISENGAGED)
 
     def test_fan_speed_out_of_range_low(self):
         """Inject an OOR fan speed and ensure the system shuts down"""
