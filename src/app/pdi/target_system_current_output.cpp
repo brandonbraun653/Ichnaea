@@ -61,7 +61,7 @@ namespace App::PDI
     node.datacache = &PDI::Internal::RAMCache.targetSystemCurrentOutput;
     node.dataSize  = ichnaea_PDI_FloatConfiguration_size;
     node.pbFields  = ichnaea_PDI_FloatConfiguration_fields;
-    node.flags     = KV_FLAG_DEFAULT_PERSISTENT;
+    node.flags     = KV_FLAG_DEFAULT_VOLATILE;
     node.onWrite   = VisitorFunc::create<onWrite__target_system_current_output>();
     node.sanitizer = SanitizeFunc::create<sanitize__target_system_current_output>();
 

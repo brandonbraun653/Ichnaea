@@ -6,7 +6,7 @@ from typing import Optional
 from loguru import logger
 
 from ichnaea.network_client import NetworkClient
-from ichnaea.messages import HeartbeatPBMsg
+from ichnaea.messages import HeartbeatPBMsg, SetpointRequestPBMsg, SetpointResponsePBMsg
 from ichnaea.proto.ichnaea_pdi_pb2 import *
 from ichnaea.proto.ichnaea_rpc_pb2 import *
 from mbedutils.rpc.logger_client import LoggerRPCClient
@@ -320,7 +320,19 @@ class NodeClient:
             True if the operation succeeded, False if not
         """
         assert 0.0 <= target, f"Output voltage out of range: {target:.2f} V"
-        return self.pdi_write(PDI_ID.TARGET_SYSTEM_VOLTAGE_OUTPUT, PDI_FloatConfiguration(value=target))
+
+        msg = SetpointRequestPBMsg()
+        msg.pb_message.node_id = self._node_id
+        msg.pb_message.field = SETPOINT_OUTPUT_VOLTAGE
+        msg.pb_message.float_type = target
+
+        rsp = self._net_client.rpc_client.com_pipe.write_and_wait(msg, timeout=2.0)
+        assert isinstance(rsp, SetpointResponsePBMsg), f"Unexpected response type: {type(rsp)}"
+
+        if not rsp.pb_message.status == ERR_SETPOINT_NO_ERROR:
+            logger.error(f"Failed to set output voltage to {target:.2f} V, error: {rsp.pb_message.status}")
+            return False
+        return True
 
     def get_output_voltage_target(self) -> Optional[float]:
         """
@@ -407,8 +419,20 @@ class NodeClient:
         Returns:
             True if the operation succeeded, False if not
         """
-        assert 0.0 <= target <= self._rated_system_output_current, f"Output current out of range: {target:.2f} A"
-        return self.pdi_write(PDI_ID.TARGET_SYSTEM_CURRENT_OUTPUT, PDI_FloatConfiguration(value=target))
+        assert 0.0 <= target, f"Output current out of range: {target:.2f} A"
+
+        msg = SetpointRequestPBMsg()
+        msg.pb_message.node_id = self._node_id
+        msg.pb_message.field = SETPOINT_OUTPUT_CURRENT
+        msg.pb_message.float_type = target
+
+        rsp = self._net_client.rpc_client.com_pipe.write_and_wait(msg, timeout=2.0)
+        assert isinstance(rsp, SetpointResponsePBMsg), f"Unexpected response type: {type(rsp)}"
+
+        if not rsp.pb_message.status == ERR_SETPOINT_NO_ERROR:
+            logger.error(f"Failed to set output current to {target:.2f} A, error: {rsp.pb_message.status}")
+            return False
+        return True
 
     def get_output_current_target(self) -> Optional[float]:
         """

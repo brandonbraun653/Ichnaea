@@ -41,12 +41,55 @@ Includes
 namespace App::Power
 {
   /*---------------------------------------------------------------------------
+  Constants
+  ---------------------------------------------------------------------------*/
+
+  static constexpr float INVALID_SETPOINT_REQUEST = -1.0f;
+
+  /*---------------------------------------------------------------------------
   Private Data
   ---------------------------------------------------------------------------*/
 
   static bool  s_power_output_enabled;
   static float s_voltage_request;
   static float s_current_request;
+
+  /*---------------------------------------------------------------------------
+  Private Functions
+  ---------------------------------------------------------------------------*/
+
+  static bool is_voltage_target_valid( const float request )
+  {
+    const float vin_max  = App::PDI::getConfigMaxSystemVoltageInput();
+    const float vin_min  = App::PDI::getConfigMinSystemVoltageInput();
+    const float vout_lim = App::PDI::getSystemVoltageOutputRatedLimit();
+    const float vin_act  = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
+
+    bool valid = true;
+
+    valid &= request >= 0.0f;        // Does not fall below zero
+    valid &= request <= vin_max;     // Does not exceed configured max input voltage
+    valid &= request >= vin_min;     // Does fall below configured min input voltage
+    valid &= request <= vout_lim;    // Does not exceed electrical system output voltage limit
+    valid &= request <= vin_act;     // Does not exceed actual input voltage (Buck converter requirement)
+
+    return valid;
+  }
+
+
+  static bool is_current_target_valid( const float request )
+  {
+    const float iout_lim       = App::PDI::getSystemCurrentOutputRatedLimit();
+    const float iout_phase_lim = App::PDI::getPhaseCurrentOutputRatedLimit();
+
+    bool valid = true;
+
+    valid &= request >= 0.0f;                         // Does not fall below zero
+    valid &= request <= iout_lim;                     // Does not exceed electrical system output current limit
+    valid &= ( request / 6.0f ) <= iout_phase_lim;    // Does not exceed phase current limit
+
+    return valid;
+  }
 
   /*---------------------------------------------------------------------------
   Public Functions
@@ -58,8 +101,8 @@ namespace App::Power
     Initialize module data
     -------------------------------------------------------------------------*/
     s_power_output_enabled = false;
-    s_voltage_request      = 0.0f;
-    s_current_request      = 0.0f;
+    s_voltage_request      = INVALID_SETPOINT_REQUEST;
+    s_current_request      = INVALID_SETPOINT_REQUEST;
 
     /*-------------------------------------------------------------------------
     Register the PDI keys for the power management system
@@ -96,85 +139,31 @@ namespace App::Power
     /*-------------------------------------------------------------------------
     Gather all the necessary data for the power on sequence
     -------------------------------------------------------------------------*/
-    const float vin_max        = App::PDI::getConfigMaxSystemVoltageInput();
-    const float vin_min        = App::PDI::getConfigMinSystemVoltageInput();
-    const float vout_lim       = App::PDI::getSystemVoltageOutputRatedLimit();
-    const float iout_lim       = App::PDI::getSystemCurrentOutputRatedLimit();
-    const float iout_phase_lim = App::PDI::getPhaseCurrentOutputRatedLimit();
-    const float vout_tgt       = App::PDI::getTargetSystemVoltageOutput();
-    const float iout_tgt       = App::PDI::getTargetSystemCurrentOutput();
-    const float vin_act        = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
-    const float vout_act       = System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD );
-    const float iout_act       = System::Sensor::getMeasurement( System::Sensor::Element::IMON_LOAD );
+    const float vin_max  = App::PDI::getConfigMaxSystemVoltageInput();
+    const float vin_min  = App::PDI::getConfigMinSystemVoltageInput();
+    const float vout_lim = App::PDI::getSystemVoltageOutputRatedLimit();
+    const float vout_tgt = App::PDI::getTargetSystemVoltageOutput();
+    const float iout_tgt = App::PDI::getTargetSystemCurrentOutput();
+    const float vin_act  = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
+    const float vout_act = System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD );
+    const float iout_act = System::Sensor::getMeasurement( System::Sensor::Element::IMON_LOAD );
 
     /*-------------------------------------------------------------------------
     Check range of the input and configuration values
     -------------------------------------------------------------------------*/
     bool can_engage = true;
 
-    // Bounded by user configured input limits
+    // Basic validity of setpoints
+    can_engage &= mbed_assert_continue_msg( ( vout_tgt > 0.0f ) && is_voltage_target_valid( vout_tgt ),
+                                            "Invalid voltage target: %.2fV", vout_tgt );
+    can_engage &= mbed_assert_continue_msg( ( iout_tgt > 0.0f ) && is_current_target_valid( iout_tgt ),
+                                            "Invalid current target: %.2fA", iout_tgt );
+
+    // Operational range checks on current system state
     can_engage &= mbed_assert_continue_msg( vin_act <= vin_max, "OOB Vin %.2fV > %.2fV Cfg", vin_act, vin_max );
     can_engage &= mbed_assert_continue_msg( vin_act >= vin_min, "OOB Vin %.2fV < %.2fV Cfg", vin_act, vin_min );
-
-    // Bounded by an attached battery/load that exceeds the system voltage output limits
     can_engage &= mbed_assert_continue_msg( vout_act <= vout_lim, "OOB Vout %.2fV > %.2fV Limit", vout_act, vout_lim );
-
-    // Should not be drawing any meaningful current right now
     can_engage &= mbed_assert_continue_msg( iout_act < 100e-3f, "Iout %.2fA > 100mA", iout_act );
-
-    // Target output voltage should be within the input range
-    can_engage &= mbed_assert_continue_msg( vout_tgt <= vin_act, "Vout %.2fV > Vin %.2fV", vout_tgt, vin_act );
-
-    // Target output voltage should be within the converter limits
-    can_engage &= mbed_assert_continue_msg( vout_tgt <= vout_lim, "Vout %.2fV > %.2fV Limit", vout_tgt, vout_lim );
-
-    // Target system output current should be within the converter limits
-    can_engage &= mbed_assert_continue_msg( iout_tgt <= iout_lim, "Iout %.2fA > %.2fA Limit", iout_tgt, iout_lim );
-
-    // Target phase current should be within the converter limits (6 phases)
-    float phase_iout = iout_tgt / 6.0f;
-    can_engage &=
-        mbed_assert_continue_msg( phase_iout <= iout_phase_lim, "Phase Iout %.2fA > %.2fA Limit", phase_iout, iout_phase_lim );
-
-
-    /*-------------------------------------------------------------------------
-    *IMPORTANT* Really need to read any configuration data from the
-    previous power cycle to ensure we don't boot up and immediately change
-    output voltage/current limts. If a battery is connected and we reconfigure
-    all willy nilly, it could be catastrophic.
-
-    There should be a layered approach:
-      1. If any of the following are true, return an invalid configuration:
-        - Output voltage is present and no input voltage
-        - Output voltage is higher than input voltage
-        - No voltage on either the input or output
-        - Any voltage is outside the expected operational range
-
-      2. With a BMS attached, read and validate the configuration. If it's
-         invalid, return false and do not boot. The BMS acts as a single
-         point of truth to describe the connected storage system. It's also
-         responsible for isolation from this buck converter.
-
-      2. If the BMS is unavailable and no voltage is present on the output,
-         we can assume there is no battery and power up to some sane values
-         based on the input voltage. This will essentially be "free running"
-         mode where we try and provide max power the solar panel can provide.
-
-        2a. When free running, use the last programmed system limits for voltage
-            and current and ramp to those points as a kind of "soft-start".
-            This thing *is* still programmable via other interfaces after all.
-
-    Log all boot decisions to the system log for later analysis.
-
-    Update:
-    - May want to always reset the LTC7871 to OFF unless the BMS commands it to
-      turn on. This might be annoying if the system suddenly resets, but it
-      ensures safety.
-
-    - May want a button input to allow someone to manually turn the system on
-      without the BMS. Would be interesting. We'd have to match output voltage
-      already present or just simply refuse to boot if we see output voltage.
-    -------------------------------------------------------------------------*/
 
     if( !can_engage )
     {
@@ -185,7 +174,6 @@ namespace App::Power
     Engage the output stage
     -------------------------------------------------------------------------*/
     s_power_output_enabled = HW::LTC7871::enablePowerConverter( vout_tgt, iout_tgt );
-
     if( s_power_output_enabled )
     {
       App::Monitor::reset();
@@ -209,12 +197,47 @@ namespace App::Power
     App::Monitor::disable();
     App::Monitor::reset();
 
+    /*-------------------------------------------------------------------------
+    Reset controller setpoints to ensure a new configuration is specified
+    before re-enabling the power output.
+    -------------------------------------------------------------------------*/
+    App::PDI::setTargetSystemVoltageOutput( 0.0f );
+    App::PDI::setTargetSystemCurrentOutput( 0.0f );
+
     s_power_output_enabled = false;
+    s_voltage_request      = INVALID_SETPOINT_REQUEST;
+    s_current_request      = INVALID_SETPOINT_REQUEST;
+  }
+
+
+  bool setOutputVoltage( const float voltage )
+  {
+    if( !is_voltage_target_valid( voltage ) )
+    {
+      return false;
+    }
+
+    s_voltage_request = voltage;
+    return true;
+  }
+
+
+  bool setOutputCurrentLimit( const float current )
+  {
+    if( !is_current_target_valid( current ) )
+    {
+      return false;
+    }
+
+    s_current_request = current;
+    return true;
   }
 
 
   void periodicProcessing()
   {
+    HW::LTC7871::runStateUpdater();
+
     switch( HW::LTC7871::getMode() )
     {
       /*-----------------------------------------------------------------------
@@ -222,18 +245,18 @@ namespace App::Power
       and monitor for faults.
       -----------------------------------------------------------------------*/
       case HW::LTC7871::DriverMode::ENABLED:
-        if( ( s_voltage_request > 0.0f ) && ( s_voltage_request < App::PDI::getSystemVoltageOutputRatedLimit() ) )
+        if( s_voltage_request >= 0.0f )
         {
           App::PDI::setTargetSystemVoltageOutput( s_voltage_request );
           HW::LTC7871::setVoutRef( s_voltage_request );
-          s_voltage_request = 0.0f;
+          s_voltage_request = INVALID_SETPOINT_REQUEST;
         }
 
-        if( ( s_current_request > 0.0f ) && ( s_current_request < App::PDI::getSystemCurrentOutputRatedLimit() ) )
+        if( s_current_request >= 0.0f )
         {
           App::PDI::setTargetSystemCurrentOutput( s_current_request );
           HW::LTC7871::setIoutRef( s_current_request );
-          s_current_request = 0.0f;
+          s_current_request = INVALID_SETPOINT_REQUEST;
         }
 
         HW::LTC7871::runFaultMonitoring();
@@ -252,15 +275,4 @@ namespace App::Power
     }
   }
 
-
-  void setOutputVoltage( const float voltage )
-  {
-    s_voltage_request = voltage;
-  }
-
-
-  void setOutputCurrentLimit( const float current )
-  {
-    s_current_request = current;
-  }
 }    // namespace App::Power

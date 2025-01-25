@@ -134,8 +134,7 @@ enum SetpointError {
 
 enum SetpointField {
   SETPOINT_OUTPUT_VOLTAGE = 0; // Regulated output voltage of the node
-  SETPOINT_MAX_AVG_OUTPUT_CURRENT =
-      1; // Maximum average output current of the node
+  SETPOINT_OUTPUT_CURRENT = 1; // Output current limit of the node
 }
 
 // Control a node's operational setpoints for parameters like voltage, current,

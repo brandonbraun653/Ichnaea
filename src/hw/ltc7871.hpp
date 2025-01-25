@@ -133,6 +133,11 @@ namespace HW::LTC7871
   void disablePowerConverter();
 
   /**
+   * @brief Run background processing to keep the LTC state up to date
+   */
+  void runStateUpdater();
+
+  /**
    * @brief Sets the system output voltage reference.
    *
    * Assuming the controller is in a state to accept this command, the

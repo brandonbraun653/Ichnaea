@@ -41,28 +41,30 @@ namespace App::Power
   void disengageOutput();
 
   /**
+   * @brief Set the output voltage to a specific value.
+   *
+   * @param voltage New output voltage to set (Volts)
+   * @return True if the voltage was successfully set, false otherwise
+   */
+  bool setOutputVoltage( const float voltage );
+
+  /**
+   * @brief Set the output current limit.
+   *
+   * @param current New output current limit to set (Amps)
+   * @return True if the current limit was successfully set, false otherwise
+   */
+  bool setOutputCurrentLimit( const float current );
+
+  /**
    * @brief Single step the core controller of the power stage.
    *
    * This should be called periodically to ensure the power stage is operating
    * correctly. It will handle all the necessary state transitions and
    * fault checking.
    */
-   void periodicProcessing();
+  void periodicProcessing();
 
-  /**
-   * @brief Set the output voltage to a specific value.
-   *
-   * @param voltage New output voltage to set (Volts)
-   */
-  void setOutputVoltage( const float voltage );
+}    // namespace App::Power
 
-  /**
-   * @brief Set the output current limit.
-   *
-   * @param current New output current limit to set (Amps)
-   */
-  void setOutputCurrentLimit( const float current );
-
-}  // namespace App::Power
-
-#endif  /* !ICHNAEA_APP_POWER_HPP */
+#endif /* !ICHNAEA_APP_POWER_HPP */

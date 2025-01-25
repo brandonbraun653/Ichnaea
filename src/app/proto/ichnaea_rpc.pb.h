@@ -89,7 +89,7 @@ typedef enum _ichnaea_SetpointError {
 
 typedef enum _ichnaea_SetpointField {
     ichnaea_SetpointField_SETPOINT_OUTPUT_VOLTAGE = 0, /* Regulated output voltage of the node */
-    ichnaea_SetpointField_SETPOINT_MAX_AVG_OUTPUT_CURRENT = 1 /* Maximum average output current of the node */
+    ichnaea_SetpointField_SETPOINT_OUTPUT_CURRENT = 1 /* Output current limit of the node */
 } ichnaea_SetpointField;
 
 typedef enum _ichnaea_SensorError {
@@ -259,8 +259,8 @@ extern "C" {
 #define _ichnaea_SetpointError_ARRAYSIZE ((ichnaea_SetpointError)(ichnaea_SetpointError_ERR_SETPOINT_NOT_SUPPORTED+1))
 
 #define _ichnaea_SetpointField_MIN ichnaea_SetpointField_SETPOINT_OUTPUT_VOLTAGE
-#define _ichnaea_SetpointField_MAX ichnaea_SetpointField_SETPOINT_MAX_AVG_OUTPUT_CURRENT
-#define _ichnaea_SetpointField_ARRAYSIZE ((ichnaea_SetpointField)(ichnaea_SetpointField_SETPOINT_MAX_AVG_OUTPUT_CURRENT+1))
+#define _ichnaea_SetpointField_MAX ichnaea_SetpointField_SETPOINT_OUTPUT_CURRENT
+#define _ichnaea_SetpointField_ARRAYSIZE ((ichnaea_SetpointField)(ichnaea_SetpointField_SETPOINT_OUTPUT_CURRENT+1))
 
 #define _ichnaea_SensorError_MIN ichnaea_SensorError_ERR_SENSOR_NO_ERROR
 #define _ichnaea_SensorError_MAX ichnaea_SensorError_ERR_SENSOR_UNKNOWN

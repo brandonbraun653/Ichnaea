@@ -98,14 +98,6 @@ namespace COM::RPC
 
   mb::rpc::ErrId ManagerService::engage_output()
   {
-    /*-------------------------------------------------------------------------
-    Ignore requests that are not intended for this node
-    -------------------------------------------------------------------------*/
-    if( request.node_id != System::identity() )
-    {
-      return mbed_rpc_ErrorCode_ERR_SVC_NO_RSP;
-    }
-
     response.has_message = false;
     response.status      = ichnaea_ManagerError_ERR_CMD_NO_ERROR;
 
@@ -124,14 +116,6 @@ namespace COM::RPC
 
   mb::rpc::ErrId ManagerService::disengage_output()
   {
-    /*-------------------------------------------------------------------------
-    Ignore requests that are not intended for this node
-    -------------------------------------------------------------------------*/
-    if( request.node_id != System::identity() )
-    {
-      return mbed_rpc_ErrorCode_ERR_SVC_NO_RSP;
-    }
-
     response.has_message = false;
     response.status      = ichnaea_ManagerError_ERR_CMD_NO_ERROR;
 

@@ -11,8 +11,9 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-
+#include "etl/char_traits.h"
 #include "mbed_rpc.pb.h"
+#include <src/app/app_power.hpp>
 #include <src/com/rpc/rpc_services.hpp>
 #include <src/system/system_util.hpp>
 #include <src/version.hpp>
@@ -45,38 +46,34 @@ namespace COM::RPC
     /*-------------------------------------------------------------------------
     Process the request
     -------------------------------------------------------------------------*/
-    auto result = mbed_rpc_ErrorCode_ERR_NO_ERROR;
+    auto result          = mbed_rpc_ErrorCode_ERR_NO_ERROR;
+    response.status      = ichnaea_SetpointError_ERR_SETPOINT_NO_ERROR;
+    response.has_message = false;
 
     switch( request.field )
     {
       case ichnaea_SetpointField_SETPOINT_OUTPUT_VOLTAGE:
-        result = set_voltage_output( request.value_oneof.float_type );
+        if( !App::Power::setOutputVoltage( request.value_oneof.float_type ) )
+        {
+          response.status = ichnaea_SetpointError_ERR_SETPOINT_INVALID;
+        }
         break;
 
-      case ichnaea_SetpointField_SETPOINT_MAX_AVG_OUTPUT_CURRENT:
-        result = set_max_current_limit( request.value_oneof.float_type );
+      case ichnaea_SetpointField_SETPOINT_OUTPUT_CURRENT:
+        if( !App::Power::setOutputCurrentLimit( request.value_oneof.float_type ) )
+        {
+          response.status = ichnaea_SetpointError_ERR_SETPOINT_INVALID;
+        }
         break;
 
       default:
         mbed_assert_continue_msg( false, "Unknown setpoint field: %d", request.field );
-        result = mbed_rpc_ErrorCode_ERR_SVC_FAILED;
+        result          = mbed_rpc_ErrorCode_ERR_SVC_FAILED;
+        response.status = ichnaea_SetpointError_ERR_SETPOINT_NOT_SUPPORTED;
         break;
     }
 
     return result;
   }
 
-  mb::rpc::ErrId SetpointService::set_voltage_output( const float voltage )
-  {
-    ( void )voltage;
-    return mbed_rpc_ErrorCode_ERR_SVC_FAILED;
-  }
-
-
-  mb::rpc::ErrId SetpointService::set_max_current_limit( const float current )
-  {
-    ( void )current;
-    return mbed_rpc_ErrorCode_ERR_SVC_FAILED;
-  }
-
-}  // namespace COM::RPC
+}    // namespace COM::RPC

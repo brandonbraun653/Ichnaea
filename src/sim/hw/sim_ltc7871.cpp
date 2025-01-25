@@ -1,11 +1,11 @@
 /******************************************************************************
  *  File Name:
- *    ltc7871.cpp
+ *    sim_ltc7871.cpp
  *
  *  Description:
- *    Simulator implementation of the LTC7871 power buck converter. This models
- *    the logical behavior of the LTC7871, but does not interact with any
- *    physical hardware.
+ *    Idealized simulator implementation of the LTC7871 power buck converter.
+ *    This models the logical behavior of the LTC7871, but does not interact
+ *    with any physical hardware.
  *
  *  2024 | Brandon Braun | brandonbraun653@protonmail.com
  *****************************************************************************/
@@ -13,7 +13,6 @@
 /*-----------------------------------------------------------------------------
 Includes
 -----------------------------------------------------------------------------*/
-#include "mbedutils/drivers/logging/logging_macros.hpp"
 #include <cstdint>
 #include <mbedutils/drivers/hardware/analog.hpp>
 #include <mbedutils/logging.hpp>
@@ -44,7 +43,6 @@ namespace HW::LTC7871
 
   /**
    * @brief Computes the analog voltage on the LTC average current output pin.
-   *
    * @return float
    */
   static float adc_ltc_imon_update_callback()
@@ -59,7 +57,10 @@ namespace HW::LTC7871
     ;
   }
 
-
+  /**
+   * @brief Computes the ADC measurement of the LTC output voltage.
+   * @return float
+   */
   static float adc_ltc_vout_update_callback()
   {
     auto ioConfig = BSP::getIOConfig();
@@ -99,7 +100,6 @@ namespace HW::LTC7871
 
   void postSequence()
   {
-    // Nothing to do here
   }
 
 
@@ -109,7 +109,6 @@ namespace HW::LTC7871
     s_driver_mode     = DriverMode::ENABLED;
     s_vout_ref        = vout;
     s_iout_ref        = iout;
-    LOG_INFO( "LTC7871: Power converter enabled." );
     return true;
   }
 
@@ -119,21 +118,18 @@ namespace HW::LTC7871
     s_ltc7871_enabled = false;
     s_driver_mode     = DriverMode::DISABLED;
     s_vout_ref        = 0.0f;
-    LOG_INFO( "LTC7871: Power converter disabled." );
   }
 
 
   void setVoutRef( const float voltage )
   {
     s_vout_ref = voltage;
-    LOG_INFO( "LTC7871: Vout set to %.2fV", voltage );
   }
 
 
   void setIoutRef( const float current )
   {
     s_iout_ref = current;
-    LOG_INFO( "LTC7871: Iout set to %.2fA", current );
   }
 
 
@@ -151,6 +147,7 @@ namespace HW::LTC7871
 
   void clearFaults()
   {
+    s_ltc7871_faults = 0;
   }
 
 
@@ -165,4 +162,8 @@ namespace HW::LTC7871
   {
   }
 
+
+  void runStateUpdater()
+  {
+  }
 }    // namespace HW::LTC7871

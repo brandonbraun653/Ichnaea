@@ -100,13 +100,6 @@ namespace HW::LTC7871::Private
     float msr_average_current;   /* Measured average current (amps) */
     float msr_immediate_current; /* Measured output current (amps) */
 
-    /* Live/Valid References */
-    float tgt_output_voltage; /* Target output voltage (volts) */
-
-    /* Requests */
-    float req_output_voltage; /* Requested output voltage (volts) */
-    float req_output_current; /* Requested output current (amps) */
-
     /* Status */
     DriverMode driver_mode;       /* Current operational mode of the driver */
     uint32_t   fault_bits;        /* Bitfield to indicate if a fault has occurred */

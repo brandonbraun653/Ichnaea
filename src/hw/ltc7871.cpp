@@ -367,13 +367,7 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Update the system state
     -------------------------------------------------------------------------*/
-    s_ltc_state.msr_input_voltage =
-        System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT, System::Sensor::LookupType::REFRESH );
-    s_ltc_state.msr_output_voltage =
-        System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD, System::Sensor::LookupType::REFRESH );
-    s_ltc_state.req_output_voltage = 0.0f;
-    s_ltc_state.req_output_current = 0.0f;
-    s_ltc_state.tgt_output_voltage = vout;
+    runStateUpdater();
 
     switch( cfg1_reg & MFR_CONFIG1_ILIM_SET_Msk )
     {
@@ -479,18 +473,9 @@ namespace HW::LTC7871
     accepted &= Private::min_on_time_satisfied( voltage, s_ltc_state.msr_input_voltage );
     LOG_WARN_IF( !accepted, "Vin/Vout ratio too high. Cannot set voltage to %.2f", voltage );
 
-    accepted &= voltage <= App::PDI::getSystemVoltageOutputRatedLimit();
-    LOG_WARN_IF( !accepted, "Voltage request too high: %.2f", voltage );
-
     if( accepted )
     {
-      // Save off the new reference
-      App::PDI::setTargetSystemVoltageOutput( s_ltc_state.req_output_voltage );
-
-      // Update the LTC output voltage
-      set_output_voltage( s_ltc_state.req_output_voltage );
-
-      // Update the LTC operating point
+      set_output_voltage( voltage );
       update_operating_point();
     }
   }
@@ -498,31 +483,8 @@ namespace HW::LTC7871
 
   void setIoutRef( const float current )
   {
-    bool accepted = true;
-    auto ioConfig = BSP::getIOConfig();
-
-    /* System Current */
-    float current_limit = App::PDI::getSystemCurrentOutputRatedLimit();
-    accepted &= current >= current_limit;
-    LOG_WARN_IF( !accepted, "Current request too high: %.2f > %.2f", current, current_limit );
-
-    /* Phase Current */
-    float phase_current       = current / ioConfig.ltc_num_phases;
-    float phase_current_limit = App::PDI::getSystemCurrentOutputRatedLimit();
-    accepted &= phase_current >= phase_current_limit;
-    LOG_WARN_IF( !accepted, "Phase current request too high: %.2f > %.2f", phase_current, phase_current_limit );
-
-    if( accepted )
-    {
-      // Save off the new reference
-      App::PDI::setTargetSystemCurrentOutput( s_ltc_state.req_output_current );
-
-      // Update the LTC output current limit
-      set_max_avg_current( s_ltc_state.req_output_current );
-
-      // Update the LTC operating point
-      update_operating_point();
-    }
+    set_max_avg_current( current );
+    update_operating_point();
   }
 
 
@@ -590,6 +552,18 @@ namespace HW::LTC7871
       s_ltc_state.driver_mode = DriverMode::FAULTED;
     }
   }
+
+
+  void runStateUpdater()
+  {
+    using namespace System::Sensor;
+
+    s_ltc_state.msr_input_voltage     = getMeasurement( Element::VMON_SOLAR_INPUT );
+    s_ltc_state.msr_output_voltage    = getMeasurement( Element::VMON_LOAD );
+    s_ltc_state.msr_immediate_current = getMeasurement( Element::IMON_LOAD );
+    s_ltc_state.msr_average_current   = getMeasurement( Element::IMON_LTC_AVG );
+  }
+
 
   /*---------------------------------------------------------------------------
   Private Functions
@@ -753,12 +727,9 @@ namespace HW::LTC7871
     /*-------------------------------------------------------------------------
     Get the latest information from the monitor
     -------------------------------------------------------------------------*/
-    s_ltc_state.msr_input_voltage     = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
-    s_ltc_state.msr_output_voltage    = System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD );
-    s_ltc_state.msr_average_current   = System::Sensor::getMeasurement( System::Sensor::Element::IMON_LTC_AVG );
-    s_ltc_state.msr_immediate_current = System::Sensor::getMeasurement( System::Sensor::Element::IMON_LOAD );
+    runStateUpdater();
 
-    Private::set_switching_frequency( 80e3 );
+    Private::set_switching_frequency( 100e3 );
     Private::set_mode_pin( Private::SwitchingMode::LTC_MODE_DISC );
 
     // TODO BMB: This is where the magic happens. We need to implement a control
@@ -779,9 +750,5 @@ namespace HW::LTC7871
     // - Low current, low output voltage: 12V, 0.5A
     // - High current, low output voltage: 12V, 100A
     // - Medium current, medium output voltage: 24V, 10A
-
-    // TODO LUNCH BREAK:
-    // - Averaged current monitor from the main sensor. (100ms or something)
-    // - Start working on the monitor thread
   }
 }    // namespace HW::LTC7871

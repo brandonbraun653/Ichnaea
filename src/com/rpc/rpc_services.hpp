@@ -88,10 +88,6 @@ namespace COM::RPC
      * @copydoc IService::processRequest
      */
     mb::rpc::ErrId processRequest() final override;
-
-  private:
-    mb::rpc::ErrId set_voltage_output( const float voltage );
-    mb::rpc::ErrId set_max_current_limit( const float current );
   };
 
 

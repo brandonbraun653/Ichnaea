@@ -20,6 +20,7 @@ Includes
 #include <src/system/system_error.hpp>
 #include <src/hw/nor.hpp>
 #include "fal_def.h"
+#include "mbedutils/drivers/database/db_kv_node.hpp"
 #include "mbedutils/drivers/logging/logging_macros.hpp"
 
 namespace System::Database
@@ -148,11 +149,28 @@ namespace System::Database
     mbed_assert_msg( s_pdi_kvdb.insert( node ), "PDI key %d insert fail", node.hashKey );
 
     /*-------------------------------------------------------------------------
-    Write the default data to the database if it doesn't already exist
+    Insertion doesn't mean data fully "exists". Some keys are NVM backed and
+    need explicit writes to the NVM cache before they are truly persistent.
     -------------------------------------------------------------------------*/
     if( !s_pdi_kvdb.exists( node.hashKey ) )
     {
-      mbed_assert_msg( s_pdi_kvdb.write( node.hashKey, dflt_data, size ) == DB_ERR_NONE, "PDI key %d dflt write fail", node.hashKey );
+      // Write the default data to the NVM cache
+      auto iter = s_pdi_kvdb.find( node.hashKey );
+      mbed_dbg_assert( iter != nullptr );
+
+      iter->flags |= KV_FLAG_FORCE_WRITE;
+      mbed_assert_msg( s_pdi_kvdb.write( node.hashKey, dflt_data, size ) == static_cast<int>( size ),
+                       "PDI key %d dflt write fail", node.hashKey );
+      iter->flags &= ~KV_FLAG_FORCE_WRITE;
+
+      // Flush the data to finalize the commit
+      if( iter->flags & KV_FLAG_DIRTY )
+      {
+        s_pdi_kvdb.flush();
+      }
+
+      // Sanity check the data is now in the NVM cache
+      mbed_dbg_assert( s_pdi_kvdb.exists( node.hashKey ) );
     }
 
     /*-------------------------------------------------------------------------

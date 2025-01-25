@@ -275,15 +275,15 @@ class _SetpointFieldEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     SETPOINT_OUTPUT_VOLTAGE: _SetpointField.ValueType  # 0
     """Regulated output voltage of the node"""
-    SETPOINT_MAX_AVG_OUTPUT_CURRENT: _SetpointField.ValueType  # 1
-    """Maximum average output current of the node"""
+    SETPOINT_OUTPUT_CURRENT: _SetpointField.ValueType  # 1
+    """Output current limit of the node"""
 
 class SetpointField(_SetpointField, metaclass=_SetpointFieldEnumTypeWrapper): ...
 
 SETPOINT_OUTPUT_VOLTAGE: SetpointField.ValueType  # 0
 """Regulated output voltage of the node"""
-SETPOINT_MAX_AVG_OUTPUT_CURRENT: SetpointField.ValueType  # 1
-"""Maximum average output current of the node"""
+SETPOINT_OUTPUT_CURRENT: SetpointField.ValueType  # 1
+"""Output current limit of the node"""
 global___SetpointField = SetpointField
 
 class _SensorError:
