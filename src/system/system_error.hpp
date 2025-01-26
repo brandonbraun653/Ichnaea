@@ -17,6 +17,7 @@ Includes
 -----------------------------------------------------------------------------*/
 #include <cstddef>
 #include <etl/delegate.h>
+#include <etl/string_view.h>
 
 namespace Panic
 {
@@ -121,6 +122,14 @@ namespace Panic
    * @param handler Function to call when the error occurs
    */
   void registerHandler( const Panic::ErrorCode code, Panic::ErrorCallback handler );
+
+  /**
+   * @brief Get the error string associated with a given error code
+   *
+   * @param code Error code thrown
+   * @return etl::string_view
+   */
+  etl::string_view getErrorString( const Panic::ErrorCode code );
 
 }    // namespace Panic
 

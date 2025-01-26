@@ -942,7 +942,7 @@ namespace App::Monitor
     /*-------------------------------------------------------------------------
     Put the system into a safe state
     -------------------------------------------------------------------------*/
-    LOG_WARN( "Safe-ing system due to monitor error: %d", code );
+    LOG_WARN( "Safe-ing system due to monitor error: %s", Panic::getErrorString( code ).data() );
     App::Power::disengageOutput();
     return true;
   }

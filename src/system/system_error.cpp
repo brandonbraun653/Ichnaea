@@ -101,4 +101,84 @@ namespace Panic
       s_error_handlers[ static_cast<size_t>( code ) ] = callback;
     }
   }
+
+
+  etl::string_view getErrorString( const Panic::ErrorCode code )
+  {
+    switch( code )
+    {
+      case NO_ERROR:
+        return "No error";
+
+      case ERR_UNKNOWN:
+        return "Unknown error";
+
+      case ERR_ASSERTION_FAIL:
+        return "Assertion failed";
+
+      case ERR_INVALID_PARAM:
+        return "Invalid parameter";
+
+      case ERR_INVALID_CONTEXT:
+        return "Invalid context";
+
+      case ERR_SYSTEM_INIT_FAIL:
+        return "System initialization failed";
+
+      case ERR_POST_FAIL:
+        return "POST sequence failed";
+
+      case ERR_BOARD_VERSION_READ_FAIL:
+        return "Board version read failed";
+
+      case ERR_SYSTEM_THREAD_EXIT:
+        return "System thread exited unexpectedly";
+
+      case ERR_LTC_DATA_WRITE_FAIL:
+        return "LTC data write failed";
+
+      case ERR_LTC_DATA_READ_FAIL:
+        return "LTC data read failed";
+
+      case ERR_LTC_PEC_READ_FAIL:
+        return "LTC PEC read failed";
+
+      case ERR_LTC_PEC_WRITE_FAIL:
+        return "LTC PEC write failed";
+
+      case ERR_LTC_CMD_FAIL:
+        return "LTC command failed";
+
+      case ERR_LTC_HW_STRAP_FAIL:
+        return "LTC hardware strap failed";
+
+      case ERR_LTC_FAULT:
+        return "LTC fault";
+
+      case ERR_LTC_PWR_DWN_FAIL:
+        return "LTC power down failed";
+
+      case ERR_MONITOR_12V0_OOR:
+        return "12V rail out of range";
+
+      case ERR_MONITOR_VIN_OOR:
+        return "Input voltage out of range";
+
+      case ERR_MONITOR_VOUT_OOR:
+        return "Output voltage out of range";
+
+      case ERR_MONITOR_IOUT_OOR:
+        return "Output current out of range";
+
+      case ERR_MONITOR_TEMP_OOR:
+        return "Temperature out of range";
+
+      case ERR_MONITOR_FAN_SPEED_OOR:
+        return "Fan speed out of range";
+
+      default:
+        return "Unknown error code";
+    }
+  }
+
 }    // namespace Panic

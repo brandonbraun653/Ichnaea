@@ -513,31 +513,10 @@ namespace HW::LTC7871
   void runFaultMonitoring()
   {
     /*-------------------------------------------------------------------------
-    Check for any pending fault states
+    If any faults are present, transition the system to a faulted state
     -------------------------------------------------------------------------*/
     s_ltc_state.fault_bits = read_faults();
 
-    for( size_t i = 0; i < LTCFaultBits::LTC_FAULT_COUNT; i++ )
-    {
-      if( ( ( s_ltc_state.fault_bits & ( 1u << i ) ) != 0 )                // Fault is present
-          && ( ( s_ltc_state.fault_code_logged & ( 1u << i ) ) == 0 ) )    // Fault has not been logged yet
-      {
-        /*---------------------------------------------------------------------
-        Disable the power stage immediately to prevent further damage
-        ---------------------------------------------------------------------*/
-        Private::set_pwmen_pin( false );
-
-        /*---------------------------------------------------------------------
-        Log the fault code
-        ---------------------------------------------------------------------*/
-        s_ltc_state.fault_code_logged |= ( 1u << i );
-        LOG_ERROR( "LTC7871 Fault: %s", ltcFaultCodeToString( i ) );
-      }
-    }
-
-    /*-------------------------------------------------------------------------
-    If any faults are present, transition the system to a faulted state
-    -------------------------------------------------------------------------*/
     if( ( s_ltc_state.fault_bits != 0 ) && ( s_ltc_state.driver_mode != DriverMode::FAULTED ) )
     {
       /*-----------------------------------------------------------------------
@@ -548,7 +527,15 @@ namespace HW::LTC7871
       /*-----------------------------------------------------------------------
       Transition the system to a faulted state
       -----------------------------------------------------------------------*/
-      LOG_ERROR( "LTC7871 transition to faulted state" );
+      mbed_assert_continue_msg( false, "LTC7871 FAULT: 0x%08x", s_ltc_state.fault_bits );
+      for( size_t i = 0; i < LTCFaultBits::LTC_FAULT_COUNT; i++ )
+      {
+        if( ( s_ltc_state.fault_bits & ( 1u << i ) ) != 0 )
+        {
+          LOG_ERROR( "\t-- %s", ltcFaultCodeToString( i ) );
+        }
+      }
+
       s_ltc_state.driver_mode = DriverMode::FAULTED;
     }
   }
@@ -657,12 +644,13 @@ namespace HW::LTC7871
     const uint8_t fault3 = Private::read_register( REG_MFR_NOC_FAULT );
 
     /*-------------------------------------------------------------------------
-    Collapse the fault bits into a single 32-bit value
+    Collapse the fault bits into a single 32-bit value. Ordering will follow
+    the enumeration in the LTCFaultBits.
     -------------------------------------------------------------------------*/
     uint32_t bits = 0;
-    bits |= static_cast<uint32_t>( fault1 ) << 16u;
+    bits |= static_cast<uint32_t>( fault3 ) << 16u;
     bits |= static_cast<uint32_t>( fault2 ) << 8u;
-    bits |= static_cast<uint32_t>( fault3 );
+    bits |= static_cast<uint32_t>( fault1 );
 
     return bits;
   }

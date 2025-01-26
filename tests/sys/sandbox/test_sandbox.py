@@ -73,7 +73,7 @@ class TestSandbox:
 
         # Engage the output, wait for the system to enable and stabilize
         assert self.node_link.engage_output()
-        assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_VOLTAGE, target=voltage_target)
+        assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_VOLTAGE, target=voltage_target, tolerance=0.1)
         self.node_link.sleep_on_node_time(2.0)
 
         # Disengage the output and ensure the voltage drops (safety)

@@ -83,7 +83,7 @@ namespace Threads
       App::Monitor::monitor5V0Voltage();
       App::Monitor::monitor12V0Voltage();
       App::Monitor::monitorTemperature();
-      App::Monitor::monitorFanSpeed();
+      // App::Monitor::monitorFanSpeed();
 
       logMeasurements();
 

@@ -46,6 +46,15 @@ namespace HW::LTC7871::Private
   static mb::osal::mb_recursive_mutex_t s_bus_lock; /* SPI bus lock */
 
   /*---------------------------------------------------------------------------
+  Private Functions
+  ---------------------------------------------------------------------------*/
+
+  static inline float idac_vlow_ua_to_vout( const uint8_t idac, const float ra, const float rb )
+  {
+    return 1.2f * ( 1.0f + ( rb / ra ) ) - static_cast<float>( idac ) * rb;
+  }
+
+  /*---------------------------------------------------------------------------
   Public Functions
   ---------------------------------------------------------------------------*/
 
@@ -316,6 +325,22 @@ namespace HW::LTC7871::Private
     -------------------------------------------------------------------------*/
     int32_t idac_ideal_uA  = static_cast<int32_t>( 1e6 * ( ( ( 1.2f * ( 1 + ( rb / ra ) ) ) - vlow ) / rb ) );
     int32_t idac_actual_uA = etl::clamp( idac_ideal_uA, IDAC_MIN_UA, IDAC_MAX_UA );
+
+    /*-------------------------------------------------------------------------
+    For precision, check +/- 1uA around the ideal value to see if we can get
+    closer to the desired voltage. This is a brute force method, but it's
+    simple and effective.
+    -------------------------------------------------------------------------*/
+    for( int32_t i = -1; i <= 1; i++ )
+    {
+      int32_t idac_test_uA = etl::clamp( idac_actual_uA + i, IDAC_MIN_UA, IDAC_MAX_UA );
+      float   vout_test    = idac_vlow_ua_to_vout( static_cast<uint8_t>( idac_test_uA ), ra, rb );
+
+      if( fabs( vout_test - vlow ) < fabs( vlow - idac_vlow_ua_to_vout( static_cast<uint8_t>( idac_actual_uA ), ra, rb ) ) )
+      {
+        idac_actual_uA = idac_test_uA;
+      }
+    }
 
     /*-------------------------------------------------------------------------
     Convert the current reference to the 7-bit register value (pg. 39)
