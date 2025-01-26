@@ -179,7 +179,7 @@ Initialize and read the ADC pin used for board versioning
       s_board_map.tmon_beta_25C                    = 3'380.0f; /* Digikey: 445-2550-1-ND */
       s_board_map.ltc_inductor_dcr                 = 0.0016f;
       s_board_map.ltc_vlow_ra                      = 15'000.0f;
-      s_board_map.ltc_vlow_rb                      = 470'000'000.0f;
+      s_board_map.ltc_vlow_rb                      = 470'000.0f;
       s_board_map.ltc_num_phases                   = 6;
       s_board_map.ltc_setcur_rfb                   = 22'000.0f;
       s_board_map.adc[ ADC_MUTLIPLEXED_SENSE ].pin = BSPV2::ADC::PIN_MULTIPLEX;

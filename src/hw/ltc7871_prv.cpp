@@ -314,7 +314,7 @@ namespace HW::LTC7871::Private
     /*-------------------------------------------------------------------------
     Compute a realizable IDAC adjustment current (pg. 17)
     -------------------------------------------------------------------------*/
-    int32_t idac_ideal_uA  = static_cast<int32_t>( 1e6 * ( ( 1.2f * ( ( ra + rb ) / ra ) - vlow ) / rb ) );
+    int32_t idac_ideal_uA  = static_cast<int32_t>( 1e6 * ( ( ( 1.2f * ( 1 + ( rb / ra ) ) ) - vlow ) / rb ) );
     int32_t idac_actual_uA = etl::clamp( idac_ideal_uA, IDAC_MIN_UA, IDAC_MAX_UA );
 
     /*-------------------------------------------------------------------------
@@ -363,11 +363,11 @@ namespace HW::LTC7871::Private
     /*-------------------------------------------------------------------------
     Return 5-bit two's complement value
     -------------------------------------------------------------------------*/
-    uint8_t abs_value =  static_cast<uint8_t>( -iResistor_uA - 1u );
+    uint8_t abs_value = static_cast<uint8_t>( -iResistor_uA - 1u );
     return ( ~abs_value ) & 0x1F;
   }
 
-  bool min_on_time_satisfied(const float vout, const float vin)
+  bool min_on_time_satisfied( const float vout, const float vin )
   {
     /*-------------------------------------------------------------------------
     Input Protection
@@ -380,7 +380,7 @@ namespace HW::LTC7871::Private
     /*-------------------------------------------------------------------------
     Validate minimum on-time requirements (pg. 29)
     -------------------------------------------------------------------------*/
-    const float min_on_time = 150e-9f; // 150ns
+    const float min_on_time = 150e-9f;    // 150ns
     const float act_on_time = vout / vin;
 
     return act_on_time >= min_on_time;
