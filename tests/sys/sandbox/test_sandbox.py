@@ -65,15 +65,13 @@ class TestSandbox:
         )
         assert input_voltage, "Input voltage target not met"
 
-        voltage_target = max(input_voltage / 2.0, 12.0)
-        ilim_target = 1.0
-
+        # Set the output voltage and current limits
         assert self.node_link.set_output_voltage_target(12.0), "Unable to set output voltage"
-        assert self.node_link.set_output_current_target(ilim_target), "Unable to set output current limit"
+        assert self.node_link.set_output_current_target(10.0), "Unable to set output current limit"
 
         # Engage the output, wait for the system to enable and stabilize
         assert self.node_link.engage_output()
-        assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_VOLTAGE, target=voltage_target, tolerance=0.1)
+        assert self.node_link.await_sensor_value(SensorType.SENSOR_OUTPUT_VOLTAGE, target=12.0, tolerance=0.1)
         self.node_link.sleep_on_node_time(2.0)
 
         # Disengage the output and ensure the voltage drops (safety)
