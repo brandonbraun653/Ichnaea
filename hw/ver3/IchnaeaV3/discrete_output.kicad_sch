@@ -385,7 +385,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8f837312-ff6b-44c6-b00d-0199a586cb32")
-		(property "Reference" "U11"
+		(property "Reference" "U14"
 			(at 135.5441 69.85 0)
 			(effects
 				(font
@@ -490,7 +490,7 @@
 		(instances
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/fdf9ed79-d6dc-4b90-81da-ef64aa580205"
-					(reference "U11")
+					(reference "U14")
 					(unit 1)
 				)
 			)
@@ -506,7 +506,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b0480a45-a707-418f-a818-5ab33e9fca29")
-		(property "Reference" "U17"
+		(property "Reference" "U15"
 			(at 162.2141 69.85 0)
 			(effects
 				(font
@@ -611,7 +611,7 @@
 		(instances
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/fdf9ed79-d6dc-4b90-81da-ef64aa580205"
-					(reference "U17")
+					(reference "U15")
 					(unit 1)
 				)
 			)

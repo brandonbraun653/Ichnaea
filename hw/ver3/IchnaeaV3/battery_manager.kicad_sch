@@ -745,7 +745,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d5c63c8d-9a2b-4205-a45d-4e0c50b01447")
-		(property "Reference" "J4"
+		(property "Reference" "J7"
 			(at 200.66 25.4 0)
 			(effects
 				(font
@@ -851,7 +851,7 @@
 		(instances
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/15949d39-4147-469d-a992-c4b48798ba19"
-					(reference "J4")
+					(reference "J7")
 					(unit 1)
 				)
 			)
