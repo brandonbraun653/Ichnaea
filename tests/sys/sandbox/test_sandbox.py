@@ -66,8 +66,8 @@ class TestSandbox:
         assert input_voltage, "Input voltage target not met"
 
         # Set the output voltage and current limits
-        assert self.node_link.set_output_voltage_target(12.0), "Unable to set output voltage"
-        assert self.node_link.set_output_current_target(10.0), "Unable to set output current limit"
+        assert self.node_link.set_output_voltage_target(24.0), "Unable to set output voltage"
+        assert self.node_link.set_output_current_target(48.0), "Unable to set output current limit"
 
         # Engage the output, wait for the system to enable and stabilize
         assert self.node_link.engage_output()

@@ -35,8 +35,11 @@ namespace Threads
       auto inputVoltage  = System::Sensor::getMeasurement( System::Sensor::Element::VMON_SOLAR_INPUT );
       auto outputVoltage = System::Sensor::getMeasurement( System::Sensor::Element::VMON_LOAD );
       auto outputCurrent = System::Sensor::getMeasurement( System::Sensor::Element::IMON_LOAD );
-      LOG_INFO( "Input Voltage: %.2f V, Output Voltage: %.2f V, Output Current: %.2f A", inputVoltage, outputVoltage,
-                outputCurrent );
+      auto temp0         = System::Sensor::getMeasurement( System::Sensor::Element::BOARD_TEMP_0 );
+      auto temp1         = System::Sensor::getMeasurement( System::Sensor::Element::BOARD_TEMP_1 );
+
+      LOG_INFO( "VIN: %.2f V, VOUT: %.2f V, IOUT: %.2f A, T0: %.2f C, T1: %.2f C", inputVoltage, outputVoltage, outputCurrent,
+                temp0, temp1 );
     }
   }
 

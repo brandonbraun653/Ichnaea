@@ -38,7 +38,7 @@ namespace HW::FAN
    *
    * @param speed  Value between 0.0 and 1.0
    */
-  void setSpeedRPM( const float speed );
+  void setSpeed( const float percent );
 
   /**
    * @brief Gets the fan speed in RPM
@@ -46,6 +46,6 @@ namespace HW::FAN
    * @return float Fan speed in RPM
    */
   float getFanSpeed();
-}  // namespace HW::FAN
+}    // namespace HW::FAN
 
-#endif  /* !ICHNAEA_FAN_CONTROL_HPP */
+#endif /* !ICHNAEA_FAN_CONTROL_HPP */

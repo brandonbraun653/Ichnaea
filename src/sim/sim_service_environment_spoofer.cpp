@@ -190,7 +190,7 @@ namespace SIM::Service
 
     // LOG_TRACE( "Setting fan speed to: %.2f RPM", request->value() );
 
-    HW::FAN::setSpeedRPM( request->value() );
+    HW::FAN::setSpeedPercent( request->value() );
     return ::grpc::Status::OK;
   }
 

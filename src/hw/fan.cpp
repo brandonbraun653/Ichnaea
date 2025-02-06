@@ -133,18 +133,18 @@ namespace HW::FAN
 
   void postSequence()
   {
-    setSpeedRPM( 0.25f );
+    setSpeed( 0.25f );
     mb::thread::this_thread::sleep_for( 2000 );
-    setSpeedRPM( 0.1f );
+    setSpeed( 0.8f );
   }
 
 
-  void setSpeedRPM( const float speed )
+  void setSpeed( const float percent )
   {
     /*-------------------------------------------------------------------------
     Clamp the brightness level to a valid range and convert it to a PWM level.
     -------------------------------------------------------------------------*/
-    const float    clamped_speed = etl::max( 0.0f, etl::min( speed, 0.99f ) );
+    const float    clamped_speed = etl::max( 0.0f, etl::min( percent, 0.99f ) );
     const uint16_t approx_level  = etl::min( PWM_COUNTER_WRAP, static_cast<uint16_t>( PWM_COUNTER_WRAP * clamped_speed ) );
 
     /*-------------------------------------------------------------------------

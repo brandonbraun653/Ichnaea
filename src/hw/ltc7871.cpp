@@ -717,7 +717,7 @@ namespace HW::LTC7871
     -------------------------------------------------------------------------*/
     runStateUpdater();
 
-    Private::set_switching_frequency( 100e3 );
+    Private::set_switching_frequency( 150e3 );
     Private::set_mode_pin( Private::SwitchingMode::LTC_MODE_DISC );
 
     // TODO BMB: This is where the magic happens. We need to implement a control
