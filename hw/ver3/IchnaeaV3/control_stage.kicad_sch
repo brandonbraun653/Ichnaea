@@ -3080,6 +3080,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 119.38 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a6d6666b-10d9-4d53-9ab6-96db727090e5")
 		)
@@ -3180,6 +3189,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 111.76 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "e092c903-5053-4c80-bac7-f631fe52c3b1")
 		)
@@ -3267,6 +3285,15 @@
 			)
 		)
 		(property "LCSC" "C22775"
+			(at 161.29 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 161.29 187.96 0)
 			(effects
 				(font
@@ -3507,6 +3534,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 119.38 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "78b72978-ec01-4a6f-856f-ea8ff1d77b97")
 		)
@@ -3599,6 +3635,15 @@
 			)
 		)
 		(property "Digikey" "N/A"
+			(at 111.76 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 111.76 196.85 0)
 			(effects
 				(font
@@ -3768,6 +3813,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 34.29 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6b2a6839-53be-49c7-b126-1226e130f8f3")
 		)
@@ -3868,6 +3922,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 187.96 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "9a9fd139-c7b3-41ca-bbf0-5f7c86a47bd4")
 		)
@@ -3931,6 +3994,15 @@
 			)
 		)
 		(property "Description" "Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 49.53 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 49.53 49.53 0)
 			(effects
 				(font
@@ -4055,6 +4127,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 43.18 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f53cbb11-bc5f-42a9-b441-f813b85de8c6")
 		)
@@ -4144,6 +4225,15 @@
 			)
 		)
 		(property "Digikey" "N/A"
+			(at 121.92 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 121.92 180.34 0)
 			(effects
 				(font
@@ -4249,6 +4339,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 190.5 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "532c2018-9e8c-42a8-98d5-a0209e23ba26")
 		)
@@ -4340,6 +4439,15 @@
 			)
 		)
 		(property "LCSC" "C5224260"
+			(at 177.8 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 177.8 173.99 0)
 			(effects
 				(font
@@ -4510,6 +4618,15 @@
 			)
 		)
 		(property "LCSC" "C2926187"
+			(at 187.96 167.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 187.96 167.64 0)
 			(effects
 				(font
@@ -4750,6 +4867,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 180.34 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "32b29b5f-0345-4c66-a34c-d3ed9bb85d54")
 		)
@@ -4903,6 +5029,15 @@
 			)
 		)
 		(property "LCSC" "N/A"
+			(at 25.4 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 25.4 130.81 0)
 			(effects
 				(font
@@ -5077,6 +5212,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 161.29 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "440effd0-978d-436a-8bce-2785280bd35e")
 		)
@@ -5166,6 +5310,15 @@
 			)
 		)
 		(property "Digikey" "N/A"
+			(at 39.37 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 39.37 124.46 0)
 			(effects
 				(font
@@ -5393,6 +5546,15 @@
 			)
 		)
 		(property "LCSC" "C22775"
+			(at 105.41 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 105.41 157.48 0)
 			(effects
 				(font
@@ -5825,6 +5987,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 34.29 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7af07f98-540b-4974-b6f8-e4b627819188")
 		)
@@ -5912,6 +6083,15 @@
 			)
 		)
 		(property "LCSC" "C22775"
+			(at 105.41 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 105.41 191.77 0)
 			(effects
 				(font
@@ -6148,6 +6328,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 171.45 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "85767647-b033-4941-bcd2-7dbcbdbadc7a")
 		)
@@ -6311,6 +6500,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 181.61 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bb386ff3-7966-4124-8808-7fb244562fcf")
 		)
@@ -6383,6 +6581,15 @@
 			)
 		)
 		(property "LCSC" "C96512"
+			(at 46.99 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 46.99 142.24 0)
 			(effects
 				(font

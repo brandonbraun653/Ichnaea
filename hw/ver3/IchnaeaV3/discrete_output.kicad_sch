@@ -439,6 +439,15 @@
 				(hide yes)
 			)
 		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 133.35 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "7"
 			(uuid "7c6a5dc7-eab8-4871-a4fc-0af5eb8aa131")
 		)
@@ -552,6 +561,15 @@
 			)
 		)
 		(property "Digikey" "1727-3327-2-ND"
+			(at 160.02 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 160.02 87.63 0)
 			(effects
 				(font

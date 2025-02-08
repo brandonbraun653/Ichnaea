@@ -624,7 +624,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" " C2934051"
+		(property "LCSC" "C2934051"
+			(at 118.11 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 118.11 107.95 0)
 			(effects
 				(font
@@ -695,6 +704,15 @@
 			)
 		)
 		(property "Description" "Dual NMOS transistor, 6 pin package"
+			(at 107.95 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 107.95 129.54 0)
 			(effects
 				(font
@@ -777,6 +795,15 @@
 			)
 		)
 		(property "Description" "Dual NMOS transistor, 6 pin package"
+			(at 95.25 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
 			(at 95.25 118.11 0)
 			(effects
 				(font

@@ -20,17 +20,9 @@
 - [ ] Voltage sample before inline load switch (enable matching to load before connection is made)
 
 ### **Cost Optimization**
-- [ ] Switch sourcing to LCSC as much as possible. Very cheap/great components there.
-- [ ] Optimize MOSFET selection for cost/current/RdsON.
-  - Each switch only needs to handle 2 (50A / 6) for peak inductor load, or 16.6A.
-  - I've selected parts that can handle 80A continuous for $2.72 ea.
-- [ ] Find cheaper binding posts for terminal connections that can still handle 50A. Spent $12.50 previously on 4x connectors.
 - [ ] Smaller flash memory chip (2x 1MB?). Even the debug software really isn't that big and I don't need much space for logging/PDI.
 - [ ] Cheaper buttons. We have so much board space they can be bigger.
 - [ ] USB uB Port instead of USB-C. Each USB-C is $1 and we're not even using USB-3.0 speeds.
-- [ ] Measure ripple currents under designed peak load and start removing capacitors (not cheap). How much do we really need?
-- [ ] Can I buy power inductors cheaper elsewhere, but in the same form factor?
-  - Even a toroid that fits in the same space is OK. They can be glued down with high-temp epoxy.
 
 ### **Ichnaea**
 - [ ] Dead-man switch to disable power output when Sophrosyne isn't connected
@@ -43,6 +35,30 @@
 - [ ] Try to get a single flat plane for component height. Ideally the power IC side of the system is covered in a giant block of aluminium.
 - [ ] Design mounts to allow for airflow. We have a bit of a heat problem.
 - [ ] 12v/5v capacitors on the bottom of the board were placed too close together. Give space to power capacitors.
+
+#### **Cost Optimization**
+- [ ] Measure ripple currents under designed peak load and start removing capacitors (not cheap). How much do we really need?
+  - Current BOM is 44x 100v 10uF MLCC @$0.31 ea: $13.64
+  - I think I could use electrolytics + ceramics and get the cost down.
+- [ ] Optimize MOSFET selection for cost/current/RdsON.
+  - Each switch only needs to handle 2 (50A / 6) for peak inductor load, or 16.6A.
+  - I've selected parts that can handle 80A continuous for $2.72 ea -> $32.64
+  - [HYG053N10](https://www.lcsc.com/product-detail/MOSFETs_HUAYI-HYG053N10NS1C2_C2986239.html) is $0.31 per 10+.
+    - 16x == $4.96
+- [ ] Can I buy power inductors cheaper elsewhere, but in the same form factor?
+  - Previously spent $3.12 ea x6 == $18.72
+  - Even a toroid that fits in the same space is OK. They can be glued down with high-temp epoxy.
+  - May need to increase switching frequency to drop the inductance requirement. Ran 1.15kW at 150kHz.
+  - [1.0uH 32A, 54A Sat](https://www.lcsc.com/product-detail/Power-Inductors_SHOU-HAN-CYA1265-1-0UH_C19268663.html)
+    - $0.63 each
+    - 13.8mm x 12.8mm
+- [ ] Are there cheaper gate drivers? Previously spent $1.83/10x == $18.30.
+  - Legitimately struggling to find solutions that can meet deadtime + voltage requirements. May be best option.
+  - Challenge the requirements. Do I actually need 3A src/sink? Much cheaper chips can be had for dropping some current "requirements"
+- [ ] Find cheaper binding posts for terminal connections that can still handle 50A. Spent $12.50 previously on 4x connectors.
+  - $1.50 for 2x [76A 1x2P Barrier Terminal Block](https://www.lcsc.com/product-detail/Barrier-Terminal-Blocks_Cixi-Kefa-Elec-KF88SA-16-0-2P_C707749.html)
+  - They have a 4-terminal variant for $1, but not very much stock at all
+
 
 ### **Sophrosyne**
 - [ ] Watchdog circuit to act as a safety net

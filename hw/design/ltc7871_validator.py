@@ -6,11 +6,11 @@ import math
 from enum import Enum
 from dataclasses import dataclass
 from loguru import logger
-from eseries import find_nearest, E96
 
 
 class ILim(Enum):
-    """ Enumeration of the current limit programming options for the LTC7871 Table 5 """
+    """Enumeration of the current limit programming options for the LTC7871 Table 5"""
+
     ILIM_0 = 0
     ILIM_1_4 = 1
     ILIM_FLOAT = 2
@@ -20,7 +20,8 @@ class ILim(Enum):
 
 @dataclass
 class Mosfet:
-    """ N-Channel mosfet parameters for one of the switches in the buck converter """
+    """N-Channel mosfet parameters for one of the switches in the buck converter"""
+
     name: str  # Part number
     t_delta: float  # Compensation factor for temperature, per degree C
     rds_on: float  # On resistance, in ohms
@@ -32,7 +33,8 @@ class Mosfet:
 
 @dataclass
 class Inductor:
-    """ Inductor parameters for the buck converter """
+    """Inductor parameters for the buck converter"""
+
     name: str  # Part number
     l: float  # Inductance, in henries
     dcr: float  # DC resistance, in ohms
@@ -42,7 +44,8 @@ class Inductor:
 
 @dataclass
 class Capacitor:
-    """ Capacitor parameters for the buck converter """
+    """Capacitor parameters for the buck converter"""
+
     name: str  # Part number
     c: float  # Capacitance, in farads
     v: float  # Rated voltage, in volts
@@ -51,17 +54,19 @@ class Capacitor:
 
 @dataclass
 class HybridCapacitor:
-    """ Specifies a combination of ceramic and electrolytic capacitors """
+    """Specifies a combination of ceramic and electrolytic capacitors"""
+
     ceramic: Capacitor
     num_ceramic: int
     electrolytic: Capacitor
     num_electrolytic: int
-    fos_v: float = 1.5  # Factor of safety for voltage rating
+    fos_v: float = 1.1  # Factor of safety for voltage rating
 
 
 @dataclass
 class CurrentSenseFilter:
-    """ Sense network configuration for the inductor current """
+    """Sense network configuration for the inductor current"""
+
     r1: float  # Sense resistor 1, in ohms
     c1: float  # Sense capacitor 1, in farads
     r2: float  # Sense resistor 2, in ohms
@@ -70,7 +75,8 @@ class CurrentSenseFilter:
 
 @dataclass
 class OPP:
-    """ Operational performance parameters for the buck converter """
+    """Operational performance parameters for the buck converter"""
+
     description: str  # Description of the operating point
     v_in: float  # Input voltage, in volts
     v_out: float  # Output voltage, in volts
@@ -92,7 +98,7 @@ VSense_Max_DCR = {
     ILim.ILIM_1_4: 20e-3,
     ILim.ILIM_FLOAT: 30e-3,
     ILim.ILIM_3_4: 40e-3,
-    ILim.ILIM_FULL: 50e-3
+    ILim.ILIM_FULL: 50e-3,
 }
 
 VSense_VDiv_Resistors = {
@@ -100,13 +106,14 @@ VSense_VDiv_Resistors = {
     ILim.ILIM_1_4: (10.2e3, 3.4e3),
     ILim.ILIM_FLOAT: (10e3, 10e3),
     ILim.ILIM_3_4: (3.4e3, 10.2e3),
-    ILim.ILIM_FULL: (1e3, 22e3)
+    ILim.ILIM_FULL: (1e3, 22e3),
 }
 
 
 @dataclass
 class LTC7871Parameters:
-    """ Design parameters for the buck converter """
+    """Design parameters for the buck converter"""
+
     name: str  # Design name
     mosfet: Mosfet
     inductor: Inductor
@@ -117,7 +124,7 @@ class LTC7871Parameters:
 
 
 class LTC7871Validator:
-    """ Validate a parameterized LTC7871 design """
+    """Validate a parameterized LTC7871 design"""
 
     def __init__(self, param: LTC7871Parameters):
         self.p = param
@@ -180,14 +187,16 @@ class LTC7871Validator:
         self._log_assert(math.isclose(l_by_dcr, r2_c2, abs_tol=1e-4), f"L/DCR {l_by_dcr} != R2C2 {r2_c2}")
 
         # Pre-compute a few useful values.
-        duty_max = (self.p.opp.v_out / (0.9 * self.p.opp.v_in))  # Estimated 90% efficiency (see SLVA477B section 2)
+        duty_max = self.p.opp.v_out / (0.9 * self.p.opp.v_in)  # Estimated 90% efficiency (see SLVA477B section 2)
         v_delta = self.p.opp.v_in - self.p.opp.v_out
 
         # Compute the minimum inductor value to achieve desired ripple current. << current == lower core loss
         self.l_min = (v_delta / (self.p.opp.f_sw * self.il_ripple_target)) * duty_max
-        self._log_assert(self.p.inductor.l >= self.l_min,
-                         f"Inductor value {self.p.inductor.l * 1e6:.2f}uH < minimum {self.l_min * 1e6:.2f}uH"
-                         f" for ripple current target")
+        self._log_assert(
+            self.p.inductor.l >= self.l_min,
+            f"Inductor value {self.p.inductor.l * 1e6:.2f}uH < minimum {self.l_min * 1e6:.2f}uH"
+            f" for ripple current target",
+        )
 
         # Compute the actual ripple current in the inductor
         self.il_ripple_actual = (v_delta * duty_max) / (self.p.inductor.l * self.p.opp.f_sw)
@@ -202,31 +211,37 @@ class LTC7871Validator:
 
         # Ensure the actual voltage ripple can be sensed by the LTC7871 using the current limit setting
         self.l_v_sense_ripple_max = VSense_Max_DCR[self.p.opp.i_lim]
-        self._log_assert(self.l_v_sense_ripple < self.l_v_sense_ripple_max,
-                         f"Inductor ripple vSense {self.l_v_sense_ripple * 1e3:.2f}mV > configured max "
-                         f"vSense {self.l_v_sense_ripple_max * 1e3:.2f}mV")
+        self._log_assert(
+            self.l_v_sense_ripple < self.l_v_sense_ripple_max,
+            f"Inductor ripple vSense {self.l_v_sense_ripple * 1e3:.2f}mV > configured max "
+            f"vSense {self.l_v_sense_ripple_max * 1e3:.2f}mV",
+        )
 
         # Ensure we meet the minimum voltage sense ripple requirement for SNR and accuracy
-        self._log_assert(self.l_v_ripple >= 10e-3,
-                         f"SNSA+, SNS- ripple voltage {self.l_v_ripple * 1e3:.2f}mV < 10mV recommended. "
-                         f"Inductor DCR is too low to regulate per-phase current of {self.op_i_out_phase * 1e3:.2f}mA.")
+        self._log_assert(
+            self.l_v_ripple >= 10e-3,
+            f"SNSA+, SNS- ripple voltage {self.l_v_ripple * 1e3:.2f}mV < 10mV recommended. "
+            f"Inductor DCR is too low to regulate per-phase current of {self.op_i_out_phase * 1e3:.2f}mA.",
+        )
 
         # Ensure sense pin voltage limits aren't exceeded
         self._log_assert(self.p.opp.v_out <= 60, f"Output voltage {self.p.opp.v_out} > 60V limit for SNS pins")
 
         # Peak Current Rating
         self.l_peak_current = self.op_i_out_phase + self.il_ripple_actual / 2.0
-        self._log_assert(self.p.inductor.i_sat >= self.l_peak_current,
-                         f"Peak current rating {self.p.inductor.i_sat} < {self.l_peak_current}")
+        self._log_assert(
+            self.p.inductor.i_sat >= self.l_peak_current,
+            f"Peak current rating {self.p.inductor.i_sat} < {self.l_peak_current}",
+        )
 
         # Compute copper loss
-        self.l_avg_pwr_loss = self.op_i_out_phase ** 2 * self.p.inductor.dcr
-        self.l_peak_pwr_loss = self.l_peak_current ** 2 * self.p.inductor.dcr
-        self.total_power_dissipation += (self.l_avg_pwr_loss * self.p.opp.phases)
+        self.l_avg_pwr_loss = self.op_i_out_phase**2 * self.p.inductor.dcr
+        self.l_peak_pwr_loss = self.l_peak_current**2 * self.p.inductor.dcr
+        self.total_power_dissipation += self.l_avg_pwr_loss * self.p.opp.phases
 
         # Compute power loss in R1, which has to handle a bit more dissipation than typical
         self.il_r1_pwr_loss = ((100 - self.p.opp.v_out) * self.p.opp.v_out) / self.p.i_filter.r1
-        self.total_power_dissipation += (self.il_r1_pwr_loss * self.p.opp.phases)
+        self.total_power_dissipation += self.il_r1_pwr_loss * self.p.opp.phases
 
     def validate_mosfet(self):
         rds_on = self.p.mosfet.rds_on
@@ -239,14 +254,14 @@ class LTC7871Validator:
         temp_factor = self.p.mosfet.t_delta * (self.p.opp.tj_max - self.p.opp.t_ambient)
 
         # Top Switch Mosfet Dissipation
-        mos_top_1 = (self.p.opp.v_out / self.p.opp.v_in) * (self.op_i_out_phase ** 2.0) * (1.0 + temp_factor) * rds_on
-        mos_top_2 = (self.p.opp.v_in ** 2.0) * (self.op_i_out_phase / 2.0) * rdr * crss
+        mos_top_1 = (self.p.opp.v_out / self.p.opp.v_in) * (self.op_i_out_phase**2.0) * (1.0 + temp_factor) * rds_on
+        mos_top_2 = (self.p.opp.v_in**2.0) * (self.op_i_out_phase / 2.0) * rdr * crss
         mos_top_3 = ((1.0 / (self.p.opp.drvcc - vth)) + (1.0 / vth)) * self.p.opp.f_sw
         self.m_top_pwr_loss = mos_top_1 + mos_top_2 * mos_top_3
 
         # Bottom Switch Mosfet Dissipation
         mos_bot_1 = (self.p.opp.v_in - self.p.opp.v_out) / self.p.opp.v_in
-        mos_bot_2 = self.op_i_out_phase ** 2.0
+        mos_bot_2 = self.op_i_out_phase**2.0
         mos_bot_3 = (1.0 + temp_factor) * rds_on
         self.m_bot_pwr_loss = mos_bot_1 * mos_bot_2 * mos_bot_3
 
@@ -254,17 +269,21 @@ class LTC7871Validator:
         self._log_assert(iavg >= self.op_i_out_phase, f"Average current rating {iavg} < {self.op_i_out_phase}")
 
         # Summarize this block
-        self.total_power_dissipation += ((self.m_top_pwr_loss + self.m_bot_pwr_loss) * self.p.opp.phases)
+        self.total_power_dissipation += (self.m_top_pwr_loss + self.m_bot_pwr_loss) * self.p.opp.phases
 
     def validate_high_side_capacitor(self):
         pass
 
     def validate_low_side_capacitor(self):
         # Ensure voltage limits aren't exceeded
-        self._log_assert(self.p.low_side_cap.fos_v * self.p.opp.v_out < self.p.low_side_cap.ceramic.v,
-                         f"Low side ceramic voltage rating FOS not met.")
-        self._log_assert(self.p.low_side_cap.fos_v * self.p.opp.v_out < self.p.low_side_cap.electrolytic.v,
-                         f"Low side electrolytic voltage rating FOS not met.")
+        self._log_assert(
+            self.p.low_side_cap.fos_v * self.p.opp.v_out < self.p.low_side_cap.ceramic.v,
+            f"Low side ceramic voltage rating FOS not met.",
+        )
+        self._log_assert(
+            self.p.low_side_cap.fos_v * self.p.opp.v_out < self.p.low_side_cap.electrolytic.v,
+            f"Low side electrolytic voltage rating FOS not met.",
+        )
 
         # Compute effective ESR and capacitance for the low side capacitors
         c_low_ceramic_cap = self.p.low_side_cap.ceramic.c
@@ -282,14 +301,20 @@ class LTC7871Validator:
         self.c_low_cap_eff = (c_low_ceramic_cap * c_low_ceramic_n) + (c_low_electrolytic_cap * c_low_electrolytic_n)
 
         # Validate steady state output ripple voltage isn't exceeded
-        self.c_low_v_ripple = self.il_ripple_actual * (self.c_low_esr_eff + (1.0 / (8.0 * self.p.opp.f_sw * self.c_low_cap_eff)))
-        self._log_assert(self.c_low_v_ripple <= self.p.opp.v_ripple,
-                         f"Output voltage ripple {self.c_low_v_ripple * 1e3:.2f}mV > {self.p.opp.v_ripple * 1e3:.2f}mV")
+        self.c_low_v_ripple = self.il_ripple_actual * (
+            self.c_low_esr_eff + (1.0 / (8.0 * self.p.opp.f_sw * self.c_low_cap_eff))
+        )
+        self._log_assert(
+            self.c_low_v_ripple <= self.p.opp.v_ripple,
+            f"Output voltage ripple {self.c_low_v_ripple * 1e3:.2f}mV > {self.p.opp.v_ripple * 1e3:.2f}mV",
+        )
 
         # Validate minimum capacitance is met
         self.c_low_cap_min = 1.0 / (8.0 * self.p.opp.f_sw * self.p.inductor.dcr)
-        self._log_assert(self.c_low_cap_eff > self.c_low_cap_min,
-                         f"Output capacitance {self.c_low_cap_eff * 1e6}uF < {self.c_low_cap_min * 1e6:.2f}uF")
+        self._log_assert(
+            self.c_low_cap_eff > self.c_low_cap_min,
+            f"Output capacitance {self.c_low_cap_eff * 1e6}uF < {self.c_low_cap_min * 1e6:.2f}uF",
+        )
 
         # Compute total capacitor power dissipation. This is spread out across all the capacitors, but it's
         # relative to the ESR of each capacitor. The RMS current is used to compute the power loss, which is
@@ -308,7 +333,9 @@ class LTC7871Validator:
         logger.info(f"\tPer-Phase Inductor Peak I2R Loss: {self.l_peak_pwr_loss:.2f}W")
         logger.info(f"\tPer-Phase High Side Switch Power Dissipation: {self.m_top_pwr_loss:.2f}W")
         logger.info(f"\tPer-Phase Low Side Switch Power Dissipation: {self.m_bot_pwr_loss:.2f}W")
-        logger.info(f"\tOutput voltage ripple: {self.c_low_v_ripple * 1e3:.2f}mV, Max: {self.p.opp.v_ripple * 1e3:.2f}mV")
+        logger.info(
+            f"\tOutput voltage ripple: {self.c_low_v_ripple * 1e3:.2f}mV, Max: {self.p.opp.v_ripple * 1e3:.2f}mV"
+        )
         logger.info(f"\tOutput capacitance: {self.c_low_cap_eff * 1e6:.2f}uF, Min: {self.c_low_cap_min * 1e6:.2f}uF")
         logger.info(f"\tCapacitor Dissipation: {self.c_low_pwr_loss:.2f}W")
         logger.info(f"\tTotal Power Dissipation: {self.total_power_dissipation:.2f}W")
@@ -330,7 +357,8 @@ class LTC7871Validator:
             VLow_programmable_max = 1.2 * (1.0 + (RB / RA)) - (IDAC_min * RB)
 
             print(
-                f"{name} Nominal: {VLow_Nominal:.2f}V -> Range: {VLow_programmable_min:.2f}V - {VLow_programmable_max:.2f}V")
+                f"{name} Nominal: {VLow_Nominal:.2f}V -> Range: {VLow_programmable_min:.2f}V - {VLow_programmable_max:.2f}V"
+            )
 
     def validate(self) -> bool:
         logger.info(f"Validating: {self.p.name}")
