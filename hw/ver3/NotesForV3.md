@@ -1,5 +1,13 @@
 # Version 3 Notes
 
+## **Major Design Flaw**
+I think I may have overlooked something. I need precise voltage control to charge a battery, right? The voltage feedback loop
+for the LTC7871 doesn't allow me to get fine control in the voltage ranges I need, i.e. 48V. The steps are roughly 0.47V each.
+I need to somehow achieve a very fine level of control over that feedback loop, or else I'm screwed with this design.
+
+Is this a valid assumption? I'm not sure. At the worst case, I lose the ability to fully charge the pack because I can't get
+close enough to the max charge voltage. That may be ok.
+
 ## Case Considerations
 - The new board layout seems to favor airflow over both sides of the circuit.
   - Design around a standard PC fan or maybe a server fan?
@@ -45,13 +53,14 @@
   - I've selected parts that can handle 80A continuous for $2.72 ea -> $32.64
   - [HYG053N10](https://www.lcsc.com/product-detail/MOSFETs_HUAYI-HYG053N10NS1C2_C2986239.html) is $0.31 per 10+.
     - 16x == $4.96
-- [ ] Can I buy power inductors cheaper elsewhere, but in the same form factor?
+- [x] ~~Can I buy power inductors cheaper elsewhere, but in the same form factor?~~
   - Previously spent $3.12 ea x6 == $18.72
   - Even a toroid that fits in the same space is OK. They can be glued down with high-temp epoxy.
   - May need to increase switching frequency to drop the inductance requirement. Ran 1.15kW at 150kHz.
   - [1.0uH 32A, 54A Sat](https://www.lcsc.com/product-detail/Power-Inductors_SHOU-HAN-CYA1265-1-0UH_C19268663.html)
     - $0.63 each
     - 13.8mm x 12.8mm
+  - Starting to realize this will really screw with my system design.
 - [ ] Are there cheaper gate drivers? Previously spent $1.83/10x == $18.30.
   - Legitimately struggling to find solutions that can meet deadtime + voltage requirements. May be best option.
   - Challenge the requirements. Do I actually need 3A src/sink? Much cheaper chips can be had for dropping some current "requirements"

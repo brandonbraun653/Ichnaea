@@ -2508,6 +2508,16 @@
 		)
 		(uuid "f5a62555-d703-4f63-99c4-a7e3e5746353")
 	)
+	(text "TODO: Delete resistors on MOSFETs and let the \nshift register handle logic levels"
+		(exclude_from_sim no)
+		(at 156.972 143.256 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "31172cd1-ea96-4358-b076-c0e1b883e374")
+	)
 	(text "CCM=0, DCM=0: Burst Mode\nCCM=0, DCM=1: Discontinuous Conduction Mode\nCCM=1, DCM=0: Forced Continuous Conduction Mode\nCCM=1, DCM=1: Forced Continuous Conduction Mode"
 		(exclude_from_sim no)
 		(at 145.034 204.47 0)
@@ -2518,6 +2528,16 @@
 			(justify left)
 		)
 		(uuid "7a7d01e1-e112-41ec-9676-07aeae41d60d")
+	)
+	(text "TODO: Can I delete the 3.3v rail entirely?"
+		(exclude_from_sim no)
+		(at 138.684 42.164 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ebfaebad-df5d-4a3e-9678-c728a7997618")
 	)
 	(global_label "PWM_FAN_CTL"
 		(shape input)
@@ -2959,6 +2979,18 @@
 			)
 		)
 	)
+	(hierarchical_label "ISENSE_PWR_IN"
+		(shape input)
+		(at 92.71 119.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5a06a97d-6bd0-4c9a-9171-e750b7b90137")
+	)
 	(hierarchical_label "CTL_LTC_SYNC"
 		(shape output)
 		(at 123.19 185.42 0)
@@ -2994,6 +3026,18 @@
 			(justify left)
 		)
 		(uuid "8dadfcfb-757d-475d-bc25-57ad2a289607")
+	)
+	(hierarchical_label "ISENSE_PWR_OUT"
+		(shape input)
+		(at 92.71 116.84 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a8f1be84-bccb-4ccd-bd7e-74f01323b777")
 	)
 	(symbol
 		(lib_id "Transistor_FET:BSS138")
@@ -5068,71 +5112,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+12P")
-		(at 57.15 41.91 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "58f8aba4-d402-465d-8a9e-39deb42ce6dc")
-		(property "Reference" "#PWR0136"
-			(at 53.34 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+12V"
-			(at 62.23 41.91 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 57.15 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 57.15 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+12P\""
-			(at 57.15 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "006d2018-adcd-406b-83fb-edce6c5e4585")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "#PWR0136")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
 		(at 161.29 173.99 270)
 		(unit 1)
@@ -5337,6 +5316,73 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "R57")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 57.15 41.91 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "713daaaf-e881-46d6-aad8-10e536ea4238")
+		(property "Reference" "#PWR0136"
+			(at 53.34 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 60.96 41.9099 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 57.15 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 57.15 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 57.15 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b738466e-c549-44ac-b5c2-dcdf700fc1b6")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "#PWR0136")
 					(unit 1)
 				)
 			)
