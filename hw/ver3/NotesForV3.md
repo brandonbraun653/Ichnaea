@@ -64,7 +64,7 @@ close enough to the max charge voltage. That may be ok.
 - [ ] Are there cheaper gate drivers? Previously spent $1.83/10x == $18.30.
   - Legitimately struggling to find solutions that can meet deadtime + voltage requirements. May be best option.
   - Challenge the requirements. Do I actually need 3A src/sink? Much cheaper chips can be had for dropping some current "requirements"
-- [ ] Find cheaper binding posts for terminal connections that can still handle 50A. Spent $12.50 previously on 4x connectors.
+- [x] Find cheaper binding posts for terminal connections that can still handle 50A. Spent $12.50 previously on 4x connectors.
   - $1.50 for 2x [76A 1x2P Barrier Terminal Block](https://www.lcsc.com/product-detail/Barrier-Terminal-Blocks_Cixi-Kefa-Elec-KF88SA-16-0-2P_C707749.html)
   - They have a 4-terminal variant for $1, but not very much stock at all
 
