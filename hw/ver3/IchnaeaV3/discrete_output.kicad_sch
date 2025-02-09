@@ -412,7 +412,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT595.pdf"
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/sn74hc595.pdf"
 			(at 133.35 87.63 0)
 			(effects
 				(font
@@ -542,7 +542,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/74HC_HCT595.pdf"
+		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/sn74hc595.pdf"
 			(at 160.02 87.63 0)
 			(effects
 				(font

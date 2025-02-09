@@ -3478,9 +3478,9 @@
 		)
 		(symbol "power:+12V"
 			(power)
-			(pin_numbers hide)
 			(pin_names
-				(offset 0) hide)
+				(offset 0)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -3578,8 +3578,8 @@
 			(symbol "+12V_1_1"
 				(pin power_in line
 					(at 0 0 90)
-					(length 0)
-					(name "~"
+					(length 0) hide
+					(name "+12V"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -16200,7 +16200,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/lcsc_datasheet_2401290750_MDD-Microdiode-Semiconductor-SB10100L_C113946.pdf"
+		(property "Datasheet" "~"
 			(at 190.5 68.58 0)
 			(effects
 				(font
