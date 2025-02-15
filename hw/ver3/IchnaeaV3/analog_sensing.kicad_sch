@@ -1349,246 +1349,6 @@
 				)
 			)
 		)
-		(symbol "power:+1V1"
-			(power)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+1V1"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+1V1\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+1V1_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+1V1_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0) hide
-					(name "+1V1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
-		(symbol "power:+3.3VP"
-			(power)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 3.81 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+3.3VP"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+3.3VP\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+3.3VP_0_0"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0) hide
-					(name "+3.3VP"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "+3.3VP_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-		)
 		(symbol "power:+5V"
 			(power)
 			(pin_names
@@ -1933,12 +1693,6 @@
 		(uuid "0ce4207c-0d7e-46e9-90e7-79bd94b257b8")
 	)
 	(junction
-		(at 210.82 45.72)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "12f549ea-bb37-4f91-824e-81e505ed82d0")
-	)
-	(junction
 		(at 143.51 110.49)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1961,12 +1715,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "2b9e1341-c5ca-467f-add8-41d0b065bc94")
-	)
-	(junction
-		(at 226.06 36.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3ca409ee-7aef-4ed8-932d-838a9b1faeb5")
 	)
 	(junction
 		(at 130.81 69.85)
@@ -2041,12 +1789,6 @@
 		(uuid "95eb5c1e-32a1-44ad-be3a-c2041edbe932")
 	)
 	(junction
-		(at 210.82 36.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "97c02f12-851d-4722-99aa-9a8306631958")
-	)
-	(junction
 		(at 90.17 36.83)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2059,12 +1801,6 @@
 		(uuid "aa3497ef-5780-4956-8817-ad9e80752b2e")
 	)
 	(junction
-		(at 254 36.83)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "bcd63a22-404d-4337-bb92-282bf758c862")
-	)
-	(junction
 		(at 182.88 36.83)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2075,16 +1811,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "fe469a02-6c68-4266-860e-c60a56ddf09c")
-	)
-	(wire
-		(pts
-			(xy 210.82 45.72) (xy 226.06 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "06862102-e52f-4bac-af5c-27245494508a")
 	)
 	(wire
 		(pts
@@ -2368,26 +2094,6 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 36.83) (xy 210.82 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6281b85e-75e0-4182-bb92-43564dc0c9bf")
-	)
-	(wire
-		(pts
-			(xy 217.17 36.83) (xy 210.82 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "64a25b43-6db8-42dd-9d86-685a05abb948")
-	)
-	(wire
-		(pts
 			(xy 139.7 115.57) (xy 144.78 115.57)
 		)
 		(stroke
@@ -2448,16 +2154,6 @@
 	)
 	(wire
 		(pts
-			(xy 238.76 27.94) (xy 238.76 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f578459-fefa-40bf-a334-0cf551288333")
-	)
-	(wire
-		(pts
 			(xy 139.7 123.19) (xy 139.7 115.57)
 		)
 		(stroke
@@ -2475,16 +2171,6 @@
 			(type default)
 		)
 		(uuid "8693e3aa-9035-415f-a637-c425ee75e3e1")
-	)
-	(wire
-		(pts
-			(xy 245.11 36.83) (xy 238.76 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "893b7fb1-f918-4150-83e4-5253583492a0")
 	)
 	(wire
 		(pts
@@ -2528,16 +2214,6 @@
 	)
 	(wire
 		(pts
-			(xy 252.73 36.83) (xy 254 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9d2cf449-ba89-40c8-9755-031751f97183")
-	)
-	(wire
-		(pts
 			(xy 116.84 35.56) (xy 116.84 36.83)
 		)
 		(stroke
@@ -2555,16 +2231,6 @@
 			(type default)
 		)
 		(uuid "a1bbefc6-6705-481e-8947-713efde5b146")
-	)
-	(wire
-		(pts
-			(xy 254 36.83) (xy 255.27 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a232211d-864c-4ba8-a245-7717f4dc21b3")
 	)
 	(wire
 		(pts
@@ -2628,16 +2294,6 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 36.83) (xy 226.06 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bac8b001-ce50-44a7-be66-41a1ffd088fd")
-	)
-	(wire
-		(pts
 			(xy 90.17 36.83) (xy 91.44 36.83)
 		)
 		(stroke
@@ -2645,16 +2301,6 @@
 			(type default)
 		)
 		(uuid "bad6c790-5616-481a-b5ab-f93f7329bdac")
-	)
-	(wire
-		(pts
-			(xy 226.06 36.83) (xy 226.06 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c05c33ca-48bf-4a90-9464-fc586434846a")
 	)
 	(wire
 		(pts
@@ -2688,26 +2334,6 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 36.83) (xy 210.82 35.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d40d37ed-8ff7-42d2-a400-15e6f4e17de3")
-	)
-	(wire
-		(pts
-			(xy 226.06 36.83) (xy 227.33 36.83)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d456ed2b-c058-4a06-ae8f-826e65e3cd57")
-	)
-	(wire
-		(pts
 			(xy 76.2 36.83) (xy 76.2 38.1)
 		)
 		(stroke
@@ -2735,16 +2361,6 @@
 			(type default)
 		)
 		(uuid "dd746f32-fb1a-45a5-8b88-cccce1fef3b4")
-	)
-	(wire
-		(pts
-			(xy 254 36.83) (xy 254 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "df88088f-6900-4a94-9d51-163c96f13bc6")
 	)
 	(wire
 		(pts
@@ -2795,16 +2411,6 @@
 			)
 		)
 		(uuid "60e570b6-9b27-461f-b258-2cfa8412956d")
-	)
-	(text "TODO: Can I delete the 3.3v rail entirely?"
-		(exclude_from_sim no)
-		(at 171.958 87.63 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "711e8f82-b382-49e1-b332-89a71d6681c2")
 	)
 	(text "TODO: Feed directly into the ADC chip? Except maybe the 5v line"
 		(exclude_from_sim no)
@@ -3068,28 +2674,6 @@
 			)
 		)
 	)
-	(global_label "3V3_MON"
-		(shape passive)
-		(at 227.33 36.83 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "9ace9beb-2c4d-4a80-8e6b-0ab8f0ce39c7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 237.7915 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "ADC_SEL_0"
 		(shape passive)
 		(at 137.16 115.57 180)
@@ -3152,28 +2736,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "1V1_MON"
-		(shape passive)
-		(at 255.27 36.83 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c892afb0-3446-486f-8386-1fe05497ec95")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 265.7315 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -3267,72 +2829,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3VP")
-		(at 52.07 27.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00aa3a1e-152a-43c3-8ac8-f33bebc5a1ab")
-		(property "Reference" "#PWR0156"
-			(at 55.88 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 48.514 23.368 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 52.07 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 52.07 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3VP\""
-			(at 52.07 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "39598ce6-19aa-4594-a486-048ef5ebf2f4")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "#PWR0156")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 90.17 36.83 0)
 		(unit 1)
@@ -3395,6 +2891,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 90.17 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 90.17 36.83 0)
 			(effects
 				(font
@@ -3486,6 +2991,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 139.7 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d4fd2d2d-b5a9-43b8-9621-577fd0b4bd62")
 		)
@@ -3493,100 +3007,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "TP68")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 248.92 36.83 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0b96e5b5-2c5c-45de-b20a-4f6ea1d34da4")
-		(property "Reference" "R94"
-			(at 248.666 31.75 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100k"
-			(at 248.92 34.29 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 249.174 35.814 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 248.92 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 248.92 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 248.92 36.83 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 248.92 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 248.92 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "43524814-5057-4972-a082-a24718d025d5")
-		)
-		(pin "1"
-			(uuid "601d11da-beda-4a88-9a52-873f0463ba56")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "R94")
 					(unit 1)
 				)
 			)
@@ -3675,6 +3095,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 116.84 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 116.84 64.77 0)
 			(effects
 				(font
@@ -3781,6 +3210,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 130.81 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 130.81 41.91 0)
 			(effects
 				(font
@@ -3961,6 +3399,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 76.2 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "cb5cb23c-306f-496f-85ee-74de22dabbb0")
 		)
@@ -4059,6 +3506,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 205.74 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 205.74 121.92 0)
 			(effects
 				(font
@@ -4281,6 +3737,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 90.17 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8ae5c25d-64bf-484c-86dc-2ad4ef5c5357")
 		)
@@ -4375,6 +3840,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 52.07 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b1cdbf4b-08c2-46de-8085-b75b2668d5fb")
 		)
@@ -4385,155 +3859,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "R76")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3VP")
-		(at 210.82 27.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "35741599-9017-438c-9f63-d748f7a23873")
-		(property "Reference" "#PWR0171"
-			(at 214.63 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 207.264 23.368 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 210.82 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 210.82 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3VP\""
-			(at 210.82 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f004a3e4-0ffc-45c6-9fee-d6a1f05857b1")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "#PWR0171")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 226.06 36.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "4287feae-436d-45e9-a067-e9c9954bc233")
-		(property "Reference" "TP71"
-			(at 226.06 30.48 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 228.6 33.528 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 231.14 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 231.14 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 226.06 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "N/A"
-			(at 226.06 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 226.06 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "55a7e9ef-9e13-4f40-b9e9-b8930b35f7e1")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "TP71")
 					(unit 1)
 				)
 			)
@@ -4557,7 +3882,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "VHIGH"
+		(property "Value" "VIN"
 			(at 119.38 56.896 0)
 			(effects
 				(font
@@ -4684,6 +4009,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 125.73 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "972511ec-d0c6-4447-8efb-15d2056dc4be")
 		)
@@ -4782,6 +4116,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 116.84 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 116.84 31.75 0)
 			(effects
 				(font
@@ -4896,6 +4239,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 76.2 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c232c12d-4645-48db-8c2e-a7ef5bbf5b01")
 		)
@@ -4994,6 +4346,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 182.88 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 182.88 41.91 0)
 			(effects
 				(font
@@ -5108,6 +4469,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 76.2 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4b44d479-f8be-43bb-ba81-d13ac62ef500")
 		)
@@ -5118,72 +4488,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "R78")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+1V1")
-		(at 238.76 27.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5f165d3d-44c5-4190-83c7-b77be05e498d")
-		(property "Reference" "#PWR0173"
-			(at 238.76 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+1V1"
-			(at 238.76 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 238.76 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 238.76 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+1V1\""
-			(at 238.76 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "625f5633-1a7b-4f94-8ba0-bddef6360054")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "#PWR0173")
 					(unit 1)
 				)
 			)
@@ -5252,6 +4556,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 130.81 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 130.81 69.85 0)
 			(effects
 				(font
@@ -5351,6 +4664,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 125.73 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "23aa1adb-f93f-4f7a-9ff6-92165c299d0c")
 		)
@@ -5429,6 +4751,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 90.17 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 90.17 69.85 0)
 			(effects
 				(font
@@ -5532,6 +4863,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 152.4 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 152.4 118.11 0)
 			(effects
 				(font
@@ -5688,6 +5028,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 116.84 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "033fe619-2e84-4cd5-aaa6-bb27184a3bc9")
 		)
@@ -5794,6 +5143,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 198.12 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "abd077c4-a3a6-4c1f-9ae9-ec5896c0300d")
 		)
@@ -5888,6 +5246,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 85.09 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f09e879b-511c-4520-8a46-81a3bd144f77")
 		)
@@ -5966,6 +5333,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 139.7 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 139.7 125.73 0)
 			(effects
 				(font
@@ -6065,6 +5441,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 85.09 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "1258a498-9538-49fe-a6a5-b0ccdb473f55")
 		)
@@ -6075,89 +5460,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "R82")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 254 36.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "79924cc6-6c4e-40eb-86fc-0877c528ce0d")
-		(property "Reference" "TP72"
-			(at 254 30.48 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 256.54 33.528 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 259.08 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 259.08 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 254 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "N/A"
-			(at 254 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 254 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4be9bb42-ad0c-4b3b-b2be-06e4338ce630")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "TP72")
 					(unit 1)
 				)
 			)
@@ -6226,6 +5528,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 198.12 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 198.12 36.83 0)
 			(effects
 				(font
@@ -6337,6 +5648,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 76.2 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "2e3dc977-2c39-4b85-92f9-fba9dee9f094")
 		)
@@ -6413,112 +5733,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "#PWR0169")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 254 41.91 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "93675d46-61b8-46ae-a923-ecadfe7a9a03")
-		(property "Reference" "C100"
-			(at 257.81 40.6399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100nF"
-			(at 257.81 43.1799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 254.9652 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 254 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 254 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 254 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 254 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 254 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 254 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9885a8fc-e4c4-4465-8177-b227b33d28eb")
-		)
-		(pin "2"
-			(uuid "2ba3f240-ed7d-4299-ac99-3630221b214a")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "C100")
 					(unit 1)
 				)
 			)
@@ -6730,6 +5944,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 60.96 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "11"
 			(uuid "bd7cba3a-3258-4331-a21e-4473afa70774")
 		)
@@ -6858,6 +6081,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 139.7 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4b000f6c-f13d-49d6-97fe-b3b942bb1ea9")
 		)
@@ -6961,6 +6193,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 90.17 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ba64aac3-deb6-4dc3-82df-a3a224c1af11")
 		)
@@ -7037,112 +6278,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "#PWR0157")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 226.06 41.91 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b0f015e5-5fab-487a-9edd-d407f71f3bef")
-		(property "Reference" "C99"
-			(at 229.87 40.6399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100nF"
-			(at 229.87 43.1799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 227.0252 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 226.06 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 226.06 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 226.06 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C14663"
-			(at 226.06 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 226.06 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 226.06 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b9267d97-b99b-46ff-afca-9219f01fa98a")
-		)
-		(pin "2"
-			(uuid "6e2ee582-6dcc-4937-8790-2f1d65b6f4b3")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "C99")
 					(unit 1)
 				)
 			)
@@ -7425,6 +6560,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 193.04 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2a8cb845-06d9-4de8-a062-4943cd25054c")
 		)
@@ -7531,6 +6675,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 130.81 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1ce0b614-ff9a-42d0-926b-f169393f437d")
 		)
@@ -7541,6 +6694,72 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "C97")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 52.07 27.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c7040e5a-8b60-4f0b-975d-b182b1548203")
+		(property "Reference" "#PWR068"
+			(at 52.07 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 52.07 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 52.07 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 52.07 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3751e17d-b7b2-45c4-9ce7-57d52d8744f5")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
+					(reference "#PWR068")
 					(unit 1)
 				)
 			)
@@ -7629,6 +6848,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 52.07 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 52.07 41.91 0)
 			(effects
 				(font
@@ -7743,6 +6971,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 116.84 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ffc44599-073f-49f6-a7cf-60e843e22af5")
 		)
@@ -7753,178 +6990,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "R85")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 210.82 41.91 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d6f26bec-94a1-4d59-8188-7ddd146e3ebc")
-		(property "Reference" "R92"
-			(at 213.36 40.6399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 213.36 43.1799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 209.804 41.656 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 210.82 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 210.82 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 210.82 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 210.82 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 210.82 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 210.82 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "ca74f1c6-e1bd-41cd-ac8d-07d2919bf6ab")
-		)
-		(pin "2"
-			(uuid "d06eee45-8d3d-4937-acd0-601308f53470")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "R92")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 210.82 45.72 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d89a7997-26c8-4d81-8f3c-4cd7cc0b4140")
-		(property "Reference" "#PWR0172"
-			(at 210.82 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 210.82 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 210.82 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 210.82 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 210.82 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f6b967a9-70a2-46cf-9ad3-5cc90148ec48")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "#PWR0172")
 					(unit 1)
 				)
 			)
@@ -7991,272 +7056,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
 					(reference "#PWR0167")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 254 45.72 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e2061af2-acd8-454e-8176-f4736d4a58a0")
-		(property "Reference" "#PWR0174"
-			(at 254 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 254 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 254 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 254 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 254 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "32ccded8-739e-42d1-aab2-8d2a6b61e42e")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "#PWR0174")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 220.98 36.83 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "e295e5e9-44a7-41cf-ba01-bb8070cd7572")
-		(property "Reference" "R93"
-			(at 220.726 31.75 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100k"
-			(at 220.98 34.29 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 221.234 35.814 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 220.98 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 220.98 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25803"
-			(at 220.98 36.83 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 220.98 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 220.98 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "1527addb-34c3-4584-aa47-b1f879041e62")
-		)
-		(pin "1"
-			(uuid "fb14c3d0-d6dc-4b13-9500-79270c81e95c")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "R93")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 210.82 31.75 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e29be59b-50bc-4cb1-b69a-bdeca8375079")
-		(property "Reference" "R91"
-			(at 213.36 30.4799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 213.36 33.0199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 209.804 31.496 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 210.82 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 210.82 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 210.82 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 210.82 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 210.82 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 210.82 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "da00c98f-cae8-4e25-b796-db4d71d2824d")
-		)
-		(pin "2"
-			(uuid "927acebe-c96f-466c-8836-53eb9e1b25a0")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/6c1d70a0-5eea-4fa8-b345-358dda7669fa"
-					(reference "R91")
 					(unit 1)
 				)
 			)
@@ -8485,6 +7284,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 182.88 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d9a7e0f0-072d-46a9-9d56-088292009aad")
 		)
@@ -8571,6 +7379,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 143.51 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d4fac294-5060-4624-8655-f250f3b89c50")
 		)
@@ -8646,6 +7463,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 130.81 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 130.81 36.83 0)
 			(effects
 				(font

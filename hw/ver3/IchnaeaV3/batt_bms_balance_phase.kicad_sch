@@ -642,6 +642,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 118.11 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "14e5d2e8-d7fa-4ef0-8c94-cf768728030c")
 		)
@@ -713,6 +722,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 107.95 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 107.95 129.54 0)
 			(effects
 				(font
@@ -804,6 +822,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 95.25 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 95.25 118.11 0)
 			(effects
 				(font

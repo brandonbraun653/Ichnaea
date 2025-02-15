@@ -1771,126 +1771,6 @@
 				)
 			)
 		)
-		(symbol "power:+3.3VP"
-			(power)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 3.81 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+3.3VP"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+3.3VP\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+3.3VP_0_0"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0) hide
-					(name "+3.3VP"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "+3.3VP_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-		)
 		(symbol "power:+5V"
 			(power)
 			(pin_names
@@ -2109,12 +1989,6 @@
 		)
 	)
 	(junction
-		(at 171.45 173.99)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0b167e38-65b2-452d-83ca-d5535aecef9b")
-	)
-	(junction
 		(at 43.18 135.89)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2125,12 +1999,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "322605d0-70d6-45ab-b6c6-3bfd42e167d1")
-	)
-	(junction
-		(at 181.61 187.96)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "465c4e7b-4821-4309-ac65-cc3c6125e62e")
 	)
 	(junction
 		(at 39.37 133.35)
@@ -2151,22 +2019,10 @@
 		(uuid "76077bf4-8917-40f9-8d22-e24999c1781d")
 	)
 	(junction
-		(at 111.76 191.77)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "c4dad4ab-91b3-4e62-81a5-bca52774fe3b")
-	)
-	(junction
 		(at 180.34 167.64)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e3a2f62c-e706-44e1-b27f-8b6a68018d36")
-	)
-	(junction
-		(at 111.76 157.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f22c66c0-47de-4a45-ab57-e4b0efdc454d")
 	)
 	(wire
 		(pts
@@ -2177,16 +2033,6 @@
 			(type default)
 		)
 		(uuid "0055cd0d-ed4b-46aa-bc01-a946064612bc")
-	)
-	(wire
-		(pts
-			(xy 165.1 187.96) (xy 181.61 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "082503f7-9905-4514-afad-79145cb4acca")
 	)
 	(wire
 		(pts
@@ -2210,16 +2056,6 @@
 	)
 	(wire
 		(pts
-			(xy 109.22 191.77) (xy 111.76 191.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1154f735-2e30-418c-82cf-69eee488656d")
-	)
-	(wire
-		(pts
 			(xy 121.92 149.86) (xy 123.19 149.86)
 		)
 		(stroke
@@ -2227,36 +2063,6 @@
 			(type default)
 		)
 		(uuid "17ea9365-ee97-42c9-9f5b-4cbdbd369a2d")
-	)
-	(wire
-		(pts
-			(xy 111.76 191.77) (xy 111.76 193.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "31e32352-68d1-41b0-a510-060b8078cb77")
-	)
-	(wire
-		(pts
-			(xy 181.61 187.96) (xy 182.88 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "336688ed-46b4-4ebe-afa6-7fc62bcabe8d")
-	)
-	(wire
-		(pts
-			(xy 111.76 157.48) (xy 111.76 158.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d90e6b3-f604-4af0-b59b-9006445532e7")
 	)
 	(wire
 		(pts
@@ -2320,16 +2126,6 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 187.96) (xy 181.61 189.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6bf24004-f66f-4a12-b0e3-8b717048e038")
-	)
-	(wire
-		(pts
 			(xy 38.1 133.35) (xy 39.37 133.35)
 		)
 		(stroke
@@ -2360,16 +2156,6 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 191.77) (xy 114.3 191.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8851fc1a-c283-4e06-b58c-46b8a9a2e5f8")
-	)
-	(wire
-		(pts
 			(xy 190.5 180.34) (xy 190.5 181.61)
 		)
 		(stroke
@@ -2377,36 +2163,6 @@
 			(type default)
 		)
 		(uuid "8d23e3b8-e8a7-41b9-9bf6-b5fd31f1eccb")
-	)
-	(wire
-		(pts
-			(xy 109.22 157.48) (xy 111.76 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "913a06e0-2ec9-481a-a9b2-f627dcb0c95e")
-	)
-	(wire
-		(pts
-			(xy 111.76 157.48) (xy 114.3 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "969d9be1-6961-4302-b125-072f773b68db")
-	)
-	(wire
-		(pts
-			(xy 165.1 173.99) (xy 171.45 173.99)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "98d3277c-5546-413a-bdfb-90b4a187ba0c")
 	)
 	(wire
 		(pts
@@ -2450,26 +2206,6 @@
 	)
 	(wire
 		(pts
-			(xy 171.45 173.99) (xy 172.72 173.99)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bdafcce4-07fd-4c67-a43b-72b4affc909a")
-	)
-	(wire
-		(pts
-			(xy 171.45 173.99) (xy 171.45 175.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bf0dc07b-d093-463c-9584-f5f8a8332e2d")
-	)
-	(wire
-		(pts
 			(xy 46.99 138.43) (xy 46.99 133.35)
 		)
 		(stroke
@@ -2508,16 +2244,6 @@
 		)
 		(uuid "f5a62555-d703-4f63-99c4-a7e3e5746353")
 	)
-	(text "TODO: Delete resistors on MOSFETs and let the \nshift register handle logic levels"
-		(exclude_from_sim no)
-		(at 156.972 143.256 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "31172cd1-ea96-4358-b076-c0e1b883e374")
-	)
 	(text "CCM=0, DCM=0: Burst Mode\nCCM=0, DCM=1: Discontinuous Conduction Mode\nCCM=1, DCM=0: Forced Continuous Conduction Mode\nCCM=1, DCM=1: Forced Continuous Conduction Mode"
 		(exclude_from_sim no)
 		(at 145.034 204.47 0)
@@ -2528,16 +2254,6 @@
 			(justify left)
 		)
 		(uuid "7a7d01e1-e112-41ec-9676-07aeae41d60d")
-	)
-	(text "TODO: Can I delete the 3.3v rail entirely?"
-		(exclude_from_sim no)
-		(at 138.684 42.164 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "ebfaebad-df5d-4a3e-9678-c728a7997618")
 	)
 	(global_label "PWM_FAN_CTL"
 		(shape input)
@@ -2563,7 +2279,7 @@
 	)
 	(global_label "LTC_SYNC"
 		(shape passive)
-		(at 101.6 191.77 180)
+		(at 114.3 191.77 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2573,7 +2289,7 @@
 		)
 		(uuid "1bd77677-ad66-4477-8434-b5ea56d92215")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 90.5942 191.77 0)
+			(at 103.2942 191.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2651,7 +2367,7 @@
 	)
 	(global_label "LTC_CCM"
 		(shape passive)
-		(at 157.48 187.96 180)
+		(at 182.88 187.96 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2661,7 +2377,7 @@
 		)
 		(uuid "5849b352-2b3f-4ae2-b5f5-03702bd74569")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.3814 187.96 0)
+			(at 172.7814 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2673,7 +2389,7 @@
 	)
 	(global_label "LTC_DCM"
 		(shape passive)
-		(at 157.48 173.99 180)
+		(at 172.72 173.99 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2683,7 +2399,7 @@
 		)
 		(uuid "5cadc886-e137-413c-925f-7c0e792ae122")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 147.3814 173.99 0)
+			(at 162.6214 173.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2827,7 +2543,7 @@
 	)
 	(global_label "LTC_RUN"
 		(shape passive)
-		(at 101.6 157.48 180)
+		(at 114.3 157.48 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2837,7 +2553,7 @@
 		)
 		(uuid "aa2a545f-452f-4b2b-a300-d285cfb15ba7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 91.5618 157.48 0)
+			(at 104.2618 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3133,6 +2849,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 119.38 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a6d6666b-10d9-4d53-9ab6-96db727090e5")
 		)
@@ -3146,216 +2871,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "Q12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 111.76 162.56 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "017bc473-9cc9-4d13-ad35-f9b245eec14b")
-		(property "Reference" "R60"
-			(at 114.3 161.2899 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 114.3 163.8299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 110.744 162.306 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 111.76 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 111.76 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 111.76 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 111.76 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 111.76 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 111.76 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e092c903-5053-4c80-bac7-f631fe52c3b1")
-		)
-		(pin "2"
-			(uuid "48b10825-fad7-4adf-9e55-770ec867f88e")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R60")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 161.29 187.96 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "026fda48-fd86-4214-a5bc-1c11437b001e")
-		(property "Reference" "R64"
-			(at 161.29 181.61 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 161.29 184.15 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 161.036 188.976 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 161.29 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 161.29 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 161.29 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 161.29 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 161.29 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 161.29 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7653f6cd-b453-4fb5-99d9-ab7a91dbaa14")
-		)
-		(pin "2"
-			(uuid "79677d42-29a5-4e8f-a405-79bd19096818")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R64")
 					(unit 1)
 				)
 			)
@@ -3587,6 +3102,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 119.38 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "78b72978-ec01-4a6f-856f-ea8ff1d77b97")
 		)
@@ -3600,178 +3124,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "Q13")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 111.76 196.85 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "10844931-e567-494f-9085-e360b4ca8152")
-		(property "Reference" "R61"
-			(at 114.3 195.5799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 114.3 198.1199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 110.744 196.596 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 111.76 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 111.76 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 111.76 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 111.76 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 111.76 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 111.76 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "871c1ec1-2eec-4bc5-b8cf-0c12d7b49ce6")
-		)
-		(pin "2"
-			(uuid "6d92f130-3ea7-4c4e-8c76-c90c4f22b5bb")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R61")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 171.45 182.88 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1546069a-9872-49c1-be8f-eb28e8d52f53")
-		(property "Reference" "#PWR0142"
-			(at 171.45 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 171.45 187.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 171.45 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 171.45 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 171.45 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "6c155ecc-a534-41d8-aa5a-4563398a4536")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "#PWR0142")
 					(unit 1)
 				)
 			)
@@ -3858,6 +3210,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 34.29 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 34.29 135.89 0)
 			(effects
 				(font
@@ -3975,6 +3336,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 187.96 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "9a9fd139-c7b3-41ca-bbf0-5f7c86a47bd4")
 		)
@@ -4047,6 +3417,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 49.53 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 49.53 49.53 0)
 			(effects
 				(font
@@ -4180,6 +3559,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 43.18 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f53cbb11-bc5f-42a9-b441-f813b85de8c6")
 		)
@@ -4278,6 +3666,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 121.92 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 121.92 180.34 0)
 			(effects
 				(font
@@ -4392,6 +3789,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 190.5 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "532c2018-9e8c-42a8-98d5-a0209e23ba26")
 		)
@@ -4492,6 +3898,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 177.8 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 177.8 173.99 0)
 			(effects
 				(font
@@ -4671,6 +4086,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 187.96 167.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 187.96 167.64 0)
 			(effects
 				(font
@@ -4920,6 +4344,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 180.34 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "32b29b5f-0345-4c66-a34c-d3ed9bb85d54")
 		)
@@ -4930,72 +4363,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "R66")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 181.61 196.85 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5221f36a-f7ab-493b-86da-8f03af7d97df")
-		(property "Reference" "#PWR0145"
-			(at 181.61 203.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 181.61 201.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 181.61 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 181.61 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 181.61 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "31b78536-900a-4fe5-8fb9-a369170ca6e9")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "#PWR0145")
 					(unit 1)
 				)
 			)
@@ -5090,6 +4457,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 25.4 130.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "93f255d1-336e-4d79-8aa4-af74366c2863")
 		)
@@ -5106,110 +4482,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "J5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 161.29 173.99 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5e0332fd-7cae-4df2-8759-a5a99f5b1151")
-		(property "Reference" "R63"
-			(at 161.29 167.64 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 161.29 170.18 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 161.036 175.006 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 161.29 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 161.29 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 161.29 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 161.29 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 161.29 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 161.29 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "440effd0-978d-436a-8bce-2785280bd35e")
-		)
-		(pin "2"
-			(uuid "870381e6-a5ac-44bd-bb26-7f55d262d277")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R63")
 					(unit 1)
 				)
 			)
@@ -5306,6 +4578,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 39.37 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8ac90c10-08de-43a1-bf9c-b7a999ba0d84")
 		)
@@ -5316,6 +4597,72 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "R57")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 39.37 120.65 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6bf7f248-28c2-4e09-adf7-190e12547161")
+		(property "Reference" "#PWR018"
+			(at 39.37 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 39.37 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 39.37 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 39.37 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 39.37 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6dbd9d01-4f0a-41c6-8c56-6180a6cf5476")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -5389,72 +4736,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3VP")
-		(at 39.37 120.65 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7813e2b3-cecf-442d-a23f-3ac0ff0340be")
-		(property "Reference" "#PWR0132"
-			(at 43.18 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 39.37 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 39.37 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 39.37 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3VP\""
-			(at 39.37 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7689e1c2-a6df-4c0f-802b-88a2d1eb4911")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "#PWR0132")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5V")
 		(at 180.34 157.48 0)
 		(unit 1)
@@ -5515,176 +4796,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "#PWR0143")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 105.41 157.48 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "93c8395e-a902-4d88-8649-cdec23d227bc")
-		(property "Reference" "R58"
-			(at 105.41 151.13 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 105.41 153.67 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 105.156 158.496 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 105.41 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 105.41 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 105.41 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 105.41 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 105.41 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 105.41 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "12ab0c21-4dee-4fa5-b802-b73158c9588c")
-		)
-		(pin "2"
-			(uuid "8449906c-0690-4d2e-a22b-c1b7e2574b13")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R58")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 111.76 166.37 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9d1910a3-b2f6-48fa-a1f3-ba659f2881e4")
-		(property "Reference" "#PWR0137"
-			(at 111.76 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 111.76 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 111.76 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 111.76 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 111.76 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "16ffd3e0-b742-408d-8a28-6d81afa91844")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "#PWR0137")
 					(unit 1)
 				)
 			)
@@ -6042,6 +5153,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" ""
+			(at 34.29 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7af07f98-540b-4974-b6f8-e4b627819188")
 		)
@@ -6052,110 +5172,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
 					(reference "R55")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 105.41 191.77 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c62633ff-410c-438f-b906-2985ebe5d0f7")
-		(property "Reference" "R59"
-			(at 105.41 185.42 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 105.41 187.96 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 105.156 192.786 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 105.41 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 105.41 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 105.41 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 105.41 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 105.41 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 105.41 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "58c4743a-d6af-4494-ae5a-bdcfe0f18c59")
-		)
-		(pin "2"
-			(uuid "93546065-9ad6-4421-b2d4-d9f76cb66b02")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R59")
 					(unit 1)
 				)
 			)
@@ -6293,284 +5309,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 171.45 179.07 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d8fddb38-3122-410f-b8bf-53144bcb35bc")
-		(property "Reference" "R65"
-			(at 168.91 177.7999 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 168.91 180.3399 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 172.466 178.816 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 171.45 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 171.45 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 171.45 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 171.45 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 171.45 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 171.45 179.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "85767647-b033-4941-bcd2-7dbcbdbadc7a")
-		)
-		(pin "2"
-			(uuid "0b010737-22fb-4c52-8fc5-edef96d391be")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R65")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 111.76 200.66 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "def8bf71-128e-41f4-8ee9-e6d54e5a06ec")
-		(property "Reference" "#PWR0138"
-			(at 111.76 207.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 111.76 205.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 111.76 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 111.76 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 111.76 200.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1f212526-a806-4c5d-9915-8b4813e19a5f")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "#PWR0138")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 181.61 193.04 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "e639001c-21af-49ac-8ec3-96e7667653ba")
-		(property "Reference" "R67"
-			(at 179.07 191.7699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "10k"
-			(at 179.07 194.3099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 182.626 192.786 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 181.61 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 181.61 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 181.61 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C25804"
-			(at 181.61 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 181.61 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 181.61 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bb386ff3-7966-4124-8808-7fb244562fcf")
-		)
-		(pin "2"
-			(uuid "5ad8f9b0-18fb-4ed1-9c97-3b631c800eb0")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9"
-					(reference "R67")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Diode:ESD9B3.3ST5G")
 		(at 46.99 142.24 90)
 		(unit 1)
@@ -6636,6 +5374,15 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
+			(at 46.99 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" ""
 			(at 46.99 142.24 0)
 			(effects
 				(font

@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.09999999999999999,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.5
+          "min_clearance": 1.0
         }
       },
       "diff_pair_dimensions": [
@@ -614,7 +614,7 @@
       "group_symbols": true,
       "name": "",
       "sort_asc": true,
-      "sort_field": "${QUANTITY}"
+      "sort_field": "Value"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -711,6 +711,10 @@
     [
       "6c1d70a0-5eea-4fa8-b345-358dda7669fa",
       "AnalogSensing"
+    ],
+    [
+      "9097dfce-ff34-4862-a168-813efcdac9c0",
+      "PowerLoadSwitch"
     ]
   ],
   "text_variables": {}
