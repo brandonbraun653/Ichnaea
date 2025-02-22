@@ -3759,114 +3759,6 @@
 				)
 			)
 		)
-		(symbol "power:HT"
-			(power)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 3.048 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "HT"
-				(at 0 2.286 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"HT\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "HT_0_0"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0) hide
-					(name "HT"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(symbol "HT_0_1"
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 1.016) (xy 0 1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 1.016) (xy 0.508 0.508) (xy 0 1.778) (xy -0.508 0.508) (xy 0 1.016) (xy 0 1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-		)
 		(symbol "power:VBUS"
 			(power)
 			(pin_names
@@ -4412,16 +4304,6 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 172.72) (xy 111.76 176.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "08477449-9820-4b57-a509-8bb66f804d06")
-	)
-	(wire
-		(pts
 			(xy 111.76 100.33) (xy 111.76 101.6)
 		)
 		(stroke
@@ -4952,16 +4834,6 @@
 	)
 	(wire
 		(pts
-			(xy 111.76 213.36) (xy 111.76 217.17)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "61297f02-36ba-465d-bada-bfd98957dc60")
-	)
-	(wire
-		(pts
 			(xy 185.42 68.58) (xy 185.42 71.12)
 		)
 		(stroke
@@ -5002,16 +4874,6 @@
 	)
 	(wire
 		(pts
-			(xy 115.57 193.04) (xy 111.76 193.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6a4b6f7f-5600-45db-9778-300f1f6dfb95")
-	)
-	(wire
-		(pts
 			(xy 39.37 251.46) (xy 39.37 252.73)
 		)
 		(stroke
@@ -5019,16 +4881,6 @@
 			(type default)
 		)
 		(uuid "6a8e50f1-70a0-4bf0-9c0a-fc37abbb97bf")
-	)
-	(wire
-		(pts
-			(xy 115.57 172.72) (xy 111.76 172.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6d248050-5522-412d-9295-26109e13e757")
 	)
 	(wire
 		(pts
@@ -5289,16 +5141,6 @@
 			(type default)
 		)
 		(uuid "9128f272-99db-4f2d-a24b-a20c300410f0")
-	)
-	(wire
-		(pts
-			(xy 111.76 193.04) (xy 111.76 195.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9159ff5e-d4d4-4913-82fc-cb4405caa36e")
 	)
 	(wire
 		(pts
@@ -5839,16 +5681,6 @@
 			(type default)
 		)
 		(uuid "eb2a98eb-4103-4937-b635-6098a251d776")
-	)
-	(wire
-		(pts
-			(xy 115.57 213.36) (xy 111.76 213.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "eb352fee-da84-492a-99a5-7c4eee4f8598")
 	)
 	(wire
 		(pts
@@ -7008,71 +6840,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:HT")
-		(at 139.7 176.53 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "050cf3c2-49ab-4a6f-b56a-ac0aab16074b")
-		(property "Reference" "#PWR034"
-			(at 136.652 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "HT"
-			(at 135.89 176.53 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 139.7 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 139.7 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"HT\""
-			(at 139.7 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "66496908-5892-44a6-b8c2-56f16b964913")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "#PWR034")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R_US")
 		(at 111.76 105.41 180)
 		(unit 1)
@@ -7526,6 +7293,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+VSW")
+		(at 101.6 176.53 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "14acadb8-8005-4b00-8f25-7b7d70e2bb8b")
+		(property "Reference" "#PWR022"
+			(at 105.41 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VIN"
+			(at 97.79 176.5299 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 101.6 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+VSW\""
+			(at 101.6 176.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5289f02c-3cc7-4818-aa47-111af4b741de")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
+					(reference "#PWR022")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+5V")
 		(at 179.07 163.83 90)
 		(unit 1)
@@ -7652,6 +7486,73 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
 					(reference "#PWR085")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+VSW")
+		(at 101.6 195.58 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "18e40735-c577-4eb3-9771-904f4c14e62d")
+		(property "Reference" "#PWR034"
+			(at 105.41 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VIN"
+			(at 97.79 195.5799 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 101.6 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 101.6 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+VSW\""
+			(at 101.6 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b71c69da-6493-46b0-bd53-e6c0564f3738")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -12242,71 +12143,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:HT")
-		(at 101.6 176.53 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6e5e8948-acff-476d-9223-9988c7f0fa03")
-		(property "Reference" "#PWR021"
-			(at 98.552 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "HT"
-			(at 97.79 176.53 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 101.6 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 101.6 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"HT\""
-			(at 101.6 176.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b0a1b3d8-d218-413c-b09f-e0f4465c3f4e")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "#PWR021")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 326.39 87.63 90)
 		(unit 1)
@@ -13044,71 +12880,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
 					(reference "#PWR063")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:HT")
-		(at 101.6 195.58 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "907c00ed-62b8-428e-8053-bfae36328471")
-		(property "Reference" "#PWR022"
-			(at 98.552 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "HT"
-			(at 97.79 195.58 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 101.6 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 101.6 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"HT\""
-			(at 101.6 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "539143ab-76ef-47cc-9441-73adafe9f72f")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -14914,98 +14685,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 39.37 251.46 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a9aaf4f5-b778-45a2-aaca-8cb4f2e5674f")
-		(property "Reference" "TP4"
-			(at 33.02 251.46 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 36.068 248.92 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 39.37 246.38 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 39.37 246.38 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 39.37 251.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "N/A"
-			(at 39.37 251.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 39.37 251.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "DigiKey" ""
-			(at 39.37 251.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "478623c5-f433-4a1b-ab8a-00dad99fd32f")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "TP4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:VBUS")
 		(at 39.37 242.57 0)
 		(unit 1)
@@ -15976,98 +15655,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 115.57 172.72 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "bce735ed-6cfe-496b-a408-dfb4d4d9fb95")
-		(property "Reference" "TP5"
-			(at 121.92 172.72 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 118.872 175.26 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 115.57 177.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 115.57 177.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 115.57 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "N/A"
-			(at 115.57 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 115.57 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "DigiKey" ""
-			(at 115.57 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "97218770-b683-4a5a-a822-e3aea6c52277")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "TP5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+12V")
 		(at 242.57 170.18 270)
 		(unit 1)
@@ -16982,98 +16569,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 115.57 193.04 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d2aa4500-77ff-4c6c-9f49-d038df787a5c")
-		(property "Reference" "TP6"
-			(at 121.92 193.04 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 118.872 195.58 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 115.57 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 115.57 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 115.57 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "N/A"
-			(at 115.57 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 115.57 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "DigiKey" ""
-			(at 115.57 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0f1fb17a-bd76-47e4-a00d-1ce6397f002a")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "TP6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+5P")
 		(at 127 66.04 0)
 		(unit 1)
@@ -17272,24 +16767,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 115.57 213.36 270)
+		(lib_id "power:+VSW")
+		(at 139.7 176.53 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "db7cd433-5fa5-4cdb-91cc-385448b52bbb")
-		(property "Reference" "TP7"
-			(at 121.92 213.36 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 118.872 215.9 90)
+		(fields_autoplaced yes)
+		(uuid "dcb7b116-7a6d-49b8-a27d-81754a627363")
+		(property "Reference" "#PWR021"
+			(at 143.51 176.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17297,8 +16785,17 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 115.57 218.44 0)
+		(property "Value" "VIN"
+			(at 135.89 176.5299 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 176.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17306,8 +16803,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 115.57 218.44 0)
+		(property "Datasheet" ""
+			(at 139.7 176.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17315,35 +16812,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "test point"
-			(at 115.57 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "N/A"
-			(at 115.57 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 115.57 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "DigiKey" ""
-			(at 115.57 213.36 0)
+		(property "Description" "Power symbol creates a global label with name \"+VSW\""
+			(at 139.7 176.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17352,12 +16822,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "d48639cc-68e6-4baa-9771-f65e4d4a66c1")
+			(uuid "bd1e49b2-e350-47cc-be4e-94f431f6676a")
 		)
 		(instances
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "TP7")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -18773,7 +18243,7 @@
 		)
 	)
 	(sheet
-		(at 223.52 102.87)
+		(at 223.52 128.27)
 		(size 19.05 10.16)
 		(fields_autoplaced yes)
 		(stroke
@@ -18785,125 +18255,6 @@
 		)
 		(uuid "171364aa-6f2d-4723-9ce2-aacc140a6e7a")
 		(property "Sheetname" "Phase1"
-			(at 223.52 102.1584 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "PhaseNDriver.kicad_sch"
-			(at 223.52 113.6146 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(pin "VCC" input
-			(at 242.57 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "5de24fab-044a-4964-9935-111e9a58d6a0")
-		)
-		(pin "PWM" input
-			(at 223.52 104.14 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "3aebf06b-eb15-4542-b5d7-1b8610040c73")
-		)
-		(pin "PWMEN" input
-			(at 242.57 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "b457a77c-e2af-4b74-985f-4518caa83c55")
-		)
-		(pin "VLOW" output
-			(at 242.57 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "6431b5ec-8603-4cba-825b-25e54524b0b0")
-		)
-		(pin "SNSA+" output
-			(at 223.52 106.68 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "96bbb0e8-2adf-4551-8259-8dfd78749558")
-		)
-		(pin "SNSD-" output
-			(at 223.52 111.76 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "1080b133-6cdc-48cd-97cb-543bfe7dd439")
-		)
-		(pin "SNSD+" output
-			(at 223.52 109.22 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "1bac040b-5a13-454f-a98d-080fa1537b7f")
-		)
-		(pin "VHIGH" input
-			(at 242.57 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "18b539ef-5ab5-4454-ac3b-cb8cb878c463")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(page "3")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 223.52 128.27)
-		(size 19.05 10.16)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "48047d75-e488-4da1-b4d9-5027f5fb8795")
-		(property "Sheetname" "Phase3"
 			(at 223.52 127.5584 0)
 			(effects
 				(font
@@ -18930,7 +18281,7 @@
 				)
 				(justify right)
 			)
-			(uuid "a726b90b-70cc-4ea5-829c-d1dfb65ddd59")
+			(uuid "5de24fab-044a-4964-9935-111e9a58d6a0")
 		)
 		(pin "PWM" input
 			(at 223.52 129.54 180)
@@ -18940,7 +18291,7 @@
 				)
 				(justify left)
 			)
-			(uuid "16b2a105-2885-4ffb-b3a1-3cd53c3fa240")
+			(uuid "3aebf06b-eb15-4542-b5d7-1b8610040c73")
 		)
 		(pin "PWMEN" input
 			(at 242.57 129.54 0)
@@ -18950,7 +18301,7 @@
 				)
 				(justify right)
 			)
-			(uuid "f4d8b841-2c1b-44fa-b3d2-729f92e9904b")
+			(uuid "b457a77c-e2af-4b74-985f-4518caa83c55")
 		)
 		(pin "VLOW" output
 			(at 242.57 134.62 0)
@@ -18960,7 +18311,7 @@
 				)
 				(justify right)
 			)
-			(uuid "f47a5ee1-44e7-428e-b482-3d7a3e3b6cfe")
+			(uuid "6431b5ec-8603-4cba-825b-25e54524b0b0")
 		)
 		(pin "SNSA+" output
 			(at 223.52 132.08 180)
@@ -18970,7 +18321,7 @@
 				)
 				(justify left)
 			)
-			(uuid "2f79cdc8-1d22-4dc0-825b-dc2ced141934")
+			(uuid "96bbb0e8-2adf-4551-8259-8dfd78749558")
 		)
 		(pin "SNSD-" output
 			(at 223.52 137.16 180)
@@ -18980,7 +18331,7 @@
 				)
 				(justify left)
 			)
-			(uuid "046eb0a5-75fd-497d-a212-2cf7c2b23add")
+			(uuid "1080b133-6cdc-48cd-97cb-543bfe7dd439")
 		)
 		(pin "SNSD+" output
 			(at 223.52 134.62 180)
@@ -18990,10 +18341,129 @@
 				)
 				(justify left)
 			)
-			(uuid "7913dd90-4499-4c31-8a9b-4b6663cb513f")
+			(uuid "1bac040b-5a13-454f-a98d-080fa1537b7f")
 		)
 		(pin "VHIGH" input
 			(at 242.57 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "18b539ef-5ab5-4454-ac3b-cb8cb878c463")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 223.52 102.87)
+		(size 19.05 10.16)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "48047d75-e488-4da1-b4d9-5027f5fb8795")
+		(property "Sheetname" "Phase3"
+			(at 223.52 102.1584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "PhaseNDriver.kicad_sch"
+			(at 223.52 113.6146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "VCC" input
+			(at 242.57 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "a726b90b-70cc-4ea5-829c-d1dfb65ddd59")
+		)
+		(pin "PWM" input
+			(at 223.52 104.14 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "16b2a105-2885-4ffb-b3a1-3cd53c3fa240")
+		)
+		(pin "PWMEN" input
+			(at 242.57 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "f4d8b841-2c1b-44fa-b3d2-729f92e9904b")
+		)
+		(pin "VLOW" output
+			(at 242.57 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "f47a5ee1-44e7-428e-b482-3d7a3e3b6cfe")
+		)
+		(pin "SNSA+" output
+			(at 223.52 106.68 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "2f79cdc8-1d22-4dc0-825b-dc2ced141934")
+		)
+		(pin "SNSD-" output
+			(at 223.52 111.76 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "046eb0a5-75fd-497d-a212-2cf7c2b23add")
+		)
+		(pin "SNSD+" output
+			(at 223.52 109.22 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "7913dd90-4499-4c31-8a9b-4b6663cb513f")
+		)
+		(pin "VHIGH" input
+			(at 242.57 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19317,7 +18787,7 @@
 		)
 	)
 	(sheet
-		(at 223.52 166.37)
+		(at 223.52 140.97)
 		(size 19.05 10.16)
 		(fields_autoplaced yes)
 		(stroke
@@ -19329,125 +18799,6 @@
 		)
 		(uuid "d7eacb53-72cb-4ae3-a7a6-7938b9062ae2")
 		(property "Sheetname" "Phase6"
-			(at 223.52 165.6584 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "PhaseNDriver.kicad_sch"
-			(at 223.52 177.1146 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(pin "VCC" input
-			(at 242.57 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "3aa17f70-0ce7-4499-9e94-87264a43af71")
-		)
-		(pin "PWM" input
-			(at 223.52 167.64 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "67e305f6-ddc8-4a58-8fb7-c9b939dd57c9")
-		)
-		(pin "PWMEN" input
-			(at 242.57 167.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "8385f93a-8f70-4d13-bc47-d3a8e4ffb2d4")
-		)
-		(pin "VLOW" output
-			(at 242.57 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "6bf82b10-48c7-4247-a209-74c7e744475a")
-		)
-		(pin "SNSA+" output
-			(at 223.52 170.18 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "9799fe03-5b29-4e6e-b901-1f1209712fb8")
-		)
-		(pin "SNSD-" output
-			(at 223.52 175.26 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "49bef766-3d2b-4e26-8398-6a59444a759b")
-		)
-		(pin "SNSD+" output
-			(at 223.52 172.72 180)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-			(uuid "90e60055-b108-4035-800d-426980ce9594")
-		)
-		(pin "VHIGH" input
-			(at 242.57 175.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-			(uuid "a22b79d6-e963-4600-9f4d-d2f075bb6f77")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(page "9")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 223.52 140.97)
-		(size 19.05 10.16)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "ed7af46d-5b91-411b-a953-18bebafe1a87")
-		(property "Sheetname" "Phase4"
 			(at 223.52 140.2584 0)
 			(effects
 				(font
@@ -19474,7 +18825,7 @@
 				)
 				(justify right)
 			)
-			(uuid "170d4ec8-d03c-4f61-ba72-8824c1a64bbe")
+			(uuid "3aa17f70-0ce7-4499-9e94-87264a43af71")
 		)
 		(pin "PWM" input
 			(at 223.52 142.24 180)
@@ -19484,7 +18835,7 @@
 				)
 				(justify left)
 			)
-			(uuid "a9d71e94-6a70-4b80-b2bf-5156b7fb1ceb")
+			(uuid "67e305f6-ddc8-4a58-8fb7-c9b939dd57c9")
 		)
 		(pin "PWMEN" input
 			(at 242.57 142.24 0)
@@ -19494,7 +18845,7 @@
 				)
 				(justify right)
 			)
-			(uuid "f8356d29-49a1-48ce-9a73-52354f013794")
+			(uuid "8385f93a-8f70-4d13-bc47-d3a8e4ffb2d4")
 		)
 		(pin "VLOW" output
 			(at 242.57 147.32 0)
@@ -19504,7 +18855,7 @@
 				)
 				(justify right)
 			)
-			(uuid "fbd221bd-2113-4d9c-8c84-bc242863f3ac")
+			(uuid "6bf82b10-48c7-4247-a209-74c7e744475a")
 		)
 		(pin "SNSA+" output
 			(at 223.52 144.78 180)
@@ -19514,7 +18865,7 @@
 				)
 				(justify left)
 			)
-			(uuid "e5d3e787-dab3-47c6-b3fa-721821a3a98a")
+			(uuid "9799fe03-5b29-4e6e-b901-1f1209712fb8")
 		)
 		(pin "SNSD-" output
 			(at 223.52 149.86 180)
@@ -19524,7 +18875,7 @@
 				)
 				(justify left)
 			)
-			(uuid "a5a66238-4e66-4f20-acac-9bed1b55ea24")
+			(uuid "49bef766-3d2b-4e26-8398-6a59444a759b")
 		)
 		(pin "SNSD+" output
 			(at 223.52 147.32 180)
@@ -19534,10 +18885,129 @@
 				)
 				(justify left)
 			)
-			(uuid "39664bcd-5199-4c33-a05a-5f224576aa3d")
+			(uuid "90e60055-b108-4035-800d-426980ce9594")
 		)
 		(pin "VHIGH" input
 			(at 242.57 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "a22b79d6-e963-4600-9f4d-d2f075bb6f77")
+		)
+		(instances
+			(project "IchnaeaV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 223.52 166.37)
+		(size 19.05 10.16)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "ed7af46d-5b91-411b-a953-18bebafe1a87")
+		(property "Sheetname" "Phase4"
+			(at 223.52 165.6584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "PhaseNDriver.kicad_sch"
+			(at 223.52 177.1146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "VCC" input
+			(at 242.57 170.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "170d4ec8-d03c-4f61-ba72-8824c1a64bbe")
+		)
+		(pin "PWM" input
+			(at 223.52 167.64 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "a9d71e94-6a70-4b80-b2bf-5156b7fb1ceb")
+		)
+		(pin "PWMEN" input
+			(at 242.57 167.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "f8356d29-49a1-48ce-9a73-52354f013794")
+		)
+		(pin "VLOW" output
+			(at 242.57 172.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+			(uuid "fbd221bd-2113-4d9c-8c84-bc242863f3ac")
+		)
+		(pin "SNSA+" output
+			(at 223.52 170.18 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "e5d3e787-dab3-47c6-b3fa-721821a3a98a")
+		)
+		(pin "SNSD-" output
+			(at 223.52 175.26 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "a5a66238-4e66-4f20-acac-9bed1b55ea24")
+		)
+		(pin "SNSD+" output
+			(at 223.52 172.72 180)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+			(uuid "39664bcd-5199-4c33-a05a-5f224576aa3d")
+		)
+		(pin "VHIGH" input
+			(at 242.57 175.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
