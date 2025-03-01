@@ -1,0 +1,4 @@
+- Shall have two power inputs
+  - One for a low voltage input (12-100VDC) that goes to an (optional) on-board boost converter.
+  - Another for high voltage input (250-480VDC) that can directly feed the inverter.
+- Networked control via RS485

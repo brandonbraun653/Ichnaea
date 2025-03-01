@@ -1,0 +1,7 @@
+- "Brains" of the operation. Acts as a hub for orchestrating multiple chargers, balancers, and inverters.
+- Data concentrator
+- Human interface device
+  - Potentially a screen
+  - Maybe some buttons
+  - Likely a WiFi connection, maybe bluetooth as well.
+- Software update controller for various nodes in the system

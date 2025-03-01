@@ -478,7 +478,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "IchnaeaV3.kicad_pro",
+    "filename": "ChargerV3.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -716,16 +716,8 @@
       "Phase6"
     ],
     [
-      "15949d39-4147-469d-a992-c4b48798ba19",
-      "BatteryManagement"
-    ],
-    [
-      "5d638572-1b20-446a-b8ff-9a7be673240d",
-      "BalancePhase"
-    ],
-    [
-      "34bfa573-b03d-46a9-b87f-fd8daed6e538",
-      "DiscreteInput"
+      "aa801e4b-edfe-4a01-9e20-8e9249af9b44",
+      "InterConnectV1"
     ],
     [
       "fdf9ed79-d6dc-4b90-81da-ef64aa580205",
