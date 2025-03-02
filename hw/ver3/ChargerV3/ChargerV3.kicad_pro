@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.25
+          "min_clearance": 0.5
         }
       },
       "diff_pair_dimensions": [
@@ -722,6 +722,10 @@
     [
       "fdf9ed79-d6dc-4b90-81da-ef64aa580205",
       "DiscreteOuptut"
+    ],
+    [
+      "11da823d-a1b5-4683-acde-852ac90cc216",
+      "MCUControl"
     ],
     [
       "6c1d70a0-5eea-4fa8-b345-358dda7669fa",

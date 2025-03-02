@@ -1101,7 +1101,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "70098b5c-45d7-4a5a-bb54-c44a79633413")
-		(property "Reference" "J1"
+		(property "Reference" "J4"
 			(at 125.73 93.98 0)
 			(effects
 				(font
@@ -1169,6 +1169,12 @@
 			(uuid "9a2c0c22-c089-4326-9295-5b34a4f1e2b6")
 		)
 		(instances
+			(project "ChargerV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/aa801e4b-edfe-4a01-9e20-8e9249af9b44"
+					(reference "J4")
+					(unit 1)
+				)
+			)
 			(project ""
 				(path "/93a5de3b-2dc1-4e4f-9e25-5e90260a5115"
 					(reference "J1")
@@ -1254,6 +1260,12 @@
 			(uuid "47db7a4b-49c6-45cb-89c2-962db1765feb")
 		)
 		(instances
+			(project "ChargerV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/aa801e4b-edfe-4a01-9e20-8e9249af9b44"
+					(reference "J3")
+					(unit 1)
+				)
+			)
 			(project "InterConnectV1"
 				(path "/93a5de3b-2dc1-4e4f-9e25-5e90260a5115"
 					(reference "J3")
@@ -1343,6 +1355,12 @@
 			(uuid "30f6b1c7-be8b-461a-aa51-19b864354a45")
 		)
 		(instances
+			(project "ChargerV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/aa801e4b-edfe-4a01-9e20-8e9249af9b44"
+					(reference "U5")
+					(unit 1)
+				)
+			)
 			(project "InterConnectV1"
 				(path "/93a5de3b-2dc1-4e4f-9e25-5e90260a5115"
 					(reference "U5")

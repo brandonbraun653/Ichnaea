@@ -1,0 +1,25 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "db1e4eb9-9ee2-4671-ab5f-67bc0af1a2c5")
+	(paper "A4")
+	(lib_symbols)
+	(text "This tool is a USB -> RJ45 interface to allow a host machine to inspect\nand control the network for testing purpose. It replaces the \"controller\"\nmodule, but if the controller is on the network it turns into a slave device.\n\nThis device should:\n1. Provide 48V POE through an external power source (not USB)\n2. Allow sniffing the traffic on both RS485 busses\n3. Act as the controller, via USB\n4. Have an RP2040 on-board to perform realtime tasks of the controller\n	- Log inspection\n	- Firmware upgrades\n	- etc"
+		(exclude_from_sim no)
+		(at 121.92 97.028 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2b246388-f9d6-473c-8989-eded59606d79")
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
