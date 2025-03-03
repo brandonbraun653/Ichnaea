@@ -7460,17 +7460,8 @@
 				(hide yes)
 			)
 		)
-<<<<<<< HEAD
-<<<<<<< HEAD:hw/ver3/IchnaeaV3/PowerStage.kicad_sch
 		(property "Value" "+5P"
-			(at 172.466 162.814 90)
-=======
-		(property "Value" "+5V"
-=======
-		(property "Value" "+5P"
->>>>>>> 9fc2800 (Redo some charger routing. Improve design for interconnect)
-			(at 175.26 180.3399 90)
->>>>>>> 90fb527 (Split the design into four major components. Start working on system architecture.):hw/ver3/ChargerV3/PowerStage.kicad_sch
+			(at 172.212 180.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
