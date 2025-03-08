@@ -12,6 +12,8 @@
 - RS485 Bus 1 is the primary interface
 - RS485 Bus 2 is the backup for many nodes
 - Each node in the system should have selectable pin headers for which bus it's connected to
+- Resiliant to accidental cross-over cable usage. RS485 channels become swapped, which will likely
+    break communication, but the power wires stay the same. This should prevent magic smoke release.
 
 ## Resolving System Addressing
 - Ask Grok. Had some interesting things to say about random response times and resolve collisions
