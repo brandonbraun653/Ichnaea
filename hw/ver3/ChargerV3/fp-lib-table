@@ -7,4 +7,5 @@
   (lib (name "Jumpers")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Jumpers.pretty")(options "")(descr ""))
   (lib (name "Resistors")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Resistors.pretty")(options "")(descr ""))
   (lib (name "PMIC")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/PMIC")(options "")(descr ""))
+  (lib (name "USB")(type "KiCad")(uri "/home/brandon/git/projects/Ichnaea/hw/lib/KiCadLib/Connectors/USB.pretty")(options "")(descr ""))
 )
