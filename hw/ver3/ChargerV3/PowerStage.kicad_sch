@@ -4260,7 +4260,7 @@
 	)
 	(text "6-Phase Buck Converter"
 		(exclude_from_sim no)
-		(at 172.212 14.478 0)
+		(at 172.72 283.464 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6867,7 +6867,7 @@
 	)
 	(global_label "CTL_LTC_PWM_EN"
 		(shape passive)
-		(at 133.35 148.59 0)
+		(at 125.73 148.59 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6877,7 +6877,7 @@
 		)
 		(uuid "4e6e2062-ae47-42ed-a4ba-365995829685")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 151.3104 148.59 0)
+			(at 143.6904 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17342,120 +17342,6 @@
 			(project "IchnaeaV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
 					(reference "#PWR021")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 129.54 148.59 90)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "dfa35219-1a72-4816-a2cf-00f4a8d8e865")
-		(property "Reference" "R25"
-			(at 129.54 142.24 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 129.54 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 129.794 149.606 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C22775"
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" ""
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "DigiKey" ""
-			(at 129.54 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "052f0184-1d6e-40ed-91df-146469f42f68")
-		)
-		(pin "2"
-			(uuid "aa641a6d-6cb8-48a5-a10f-4897d552cee1")
-		)
-		(instances
-			(project "IchnaeaV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/31a930eb-86fc-490d-aa2b-31b72c4dd29d"
-					(reference "R25")
 					(unit 1)
 				)
 			)

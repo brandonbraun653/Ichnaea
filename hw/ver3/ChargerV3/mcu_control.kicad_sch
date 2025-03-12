@@ -5007,6 +5007,16 @@
 		)
 		(uuid "18fdcbd5-8556-4418-a589-31b850e40bb2")
 	)
+	(text "UART 1"
+		(exclude_from_sim no)
+		(at 188.722 108.458 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "42f2148c-c34a-4eee-9745-52fd19b6e7c5")
+	)
 	(text "Provides software control/inspection of:\n  - LTC7871 operating state \n  - ADC Sensor Data\n  - System logging and config\n  - External network interface over RS485"
 		(exclude_from_sim no)
 		(at 177.8 171.958 0)
@@ -5171,7 +5181,7 @@
 		(uuid "4b60f3b9-1ffe-4f49-8fa4-47434399b757")
 	)
 	(junction
-		(at 273.05 38.1)
+		(at 260.35 31.75)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5c8fc150-2930-44af-94bc-4a3d028c66de")
@@ -5378,7 +5388,7 @@
 	)
 	(wire
 		(pts
-			(xy 271.78 38.1) (xy 273.05 38.1)
+			(xy 259.08 31.75) (xy 260.35 31.75)
 		)
 		(stroke
 			(width 0)
@@ -5558,7 +5568,7 @@
 	)
 	(wire
 		(pts
-			(xy 273.05 38.1) (xy 273.05 39.37)
+			(xy 260.35 31.75) (xy 260.35 33.02)
 		)
 		(stroke
 			(width 0)
@@ -5828,7 +5838,7 @@
 	)
 	(wire
 		(pts
-			(xy 260.35 59.69) (xy 260.35 62.23)
+			(xy 260.35 55.88) (xy 260.35 58.42)
 		)
 		(stroke
 			(width 0)
@@ -5948,7 +5958,7 @@
 	)
 	(wire
 		(pts
-			(xy 273.05 36.83) (xy 273.05 38.1)
+			(xy 260.35 30.48) (xy 260.35 31.75)
 		)
 		(stroke
 			(width 0)
@@ -6148,7 +6158,7 @@
 	)
 	(wire
 		(pts
-			(xy 260.35 59.69) (xy 261.62 59.69)
+			(xy 260.35 55.88) (xy 261.62 55.88)
 		)
 		(stroke
 			(width 0)
@@ -6612,7 +6622,7 @@
 	)
 	(global_label "CTL_LTC_SYNC"
 		(shape passive)
-		(at 271.78 38.1 180)
+		(at 259.08 31.75 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6622,7 +6632,7 @@
 		)
 		(uuid "3500526f-b584-4d15-8d74-5803206627cf")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 256.5409 38.1 0)
+			(at 243.8409 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6744,7 +6754,7 @@
 	)
 	(global_label "CTL_LTC_RUN"
 		(shape passive)
-		(at 261.62 59.69 0)
+		(at 261.62 55.88 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6754,7 +6764,7 @@
 		)
 		(uuid "599880ba-8bb2-4cc0-9b69-8c99a133ca76")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 275.8915 59.69 0)
+			(at 275.8915 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7030,7 +7040,7 @@
 	)
 	(global_label "LTC_SYNC"
 		(shape passive)
-		(at 265.43 44.45 180)
+		(at 252.73 38.1 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7040,7 +7050,7 @@
 		)
 		(uuid "a02896b0-ea54-471d-b19c-51c9224909f9")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 254.4242 44.45 0)
+			(at 241.7242 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7118,22 +7128,22 @@
 	)
 	(global_label "LED_STATUS_0"
 		(shape passive)
-		(at 240.03 44.45 180)
+		(at 185.42 143.51 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right)
+			(justify left)
 		)
 		(uuid "adfedcee-f6b8-49de-9452-504613c2e9e2")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 224.791 44.45 0)
+			(at 200.659 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -7294,7 +7304,7 @@
 	)
 	(global_label "LTC_RUN"
 		(shape passive)
-		(at 252.73 67.31 180)
+		(at 252.73 63.5 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7304,7 +7314,7 @@
 		)
 		(uuid "ed577879-2a90-4a11-b8e1-9918e24f46e1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 242.6918 67.31 0)
+			(at 242.6918 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7424,7 +7434,7 @@
 		)
 		(uuid "38a253dc-44d0-480f-a13b-673eee9df256")
 	)
-	(hierarchical_label "RS485_ACTIVITY_LED"
+	(hierarchical_label "RS485_DATA_DIR"
 		(shape output)
 		(at 167.64 104.14 0)
 		(effects
@@ -7433,9 +7443,9 @@
 			)
 			(justify left)
 		)
-		(uuid "b6545a5f-095e-4a91-85e0-9cecfadd5fe2")
+		(uuid "d32fcf37-e9e8-402a-bf12-5f9b3d00d05e")
 	)
-	(hierarchical_label "RS485_DATA_DIR"
+	(hierarchical_label "RS485_LINK_STATE"
 		(shape output)
 		(at 167.64 101.6 0)
 		(effects
@@ -7444,11 +7454,11 @@
 			)
 			(justify left)
 		)
-		(uuid "d32fcf37-e9e8-402a-bf12-5f9b3d00d05e")
+		(uuid "e7ff24b7-3030-4922-b95c-e861d670a558")
 	)
 	(symbol
 		(lib_id "Transistor_FET:BSS138")
-		(at 257.81 67.31 0)
+		(at 257.81 63.5 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7457,7 +7467,7 @@
 		(fields_autoplaced yes)
 		(uuid "00c8c245-f846-4159-bbab-71fc7037b047")
 		(property "Reference" "Q12"
-			(at 264.16 66.0399 0)
+			(at 264.16 62.2299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7466,7 +7476,7 @@
 			)
 		)
 		(property "Value" "BSS138"
-			(at 264.16 68.5799 0)
+			(at 264.16 64.7699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7475,7 +7485,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 262.89 69.215 0)
+			(at 262.89 65.405 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7486,7 +7496,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
-			(at 262.89 71.12 0)
+			(at 262.89 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7496,7 +7506,7 @@
 			)
 		)
 		(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
-			(at 257.81 67.31 0)
+			(at 257.81 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7505,7 +7515,7 @@
 			)
 		)
 		(property "Field-1" ""
-			(at 257.81 67.31 0)
+			(at 257.81 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7514,7 +7524,7 @@
 			)
 		)
 		(property "Digikey" "5272-BSS138CT-ND"
-			(at 257.81 67.31 0)
+			(at 257.81 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7523,7 +7533,7 @@
 			)
 		)
 		(property "LCSC" "C5224260"
-			(at 257.81 67.31 0)
+			(at 257.81 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7532,7 +7542,7 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
-			(at 257.81 67.31 0)
+			(at 257.81 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7541,7 +7551,7 @@
 			)
 		)
 		(property "DigiKey" ""
-			(at 257.81 67.31 0)
+			(at 257.81 63.5 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7665,7 +7675,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 260.35 72.39 0)
+		(at 260.35 68.58 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7674,7 +7684,7 @@
 		(fields_autoplaced yes)
 		(uuid "030c8254-2079-47f6-bc7f-371e90bf266b")
 		(property "Reference" "#PWR0139"
-			(at 260.35 78.74 0)
+			(at 260.35 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7683,7 +7693,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 260.35 77.47 0)
+			(at 260.35 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7691,7 +7701,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 260.35 72.39 0)
+			(at 260.35 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7700,7 +7710,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 260.35 72.39 0)
+			(at 260.35 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7709,7 +7719,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 260.35 72.39 0)
+			(at 260.35 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7863,7 +7873,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_FET:BSS138")
-		(at 270.51 44.45 0)
+		(at 257.81 38.1 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7872,7 +7882,7 @@
 		(fields_autoplaced yes)
 		(uuid "07fa28cd-5770-480e-a289-17a69b872683")
 		(property "Reference" "Q13"
-			(at 276.86 43.1799 0)
+			(at 264.16 36.8299 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7881,7 +7891,7 @@
 			)
 		)
 		(property "Value" "BSS138"
-			(at 276.86 45.7199 0)
+			(at 264.16 39.3699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7890,7 +7900,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 275.59 46.355 0)
+			(at 262.89 40.005 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7901,7 +7911,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
-			(at 275.59 48.26 0)
+			(at 262.89 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7911,7 +7921,7 @@
 			)
 		)
 		(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
-			(at 270.51 44.45 0)
+			(at 257.81 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7920,7 +7930,7 @@
 			)
 		)
 		(property "Field-1" ""
-			(at 270.51 44.45 0)
+			(at 257.81 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7929,7 +7939,7 @@
 			)
 		)
 		(property "Digikey" "5272-BSS138CT-ND"
-			(at 270.51 44.45 0)
+			(at 257.81 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7938,7 +7948,7 @@
 			)
 		)
 		(property "LCSC" "C5224260"
-			(at 270.51 44.45 0)
+			(at 257.81 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7947,7 +7957,7 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
-			(at 270.51 44.45 0)
+			(at 257.81 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7956,7 +7966,7 @@
 			)
 		)
 		(property "DigiKey" ""
-			(at 270.51 44.45 0)
+			(at 257.81 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8629,7 +8639,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 273.05 33.02 180)
+		(at 260.35 26.67 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8638,7 +8648,7 @@
 		(fields_autoplaced yes)
 		(uuid "20da594b-4668-41ba-ab6c-e2550c0293a3")
 		(property "Reference" "R62"
-			(at 275.59 31.7499 0)
+			(at 262.89 25.3999 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8647,7 +8657,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 275.59 34.2899 0)
+			(at 262.89 27.9399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8656,7 +8666,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 272.034 32.766 90)
+			(at 259.334 26.416 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8665,7 +8675,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8674,7 +8684,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8683,7 +8693,7 @@
 			)
 		)
 		(property "Field-1" ""
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8692,7 +8702,7 @@
 			)
 		)
 		(property "LCSC" "C21190"
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8701,7 +8711,7 @@
 			)
 		)
 		(property "Digikey" "N/A"
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8710,7 +8720,7 @@
 			)
 		)
 		(property "JLCPCB Rotation Offset" ""
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8719,7 +8729,7 @@
 			)
 		)
 		(property "DigiKey" ""
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9223,100 +9233,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 247.65 27.94 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "2c01198c-81ab-43de-8fcf-ec23905a9a76")
-		(property "Reference" "R109"
-			(at 241.3 27.94 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "510"
-			(at 243.84 27.94 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 248.666 28.194 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 247.65 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 247.65 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 247.65 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "N/A"
-			(at 247.65 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C23193"
-			(at 247.65 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f7519951-ae0c-48d6-b73b-6d6cb5d6a06d")
-		)
-		(pin "2"
-			(uuid "73dc11f7-21be-4ff1-bbeb-777c2a7421f4")
-		)
-		(instances
-			(project "ChargerV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
-					(reference "R109")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Transistor_FET:BSS84")
 		(at 257.81 95.25 0)
 		(mirror x)
@@ -9648,108 +9564,6 @@
 			(project "ChargerV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
 					(reference "C99")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:BSS138")
-		(at 245.11 44.45 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "34f81a8c-0c43-4e17-adf7-21e3bafe385e")
-		(property "Reference" "Q19"
-			(at 250.952 46.482 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BSS138"
-			(at 248.666 48.768 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 250.19 46.355 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/BSS138-D.PDF"
-			(at 250.19 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "50V Vds, 0.22A Id, N-Channel MOSFET, SOT-23"
-			(at 245.11 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field-1" ""
-			(at 245.11 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Digikey" "5272-BSS138CT-ND"
-			(at 245.11 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C5224260"
-			(at 245.11 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "0d6a6d60-47ed-4981-8f05-02f62e0e9dc1")
-		)
-		(pin "3"
-			(uuid "b2522538-cc62-4379-8481-9ad47908e0a5")
-		)
-		(pin "1"
-			(uuid "8e8d296c-8790-4ce0-bd5e-15e2f8771b3a")
-		)
-		(instances
-			(project "ChargerV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
-					(reference "Q19")
 					(unit 1)
 				)
 			)
@@ -10639,7 +10453,7 @@
 	)
 	(symbol
 		(lib_id "Device:LED")
-		(at 247.65 35.56 90)
+		(at 181.61 143.51 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10647,7 +10461,7 @@
 		(dnp no)
 		(uuid "54b837aa-b21e-4097-b79f-efa03133c690")
 		(property "Reference" "D22"
-			(at 251.46 35.8774 90)
+			(at 179.324 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10656,7 +10470,7 @@
 			)
 		)
 		(property "Value" "Green LED"
-			(at 250.952 30.734 0)
+			(at 176.784 140.208 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10665,7 +10479,7 @@
 			)
 		)
 		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
-			(at 247.65 35.56 0)
+			(at 181.61 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10674,7 +10488,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 247.65 35.56 0)
+			(at 181.61 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10683,7 +10497,7 @@
 			)
 		)
 		(property "Description" "Light emitting diode"
-			(at 247.65 35.56 0)
+			(at 181.61 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10692,7 +10506,7 @@
 			)
 		)
 		(property "LCSC" "C2297"
-			(at 247.65 35.56 90)
+			(at 181.61 143.51 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10701,7 +10515,7 @@
 			)
 		)
 		(property "Digikey" "350-2044-2-ND"
-			(at 247.65 35.56 0)
+			(at 181.61 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11683,72 +11497,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3VP")
-		(at 247.65 24.13 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7d20df4e-8d21-4c5c-b458-f6dde5748eeb")
-		(property "Reference" "#PWR0228"
-			(at 251.46 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 247.65 19.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 247.65 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 247.65 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3VP\""
-			(at 247.65 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bd319b63-2f66-4126-a040-b7f61601675a")
-		)
-		(instances
-			(project "ChargerV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
-					(reference "#PWR0228")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 160.02 29.21 0)
 		(unit 1)
@@ -12242,6 +11990,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 170.18 143.51 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "92b025d0-b997-45fb-9a4f-1e5037b60d8d")
+		(property "Reference" "#PWR0159"
+			(at 173.99 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 165.1 143.51 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 170.18 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 170.18 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 170.18 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7fed9424-318e-4d80-9c11-21ec253e6d93")
+		)
+		(instances
+			(project "ChargerV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
+					(reference "#PWR0159")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3.3VP")
 		(at 102.87 176.53 270)
 		(unit 1)
@@ -12581,7 +12394,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 273.05 29.21 0)
+		(at 260.35 22.86 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -12590,7 +12403,7 @@
 		(fields_autoplaced yes)
 		(uuid "9ffd3cec-70ab-45d2-9f67-e9a077b59994")
 		(property "Reference" "#PWR0140"
-			(at 273.05 33.02 0)
+			(at 260.35 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12599,7 +12412,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 273.05 24.13 0)
+			(at 260.35 17.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12607,7 +12420,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 273.05 29.21 0)
+			(at 260.35 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12616,7 +12429,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 273.05 29.21 0)
+			(at 260.35 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12625,7 +12438,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 273.05 29.21 0)
+			(at 260.35 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13214,7 +13027,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 273.05 49.53 0)
+		(at 260.35 43.18 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -13223,7 +13036,7 @@
 		(fields_autoplaced yes)
 		(uuid "adf03e1a-8ca1-4822-aa38-c8f1adaa3439")
 		(property "Reference" "#PWR0141"
-			(at 273.05 55.88 0)
+			(at 260.35 49.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13232,7 +13045,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 273.05 54.61 0)
+			(at 260.35 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13240,7 +13053,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 273.05 49.53 0)
+			(at 260.35 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13249,7 +13062,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 273.05 49.53 0)
+			(at 260.35 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13258,7 +13071,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 273.05 49.53 0)
+			(at 260.35 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13367,6 +13180,101 @@
 			(project "ChargerV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
 					(reference "R100")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 173.99 143.51 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b0236ffa-c80f-4f0a-a2e5-6fe0bca011bd")
+		(property "Reference" "R912"
+			(at 173.99 145.796 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "3k"
+			(at 173.99 141.224 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 173.736 142.494 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 173.99 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, US symbol"
+			(at 173.99 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C126358"
+			(at 173.99 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Digikey" "RMCF0603FT3K00TR-ND"
+			(at 173.99 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCPCB Rotation Offset" ""
+			(at 173.99 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "af890338-892a-4477-b2aa-1d426b784acb")
+		)
+		(pin "2"
+			(uuid "b2752c7e-ab4b-4131-94de-75899e6ab66f")
+		)
+		(instances
+			(project "ChargerV3"
+				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
+					(reference "R912")
 					(unit 1)
 				)
 			)
@@ -15140,72 +15048,6 @@
 			(project "ChargerV3"
 				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
 					(reference "#PWR0208")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 247.65 49.53 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fb70ff67-ebf2-4341-bb31-42f7db214ccc")
-		(property "Reference" "#PWR0226"
-			(at 247.65 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 247.65 54.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 247.65 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 247.65 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 247.65 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0c385502-7cae-4dd5-a6bc-658e380672b1")
-		)
-		(instances
-			(project "ChargerV3"
-				(path "/93408532-1ffa-463d-873c-16289d2b7987/f8cdf9d7-add1-4ff8-8430-918a71e3d1f9/11da823d-a1b5-4683-acde-852ac90cc216"
-					(reference "#PWR0226")
 					(unit 1)
 				)
 			)
